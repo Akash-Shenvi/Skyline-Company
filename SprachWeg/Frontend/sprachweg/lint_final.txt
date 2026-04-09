@@ -1,0 +1,76 @@
+﻿
+> sprachweg@0.0.0 lint
+> eslint .
+
+
+D:\Coading\Development\SprachWeg\Frontend\sprachweg\src\context\AuthContext.tsx
+   42:8   warning  React Hook useEffect has a missing dependency: 'refreshUser'. Either include it or remove the dependency array                  react-hooks/exhaustive-deps
+  130:14  error    Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\Coading\Development\SprachWeg\Frontend\sprachweg\src\context\ThemeContext.tsx
+  45:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\Coading\Development\SprachWeg\Frontend\sprachweg\src\lib\courseData.ts
+  468:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Coading\Development\SprachWeg\Frontend\sprachweg\src\lib\courseData.ts:468:5
+  466 |     // fetch(`/api/courses/${slug}`).then(res => res.json())...
+  467 |     // For now we simulate a resolved response using the local map.
+> 468 |     setLoading(true);
+      |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  469 |     const timer = setTimeout(() => {
+  470 |       if (!isMounted) return;
+  471 |       setCourse(courseDataBySlug[slug]);  react-hooks/set-state-in-effect
+
+D:\Coading\Development\SprachWeg\Frontend\sprachweg\src\pages\Admin\AdminDashboard.tsx
+  207:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  208:24  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  217:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  218:24  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  227:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  228:24  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Coading\Development\SprachWeg\Frontend\sprachweg\src\pages\Admin\SkillDashboard.tsx
+  202:63  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Coading\Development\SprachWeg\Frontend\sprachweg\src\pages\LanguageTraining.tsx
+  271:25  error  '_index' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Coading\Development\SprachWeg\Frontend\sprachweg\src\pages\LoginPage.tsx
+  27:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  46:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Coading\Development\SprachWeg\Frontend\sprachweg\src\pages\RegisterPage.tsx
+  32:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  53:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  68:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Coading\Development\SprachWeg\Frontend\sprachweg\src\pages\ResetPasswordPage.tsx
+  49:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Coading\Development\SprachWeg\Frontend\sprachweg\src\pages\StudentDashboard.tsx
+   14:5   error  'AlertCircle' is defined but never used                  @typescript-eslint/no-unused-vars
+  197:31  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+  198:24  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+  279:11  error  'shouldReduceMotion' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  287:46  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+  288:24  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+
+D:\Coading\Development\SprachWeg\Frontend\sprachweg\src\pages\TrainerDashboard.tsx
+    9:5   error  'TrendingUp' is defined but never used                      @typescript-eslint/no-unused-vars
+  200:12  error  'showUploadModal' is assigned a value but never used        @typescript-eslint/no-unused-vars
+  201:12  error  'showAnnouncementModal' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  202:11  error  'shouldReduceMotion' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  206:31  error  Unexpected any. Specify a different type                    @typescript-eslint/no-explicit-any
+  207:24  error  Unexpected any. Specify a different type                    @typescript-eslint/no-explicit-any
+  215:31  error  Unexpected any. Specify a different type                    @typescript-eslint/no-explicit-any
+  216:24  error  Unexpected any. Specify a different type                    @typescript-eslint/no-explicit-any
+
+Γ£û 32 problems (31 errors, 1 warning)
+
