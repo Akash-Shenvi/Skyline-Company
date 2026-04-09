@@ -46,11 +46,9 @@ app.use(express.urlencoded({ extended: true, verify: captureRawBody }));
 
 import itemRoutes from './routes/item.routes';
 import authRoutes from './routes/auth.routes';
-import skillRoutes from './routes/skillCourse.routes';
 import languageRoutes from './routes/languageCourse.routes';
 import languageTrainingRoutes from './routes/language.training.routes';
 import languageTrainerRoutes from './routes/language.trainer.routes';
-// ... (middlewares)
 
 import dashboardRoutes from './routes/dashboard.routes';
 import enrollmentRoutes from './routes/enrollment.routes';
@@ -59,7 +57,6 @@ import enrollmentRoutes from './routes/enrollment.routes';
 app.use('/api/uploads', express.static('/home/sovirtraining/file_serve')); // Serve uploaded files
 app.use('/api/items', itemRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/api/skills', skillRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
 app.use('/api/enrollment', enrollmentRoutes);
@@ -67,8 +64,6 @@ app.use('/api/languages', languageRoutes);
 
 app.use('/api/language-training', languageTrainingRoutes);
 
-import skillTrainingDetailRoutes from './routes/skillTrainingDetail.routes';
-app.use('/api/skill-training-details', skillTrainingDetailRoutes);
 app.use('/api/language-trainer', languageTrainerRoutes);
 
 import contactRoutes from './routes/contact.routes';
@@ -98,26 +93,11 @@ app.use('/api/internships', internshipListingRoutes);
 import trainingCheckoutRoutes from './routes/trainingCheckout.routes';
 app.use('/api/training-checkout', trainingCheckoutRoutes);
 
-import webinarRoutes from './routes/webinar.routes';
-app.use('/api/webinars', webinarRoutes);
-
-import webinarRegistrationRoutes from './routes/webinarRegistration.routes';
-app.use('/api/webinar-registrations', webinarRegistrationRoutes);
-
 import paymentRoutes from './routes/payment.routes';
 app.use('/api/payments', paymentRoutes);
 
-import institutionRoutes from './routes/institution.routes';
-app.use('/api/institutions', institutionRoutes);
-
-import adminInstitutionRoutes from './routes/adminInstitution.routes';
-app.use('/api/admin/institutions', adminInstitutionRoutes);
-
 import trainerBatchRoutes from './routes/trainer.batch.routes';
 app.use('/api/trainer-batches', trainerBatchRoutes);
-
-import skillBatchRoutes from './routes/skill.batch.routes';
-app.use('/api/skill-batches', skillBatchRoutes);
 
 import notificationRoutes from './routes/notification.routes';
 app.use('/api/notifications', notificationRoutes);

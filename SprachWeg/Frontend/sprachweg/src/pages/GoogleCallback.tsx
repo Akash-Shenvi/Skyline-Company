@@ -45,11 +45,11 @@ const GoogleCallback: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <div className="min-h-screen flex items-center justify-center bg-brand-off-white">
             <div className="text-center">
-                <div className="h-12 w-12 animate-spin rounded-full border-4 border-[#d6b161] border-t-transparent mx-auto mb-4"></div>
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Connecting to Google...</h2>
-                <p className="text-gray-500">Please wait while we complete the setup.</p>
+                <div className="h-12 w-12 animate-spin rounded-full border-4 border-brand-gold border-t-transparent mx-auto mb-4"></div>
+                <h2 className="text-xl font-bold text-brand-black">Connecting to Google...</h2>
+                <p className="text-brand-olive">Please wait while we complete the setup.</p>
             </div>
         </div>
     );

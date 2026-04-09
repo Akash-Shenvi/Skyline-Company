@@ -80,25 +80,25 @@ const AdminFeedback: React.FC = () => {
         <AdminLayout>
             <div className="max-w-7xl mx-auto space-y-6">
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-[#0a192f] dark:text-white mb-2">Feedback & Error Reports</h1>
-                    <p className="text-gray-600 dark:text-gray-400 text-lg">Manage user feedback and reported issues.</p>
+                    <h1 className="text-3xl font-bold text-brand-black mb-2">Feedback & Error Reports</h1>
+                    <p className="text-brand-olive-dark text-lg">Manage user feedback and reported issues.</p>
                 </div>
 
             {isLoading ? (
                 <div className="flex justify-center items-center py-20">
-                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#d6b161]"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-gold"></div>
                 </div>
             ) : feedbacks.length === 0 ? (
                 <motion.div 
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="bg-white dark:bg-[#112240] rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 p-12 text-center"
+                    className="bg-white rounded-2xl shadow-lg border border-brand-surface p-12 text-center"
                 >
-                    <div className="inline-flex items-center justify-center p-4 bg-green-500/10 rounded-full mb-6">
-                        <CheckCircle className="w-16 h-16 text-green-500" />
+                    <div className="inline-flex items-center justify-center p-4 bg-brand-olive/50/10 rounded-full mb-6">
+                        <CheckCircle className="w-16 h-16 text-brand-olive" />
                     </div>
-                    <h3 className="text-2xl font-bold text-[#0a192f] dark:text-white mb-3">All Caught Up!</h3>
-                    <p className="text-gray-500 dark:text-gray-400 text-lg">There are no pending feedback or error reports at this time.</p>
+                    <h3 className="text-2xl font-bold text-brand-black mb-3">All Caught Up!</h3>
+                    <p className="text-brand-olive text-lg">There are no pending feedback or error reports at this time.</p>
                 </motion.div>
             ) : (
                 <div className="grid gap-6">
@@ -108,33 +108,33 @@ const AdminFeedback: React.FC = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.05 }}
-                            className="bg-white dark:bg-[#112240] rounded-2xl shadow-md hover:shadow-lg transition-all border border-gray-100 dark:border-gray-800 overflow-hidden"
+                            className="bg-white rounded-2xl shadow-md hover:shadow-lg transition-all border border-brand-surface overflow-hidden"
                         >
                             <div className="p-6 md:p-8 flex flex-col md:flex-row gap-6">
                                 <div className="flex-1 space-y-4">
                                     <div className="flex justify-between items-start mb-4">
                                         <div>
-                                            <h3 className="text-lg font-bold text-[#0a192f] dark:text-white flex items-center gap-2">
-                                                <AlertCircle className="w-5 h-5 text-amber-500" />
+                                            <h3 className="text-lg font-bold text-brand-black flex items-center gap-2">
+                                                <AlertCircle className="w-5 h-5 text-brand-gold" />
                                                 {fb.name}
                                             </h3>
-                                            <a href={`mailto:${fb.email}`} className="text-sm text-[#d6b161] hover:underline">
+                                            <a href={`mailto:${fb.email}`} className="text-sm text-brand-gold hover:underline">
                                                 {fb.email}
                                             </a>
                                         </div>
-                                        <div className="text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                                        <div className="text-sm text-brand-olive whitespace-nowrap">
                                             {new Date(fb.createdAt).toLocaleDateString()} at {new Date(fb.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                                         </div>
                                     </div>
                                     
-                                    <div className="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg border border-gray-100 dark:border-gray-800 mt-2">
-                                        <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{fb.problem}</p>
+                                    <div className="bg-brand-off-white p-4 rounded-lg border border-brand-surface mt-2">
+                                        <p className="text-brand-olive-dark whitespace-pre-wrap">{fb.problem}</p>
                                     </div>
                                     
-                                    <div className="flex pt-4 mt-2 border-t border-gray-100 dark:border-gray-700">
+                                    <div className="flex pt-4 mt-2 border-t border-brand-surface">
                                          <button
                                             onClick={() => handleMarkAsSolved(fb._id)}
-                                            className="ml-auto flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-medium transition-colors"
+                                            className="ml-auto flex items-center gap-2 px-4 py-2 bg-brand-olive/50 hover:bg-brand-olive text-white rounded-lg text-sm font-medium transition-colors"
                                         >
                                             <CheckCircle className="w-4 h-4" />
                                             Mark as Solved
@@ -143,14 +143,14 @@ const AdminFeedback: React.FC = () => {
                                 </div>
                                 
                                 {fb.imageUrl && (
-                                    <div className="w-full md:w-64 flex-shrink-0 flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900/50 rounded-xl p-3 border border-gray-100 dark:border-gray-800">
+                                    <div className="w-full md:w-64 flex-shrink-0 flex flex-col items-center justify-center bg-brand-off-white rounded-xl p-3 border border-brand-surface">
                                         <img 
                                             src={`${API_URL}/api/uploads/${fb.imageUrl}`} 
                                             alt="Screenshot" 
                                             className="max-h-48 rounded object-contain cursor-pointer transition-transform hover:scale-105 shadow-sm"
                                             onClick={() => setSelectedImage(`${API_URL}/api/uploads/${fb.imageUrl}`)}
                                         />
-                                        <span className="text-xs text-gray-500 dark:text-gray-400 mt-3 flex items-center gap-1.5 font-medium">
+                                        <span className="text-xs text-brand-olive mt-3 flex items-center gap-1.5 font-medium">
                                             <ImageIcon className="w-3.5 h-3.5" /> Click to enlarge
                                         </span>
                                     </div>
@@ -175,7 +175,7 @@ const AdminFeedback: React.FC = () => {
                             onClick={(e) => e.stopPropagation()}
                         />
                         <button 
-                            className="absolute -top-4 -right-4 md:top-4 md:right-4 bg-red-500/90 hover:bg-red-500 text-white rounded-full p-2.5 transition-colors shadow-lg"
+                            className="absolute -top-4 -right-4 md:top-4 md:right-4 bg-brand-red/50/90 hover:bg-brand-red/50 text-white rounded-full p-2.5 transition-colors shadow-lg"
                             onClick={() => setSelectedImage(null)}
                             title="Close preview"
                         >

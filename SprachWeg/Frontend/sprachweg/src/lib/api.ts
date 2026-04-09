@@ -1,6 +1,5 @@
 import axios from 'axios';
 import type { InternshipPayload } from '../types/internship';
-import type { WebinarPayload } from '../types/webinar';
 
 export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -40,10 +39,7 @@ api.interceptors.response.use(
         if (error.response?.status === 401) {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
-            const nextAuthPath = window.location.pathname.startsWith('/institution')
-                ? '/institution/login'
-                : '/login';
-            window.location.href = nextAuthPath;
+            window.location.href = '/login';
         }
         return Promise.reject(error);
     }
@@ -156,38 +152,6 @@ export const enrollmentAPI = {
     }
 };
 
-// Skill Course API
-export const skillAPI = {
-    async getAll(search?: string) {
-        const url = search ? `/skills?search=${encodeURIComponent(search)}` : '/skills';
-        const response = await api.get(url);
-        return response.data;
-    },
-
-    async create(data: FormData) {
-        const response = await api.post('/skills', data, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
-        return response.data;
-    },
-
-    async update(id: string, data: FormData) {
-        const response = await api.put(`/skills/${id}`, data, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
-        return response.data;
-    },
-
-    async delete(id: string) {
-        const response = await api.delete(`/skills/${id}`);
-        return response.data;
-    },
-};
-
 // Language Course API
 export const languageAPI = {
     async getAll() {
@@ -217,17 +181,6 @@ export const languageAPI = {
         const response = await api.delete(`/languages/${id}`);
         return response.data;
     },
-};
-
-export const skillTrainingDetailAPI = {
-    async get(courseId: string) {
-        const response = await api.get(`/skill-training-details/${courseId}`);
-        return response.data;
-    },
-    async update(data: any) {
-        const response = await api.post('/skill-training-details', data);
-        return response.data;
-    }
 };
 
 export const trainingCheckoutAPI = {
@@ -359,130 +312,4 @@ export const internshipCatalogAPI = {
     },
 };
 
-export const webinarCatalogAPI = {
-    async getAll() {
-        const response = await api.get('/webinars');
-        return response.data;
-    },
-    async getBySlug(slug: string) {
-        const response = await api.get(`/webinars/${slug}`);
-        return response.data;
-    },
-    async getAllAdmin() {
-        const response = await api.get('/webinars/admin');
-        return response.data;
-    },
-    async getAssignedTrainer() {
-        const response = await api.get('/webinars/trainer/assigned');
-        return response.data;
-    },
-    async create(data: WebinarPayload) {
-        const response = await api.post('/webinars/admin', data);
-        return response.data;
-    },
-    async update(id: string, data: WebinarPayload) {
-        const response = await api.put(`/webinars/admin/${id}`, data);
-        return response.data;
-    },
-};
-
-export const webinarRegistrationAPI = {
-    async createCheckout(data: {
-        webinarId: string;
-        payerName?: string;
-        payerEmail?: string;
-        payerPhone?: string;
-    }) {
-        const response = await api.post('/webinar-registrations/checkout', data);
-        return response.data;
-    },
-    async getApprovedMine() {
-        const response = await api.get('/webinar-registrations/me/approved');
-        return response.data;
-    },
-    async getAllAdmin(params?: { page?: number; limit?: number; search?: string; status?: string }) {
-        const searchParams = new URLSearchParams();
-
-        if (params?.page) {
-            searchParams.set('page', String(params.page));
-        }
-
-        if (params?.limit) {
-            searchParams.set('limit', String(params.limit));
-        }
-
-        if (params?.search) {
-            searchParams.set('search', params.search);
-        }
-
-        if (params?.status) {
-            searchParams.set('status', params.status);
-        }
-
-        const queryString = searchParams.toString();
-        const response = await api.get(`/webinar-registrations/admin${queryString ? `?${queryString}` : ''}`);
-        return response.data;
-    },
-    async updateStatus(id: string, status: 'accepted' | 'rejected') {
-        const response = await api.patch(`/webinar-registrations/admin/${id}/status`, { status });
-        return response.data;
-    },
-};
-
-export const institutionAPI = {
-    async getDashboard() {
-        const response = await api.get('/institutions/dashboard');
-        return response.data;
-    },
-    async getSubmissions() {
-        const response = await api.get('/institutions/submissions');
-        return response.data;
-    },
-    async createSubmission(data: {
-        language: 'German';
-        courseTitle: string;
-        levelName: string;
-        students: Array<{ name: string; email: string; password: string }>;
-    }) {
-        const response = await api.post('/institutions/submissions', data);
-        return response.data;
-    },
-    async getAdminRequests(params?: { page?: number; limit?: number; status?: string; search?: string }) {
-        const searchParams = new URLSearchParams();
-
-        if (params?.page) {
-            searchParams.set('page', String(params.page));
-        }
-
-        if (params?.limit) {
-            searchParams.set('limit', String(params.limit));
-        }
-
-        if (params?.status) {
-            searchParams.set('status', params.status);
-        }
-
-        if (params?.search) {
-            searchParams.set('search', params.search);
-        }
-
-        const queryString = searchParams.toString();
-        const response = await api.get(`/admin/institutions/requests${queryString ? `?${queryString}` : ''}`);
-        return response.data;
-    },
-    async approveRequest(id: string) {
-        const response = await api.post(`/admin/institutions/requests/${id}/approve`);
-        return response.data;
-    },
-    async rejectRequest(id: string, reason?: string) {
-        const response = await api.post(`/admin/institutions/requests/${id}/reject`, reason ? { reason } : {});
-        return response.data;
-    },
-    async deleteRequest(id: string) {
-        const response = await api.delete(`/admin/institutions/requests/${id}`);
-        return response.data;
-    },
-};
-
 export default api;
-

@@ -1,8 +1,8 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { internshipApplicationAPI, internshipCatalogAPI } from '../../lib/api';
-import { buildPaymentBreakdown } from '../../lib/paymentPricing';
+import { useAuth } from '../context/AuthContext';
+import { internshipApplicationAPI, internshipCatalogAPI } from '../lib/api';
+import { buildPaymentBreakdown } from '../lib/paymentPricing';
 import {
   formatInternshipPrice,
   formatInternshipMode,
@@ -13,7 +13,7 @@ import {
   slugifyInternshipTitle,
   type InternshipListing,
   type InternshipMode,
-} from '../../types/internship';
+} from '../types/internship';
 
 // ─── Icon Components ──────────────────────────────────────────────────────────
 
@@ -184,14 +184,14 @@ interface FieldProps {
 const Field: React.FC<FieldProps> = ({ label, required, error, children }) => (
   <div className="flex flex-col gap-1.5">
     {label && (
-      <label className="flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-300">
+      <label className="flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-brand-olive-dark">
         {label}
-        {required && <span className="text-[#d6b161] text-[10px]">*</span>}
+        {required && <span className="text-brand-gold text-[10px]">*</span>}
       </label>
     )}
     <div className="relative">{children}</div>
     {error && (
-      <div className="flex items-center gap-1 text-xs font-medium text-red-600 dark:text-red-400">
+      <div className="flex items-center gap-1 text-xs font-medium text-brand-red">
         <AlertCircle />
         {error}
       </div>
@@ -209,12 +209,12 @@ interface SelectFieldProps extends React.SelectHTMLAttributes<HTMLSelectElement>
 const SelectField: React.FC<SelectFieldProps> = ({ label, required, error, children, ...props }) => (
   <Field label={label} required={required} error={error}>
     <select
-      className="w-full appearance-none cursor-pointer rounded-lg border-[1.5px] border-gray-200 bg-white px-4 py-3 text-sm text-[#0a192f] outline-none transition-all duration-200 hover:border-[#d6b161]/50 focus:border-[#d6b161] focus:bg-white focus:ring-2 focus:ring-[#d6b161]/20 dark:border-white/10 dark:bg-[#0f223f] dark:text-white dark:focus:bg-[#112240] font-[Sora,system-ui]"
+      className="w-full appearance-none cursor-pointer rounded-lg border-[1.5px] border-brand-surface bg-white px-4 py-3 text-sm text-brand-black outline-none transition-all duration-200 hover:border-brand-gold/50 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-gold/20 font-[Sora,system-ui]"
       {...props}
     >
       {children}
     </select>
-    <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">
+    <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-brand-olive">
       <ChevronDown />
     </span>
   </Field>
@@ -571,9 +571,9 @@ const InternshipApplicationPage: React.FC = () => {
 
   // ─── Input class (shared) ───────────────────────────────────────────────────
   const inputCls =
-    'w-full rounded-lg border-[1.5px] border-gray-200 bg-white px-4 py-3 text-sm text-[#0a192f] outline-none transition-all duration-200 placeholder:text-gray-400 hover:border-[#d6b161]/50 focus:border-[#d6b161] focus:bg-white focus:ring-2 focus:ring-[#d6b161]/20 dark:border-white/10 dark:bg-[#0f223f] dark:text-white dark:placeholder:text-gray-500 dark:focus:bg-[#112240] font-[Sora,system-ui]';
+    'w-full rounded-lg border-[1.5px] border-brand-surface bg-white px-4 py-3 text-sm text-brand-black outline-none transition-all duration-200 placeholder:text-brand-olive-light hover:border-brand-gold/50 focus:border-brand-red focus:bg-white focus:ring-2 focus:ring-brand-gold/20 font-[Sora,system-ui]';
   const primaryButtonCls =
-    'w-full flex items-center justify-center gap-2 rounded-xl px-6 py-4 text-[15px] font-semibold transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 bg-[#0a192f] text-white shadow-[0_10px_30px_rgba(10,25,47,0.18)] hover:bg-[#112240] hover:shadow-[0_14px_36px_rgba(10,25,47,0.24)] dark:bg-[#d6b161] dark:text-[#0a192f] dark:hover:bg-[#c4a055] dark:shadow-[0_10px_30px_rgba(214,177,97,0.16)]';
+    'w-full flex items-center justify-center gap-2 rounded-xl px-6 py-4 text-[15px] font-semibold transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 bg-brand-black text-white shadow-[0_10px_30px_rgba(10,25,47,0.18)] hover:bg-brand-olive-dark hover:shadow-[0_14px_36px_rgba(10,25,47,0.24)](214,177,97,0.16)]';
 
   const stepLabels = ['Personal', 'Academic', 'Resume'];
   const stepsDone = [step > 0, step > 1, submitted];
@@ -582,18 +582,18 @@ const InternshipApplicationPage: React.FC = () => {
   // ─── Success Screen ─────────────────────────────────────────────────────────
   if (internshipLoading || checkingExistingApplication) {
     return (
-      <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gray-50 px-4 py-16 text-gray-900 transition-colors duration-300 dark:bg-[#0a192f] dark:text-gray-100">
+      <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-brand-off-white px-4 py-16 text-brand-black transition-colors duration-300">
         <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-          <div className="absolute -left-36 -top-48 h-[600px] w-[600px] rounded-full bg-gradient-to-br from-[#d6b161]/25 to-[#c4a055]/10 opacity-[0.22] blur-[100px] animate-[float1_18s_ease-in-out_infinite]" />
-          <div className="absolute -bottom-36 -right-24 h-[500px] w-[500px] rounded-full bg-gradient-to-br from-[#112240]/25 to-[#0a192f]/5 opacity-[0.2] blur-[100px] animate-[float2_22s_ease-in-out_infinite]" />
+          <div className="absolute -left-36 -top-48 h-[600px] w-[600px] rounded-full bg-gradient-to-br from-brand-gold/25 to-brand-gold-hover/10 opacity-[0.22] blur-[100px] animate-[float1_18s_ease-in-out_infinite]" />
+          <div className="absolute -bottom-36 -right-24 h-[500px] w-[500px] rounded-full bg-gradient-to-br from-brand-olive-dark/25 to-brand-black/5 opacity-[0.2] blur-[100px] animate-[float2_22s_ease-in-out_infinite]" />
         </div>
 
-        <div className="relative z-10 w-full max-w-md overflow-hidden rounded-2xl border border-gray-200 bg-white/95 p-10 text-center shadow-[0_20px_60px_rgba(10,25,47,0.12)] backdrop-blur-sm dark:border-white/10 dark:bg-[#112240]/95 dark:shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
-          <div className="mx-auto mb-5 h-12 w-12 rounded-full border-4 border-[#d6b161]/30 border-t-[#d6b161] animate-spin" />
-          <h2 className="text-2xl font-bold text-[#0a192f] dark:text-white">
+        <div className="relative z-10 w-full max-w-md overflow-hidden rounded-2xl border border-brand-surface bg-white/95 p-10 text-center shadow-[0_20px_60px_rgba(10,25,47,0.12)] backdrop-blur-sm(0,0,0,0.35)]">
+          <div className="mx-auto mb-5 h-12 w-12 rounded-full border-4 border-brand-gold/30 border-t-brand-gold animate-spin" />
+          <h2 className="text-2xl font-bold text-brand-black">
             {internshipLoading ? 'Loading internship details' : 'Checking your application'}
           </h2>
-          <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">
+          <p className="mt-3 text-sm text-brand-olive-dark">
             {internshipLoading
               ? 'We are preparing the latest internship information for this application.'
               : 'We are verifying whether you have already applied for this internship.'}
@@ -605,21 +605,21 @@ const InternshipApplicationPage: React.FC = () => {
 
   if (internshipError || !internship) {
     return (
-      <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gray-50 px-4 py-16 text-gray-900 transition-colors duration-300 dark:bg-[#0a192f] dark:text-gray-100">
-        <div className="relative z-10 w-full max-w-xl overflow-hidden rounded-2xl border border-gray-200 bg-white/95 p-10 text-center shadow-[0_20px_60px_rgba(10,25,47,0.12)] backdrop-blur-sm dark:border-white/10 dark:bg-[#112240]/95 dark:shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
-          <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-red-50 text-red-500 dark:bg-red-900/20 dark:text-red-300">
+      <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-brand-off-white px-4 py-16 text-brand-black transition-colors duration-300">
+        <div className="relative z-10 w-full max-w-xl overflow-hidden rounded-2xl border border-brand-surface bg-white/95 p-10 text-center shadow-[0_20px_60px_rgba(10,25,47,0.12)] backdrop-blur-sm(0,0,0,0.35)]">
+          <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-brand-red/5 text-brand-red">
             <AlertCircle />
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-[#0a192f] dark:text-white">
+          <h1 className="text-3xl font-bold tracking-tight text-brand-black">
             Internship not available
           </h1>
-          <p className="mt-3 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+          <p className="mt-3 text-sm leading-relaxed text-brand-olive-dark">
             {internshipError || 'This internship could not be found.'}
           </p>
           <div className="mt-8 flex justify-center">
             <Link
               to="/careers"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#0a192f] px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#112240] dark:bg-[#d6b161] dark:text-[#0a192f] dark:hover:bg-[#c4a055]"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-black px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-brand-olive-dark"
             >
               <ArrowLeft />
               Back to Careers
@@ -632,51 +632,51 @@ const InternshipApplicationPage: React.FC = () => {
 
   if (existingApplication) {
     return (
-      <div className="relative flex min-h-screen items-start justify-center overflow-hidden bg-gray-50 px-4 py-16 text-gray-900 transition-colors duration-300 dark:bg-[#0a192f] dark:text-gray-100">
+      <div className="relative flex min-h-screen items-start justify-center overflow-hidden bg-brand-off-white px-4 py-16 text-brand-black transition-colors duration-300">
         <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-          <div className="absolute -left-36 -top-48 h-[600px] w-[600px] rounded-full bg-gradient-to-br from-[#d6b161]/25 to-[#c4a055]/10 opacity-[0.22] blur-[100px] animate-[float1_18s_ease-in-out_infinite]" />
-          <div className="absolute -bottom-36 -right-24 h-[500px] w-[500px] rounded-full bg-gradient-to-br from-[#112240]/25 to-[#0a192f]/5 opacity-[0.2] blur-[100px] animate-[float2_22s_ease-in-out_infinite]" />
+          <div className="absolute -left-36 -top-48 h-[600px] w-[600px] rounded-full bg-gradient-to-br from-brand-gold/25 to-brand-gold-hover/10 opacity-[0.22] blur-[100px] animate-[float1_18s_ease-in-out_infinite]" />
+          <div className="absolute -bottom-36 -right-24 h-[500px] w-[500px] rounded-full bg-gradient-to-br from-brand-olive-dark/25 to-brand-black/5 opacity-[0.2] blur-[100px] animate-[float2_22s_ease-in-out_infinite]" />
         </div>
 
-        <div className="relative z-10 w-full max-w-xl overflow-hidden rounded-2xl border border-gray-200 bg-white/95 shadow-[0_20px_60px_rgba(10,25,47,0.12)] backdrop-blur-sm dark:border-white/10 dark:bg-[#112240]/95 dark:shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
-          <div className="h-[3px] bg-gradient-to-r from-[#0a192f] via-[#d6b161] to-[#c4a055] dark:from-[#d6b161] dark:via-[#c4a055] dark:to-[#f1d18a]" />
+        <div className="relative z-10 w-full max-w-xl overflow-hidden rounded-2xl border border-brand-surface bg-white/95 shadow-[0_20px_60px_rgba(10,25,47,0.12)] backdrop-blur-sm(0,0,0,0.35)]">
+          <div className="h-[3px] bg-gradient-to-r from-brand-black via-brand-gold to-brand-gold-hover" />
           <div className="p-5 sm:p-8 md:p-10 text-center">
-            <div className="mx-auto mb-6 flex h-[72px] w-[72px] items-center justify-center rounded-full bg-[#d6b161]/15 text-[#d6b161] shadow-[0_0_0_12px_rgba(214,177,97,0.12)]">
+            <div className="mx-auto mb-6 flex h-[72px] w-[72px] items-center justify-center rounded-full bg-brand-gold/15 text-brand-gold shadow-[0_0_0_12px_rgba(214,177,97,0.12)]">
               <FileText />
             </div>
-            <h1 className="text-3xl font-bold tracking-tight text-[#0a192f] dark:text-white">
+            <h1 className="text-3xl font-bold tracking-tight text-brand-black">
               You have already applied
             </h1>
-            <p className="mt-3 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-              Your application for <span className="font-semibold text-[#0a192f] dark:text-white">{internshipTitle}</span> is already on record.
+            <p className="mt-3 text-sm leading-relaxed text-brand-olive-dark">
+              Your application for <span className="font-semibold text-brand-black">{internshipTitle}</span> is already on record.
               You can apply again only if this application gets rejected.
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 text-left dark:border-white/10 dark:bg-[#0f223f]">
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">Program Fee</p>
-                <p className="mt-2 text-sm font-bold text-[#0a192f] dark:text-white">
+              <div className="rounded-xl border border-brand-surface bg-brand-off-white p-4 text-left">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-olive">Program Fee</p>
+                <p className="mt-2 text-sm font-bold text-brand-black">
                   {formatInternshipPrice(existingApplication.internshipPrice ?? internship.price, internship.currency)}
                 </p>
               </div>
-              <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 text-left dark:border-white/10 dark:bg-[#0f223f]">
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">Reference ID</p>
-                <p className="mt-2 font-mono text-sm font-bold text-[#0a192f] dark:text-white">{existingApplication.referenceCode}</p>
+              <div className="rounded-xl border border-brand-surface bg-brand-off-white p-4 text-left">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-olive">Reference ID</p>
+                <p className="mt-2 font-mono text-sm font-bold text-brand-black">{existingApplication.referenceCode}</p>
               </div>
-              <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 text-left dark:border-white/10 dark:bg-[#0f223f]">
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">Internship Mode</p>
-                <p className="mt-2 text-sm font-bold text-[#0a192f] dark:text-white">{formatInternshipMode(existingApplication.internshipMode)}</p>
+              <div className="rounded-xl border border-brand-surface bg-brand-off-white p-4 text-left">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-olive">Internship Mode</p>
+                <p className="mt-2 text-sm font-bold text-brand-black">{formatInternshipMode(existingApplication.internshipMode)}</p>
               </div>
-              <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 text-left dark:border-white/10 dark:bg-[#0f223f]">
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">Current Status</p>
-                <p className="mt-2 text-sm font-bold text-[#0a192f] dark:text-white">{getStatusText(existingApplication.status)}</p>
+              <div className="rounded-xl border border-brand-surface bg-brand-off-white p-4 text-left">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-olive">Current Status</p>
+                <p className="mt-2 text-sm font-bold text-brand-black">{getStatusText(existingApplication.status)}</p>
               </div>
             </div>
 
             <div className="mt-8 flex justify-center">
               <Link
                 to="/careers"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#0a192f] px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#112240] dark:bg-[#d6b161] dark:text-[#0a192f] dark:hover:bg-[#c4a055]"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-black px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-brand-olive-dark"
               >
                 <ArrowLeft />
                 Back to Careers
@@ -690,31 +690,31 @@ const InternshipApplicationPage: React.FC = () => {
 
   if (submitted) {
     return (
-      <div className="relative flex min-h-screen items-start justify-center overflow-hidden bg-gray-50 px-4 py-16 text-gray-900 transition-colors duration-300 dark:bg-[#0a192f] dark:text-gray-100">
+      <div className="relative flex min-h-screen items-start justify-center overflow-hidden bg-brand-off-white px-4 py-16 text-brand-black transition-colors duration-300">
         {/* Animated blobs */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-          <div className="absolute -left-36 -top-48 h-[600px] w-[600px] rounded-full bg-gradient-to-br from-[#d6b161]/25 to-[#c4a055]/10 opacity-[0.22] blur-[100px] animate-[float1_18s_ease-in-out_infinite]" />
-          <div className="absolute -bottom-36 -right-24 h-[500px] w-[500px] rounded-full bg-gradient-to-br from-[#112240]/25 to-[#0a192f]/5 opacity-[0.2] blur-[100px] animate-[float2_22s_ease-in-out_infinite]" />
+          <div className="absolute -left-36 -top-48 h-[600px] w-[600px] rounded-full bg-gradient-to-br from-brand-gold/25 to-brand-gold-hover/10 opacity-[0.22] blur-[100px] animate-[float1_18s_ease-in-out_infinite]" />
+          <div className="absolute -bottom-36 -right-24 h-[500px] w-[500px] rounded-full bg-gradient-to-br from-brand-olive-dark/25 to-brand-black/5 opacity-[0.2] blur-[100px] animate-[float2_22s_ease-in-out_infinite]" />
         </div>
 
-        <div className="relative z-10 w-full max-w-md overflow-hidden rounded-2xl border border-gray-200 bg-white/95 shadow-[0_20px_60px_rgba(10,25,47,0.12)] backdrop-blur-sm animate-[slideUp_0.5s_cubic-bezier(0.16,1,0.3,1)_both] dark:border-white/10 dark:bg-[#112240]/95 dark:shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
-          <div className="h-[3px] bg-gradient-to-r from-[#0a192f] via-[#d6b161] to-[#c4a055] dark:from-[#d6b161] dark:via-[#c4a055] dark:to-[#f1d18a]" />
+        <div className="relative z-10 w-full max-w-md overflow-hidden rounded-2xl border border-brand-surface bg-white/95 shadow-[0_20px_60px_rgba(10,25,47,0.12)] backdrop-blur-sm animate-[slideUp_0.5s_cubic-bezier(0.16,1,0.3,1)_both](0,0,0,0.35)]">
+          <div className="h-[3px] bg-gradient-to-r from-brand-black via-brand-gold to-brand-gold-hover" />
           <div className="p-6 sm:p-10 md:p-12 text-center">
-            <div className="w-18 h-18 mx-auto mb-6 flex items-center justify-center rounded-full bg-gradient-to-br from-[#d6b161] to-[#c4a055] text-[#0a192f] shadow-[0_0_0_12px_rgba(214,177,97,0.18)]" style={{ width: 72, height: 72 }}>
+            <div className="w-18 h-18 mx-auto mb-6 flex items-center justify-center rounded-full bg-gradient-to-br from-brand-gold to-brand-gold-hover text-brand-black shadow-[0_0_0_12px_rgba(214,177,97,0.18)]" style={{ width: 72, height: 72 }}>
               <CheckIcon />
             </div>
-            <h1 className="mb-2 text-2xl font-bold tracking-tight text-[#0a192f] dark:text-white">Application Submitted!</h1>
-            <p className="mx-auto max-w-xs text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-              Thank you, <strong className="text-[#0a192f] dark:text-white">{form.firstName}</strong>.
+            <h1 className="mb-2 text-2xl font-bold tracking-tight text-brand-black">Application Submitted!</h1>
+            <p className="mx-auto max-w-xs text-sm leading-relaxed text-brand-olive-dark">
+              Thank you, <strong className="text-brand-black">{form.firstName}</strong>.
               Your application has been received. SoVir's team will reach out within 3–5 business days.
             </p>
-            <div className="mt-4 inline-flex items-center justify-center rounded-full border border-[#d6b161]/30 bg-[#d6b161]/10 px-4 py-2 text-xs font-semibold text-[#b38f3f] dark:text-[#d6b161]">
+            <div className="mt-4 inline-flex items-center justify-center rounded-full border border-brand-gold/30 bg-brand-gold/10 px-4 py-2 text-xs font-semibold text-brand-gold-hover">
               Applying for: {internshipTitle} · {formatInternshipMode(form.internshipMode)}
             </div>
-            <div className="mt-4 inline-flex items-center justify-center rounded-full border border-[#d6b161]/20 bg-[#d6b161]/10 px-4 py-2 text-xs font-semibold text-[#b38f3f] dark:text-[#d6b161]">
+            <div className="mt-4 inline-flex items-center justify-center rounded-full border border-brand-gold/20 bg-brand-gold/10 px-4 py-2 text-xs font-semibold text-brand-gold-hover">
               Program fee: {formatInternshipPrice(internship.price, internship.currency)}
             </div>
-            <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-[#d6b161]/20 bg-[#0a192f]/5 px-4 py-2 font-mono text-sm font-medium text-[#0a192f] dark:bg-[#0a192f]/40 dark:text-[#d6b161]">
+            <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-brand-gold/20 bg-brand-black/5 px-4 py-2 font-mono text-sm font-medium text-brand-black">
               <FileText />
               Reference: {refCode}
             </div>
@@ -726,13 +726,13 @@ const InternshipApplicationPage: React.FC = () => {
 
   // ─── Main Form ──────────────────────────────────────────────────────────────
   return (
-    <div className="relative flex min-h-screen items-start justify-center overflow-hidden overflow-x-hidden bg-gray-50 px-3 sm:px-4 py-8 sm:py-12 text-gray-900 transition-colors duration-300 dark:bg-[#0a192f] dark:text-gray-100">
+    <div className="relative flex min-h-screen items-start justify-center overflow-hidden overflow-x-hidden bg-brand-off-white px-3 sm:px-4 py-8 sm:py-12 text-brand-black transition-colors duration-300">
 
       {/* Animated background blobs */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute -left-36 -top-48 h-[600px] w-[600px] rounded-full bg-gradient-to-br from-[#d6b161]/25 to-[#c4a055]/10 opacity-[0.22] blur-[100px] animate-[float1_18s_ease-in-out_infinite]" />
-        <div className="absolute -bottom-36 -right-24 h-[500px] w-[500px] rounded-full bg-gradient-to-br from-[#112240]/25 to-[#0a192f]/5 opacity-[0.2] dark:opacity-[0.28] blur-[100px] animate-[float2_22s_ease-in-out_infinite]" />
-        <div className="absolute right-[10%] top-[40%] h-[350px] w-[350px] rounded-full bg-gradient-to-br from-[#d6b161]/15 to-transparent opacity-[0.18] blur-[90px] animate-[float3_16s_ease-in-out_infinite]" />
+        <div className="absolute -left-36 -top-48 h-[600px] w-[600px] rounded-full bg-gradient-to-br from-brand-gold/25 to-brand-gold-hover/10 opacity-[0.22] blur-[100px] animate-[float1_18s_ease-in-out_infinite]" />
+        <div className="absolute -bottom-36 -right-24 h-[500px] w-[500px] rounded-full bg-gradient-to-br from-brand-olive-dark/25 to-brand-black/5 opacity-[0.2] blur-[100px] animate-[float2_22s_ease-in-out_infinite]" />
+        <div className="absolute right-[10%] top-[40%] h-[350px] w-[350px] rounded-full bg-gradient-to-br from-brand-gold/15 to-transparent opacity-[0.18] blur-[90px] animate-[float3_16s_ease-in-out_infinite]" />
         {/* Dot grid overlay */}
         <div
           className="absolute inset-0"
@@ -745,18 +745,18 @@ const InternshipApplicationPage: React.FC = () => {
       </div>
 
       {/* Form Card */}
-      <div className="relative z-10 w-full max-w-[780px] overflow-hidden rounded-2xl border border-gray-200 bg-white/95 shadow-[0_20px_60px_rgba(10,25,47,0.12)] backdrop-blur-sm animate-[slideUp_0.5s_cubic-bezier(0.16,1,0.3,1)_both] dark:border-white/10 dark:bg-[#112240]/95 dark:shadow-[0_20px_60px_rgba(0,0,0,0.35)] box-border">
+      <div className="relative z-10 w-full max-w-[780px] overflow-hidden rounded-2xl border border-brand-surface bg-white/95 shadow-[0_20px_60px_rgba(10,25,47,0.12)] backdrop-blur-sm animate-[slideUp_0.5s_cubic-bezier(0.16,1,0.3,1)_both](0,0,0,0.35)] box-border">
 
         {/* ─── Card Header ─────────────────────────────────────────────────── */}
-        <div className="relative border-b border-gray-200 px-4 sm:px-8 md:px-10 pb-6 pt-8 sm:pt-10 text-center dark:border-white/10">
+        <div className="relative border-b border-brand-surface px-4 sm:px-8 md:px-10 pb-6 pt-8 sm:pt-10 text-center">
           {/* Top gradient stripe */}
-          <div className="absolute left-0 right-0 top-0 h-[3px] bg-gradient-to-r from-[#0a192f] via-[#d6b161] to-[#c4a055] dark:from-[#d6b161] dark:via-[#c4a055] dark:to-[#f1d18a]" />
+          <div className="absolute left-0 right-0 top-0 h-[3px] bg-gradient-to-r from-brand-black via-brand-gold to-brand-gold-hover" />
 
           {/* Back button */}
           {step > 0 && (
             <button
               onClick={prevStep}
-              className="absolute left-3 sm:left-8 top-6 sm:top-8 flex cursor-pointer items-center gap-1.5 rounded-lg border-none bg-transparent px-2 sm:px-2.5 py-1.5 text-[12px] sm:text-[13px] font-medium text-gray-500 transition-all duration-200 hover:bg-[#d6b161]/10 hover:text-[#d6b161] dark:text-gray-300"
+              className="absolute left-3 sm:left-8 top-6 sm:top-8 flex cursor-pointer items-center gap-1.5 rounded-lg border-none bg-transparent px-2 sm:px-2.5 py-1.5 text-[12px] sm:text-[13px] font-medium text-brand-olive transition-all duration-200 hover:bg-brand-gold/10 hover:text-brand-gold"
             >
               <ArrowLeft />
               Back
@@ -764,63 +764,63 @@ const InternshipApplicationPage: React.FC = () => {
           )}
 
           {/* Badge */}
-          <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-[#d6b161]/20 bg-[#d6b161]/10 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.1em] text-[#d6b161]">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#d6b161]" />
+          <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/10 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-gold">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-gold" />
             SoVir Technologies
           </div>
 
-          <h1 className="text-[22px] sm:text-[26px] md:text-[30px] font-bold tracking-[-0.03em] leading-tight text-[#0a192f] dark:text-white">
-            Internship <span className="text-[#d6b161]">Application</span>
+          <h1 className="text-[22px] sm:text-[26px] md:text-[30px] font-bold tracking-[-0.03em] leading-tight text-brand-black">
+            Internship <span className="text-brand-gold">Application</span>
           </h1>
-          <p className="mt-1 text-[13px] tracking-wide text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-[13px] tracking-wide text-brand-olive">
             Industrial Training Portal
           </p>
 
-          <div className="mt-4 inline-flex items-center justify-center rounded-full border border-[#d6b161]/30 bg-[#d6b161]/10 px-4 py-2 text-xs font-semibold text-[#b38f3f] dark:text-[#d6b161]">
+          <div className="mt-4 inline-flex items-center justify-center rounded-full border border-brand-gold/30 bg-brand-gold/10 px-4 py-2 text-xs font-semibold text-brand-gold-hover">
             Applying for: {internshipTitle} · {form.internshipMode ? formatInternshipMode(form.internshipMode) : 'Select mode below'}
           </div>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
-            <div className="rounded-2xl border border-[#d6b161]/20 bg-[#d6b161]/10 px-4 py-3">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8b6f2c] dark:text-[#e3c778]">Program Fee</p>
-              <p className="mt-1 text-sm font-bold text-[#0a192f] dark:text-white">
+            <div className="rounded-2xl border border-brand-gold/20 bg-brand-gold/10 px-4 py-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8b6f2c]">Program Fee</p>
+              <p className="mt-1 text-sm font-bold text-brand-black">
                 {formatInternshipPrice(internship.price, internship.currency)}
               </p>
             </div>
-            <div className="rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 dark:border-white/10 dark:bg-[#0f223f]">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">Duration</p>
-              <p className="mt-1 text-sm font-bold text-[#0a192f] dark:text-white">{internship.duration}</p>
+            <div className="rounded-2xl border border-brand-surface bg-brand-off-white px-4 py-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-olive">Duration</p>
+              <p className="mt-1 text-sm font-bold text-brand-black">{internship.duration}</p>
             </div>
-            <div className="rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 dark:border-white/10 dark:bg-[#0f223f]">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400">Location</p>
-              <p className="mt-1 text-sm font-bold text-[#0a192f] dark:text-white">{internship.location}</p>
+            <div className="rounded-2xl border border-brand-surface bg-brand-off-white px-4 py-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-olive">Location</p>
+              <p className="mt-1 text-sm font-bold text-brand-black">{internship.location}</p>
             </div>
           </div>
 
           {(internshipResponsibilities.length > 0 || internshipBenefits.length > 0) && (
             <div className="mt-5 grid gap-3 text-left sm:grid-cols-2">
-              <div className="rounded-2xl border border-gray-200 bg-gray-50 px-4 py-4 dark:border-white/10 dark:bg-[#0f223f]">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8b6f2c] dark:text-[#e3c778]">
+              <div className="rounded-2xl border border-brand-surface bg-brand-off-white px-4 py-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8b6f2c]">
                   Key Responsibilities
                 </p>
-                <ul className="mt-3 space-y-2 text-sm leading-6 text-gray-700 dark:text-gray-300">
+                <ul className="mt-3 space-y-2 text-sm leading-6 text-brand-olive-dark">
                   {internshipResponsibilities.map((item) => (
                     <li key={item} className="flex gap-2">
-                      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[#d6b161]" />
+                      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-brand-gold" />
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="rounded-2xl border border-[#d6b161]/20 bg-[#d6b161]/10 px-4 py-4 dark:border-[#d6b161]/20 dark:bg-[#d6b161]/8">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8b6f2c] dark:text-[#e3c778]">
+              <div className="rounded-2xl border border-brand-gold/20 bg-brand-gold/10 px-4 py-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8b6f2c]">
                   What You&apos;ll Gain
                 </p>
-                <ul className="mt-3 space-y-2 text-sm leading-6 text-gray-700 dark:text-gray-300">
+                <ul className="mt-3 space-y-2 text-sm leading-6 text-brand-olive-dark">
                   {internshipBenefits.map((item) => (
                     <li key={item} className="flex gap-2">
-                      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[#0a192f] dark:bg-[#f1d18a]" />
+                      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-brand-black" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -835,25 +835,25 @@ const InternshipApplicationPage: React.FC = () => {
               <React.Fragment key={i}>
                 {i > 0 && (
                   <div
-                    className={`w-20 h-0.5 mx-1 mb-[22px] transition-colors duration-300 ${stepsDone[i - 1] ? 'bg-[#d6b161]' : 'bg-gray-200 dark:bg-white/10'
+                    className={`w-20 h-0.5 mx-1 mb-[22px] transition-colors duration-300 ${stepsDone[i - 1] ? 'bg-brand-gold' : 'bg-brand-surface'
                       }`}
                   />
                 )}
                 <div className="flex flex-col items-center gap-1">
                   <div
                     className={`w-7 h-7 rounded-full border-2 flex items-center justify-center text-[11px] font-bold font-mono transition-all duration-300 relative z-[2] ${stepsActive[i]
-                      ? 'border-[#d6b161] bg-[#d6b161] text-[#0a192f] shadow-[0_0_0_4px_rgba(214,177,97,0.18)]'
+                      ? 'border-brand-gold bg-brand-gold text-brand-black shadow-[0_0_0_4px_rgba(214,177,97,0.18)]'
                       : stepsDone[i]
-                        ? 'border-[#d6b161] bg-[#d6b161] text-[#0a192f]'
-                        : 'border-gray-200 bg-white text-gray-400 dark:border-white/10 dark:bg-[#112240] dark:text-gray-500'
+                        ? 'border-brand-gold bg-brand-gold text-brand-black'
+                        : 'border-brand-surface bg-white text-brand-olive-light'
                       }`}
                   >
                     {stepsDone[i] ? <CheckSmall /> : i + 1}
                   </div>
                   <span
                     className={`text-[10px] font-medium tracking-[0.05em] uppercase whitespace-nowrap ${stepsActive[i]
-                      ? 'text-[#d6b161]'
-                      : 'text-gray-400 dark:text-gray-500'
+                      ? 'text-brand-gold'
+                      : 'text-brand-olive-light'
                       }`}
                   >
                     {label}
@@ -871,9 +871,9 @@ const InternshipApplicationPage: React.FC = () => {
           {step === 0 && (
             <section>
               <div className="flex items-center gap-3 mb-6">
-                <div className="flex h-[26px] w-[26px] flex-shrink-0 items-center justify-center rounded-full bg-[#d6b161] font-mono text-[11px] font-bold text-[#0a192f]">1</div>
-                <span className="whitespace-nowrap font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-[#d6b161]">Personal Identity</span>
-                <div className="h-px flex-1 bg-gray-200 dark:bg-white/10" />
+                <div className="flex h-[26px] w-[26px] flex-shrink-0 items-center justify-center rounded-full bg-brand-gold font-mono text-[11px] font-bold text-brand-black">1</div>
+                <span className="whitespace-nowrap font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-brand-gold">Personal Identity</span>
+                <div className="h-px flex-1 bg-brand-surface" />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -960,9 +960,9 @@ const InternshipApplicationPage: React.FC = () => {
           {step === 1 && (
             <section>
               <div className="flex items-center gap-3 mb-6">
-                <div className="flex h-[26px] w-[26px] flex-shrink-0 items-center justify-center rounded-full bg-[#d6b161] font-mono text-[11px] font-bold text-[#0a192f]">2</div>
-                <span className="whitespace-nowrap font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-[#d6b161]">Academic Background</span>
-                <div className="h-px flex-1 bg-gray-200 dark:bg-white/10" />
+                <div className="flex h-[26px] w-[26px] flex-shrink-0 items-center justify-center rounded-full bg-brand-gold font-mono text-[11px] font-bold text-brand-black">2</div>
+                <span className="whitespace-nowrap font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-brand-gold">Academic Background</span>
+                <div className="h-px flex-1 bg-brand-surface" />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1096,12 +1096,12 @@ const InternshipApplicationPage: React.FC = () => {
           {step === 2 && (
             <section>
               <div className="flex items-center gap-3 mb-6">
-                <div className="flex h-[26px] w-[26px] flex-shrink-0 items-center justify-center rounded-full bg-[#d6b161] font-mono text-[11px] font-bold text-[#0a192f]">3</div>
-                <span className="whitespace-nowrap font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-[#d6b161]">Resume Upload</span>
-                <div className="h-px flex-1 bg-gray-200 dark:bg-white/10" />
+                <div className="flex h-[26px] w-[26px] flex-shrink-0 items-center justify-center rounded-full bg-brand-gold font-mono text-[11px] font-bold text-brand-black">3</div>
+                <span className="whitespace-nowrap font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-brand-gold">Resume Upload</span>
+                <div className="h-px flex-1 bg-brand-surface" />
               </div>
 
-              <p className="mb-5 text-[13px] leading-relaxed text-gray-600 dark:text-gray-300">
+              <p className="mb-5 text-[13px] leading-relaxed text-brand-olive-dark">
                 Upload your most recent resume. Highlight academic projects, technical skills, and any prior experience.
               </p>
 
@@ -1111,9 +1111,9 @@ const InternshipApplicationPage: React.FC = () => {
                   onDragOver={e => { e.preventDefault(); setDragOver(true); }}
                   onDragLeave={() => setDragOver(false)}
                   onDrop={handleDrop}
-                  className={`relative cursor-pointer rounded-xl border-2 border-dashed bg-white p-10 text-center transition-all duration-250 dark:bg-[#0f223f] ${dragOver
-                    ? 'scale-[1.01] border-[#d6b161] bg-[#d6b161]/10 dark:bg-[#d6b161]/10'
-                    : 'border-gray-200 hover:border-[#d6b161] hover:bg-[#d6b161]/5 dark:border-white/10 dark:hover:bg-[#d6b161]/10'
+                  className={`relative cursor-pointer rounded-xl border-2 border-dashed bg-white p-10 text-center transition-all duration-250 ${dragOver
+                    ? 'scale-[1.01] border-brand-gold bg-brand-gold/10'
+                    : 'border-brand-surface hover:border-brand-gold hover:bg-brand-gold/5'
                     }`}
                 >
                   <input
@@ -1122,66 +1122,66 @@ const InternshipApplicationPage: React.FC = () => {
                     onChange={e => handleFile(e.target.files?.[0] ?? null)}
                     className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
                   />
-                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#d6b161]/15 text-[#d6b161] transition-transform duration-200 hover:-translate-y-1">
+                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-gold/15 text-brand-gold transition-transform duration-200 hover:-translate-y-1">
                     <UploadCloud />
                   </div>
-                  <p className="mb-1 text-[15px] font-semibold text-[#0a192f] dark:text-white">
+                  <p className="mb-1 text-[15px] font-semibold text-brand-black">
                     Drag & Drop your Resume here
                   </p>
-                  <p className="text-[13px] text-gray-500 dark:text-gray-400">
-                    or <span className="cursor-pointer text-[#d6b161] underline">click to browse</span>
+                  <p className="text-[13px] text-brand-olive">
+                    or <span className="cursor-pointer text-brand-gold underline">click to browse</span>
                   </p>
-                  <p className="mt-3 font-mono text-[12px] text-gray-400 dark:text-gray-500">
-                    Accepted: <span className="font-medium text-[#d6b161]">PDF · DOC · DOCX</span>
-                    &nbsp;·&nbsp; Max: <span className="font-medium text-[#d6b161]">5 MB</span>
+                  <p className="mt-3 font-mono text-[12px] text-brand-olive-light">
+                    Accepted: <span className="font-medium text-brand-gold">PDF · DOC · DOCX</span>
+                    &nbsp;·&nbsp; Max: <span className="font-medium text-brand-gold">5 MB</span>
                   </p>
                 </div>
               )}
 
               {/* Uploading — progress bar */}
               {uploadState === 'uploading' && (
-                <div className="rounded-xl border border-gray-200 bg-white p-5 dark:border-white/10 dark:bg-[#0f223f]">
+                <div className="rounded-xl border border-brand-surface bg-white p-5">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-[#d6b161]/15 text-[#d6b161]">
+                    <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-brand-gold/15 text-brand-gold">
                       <FileText />
                     </div>
                     <div>
-                      <p className="max-w-[240px] truncate font-mono text-sm font-semibold text-[#0a192f] dark:text-white">
+                      <p className="max-w-[240px] truncate font-mono text-sm font-semibold text-brand-black">
                         {resume?.name}
                       </p>
-                      <p className="font-mono text-xs text-gray-500 dark:text-gray-400">
+                      <p className="font-mono text-xs text-brand-olive">
                         {formatBytes(resume?.size ?? 0)}
                       </p>
                     </div>
                   </div>
-                  <div className="h-1.5 overflow-hidden rounded-full bg-gray-200 dark:bg-white/10">
+                  <div className="h-1.5 overflow-hidden rounded-full bg-brand-surface">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-[#d6b161] to-[#c4a055] transition-[width] duration-100 linear"
+                      className="h-full rounded-full bg-gradient-to-r from-brand-gold to-brand-gold-hover transition-[width] duration-100 linear"
                       style={{ width: `${uploadProgress}%` }}
                     />
                   </div>
                   <div className="flex justify-between items-center mt-2">
-                    <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Uploading resume…</span>
-                    <span className="font-mono text-xs font-bold text-[#d6b161]">{uploadProgress}%</span>
+                    <span className="text-xs font-medium text-brand-olive">Uploading resume…</span>
+                    <span className="font-mono text-xs font-bold text-brand-gold">{uploadProgress}%</span>
                   </div>
                 </div>
               )}
 
               {/* Done — success state */}
               {uploadState === 'done' && (
-                <div className="flex items-center gap-3 rounded-xl border border-[#d6b161]/20 bg-[#d6b161]/10 p-4 animate-[fadeIn_0.4s_ease]">
-                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#d6b161] text-[#0a192f]">
+                <div className="flex items-center gap-3 rounded-xl border border-brand-gold/20 bg-brand-gold/10 p-4 animate-[fadeIn_0.4s_ease]">
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-brand-gold text-brand-black">
                     <CheckIcon />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-[#0a192f] dark:text-[#f7d78d]">Resume Uploaded Successfully</p>
-                    <p className="font-mono text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-sm font-semibold text-brand-black">Resume Uploaded Successfully</p>
+                    <p className="font-mono text-xs text-brand-olive">
                       {resume?.name} · {formatBytes(resume?.size ?? 0)}
                     </p>
                   </div>
                   <button
                     onClick={removeFile}
-                    className="ml-auto rounded-md p-1 text-gray-500 transition-all duration-200 hover:bg-red-50 hover:text-red-500 dark:text-gray-400 dark:hover:bg-red-900/20"
+                    className="ml-auto rounded-md p-1 text-brand-olive transition-all duration-200 hover:bg-brand-red/5 hover:text-brand-red"
                     title="Remove file"
                   >
                     <XIcon />
@@ -1191,27 +1191,27 @@ const InternshipApplicationPage: React.FC = () => {
 
               {/* Errors */}
               {uploadError && (
-                <div className="flex items-center gap-1 mt-2 text-xs font-medium text-red-600 dark:text-red-400">
+                <div className="flex items-center gap-1 mt-2 text-xs font-medium text-brand-red">
                   <AlertCircle />
                   {uploadError}
                 </div>
               )}
               {errors.resume && (
-                <div className="flex items-center gap-1 mt-2 text-xs font-medium text-red-600 dark:text-red-400">
+                <div className="flex items-center gap-1 mt-2 text-xs font-medium text-brand-red">
                   <AlertCircle />
                   {errors.resume}
                 </div>
               )}
               {submitError && (
-                <div className="flex items-center gap-1 mt-2 text-xs font-medium text-red-600 dark:text-red-400">
+                <div className="flex items-center gap-1 mt-2 text-xs font-medium text-brand-red">
                   <AlertCircle />
                   {submitError}
                 </div>
               )}
 
               {/* Submit */}
-              <div className="mt-8 border-t border-gray-200 pt-6 dark:border-white/10">
-                <div className="mb-4 rounded-xl border border-[#d6b161]/20 bg-[#d6b161]/10 px-4 py-3 text-sm text-[#0a192f] dark:text-[#f7d78d]">
+              <div className="mt-8 border-t border-brand-surface pt-6">
+                <div className="mb-4 rounded-xl border border-brand-gold/20 bg-brand-gold/10 px-4 py-3 text-sm text-brand-black">
                   {isFreeInternship ? (
                     <>This internship is <span className="font-semibold">free</span>. No payment checkout is required.</>
                   ) : (
@@ -1225,7 +1225,7 @@ const InternshipApplicationPage: React.FC = () => {
                           <span>GST @ {internshipPaymentBreakdown.gstRate}%</span>
                           <span className="font-semibold">{internshipPaymentBreakdown.formattedGstAmount}</span>
                         </div>
-                        <div className="flex items-center justify-between gap-4 border-t border-[#d6b161]/20 pt-2">
+                        <div className="flex items-center justify-between gap-4 border-t border-brand-gold/20 pt-2">
                           <span className="font-semibold">Total payable</span>
                           <span className="font-semibold">{internshipPaymentBreakdown.formattedTotalAmount}</span>
                         </div>
@@ -1239,7 +1239,7 @@ const InternshipApplicationPage: React.FC = () => {
                   onClick={handleSubmit}
                   disabled={loading}
                   className={`w-full flex items-center justify-center gap-2 rounded-xl px-6 py-4 text-[15px] font-semibold transition-all duration-200 ${loading
-                    ? 'cursor-not-allowed bg-[#0a192f]/70 text-white dark:bg-[#d6b161]/70 dark:text-[#0a192f]'
+                    ? 'cursor-not-allowed bg-brand-black/70 text-white'
                     : primaryButtonCls
                     }`}
                 >
@@ -1257,9 +1257,9 @@ const InternshipApplicationPage: React.FC = () => {
                     </>
                   )}
                 </button>
-                <p className="mt-4 text-center text-xs text-gray-400 dark:text-gray-500">
+                <p className="mt-4 text-center text-xs text-brand-olive-light">
                   By submitting, you confirm all information is accurate and agree to{' '}
-                  <a href="#" className="text-[#b38f3f] no-underline hover:underline dark:text-[#d6b161]">SoVir's privacy policy</a>.
+                  <a href="#" className="text-brand-gold-hover no-underline hover:underline">SoVir's privacy policy</a>.
                 </p>
               </div>
             </section>

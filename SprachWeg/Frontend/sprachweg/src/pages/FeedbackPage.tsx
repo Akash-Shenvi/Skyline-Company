@@ -95,7 +95,7 @@ const FeedbackPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-[#0a192f] transition-colors duration-300 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-brand-off-white transition-colors duration-300 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto">
                 {/* Header Section */}
                 <motion.div 
@@ -103,13 +103,13 @@ const FeedbackPage: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     className="text-center mb-10"
                 >
-                    <div className="inline-flex items-center justify-center p-3 bg-[#d6b161]/10 rounded-full mb-4">
-                        <MessageSquareHeart className="w-8 h-8 text-[#d6b161]" />
+                    <div className="inline-flex items-center justify-center p-3 bg-brand-gold/10 rounded-full mb-4">
+                        <MessageSquareHeart className="w-8 h-8 text-brand-gold" />
                     </div>
-                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    <h1 className="text-3xl md:text-4xl font-bold text-brand-black mb-4">
                         Report an Issue or Feedback
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    <p className="text-brand-olive-dark max-w-2xl mx-auto">
                         We value your feedback! If you encountered any errors or have suggestions to improve our platform, please let us know below.
                     </p>
                 </motion.div>
@@ -119,7 +119,7 @@ const FeedbackPage: React.FC = () => {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.1 }}
-                    className="bg-white dark:bg-[#112240] rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 overflow-hidden"
+                    className="bg-white rounded-2xl shadow-xl border border-brand-surface overflow-hidden"
                 >
                     <div className="p-6 md:p-8">
                         <form onSubmit={handleSubmit} className="space-y-6">
@@ -127,8 +127,8 @@ const FeedbackPage: React.FC = () => {
                             {/* Personal Info Row */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Your Name <span className="text-red-500">*</span>
+                                    <label htmlFor="name" className="block text-sm font-medium text-brand-olive-dark">
+                                        Your Name <span className="text-brand-red">*</span>
                                     </label>
                                     <input
                                         type="text"
@@ -137,14 +137,14 @@ const FeedbackPage: React.FC = () => {
                                         value={formData.name}
                                         onChange={handleInputChange}
                                         placeholder="John Doe"
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#d6b161] focus:border-transparent transition-colors"
+                                        className="w-full px-4 py-3 rounded-lg border border-brand-surface bg-white text-brand-black focus:ring-2 focus:ring-brand-gold focus:border-transparent transition-colors"
                                         required
                                     />
                                 </div>
                                 
                                 <div className="space-y-2">
-                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Email Address <span className="text-red-500">*</span>
+                                    <label htmlFor="email" className="block text-sm font-medium text-brand-olive-dark">
+                                        Email Address <span className="text-brand-red">*</span>
                                     </label>
                                     <input
                                         type="email"
@@ -153,7 +153,7 @@ const FeedbackPage: React.FC = () => {
                                         value={formData.email}
                                         onChange={handleInputChange}
                                         placeholder="john@example.com"
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#d6b161] focus:border-transparent transition-colors"
+                                        className="w-full px-4 py-3 rounded-lg border border-brand-surface bg-white text-brand-black focus:ring-2 focus:ring-brand-gold focus:border-transparent transition-colors"
                                         required
                                     />
                                 </div>
@@ -161,8 +161,8 @@ const FeedbackPage: React.FC = () => {
 
                             {/* Problem Description */}
                             <div className="space-y-2">
-                                <label htmlFor="problem" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    Describe the Problem / Feedback <span className="text-red-500">*</span>
+                                <label htmlFor="problem" className="block text-sm font-medium text-brand-olive-dark">
+                                    Describe the Problem / Feedback <span className="text-brand-red">*</span>
                                 </label>
                                 <textarea
                                     id="problem"
@@ -171,7 +171,7 @@ const FeedbackPage: React.FC = () => {
                                     value={formData.problem}
                                     onChange={handleInputChange}
                                     placeholder="Please describe the issue you encountered in detail..."
-                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#d6b161] focus:border-transparent transition-colors resize-y"
+                                    className="w-full px-4 py-3 rounded-lg border border-brand-surface bg-white text-brand-black focus:ring-2 focus:ring-brand-gold focus:border-transparent transition-colors resize-y"
                                     required
                                 />
                             </div>
@@ -179,14 +179,14 @@ const FeedbackPage: React.FC = () => {
                             {/* Image Upload Area */}
                             <div className="space-y-3">
                                 <div className="flex items-center justify-between">
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    <label className="block text-sm font-medium text-brand-olive-dark">
                                         Screenshot (Optional - Max 1 Image)
                                     </label>
                                     {previewUrl && (
                                         <button
                                             type="button"
                                             onClick={removeFile}
-                                            className="text-xs text-red-500 hover:text-red-600 hover:underline flex items-center gap-1"
+                                            className="text-xs text-brand-red hover:text-brand-red hover:underline flex items-center gap-1"
                                         >
                                             <X className="w-3 h-3" /> Remove image
                                         </button>
@@ -194,11 +194,11 @@ const FeedbackPage: React.FC = () => {
                                 </div>
 
                                 {!previewUrl ? (
-                                    <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg hover:border-[#d6b161] dark:hover:border-[#d6b161] transition-colors group relative cursor-pointer">
+                                    <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-brand-surface border-dashed rounded-lg hover:border-brand-gold transition-colors group relative cursor-pointer">
                                         <div className="space-y-1 text-center">
-                                            <Upload className="mx-auto h-12 w-12 text-gray-400 group-hover:text-[#d6b161] transition-colors" />
-                                            <div className="flex text-sm text-gray-600 dark:text-gray-400 justify-center">
-                                                <label htmlFor="file-upload" className="relative cursor-pointer rounded-md font-medium text-[#d6b161] hover:text-[#c4a055] focus-within:outline-none">
+                                            <Upload className="mx-auto h-12 w-12 text-brand-olive-light group-hover:text-brand-gold transition-colors" />
+                                            <div className="flex text-sm text-brand-olive-dark justify-center">
+                                                <label htmlFor="file-upload" className="relative cursor-pointer rounded-md font-medium text-brand-gold hover:text-brand-gold-hover focus-within:outline-none">
                                                     <span>Upload a file</span>
                                                     <input 
                                                         id="file-upload" 
@@ -211,13 +211,13 @@ const FeedbackPage: React.FC = () => {
                                                 </label>
                                                 <p className="pl-1">or drag and drop</p>
                                             </div>
-                                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                                            <p className="text-xs text-brand-olive">
                                                 PNG, JPG, JPEG up to 5MB
                                             </p>
                                         </div>
                                     </div>
                                 ) : (
-                                    <div className="relative mt-2 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 group flex items-center justify-center p-2 h-64">
+                                    <div className="relative mt-2 rounded-lg overflow-hidden border border-brand-surface bg-brand-off-white group flex items-center justify-center p-2 h-64">
                                          <img 
                                             src={previewUrl} 
                                             alt="Preview" 
@@ -227,7 +227,7 @@ const FeedbackPage: React.FC = () => {
                                             <button
                                                 type="button"
                                                 onClick={removeFile}
-                                                className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transform hover:scale-110 transition-all"
+                                                className="bg-brand-red/50 text-white p-2 rounded-full hover:bg-brand-red transform hover:scale-110 transition-all"
                                                 title="Remove image"
                                             >
                                                 <X className="w-5 h-5" />
@@ -244,8 +244,8 @@ const FeedbackPage: React.FC = () => {
                                     disabled={isLoading || isSuccess}
                                     className={`w-full sm:w-auto flex justify-center items-center gap-2 px-8 py-3.5 border border-transparent text-base font-semibold rounded-lg transition-all shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-70 disabled:cursor-not-allowed ${
                                         isSuccess 
-                                            ? 'bg-green-500 hover:bg-green-600 text-white focus:ring-green-500' 
-                                            : 'bg-[#d6b161] hover:bg-[#c4a055] text-[#0a192f] focus:ring-[#d6b161]'
+                                            ? 'bg-brand-olive/50 hover:bg-brand-olive text-white focus:ring-brand-olive' 
+                                            : 'bg-brand-gold hover:bg-brand-gold-hover text-brand-black focus:ring-brand-gold'
                                     }`}
                                 >
                                     {isLoading ? (
@@ -267,7 +267,7 @@ const FeedbackPage: React.FC = () => {
                                 </button>
                             </div>
                             
-                            <p className="text-xs text-center text-gray-500 dark:text-gray-400 mt-4">
+                            <p className="text-xs text-center text-brand-olive mt-4">
                                 Your feedback helps us improve. We appreciate your time!
                             </p>
                         </form>

@@ -35,24 +35,24 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-[#0a192f] flex">
+        <div className="min-h-screen bg-brand-off-white flex">
             {/* Sidebar */}
             <aside
-                className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-white dark:bg-[#112240] border-r border-gray-200 dark:border-gray-800 transform transition-transform lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+                className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-white border-r border-brand-surface transform transition-transform lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
                     }`}
             >
                 <div className="flex flex-col h-full">
                     {/* Logo */}
-                    <div className="p-6 border-b border-gray-200 dark:border-gray-800">
+                    <div className="p-6 border-b border-brand-surface">
                         <Link to="/" className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-[#d6b161] flex items-center justify-center">
-                                <span className="font-serif font-bold text-xl text-[#0a192f]">S</span>
+                            <div className="w-10 h-10 rounded-full bg-brand-gold flex items-center justify-center">
+                                <span className="font-serif font-bold text-xl text-brand-black">S</span>
                             </div>
                             <div>
-                                <h1 className="font-serif font-bold text-lg text-gray-900 dark:text-white">
+                                <h1 className="font-serif font-bold text-lg text-brand-black">
                                     Admin Panel
                                 </h1>
-                                <p className="text-xs text-gray-500">SoVir Academy</p>
+                                <p className="text-xs text-brand-olive">SoVir Academy</p>
                             </div>
                         </Link>
                     </div>
@@ -68,8 +68,8 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                                     to={item.path}
                                     onClick={() => setSidebarOpen(false)}
                                     className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
-                                        ? 'bg-[#d6b161]/10 text-[#d6b161]'
-                                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#0a192f]'
+                                        ? 'bg-brand-gold/10 text-brand-gold'
+                                        : 'text-brand-olive-dark hover:bg-brand-surface'
                                         }`}
                                 >
                                     <Icon className="w-5 h-5" />
@@ -80,10 +80,10 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                     </nav>
 
                     {/* Logout */}
-                    <div className="p-4 border-t border-gray-200 dark:border-gray-800">
+                    <div className="p-4 border-t border-brand-surface">
                         <button
                             onClick={handleLogout}
-                            className="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors"
+                            className="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-brand-red hover:bg-brand-red/5 transition-colors"
                         >
                             <LogOut className="w-5 h-5" />
                             <span className="font-medium">Logout</span>
@@ -95,13 +95,13 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             {/* Main Content */}
             <div className="flex-1 flex flex-col min-w-0">
                 {/* Top Header */}
-                <header className="lg:hidden bg-white dark:bg-[#112240] border-b border-gray-200 dark:border-gray-800 p-4 flex items-center justify-between">
-                    <h1 className="font-serif font-bold text-lg text-gray-900 dark:text-white">
+                <header className="lg:hidden bg-white border-b border-brand-surface p-4 flex items-center justify-between">
+                    <h1 className="font-serif font-bold text-lg text-brand-black">
                         Admin Panel
                     </h1>
                     <button
                         onClick={() => setSidebarOpen(!sidebarOpen)}
-                        className="p-2 hover:bg-gray-100 dark:hover:bg-[#0a192f] rounded-lg"
+                        className="p-2 hover:bg-brand-surface rounded-lg"
                     >
                         {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                     </button>

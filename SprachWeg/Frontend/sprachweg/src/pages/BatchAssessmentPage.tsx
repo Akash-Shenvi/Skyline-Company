@@ -361,17 +361,17 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
     };
 
     const renderQuestionEditor = (question: QuestionDraft, index: number) => (
-        <div key={question.clientId} className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+        <div key={question.clientId} className="rounded-2xl border border-brand-surface bg-white p-6 shadow-sm">
             <div className="mb-4 flex items-start justify-between gap-4">
                 <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#d6b161]">Question {index + 1}</p>
-                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Choose the type, write the prompt, and set the correct answer.</p>
+                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brand-gold">Question {index + 1}</p>
+                    <p className="mt-1 text-sm text-brand-olive">Choose the type, write the prompt, and set the correct answer.</p>
                 </div>
                 {questions.length > 1 && (
                     <button
                         type="button"
                         onClick={() => setQuestions((current) => current.filter((item) => item.clientId !== question.clientId))}
-                        className="inline-flex items-center gap-2 rounded-xl border border-red-200 px-3 py-2 text-sm font-semibold text-red-500 transition-colors hover:bg-red-50 dark:border-red-800 dark:hover:bg-red-900/20"
+                        className="inline-flex items-center gap-2 rounded-xl border border-brand-red/20 px-3 py-2 text-sm font-semibold text-brand-red transition-colors hover:bg-brand-red/5"
                     >
                         <Trash2 className="h-4 w-4" />
                         Remove
@@ -381,7 +381,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
 
             <div className="space-y-4">
                 <div>
-                    <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-200">Question Type</label>
+                    <label className="mb-2 block text-sm font-semibold text-brand-olive-dark">Question Type</label>
                     <div className="grid gap-3 sm:grid-cols-3">
                         {([
                             { value: 'mcq', label: 'Multiple Choice' },
@@ -394,8 +394,8 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                                 onClick={() => handleQuestionTypeChange(question.clientId, typeOption.value)}
                                 className={`rounded-xl border px-4 py-3 text-sm font-semibold transition-colors ${
                                     question.type === typeOption.value
-                                        ? 'border-[#d6b161] bg-[#d6b161]/10 text-[#d6b161]'
-                                        : 'border-gray-200 bg-gray-50 text-gray-600 hover:border-[#d6b161]/40 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-300'
+                                        ? 'border-brand-gold bg-brand-gold/10 text-brand-gold'
+                                        : 'border-brand-surface bg-brand-off-white text-brand-olive-dark hover:border-brand-gold/40'
                                 }`}
                             >
                                 {typeOption.label}
@@ -405,7 +405,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                 </div>
 
                 <div>
-                    <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-200">Prompt</label>
+                    <label className="mb-2 block text-sm font-semibold text-brand-olive-dark">Prompt</label>
                     <textarea
                         value={question.prompt}
                         onChange={(event) => updateQuestion(question.clientId, (current) => ({
@@ -413,7 +413,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                             prompt: event.target.value,
                         }))}
                         rows={3}
-                        className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-[#d6b161] focus:ring-2 focus:ring-[#d6b161]/20 dark:border-gray-700 dark:bg-gray-900/40 dark:text-white"
+                        className="w-full rounded-xl border border-brand-surface bg-brand-off-white px-4 py-3 text-sm outline-none transition focus:border-brand-red focus:ring-2 focus:ring-brand-gold/20"
                         placeholder="Write the question students should answer..."
                     />
                 </div>
@@ -421,11 +421,11 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                 {question.type === 'mcq' && (
                     <div>
                         <div className="mb-2 flex items-center justify-between">
-                            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200">Answer Options</label>
+                            <label className="block text-sm font-semibold text-brand-olive-dark">Answer Options</label>
                             <button
                                 type="button"
                                 onClick={() => addOption(question.clientId)}
-                                className="text-sm font-semibold text-[#d6b161]"
+                                className="text-sm font-semibold text-brand-gold"
                             >
                                 Add option
                             </button>
@@ -441,7 +441,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                                             ...current,
                                             correctOptionIndex: optionIndex,
                                         }))}
-                                        className="h-4 w-4 border-gray-300 text-[#d6b161] focus:ring-[#d6b161]"
+                                        className="h-4 w-4 border-brand-surface text-brand-gold focus:ring-brand-gold"
                                     />
                                     <input
                                         type="text"
@@ -452,13 +452,13 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                                                 existingIndex === optionIndex ? event.target.value : existingOption
                                             )),
                                         }))}
-                                        className="flex-1 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-[#d6b161] focus:ring-2 focus:ring-[#d6b161]/20 dark:border-gray-700 dark:bg-gray-900/40 dark:text-white"
+                                        className="flex-1 rounded-xl border border-brand-surface bg-brand-off-white px-4 py-3 text-sm outline-none transition focus:border-brand-red focus:ring-2 focus:ring-brand-gold/20"
                                         placeholder={`Option ${optionIndex + 1}`}
                                     />
                                     <button
                                         type="button"
                                         onClick={() => removeOption(question.clientId, optionIndex)}
-                                        className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20"
+                                        className="rounded-lg p-2 text-brand-olive-light transition-colors hover:bg-brand-red/5 hover:text-brand-red"
                                         aria-label={`Remove option ${optionIndex + 1}`}
                                     >
                                         <Trash2 className="h-4 w-4" />
@@ -471,7 +471,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
 
                 {question.type === 'true_false' && (
                     <div>
-                        <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-200">Correct Answer</label>
+                        <label className="mb-2 block text-sm font-semibold text-brand-olive-dark">Correct Answer</label>
                         <div className="grid gap-3 sm:grid-cols-2">
                             {([
                                 { label: 'True', value: true },
@@ -486,8 +486,8 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                                     }))}
                                     className={`rounded-xl border px-4 py-3 text-sm font-semibold transition-colors ${
                                         question.correctBoolean === booleanOption.value
-                                            ? 'border-[#d6b161] bg-[#d6b161]/10 text-[#d6b161]'
-                                            : 'border-gray-200 bg-gray-50 text-gray-600 hover:border-[#d6b161]/40 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-300'
+                                            ? 'border-brand-gold bg-brand-gold/10 text-brand-gold'
+                                            : 'border-brand-surface bg-brand-off-white text-brand-olive-dark hover:border-brand-gold/40'
                                     }`}
                                 >
                                     {booleanOption.label}
@@ -499,7 +499,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
 
                 {question.type === 'fill_blank' && (
                     <div>
-                        <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-200">Correct Answer</label>
+                        <label className="mb-2 block text-sm font-semibold text-brand-olive-dark">Correct Answer</label>
                         <input
                             type="text"
                             value={question.blankAnswer}
@@ -507,7 +507,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                                 ...current,
                                 blankAnswer: event.target.value,
                             }))}
-                            className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-[#d6b161] focus:ring-2 focus:ring-[#d6b161]/20 dark:border-gray-700 dark:bg-gray-900/40 dark:text-white"
+                            className="w-full rounded-xl border border-brand-surface bg-brand-off-white px-4 py-3 text-sm outline-none transition focus:border-brand-red focus:ring-2 focus:ring-brand-gold/20"
                             placeholder="Example: Guten Morgen"
                         />
                     </div>
@@ -517,14 +517,14 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
     );
 
     const renderQuestionPreview = (question: AssessmentQuestion, index: number, revealAnswers: boolean) => (
-        <div key={question._id || `${question.type}-${index}`} className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+        <div key={question._id || `${question.type}-${index}`} className="rounded-2xl border border-brand-surface bg-white p-6 shadow-sm">
             <div className="mb-3 flex items-center justify-between gap-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#d6b161]">Question {index + 1}</p>
-                <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brand-gold">Question {index + 1}</p>
+                <span className="rounded-full bg-brand-surface px-3 py-1 text-xs font-semibold text-brand-olive-dark">
                     {question.type === 'mcq' ? 'Multiple Choice' : question.type === 'true_false' ? 'True / False' : 'Fill Blank'}
                 </span>
             </div>
-            <p className="text-base font-semibold text-gray-900 dark:text-white">{question.prompt}</p>
+            <p className="text-base font-semibold text-brand-black">{question.prompt}</p>
 
             {question.type === 'mcq' && question.options && (
                 <div className="mt-4 space-y-2">
@@ -533,8 +533,8 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                             key={`${question._id || index}-${optionIndex}`}
                             className={`rounded-xl border px-4 py-3 text-sm ${
                                 revealAnswers && question.correctOptionIndex === optionIndex
-                                    ? 'border-green-300 bg-green-50 text-green-700 dark:border-green-700 dark:bg-green-900/20 dark:text-green-300'
-                                    : 'border-gray-200 bg-gray-50 text-gray-700 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-200'
+                                    ? 'border-brand-olive/30 bg-brand-olive/5 text-brand-olive-dark'
+                                    : 'border-brand-surface bg-brand-off-white text-brand-olive-dark'
                             }`}
                         >
                             {option}
@@ -544,13 +544,13 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
             )}
 
             {question.type === 'true_false' && revealAnswers && (
-                <p className="mt-4 text-sm font-semibold text-green-600 dark:text-green-400">
+                <p className="mt-4 text-sm font-semibold text-brand-olive">
                     Correct answer: {question.correctBoolean ? 'True' : 'False'}
                 </p>
             )}
 
             {question.type === 'fill_blank' && revealAnswers && (
-                <p className="mt-4 text-sm font-semibold text-green-600 dark:text-green-400">
+                <p className="mt-4 text-sm font-semibold text-brand-olive">
                     Correct answer: {question.blankAnswer}
                 </p>
             )}
@@ -558,10 +558,10 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
     );
 
     return (
-        <div className="min-h-screen bg-gray-50 text-gray-900 transition-colors dark:bg-gray-900 dark:text-white">
+        <div className="min-h-screen bg-brand-off-white text-brand-black transition-colors">
             <Header />
             <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-                <div className="mb-8 flex flex-col gap-4 rounded-3xl bg-gradient-to-br from-[#0a192f] via-[#112240] to-[#1f3a5f] p-6 text-white shadow-xl sm:p-8">
+                <div className="mb-8 flex flex-col gap-4 rounded-3xl bg-gradient-to-br from-brand-black via-brand-olive-dark to-[#1f3a5f] p-6 text-white shadow-xl sm:p-8">
                     <div className="flex flex-wrap items-center gap-3 text-sm text-white/70">
                         <button
                             type="button"
@@ -601,7 +601,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                 </div>
 
                 {error && (
-                    <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm font-medium text-red-600 dark:border-red-800 dark:bg-red-900/20 dark:text-red-300">
+                    <div className="mb-6 rounded-2xl border border-brand-red/20 bg-brand-red/5 px-5 py-4 text-sm font-medium text-brand-red">
                         {error}
                     </div>
                 )}
@@ -609,26 +609,26 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                 {isCreateMode ? (
                     isTrainerLike ? (
                         <form onSubmit={handleCreateAssessment} className="space-y-6">
-                            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                            <div className="rounded-2xl border border-brand-surface bg-white p-6 shadow-sm">
                                 <div className="grid gap-5">
                                     <div>
-                                        <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-200">Assessment Title</label>
+                                        <label className="mb-2 block text-sm font-semibold text-brand-olive-dark">Assessment Title</label>
                                         <input
                                             type="text"
                                             value={title}
                                             onChange={(event) => setTitle(event.target.value)}
-                                            className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-[#d6b161] focus:ring-2 focus:ring-[#d6b161]/20 dark:border-gray-700 dark:bg-gray-900/40 dark:text-white"
+                                            className="w-full rounded-xl border border-brand-surface bg-brand-off-white px-4 py-3 text-sm outline-none transition focus:border-brand-red focus:ring-2 focus:ring-brand-gold/20"
                                             placeholder="Example: Chapter 1 Assessment"
                                         />
                                     </div>
 
                                     <div>
-                                        <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-200">Description</label>
+                                        <label className="mb-2 block text-sm font-semibold text-brand-olive-dark">Description</label>
                                         <textarea
                                             value={description}
                                             onChange={(event) => setDescription(event.target.value)}
                                             rows={4}
-                                            className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-[#d6b161] focus:ring-2 focus:ring-[#d6b161]/20 dark:border-gray-700 dark:bg-gray-900/40 dark:text-white"
+                                            className="w-full rounded-xl border border-brand-surface bg-brand-off-white px-4 py-3 text-sm outline-none transition focus:border-brand-red focus:ring-2 focus:ring-brand-gold/20"
                                             placeholder="Optional instructions for students..."
                                         />
                                     </div>
@@ -641,7 +641,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                                 <button
                                     type="button"
                                     onClick={() => setQuestions((current) => [...current, createQuestionDraft()])}
-                                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#d6b161]/40 bg-[#d6b161]/10 px-5 py-3 text-sm font-semibold text-[#b38f3f] transition hover:bg-[#d6b161]/20"
+                                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-brand-gold/40 bg-brand-gold/10 px-5 py-3 text-sm font-semibold text-brand-gold-hover transition hover:bg-brand-gold/20"
                                 >
                                     <Plus className="h-4 w-4" />
                                     Add Question
@@ -650,7 +650,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                                 <button
                                     type="submit"
                                     disabled={saving}
-                                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#d6b161] px-6 py-3 text-sm font-bold text-[#0a192f] transition hover:bg-[#c4a055] disabled:cursor-not-allowed disabled:opacity-60"
+                                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-gold px-6 py-3 text-sm font-bold text-brand-black transition hover:bg-brand-gold-hover disabled:cursor-not-allowed disabled:opacity-60"
                                 >
                                     {saving && <Loader2 className="h-4 w-4 animate-spin" />}
                                     Publish Assessment
@@ -658,53 +658,53 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                             </div>
                         </form>
                     ) : (
-                        <div className="rounded-2xl border border-gray-200 bg-white p-10 text-center shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                            <p className="text-lg font-semibold text-gray-900 dark:text-white">Only trainers and admins can create assessments.</p>
+                        <div className="rounded-2xl border border-brand-surface bg-white p-10 text-center shadow-sm">
+                            <p className="text-lg font-semibold text-brand-black">Only trainers and admins can create assessments.</p>
                         </div>
                     )
                 ) : loading ? (
-                    <div className="flex min-h-[280px] items-center justify-center rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                        <div className="flex items-center gap-3 text-sm font-semibold text-gray-500 dark:text-gray-300">
-                            <Loader2 className="h-5 w-5 animate-spin text-[#d6b161]" />
+                    <div className="flex min-h-[280px] items-center justify-center rounded-2xl border border-brand-surface bg-white shadow-sm">
+                        <div className="flex items-center gap-3 text-sm font-semibold text-brand-olive">
+                            <Loader2 className="h-5 w-5 animate-spin text-brand-gold" />
                             Loading assessment...
                         </div>
                     </div>
                 ) : detail ? (
                     <div className="space-y-6">
                         <div className="grid gap-4 md:grid-cols-3">
-                            <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                                <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">Questions</p>
-                                <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">{detail.questionCount}</p>
+                            <div className="rounded-2xl border border-brand-surface bg-white p-5 shadow-sm">
+                                <p className="text-sm font-semibold text-brand-olive">Questions</p>
+                                <p className="mt-2 text-3xl font-bold text-brand-black">{detail.questionCount}</p>
                             </div>
-                            <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                                <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">Published</p>
-                                <p className="mt-2 text-sm font-semibold text-gray-900 dark:text-white">{formatDateTime(detail.publishedAt)}</p>
+                            <div className="rounded-2xl border border-brand-surface bg-white p-5 shadow-sm">
+                                <p className="text-sm font-semibold text-brand-olive">Published</p>
+                                <p className="mt-2 text-sm font-semibold text-brand-black">{formatDateTime(detail.publishedAt)}</p>
                             </div>
-                            <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                                <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">Pass Mark</p>
-                                <p className="mt-2 text-3xl font-bold text-[#d6b161]">{detail.passPercentage}%</p>
+                            <div className="rounded-2xl border border-brand-surface bg-white p-5 shadow-sm">
+                                <p className="text-sm font-semibold text-brand-olive">Pass Mark</p>
+                                <p className="mt-2 text-3xl font-bold text-brand-gold">{detail.passPercentage}%</p>
                             </div>
                         </div>
 
                         {detail.description && (
-                            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                                <p className="text-sm leading-7 text-gray-600 dark:text-gray-300">{detail.description}</p>
+                            <div className="rounded-2xl border border-brand-surface bg-white p-6 shadow-sm">
+                                <p className="text-sm leading-7 text-brand-olive-dark">{detail.description}</p>
                             </div>
                         )}
 
                         {(user?.role === 'trainer' || user?.role === 'admin') && detail.summary && (
                             <div className="grid gap-4 md:grid-cols-3">
-                                <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                                    <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">Total Attempts</p>
-                                    <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">{detail.summary.attemptCount}</p>
+                                <div className="rounded-2xl border border-brand-surface bg-white p-5 shadow-sm">
+                                    <p className="text-sm font-semibold text-brand-olive">Total Attempts</p>
+                                    <p className="mt-2 text-3xl font-bold text-brand-black">{detail.summary.attemptCount}</p>
                                 </div>
-                                <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                                    <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">Students Passed</p>
-                                    <p className="mt-2 text-3xl font-bold text-green-600 dark:text-green-400">{detail.summary.passedStudents}</p>
+                                <div className="rounded-2xl border border-brand-surface bg-white p-5 shadow-sm">
+                                    <p className="text-sm font-semibold text-brand-olive">Students Passed</p>
+                                    <p className="mt-2 text-3xl font-bold text-brand-olive">{detail.summary.passedStudents}</p>
                                 </div>
-                                <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                                    <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">Pending Pass</p>
-                                    <p className="mt-2 text-3xl font-bold text-orange-500">{detail.summary.studentsPendingPass}</p>
+                                <div className="rounded-2xl border border-brand-surface bg-white p-5 shadow-sm">
+                                    <p className="text-sm font-semibold text-brand-olive">Pending Pass</p>
+                                    <p className="mt-2 text-3xl font-bold text-brand-gold">{detail.summary.studentsPendingPass}</p>
                                 </div>
                             </div>
                         )}
@@ -712,36 +712,36 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                         {detail.studentProgress && effectiveStudentResult && !showStudentForm && (
                             <div className={`rounded-2xl border p-6 shadow-sm ${
                                 effectiveStudentResult.passed
-                                    ? 'border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20'
-                                    : 'border-orange-200 bg-orange-50 dark:border-orange-800 dark:bg-orange-900/20'
+                                    ? 'border-brand-olive/20 bg-brand-olive/5'
+                                    : 'border-brand-gold/20 bg-brand-gold/5'
                             }`}>
                                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                                     <div className="flex items-start gap-3">
                                         {effectiveStudentResult.passed ? (
-                                            <CheckCircle2 className="mt-0.5 h-6 w-6 text-green-600 dark:text-green-400" />
+                                            <CheckCircle2 className="mt-0.5 h-6 w-6 text-brand-olive" />
                                         ) : (
-                                            <CircleX className="mt-0.5 h-6 w-6 text-orange-500" />
+                                            <CircleX className="mt-0.5 h-6 w-6 text-brand-gold" />
                                         )}
                                         <div>
-                                            <p className="text-lg font-bold text-gray-900 dark:text-white">
+                                            <p className="text-lg font-bold text-brand-black">
                                                 {effectiveStudentResult.passed ? 'Passed and Finalized' : 'Attempt Complete'}
                                             </p>
-                                            <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">{effectiveStudentResult.message}</p>
+                                            <p className="mt-1 text-sm text-brand-olive-dark">{effectiveStudentResult.message}</p>
                                         </div>
                                     </div>
 
                                     <div className="flex flex-wrap items-center gap-3">
-                                        <div className="rounded-xl bg-white/80 px-4 py-3 text-sm font-semibold text-gray-700 shadow-sm dark:bg-gray-800/80 dark:text-gray-200">
+                                        <div className="rounded-xl bg-white/80 px-4 py-3 text-sm font-semibold text-brand-olive-dark shadow-sm">
                                             Score: {effectiveStudentResult.attempt.scorePercentage}%
                                         </div>
-                                        <div className="rounded-xl bg-white/80 px-4 py-3 text-sm font-semibold text-gray-700 shadow-sm dark:bg-gray-800/80 dark:text-gray-200">
+                                        <div className="rounded-xl bg-white/80 px-4 py-3 text-sm font-semibold text-brand-olive-dark shadow-sm">
                                             Correct: {effectiveStudentResult.attempt.correctCount}/{effectiveStudentResult.attempt.totalQuestions}
                                         </div>
                                         {!effectiveStudentResult.passed && effectiveStudentResult.canRetry && (
                                             <button
                                                 type="button"
                                                 onClick={handleRetry}
-                                                className="inline-flex items-center gap-2 rounded-xl bg-[#d6b161] px-4 py-3 text-sm font-bold text-[#0a192f] transition hover:bg-[#c4a055]"
+                                                className="inline-flex items-center gap-2 rounded-xl bg-brand-gold px-4 py-3 text-sm font-bold text-brand-black transition hover:bg-brand-gold-hover"
                                             >
                                                 <RotateCcw className="h-4 w-4" />
                                                 Retry Assessment
@@ -753,22 +753,22 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                         )}
 
                         {detail.studentProgress && detail.studentProgress.attempts.length > 0 && (
-                            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                                <p className="mb-4 text-lg font-bold text-gray-900 dark:text-white">Attempt History</p>
+                            <div className="rounded-2xl border border-brand-surface bg-white p-6 shadow-sm">
+                                <p className="mb-4 text-lg font-bold text-brand-black">Attempt History</p>
                                 <div className="space-y-3">
                                     {detail.studentProgress.attempts.map((attempt) => (
-                                        <div key={attempt._id} className="flex flex-col gap-2 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3 text-sm dark:border-gray-700 dark:bg-gray-900/40 sm:flex-row sm:items-center sm:justify-between">
+                                        <div key={attempt._id} className="flex flex-col gap-2 rounded-xl border border-brand-surface bg-brand-off-white px-4 py-3 text-sm sm:flex-row sm:items-center sm:justify-between">
                                             <div className="flex flex-wrap items-center gap-3">
-                                                <span className="font-semibold text-gray-900 dark:text-white">Attempt {attempt.attemptNumber}</span>
+                                                <span className="font-semibold text-brand-black">Attempt {attempt.attemptNumber}</span>
                                                 <span className={`rounded-full px-3 py-1 text-xs font-semibold ${
                                                     attempt.status === 'passed'
-                                                        ? 'bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-300'
-                                                        : 'bg-orange-100 text-orange-700 dark:bg-orange-900/20 dark:text-orange-300'
+                                                        ? 'bg-brand-olive/10 text-brand-olive-dark'
+                                                        : 'bg-brand-gold/10 text-brand-gold'
                                                 }`}>
                                                     {attempt.status === 'passed' ? 'Passed' : 'Failed'}
                                                 </span>
                                             </div>
-                                            <div className="flex flex-wrap items-center gap-3 text-gray-600 dark:text-gray-300">
+                                            <div className="flex flex-wrap items-center gap-3 text-brand-olive-dark">
                                                 <span>{attempt.scorePercentage}%</span>
                                                 <span>{attempt.correctCount}/{attempt.totalQuestions} correct</span>
                                                 <span>{formatDateTime(attempt.createdAt)}</span>
@@ -782,9 +782,9 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                         {detail.studentProgress && showStudentForm && (
                             <form onSubmit={handleSubmitAssessment} className="space-y-6">
                                 {detail.questions.map((question, index) => (
-                                    <div key={question._id || `${question.type}-${index}`} className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                                        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#d6b161]">Question {index + 1}</p>
-                                        <p className="mt-3 text-lg font-semibold text-gray-900 dark:text-white">{question.prompt}</p>
+                                    <div key={question._id || `${question.type}-${index}`} className="rounded-2xl border border-brand-surface bg-white p-6 shadow-sm">
+                                        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brand-gold">Question {index + 1}</p>
+                                        <p className="mt-3 text-lg font-semibold text-brand-black">{question.prompt}</p>
 
                                         {question.type === 'mcq' && question.options && (
                                             <div className="mt-5 space-y-3">
@@ -793,8 +793,8 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                                                         key={`${question._id || index}-${optionIndex}`}
                                                         className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm transition ${
                                                             answers[question._id || '']?.selectedOptionIndex === optionIndex
-                                                                ? 'border-[#d6b161] bg-[#d6b161]/10 text-[#b38f3f]'
-                                                                : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-[#d6b161]/40 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-200'
+                                                                ? 'border-brand-gold bg-brand-gold/10 text-brand-gold-hover'
+                                                                : 'border-brand-surface bg-brand-off-white text-brand-olive-dark hover:border-brand-gold/40'
                                                         }`}
                                                     >
                                                         <input
@@ -805,7 +805,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                                                                 ...current,
                                                                 [question._id || '']: { selectedOptionIndex: optionIndex },
                                                             }))}
-                                                            className="h-4 w-4 border-gray-300 text-[#d6b161] focus:ring-[#d6b161]"
+                                                            className="h-4 w-4 border-brand-surface text-brand-gold focus:ring-brand-gold"
                                                         />
                                                         <span>{option}</span>
                                                     </label>
@@ -823,8 +823,8 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                                                         key={`${question._id || index}-${String(option.value)}`}
                                                         className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm transition ${
                                                             answers[question._id || '']?.booleanAnswer === option.value
-                                                                ? 'border-[#d6b161] bg-[#d6b161]/10 text-[#b38f3f]'
-                                                                : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-[#d6b161]/40 dark:border-gray-700 dark:bg-gray-900/40 dark:text-gray-200'
+                                                                ? 'border-brand-gold bg-brand-gold/10 text-brand-gold-hover'
+                                                                : 'border-brand-surface bg-brand-off-white text-brand-olive-dark hover:border-brand-gold/40'
                                                         }`}
                                                     >
                                                         <input
@@ -835,7 +835,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                                                                 ...current,
                                                                 [question._id || '']: { booleanAnswer: option.value },
                                                             }))}
-                                                            className="h-4 w-4 border-gray-300 text-[#d6b161] focus:ring-[#d6b161]"
+                                                            className="h-4 w-4 border-brand-surface text-brand-gold focus:ring-brand-gold"
                                                         />
                                                         <span>{option.label}</span>
                                                     </label>
@@ -852,7 +852,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                                                         ...current,
                                                         [question._id || '']: { textAnswer: event.target.value },
                                                     }))}
-                                                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-[#d6b161] focus:ring-2 focus:ring-[#d6b161]/20 dark:border-gray-700 dark:bg-gray-900/40 dark:text-white"
+                                                    className="w-full rounded-xl border border-brand-surface bg-brand-off-white px-4 py-3 text-sm outline-none transition focus:border-brand-red focus:ring-2 focus:ring-brand-gold/20"
                                                     placeholder="Type your answer"
                                                 />
                                             </div>
@@ -864,7 +864,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                                     <button
                                         type="submit"
                                         disabled={submitting}
-                                        className="inline-flex items-center gap-2 rounded-xl bg-[#d6b161] px-6 py-3 text-sm font-bold text-[#0a192f] transition hover:bg-[#c4a055] disabled:cursor-not-allowed disabled:opacity-60"
+                                        className="inline-flex items-center gap-2 rounded-xl bg-brand-gold px-6 py-3 text-sm font-bold text-brand-black transition hover:bg-brand-gold-hover disabled:cursor-not-allowed disabled:opacity-60"
                                     >
                                         {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
                                         Submit Assessment
@@ -880,13 +880,13 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                         )}
 
                         {detail.studentProgress && !showStudentForm && !effectiveStudentResult && (
-                            <div className="rounded-2xl border border-gray-200 bg-white p-10 text-center shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                                <ClipboardList className="mx-auto mb-4 h-12 w-12 text-[#d6b161]" />
-                                <p className="text-lg font-semibold text-gray-900 dark:text-white">Assessment ready to start</p>
+                            <div className="rounded-2xl border border-brand-surface bg-white p-10 text-center shadow-sm">
+                                <ClipboardList className="mx-auto mb-4 h-12 w-12 text-brand-gold" />
+                                <p className="text-lg font-semibold text-brand-black">Assessment ready to start</p>
                                 <button
                                     type="button"
                                     onClick={() => setShowStudentForm(true)}
-                                    className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[#d6b161] px-5 py-3 text-sm font-bold text-[#0a192f] transition hover:bg-[#c4a055]"
+                                    className="mt-5 inline-flex items-center gap-2 rounded-xl bg-brand-gold px-5 py-3 text-sm font-bold text-brand-black transition hover:bg-brand-gold-hover"
                                 >
                                     <ExternalLink className="h-4 w-4" />
                                     Start Assessment
@@ -895,8 +895,8 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                         )}
                     </div>
                 ) : (
-                    <div className="rounded-2xl border border-gray-200 bg-white p-10 text-center shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                        <p className="text-lg font-semibold text-gray-900 dark:text-white">Assessment not found.</p>
+                    <div className="rounded-2xl border border-brand-surface bg-white p-10 text-center shadow-sm">
+                        <p className="text-lg font-semibold text-brand-black">Assessment not found.</p>
                     </div>
                 )}
             </main>

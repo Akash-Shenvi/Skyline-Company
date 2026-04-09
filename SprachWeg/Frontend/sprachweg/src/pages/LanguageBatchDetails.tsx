@@ -29,13 +29,13 @@ import {
 } from 'lucide-react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
-import InstitutionStudentHeader from '../components/layout/InstitutionStudentHeader';
+
 import LearnerQuickActions from '../components/layout/LearnerQuickActions';
 import { useAuth } from '../context/AuthContext';
 import { useNotifications } from '../context/NotificationContext';
 import api, { getAssetUrl } from '../lib/api';
 import { getDashboardPathForRole } from '../lib/authRouting';
-import { isInstitutionStudentRole, isLearnerRole } from '../lib/roles';
+import { isLearnerRole } from '../lib/roles';
 
 type TrainingType = 'language' | 'skill';
 type BatchTab = 'announcements' | 'materials' | 'students' | 'classes' | 'assessments';
@@ -49,8 +49,8 @@ const getBatchTabFromSearchParams = (searchParams: URLSearchParams, fallbackTab:
 
 const getUnreadTrainerChatButtonClasses = (hasUnread: boolean) => (
     hasUnread
-        ? 'flex items-center gap-2 px-3 py-2 rounded-xl border border-[#d6b161]/30 bg-[#d6b161] text-[#0a192f] text-sm font-semibold shadow-sm transition-colors duration-200 hover:bg-[#cfaa5b]'
-        : 'flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#d6b161]/10 text-[#d6b161] hover:bg-[#d6b161]/20 text-sm font-semibold transition-colors duration-200'
+        ? 'flex items-center gap-2 px-3 py-2 rounded-xl border border-brand-gold/30 bg-brand-gold text-brand-black text-sm font-semibold shadow-sm transition-colors duration-200 hover:bg-[#cfaa5b]'
+        : 'flex items-center gap-1.5 px-3 py-2 rounded-xl bg-brand-gold/10 text-brand-gold hover:bg-brand-gold/20 text-sm font-semibold transition-colors duration-200'
 );
 
 interface Annotation {
@@ -200,7 +200,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
     const isTrainer = user?.role === 'trainer' || user?._id === batch?.trainerId;
     const isAdmin = user?.role === 'admin';
     const isLearner = isLearnerRole(user?.role);
-    const isInstitutionStudent = isInstitutionStudentRole(user?.role);
+
     const currentUserId = user?._id || (user as any)?.id;
     const currentPath = `${location.pathname}${location.search}`;
     const stateFrom = typeof location.state === 'object' && location.state && 'from' in location.state
@@ -515,34 +515,27 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
 
 
     if (loading) return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-off-white to-brand-surface">
             <div className="flex flex-col items-center gap-4">
-                <div className="h-14 w-14 animate-spin rounded-full border-4 border-gray-200 dark:border-gray-700 border-t-[#d6b161]"></div>
-                <p className="text-gray-600 dark:text-gray-400 font-medium">Loading batch details...</p>
+                <div className="h-14 w-14 animate-spin rounded-full border-4 border-brand-surface border-t-brand-gold"></div>
+                <p className="text-brand-olive-dark font-medium">Loading batch details...</p>
             </div>
         </div>
     );
 
     if (!batch) return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-off-white to-brand-surface">
             <div className="text-center">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Batch Not Found</h2>
-                <p className="text-gray-600 dark:text-gray-400">The batch you're looking for doesn't exist.</p>
+                <h2 className="text-2xl font-bold text-brand-black mb-2">Batch Not Found</h2>
+                <p className="text-brand-olive-dark">The batch you're looking for doesn't exist.</p>
             </div>
         </div>
     );
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-950 dark:to-gray-950 flex flex-col">
+        <div className="min-h-screen bg-gradient-to-br from-brand-off-white via-brand-white to-brand-surface flex flex-col">
             {!isLearner && <Header />}
-            {isInstitutionStudent && (
-                <InstitutionStudentHeader
-                    institutionName={user?.institutionName}
-                    institutionLogo={user?.institutionLogo}
-                    institutionTagline={user?.institutionTagline}
-                    studentName={user?.name}
-                />
-            )}
+
 
             {isLearner && (
                 <LearnerQuickActions homeTo={getDashboardPathForRole(user?.role)} />
@@ -554,7 +547,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                     {!isLearner && (
                         <button
                             onClick={() => navigate(isAdmin ? '/admin-dashboard' : backTarget)}
-                            className="group inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-all duration-300 hover:gap-3 mb-6"
+                            className="group inline-flex items-center gap-2 text-brand-olive-dark hover:text-brand-black transition-all duration-300 hover:gap-3 mb-6"
                         >
                             <ArrowLeft className="h-5 w-5 transition-transform group-hover:-translate-x-0.5" />
                             <span className="font-medium">{isAdmin ? 'Back to Admin Dashboard' : 'Back to Dashboard'}</span>
@@ -562,29 +555,29 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                     )}
 
                     {/* Batch Header */}
-                    <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-gray-800/50 backdrop-blur-xl shadow-xl border border-gray-100 dark:border-gray-700/50 p-6 sm:p-8 lg:p-10">
-                        <div className="absolute inset-0 bg-gradient-to-r from-[#0a192f]/5 via-transparent to-[#d6b161]/5 pointer-events-none" />
+                    <div className="relative overflow-hidden rounded-3xl bg-white backdrop-blur-xl shadow-xl border border-brand-surface p-6 sm:p-8 lg:p-10">
+                        <div className="absolute inset-0 bg-gradient-to-r from-brand-black/5 via-transparent to-brand-gold/5 pointer-events-none" />
 
-                        <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#d6b161]/10 rounded-full blur-3xl dark:bg-[#d6b161]/5" />
-                        <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl dark:bg-blue-500/5" />
+                        <div className="absolute -top-20 -right-20 w-64 h-64 bg-brand-gold/10 rounded-full blur-3xl" />
+                        <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-brand-red/10 rounded-full blur-3xl" />
 
                         <div className="relative z-10">
                             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-4">
                                 <div className="flex-1">
-                                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-3 leading-tight">
+                                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-black mb-3 leading-tight">
                                         {batch.courseTitle}
                                     </h1>
-                                    <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#d6b161]/10 to-[#d6b161]/5 px-4 py-2 border border-[#d6b161]/20 dark:border-[#d6b161]/10">
-                                        <div className="w-2 h-2 rounded-full bg-[#d6b161] animate-pulse" />
-                                        <span className="text-sm font-semibold text-[#d6b161]">{batch.name}</span>
+                                    <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-brand-gold/10 to-brand-gold/5 px-4 py-2 border border-brand-gold/20">
+                                        <div className="w-2 h-2 rounded-full bg-brand-gold animate-pulse" />
+                                        <span className="text-sm font-semibold text-brand-gold">{batch.name}</span>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-6 sm:gap-8">
                                     <div className="text-center">
-                                        <p className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">
+                                        <p className="text-3xl sm:text-4xl font-bold text-brand-black">
                                             {batch.students?.length || 0}
                                         </p>
-                                        <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">Students</p>
+                                        <p className="text-sm text-brand-olive font-medium">Students</p>
                                     </div>
                                 </div>
                             </div>
@@ -596,7 +589,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                 <div className="mb-8 animate-in fade-in slide-in-from-top duration-500 delay-100">
                     <div
                         ref={tabsContainerRef}
-                        className="relative overflow-x-auto scrollbar-hide border-b border-gray-200 dark:border-gray-700/50"
+                        className="relative overflow-x-auto scrollbar-hide border-b border-brand-surface"
                     >
                         <style>{`
                             .scrollbar-hide::-webkit-scrollbar { display: none; }
@@ -609,9 +602,9 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                 <button
                                     key={tab}
                                     onClick={() => setActiveTab(tab)}
-                                    className={`relative px-5 sm:px-6 py-4 text-sm sm:text-base font-semibold whitespace-nowrap transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b161]/30 rounded-lg ${activeTab === tab
-                                        ? 'text-[#d6b161]'
-                                        : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+                                    className={`relative px-5 sm:px-6 py-4 text-sm sm:text-base font-semibold whitespace-nowrap transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold/30 rounded-lg ${activeTab === tab
+                                        ? 'text-brand-gold'
+                                        : 'text-brand-olive-dark hover:text-brand-black'
                                         }`}
                                     role="tab"
                                     aria-selected={activeTab === tab}
@@ -620,7 +613,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                     {tab.charAt(0).toUpperCase() + tab.slice(1).replace(/([A-Z])/g, ' $1')}
 
                                     {activeTab === tab && (
-                                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#d6b161] to-[#d6b161]/60 rounded-full animate-in" />
+                                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-gold to-brand-gold/60 rounded-full animate-in" />
                                     )}
                                 </button>
                             ))}
@@ -641,7 +634,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                 resetForm();
                                 setShowAddModal(true);
                             }}
-                            className="group inline-flex items-center gap-2 px-6 sm:px-8 py-3 rounded-xl font-semibold bg-gradient-to-r from-[#d6b161] to-[#c4a055] text-[#0a192f] hover:shadow-lg hover:shadow-[#d6b161]/20 hover:-translate-y-0.5 transition-all duration-300 border border-[#d6b161]/50 dark:border-[#d6b161]/30"
+                            className="group inline-flex items-center gap-2 px-6 sm:px-8 py-3 rounded-xl font-semibold bg-gradient-to-r from-brand-gold to-brand-gold-hover text-brand-black hover:shadow-lg hover:shadow-brand-gold/20 hover:-translate-y-0.5 transition-all duration-300 border border-brand-gold/50"
                             role="button"
                             aria-label={`Add new ${activeTab}`}
                         >
@@ -664,44 +657,44 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                     {activeTab === 'classes' ? (
                         <div className="space-y-4 sm:space-y-5">
                             {(!classes || classes.length === 0) && (
-                                <div className="text-center py-12 sm:py-16 bg-white dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-gray-700/50 backdrop-blur-xl">
-                                    <Video className="h-12 w-12 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-                                    <p className="text-gray-500 dark:text-gray-400 text-base font-medium">No live classes scheduled yet.</p>
+                                <div className="text-center py-12 sm:py-16 bg-white rounded-2xl border border-brand-surface backdrop-blur-xl">
+                                    <Video className="h-12 w-12 text-brand-olive-light mx-auto mb-4" />
+                                    <p className="text-brand-olive text-base font-medium">No live classes scheduled yet.</p>
                                 </div>
                             )}
 
                             {(classes || []).map((cls, idx) => (
                                 <div
                                     key={cls._id}
-                                    className="group relative overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700/50 bg-white dark:bg-gray-800/50 backdrop-blur-xl p-5 sm:p-6 lg:p-7 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-left duration-500"
+                                    className="group relative overflow-hidden rounded-2xl border border-brand-surface bg-white backdrop-blur-xl p-5 sm:p-6 lg:p-7 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-left duration-500"
                                     style={{ animationDelay: `${idx * 50}ms` }}
                                 >
-                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-green-500 to-emerald-400" />
+                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-brand-olive/50 to-brand-olive" />
 
-                                    <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                    <div className="absolute inset-0 bg-gradient-to-r from-brand-olive/50/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                                     <div className="relative z-10">
                                         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                                             <div className="flex items-start gap-4 min-w-0 flex-1">
-                                                <div className="flex-shrink-0 rounded-xl bg-gradient-to-br from-green-50 to-emerald-50 p-3 text-green-600 dark:bg-green-900/20 dark:text-green-400 transition-transform group-hover:scale-110 duration-300">
+                                                <div className="flex-shrink-0 rounded-xl bg-gradient-to-br from-brand-olive/5 to-brand-olive/5 p-3 text-brand-olive transition-transform group-hover:scale-110 duration-300">
                                                     <Video className="h-6 w-6" />
                                                 </div>
                                                 <div className="min-w-0 flex-1">
-                                                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 truncate group-hover:text-[#d6b161] transition-colors">
+                                                    <h3 className="text-lg sm:text-xl font-bold text-brand-black mb-2 truncate group-hover:text-brand-gold transition-colors">
                                                         {cls.topic}
                                                     </h3>
-                                                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                                                        <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-gray-700/50 px-3 py-1.5 rounded-lg font-medium">
+                                                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-brand-olive-dark">
+                                                        <span className="inline-flex items-center gap-1 bg-brand-surface px-3 py-1.5 rounded-lg font-medium">
                                                             {new Date(cls.startTime).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                                                         </span>
-                                                        <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-gray-700/50 px-3 py-1.5 rounded-lg font-medium">
+                                                        <span className="inline-flex items-center gap-1 bg-brand-surface px-3 py-1.5 rounded-lg font-medium">
                                                             {new Date(cls.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                         </span>
-                                                        <span className="inline-flex items-center gap-1 text-gray-500 dark:text-gray-400">
+                                                        <span className="inline-flex items-center gap-1 text-brand-olive">
                                                             <Users className="h-4 w-4" /> {cls.attendees?.length || 0} joined
                                                         </span>
                                                         {cls.status === 'completed' && (
-                                                            <span className="inline-flex items-center gap-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-3 py-1.5 rounded-lg font-bold text-xs uppercase tracking-wider">
+                                                            <span className="inline-flex items-center gap-1 bg-brand-olive/10 text-brand-olive-dark px-3 py-1.5 rounded-lg font-bold text-xs uppercase tracking-wider">
                                                                 ✓ Completed
                                                             </span>
                                                         )}
@@ -713,7 +706,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                                 {cls.status !== 'completed' ? (
                                                     <button
                                                         onClick={() => handleJoinClass(cls._id, cls.meetLink)}
-                                                        className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-green-500/20 hover:-translate-y-0.5 transition-all duration-300 text-sm whitespace-nowrap"
+                                                        className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-brand-olive/50 to-brand-olive/50 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-green-500/20 hover:-translate-y-0.5 transition-all duration-300 text-sm whitespace-nowrap"
                                                         role="button"
                                                         aria-label="Join class"
                                                     >
@@ -722,7 +715,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                                         <span className="sm:hidden">Join</span>
                                                     </button>
                                                 ) : (
-                                                    <span className="px-4 py-2.5 bg-gray-100 dark:bg-gray-700/50 text-gray-600 dark:text-gray-400 rounded-xl font-semibold text-sm">
+                                                    <span className="px-4 py-2.5 bg-brand-surface text-brand-olive-dark rounded-xl font-semibold text-sm">
                                                         Class Ended
                                                     </span>
                                                 )}
@@ -731,7 +724,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                                     <div className="flex gap-1">
                                                         <button
                                                             onClick={() => setAttendanceClass(cls)}
-                                                            className="p-2.5 text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/30"
+                                                            className="p-2.5 text-brand-red hover:bg-brand-gold/5 rounded-lg transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red/30"
                                                             title="Attendance"
                                                             aria-label="View attendance"
                                                         >
@@ -740,7 +733,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                                         {cls.status !== 'completed' && (
                                                             <button
                                                                 onClick={() => handleEndClass(cls._id)}
-                                                                className="p-2.5 text-orange-600 hover:bg-orange-50 dark:text-orange-400 dark:hover:bg-orange-900/20 rounded-lg transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/30"
+                                                                className="p-2.5 text-brand-gold hover:bg-brand-gold/5 rounded-lg transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold/30"
                                                                 title="End Class"
                                                                 aria-label="End class"
                                                             >
@@ -749,7 +742,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                                         )}
                                                         <button
                                                             onClick={() => handleDeleteClass(cls._id)}
-                                                            className="p-2.5 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/30"
+                                                            className="p-2.5 text-brand-olive-light hover:text-brand-red hover:bg-brand-red/5 rounded-lg transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red/30"
                                                             title="Delete Class"
                                                             aria-label="Delete class"
                                                         >
@@ -766,35 +759,35 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                     ) : activeTab === 'announcements' ? (
                         <div className="space-y-4 sm:space-y-5">
                             {!annLoading && announcements.length === 0 && (
-                                <div className="text-center py-12 sm:py-16 bg-white dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-gray-700/50 backdrop-blur-xl">
-                                    <Bell className="h-12 w-12 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-                                    <p className="text-gray-500 dark:text-gray-400 text-base font-medium">No announcements yet.</p>
+                                <div className="text-center py-12 sm:py-16 bg-white rounded-2xl border border-brand-surface backdrop-blur-xl">
+                                    <Bell className="h-12 w-12 text-brand-olive-light mx-auto mb-4" />
+                                    <p className="text-brand-olive text-base font-medium">No announcements yet.</p>
                                 </div>
                             )}
                             {announcements.map((item, idx) => (
-                                <div key={item._id} className="group relative overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700/50 bg-white dark:bg-gray-800/50 backdrop-blur-xl p-5 sm:p-6 lg:p-7 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-right duration-500" style={{ animationDelay: `${idx * 50}ms` }}>
-                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 to-cyan-400" />
-                                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                <div key={item._id} className="group relative overflow-hidden rounded-2xl border border-brand-surface bg-white backdrop-blur-xl p-5 sm:p-6 lg:p-7 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-right duration-500" style={{ animationDelay: `${idx * 50}ms` }}>
+                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-brand-off-white0 to-brand-gold" />
+                                    <div className="absolute inset-0 bg-gradient-to-r from-brand-off-white0/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                     <div className="relative z-10">
                                         <div className="flex items-start gap-4 sm:gap-5">
-                                            <div className="flex-shrink-0 rounded-xl bg-gradient-to-br from-blue-50 to-cyan-50 p-3 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400 transition-transform group-hover:scale-110 duration-300">
+                                            <div className="flex-shrink-0 rounded-xl bg-gradient-to-br from-brand-off-white to-brand-gold/5 p-3 text-brand-red transition-transform group-hover:scale-110 duration-300">
                                                 <Bell className="h-6 w-6" />
                                             </div>
                                             <div className="flex-1 min-w-0">
                                                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 mb-3">
-                                                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white group-hover:text-[#d6b161] transition-colors break-words">{item.title}</h3>
+                                                    <h3 className="text-lg sm:text-xl font-bold text-brand-black group-hover:text-brand-gold transition-colors break-words">{item.title}</h3>
                                                     <div className="flex items-center gap-2">
-                                                        <span className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700/50 px-3 py-1.5 rounded-lg whitespace-nowrap">
+                                                        <span className="text-xs sm:text-sm font-medium text-brand-olive bg-brand-surface px-3 py-1.5 rounded-lg whitespace-nowrap">
                                                             {new Date(item.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' })}
                                                         </span>
                                                         {isTrainer && (
-                                                            <button onClick={() => handleDeleteAnnouncement(item._id)} className="opacity-0 group-hover:opacity-100 transition-opacity p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500 hover:text-red-600 dark:text-red-400 duration-200" title="Delete" aria-label="Delete announcement">
+                                                            <button onClick={() => handleDeleteAnnouncement(item._id)} className="opacity-0 group-hover:opacity-100 transition-opacity p-2 rounded-lg hover:bg-brand-red/5 text-brand-red hover:text-brand-red duration-200" title="Delete" aria-label="Delete announcement">
                                                                 <Trash2 className="h-4 w-4" />
                                                             </button>
                                                         )}
                                                     </div>
                                                 </div>
-                                                <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base whitespace-pre-wrap break-words">{item.content}</p>
+                                                <p className="text-brand-olive-dark leading-relaxed text-sm sm:text-base whitespace-pre-wrap break-words">{item.content}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -802,7 +795,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                             ))}
                             {annHasMore && (
                                 <div className="flex justify-center mt-6 pb-4">
-                                    <button onClick={() => fetchTab('announcements', annPage + 1, true)} disabled={annLoading} className="px-6 py-2.5 bg-white dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 font-semibold rounded-xl border border-gray-200 dark:border-gray-700/50 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors shadow-sm disabled:opacity-50">
+                                    <button onClick={() => fetchTab('announcements', annPage + 1, true)} disabled={annLoading} className="px-6 py-2.5 bg-white text-brand-olive-dark font-semibold rounded-xl border border-brand-surface hover:bg-brand-off-white transition-colors shadow-sm disabled:opacity-50">
                                         {annLoading ? 'Loading...' : 'Load More'}
                                     </button>
                                 </div>
@@ -811,60 +804,60 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                     ) : activeTab === 'materials' ? (
                         <div className="grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
                             {!matLoading && materials.length === 0 && (
-                                <div className="col-span-full text-center py-12 sm:py-16 bg-white dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-gray-700/50 backdrop-blur-xl">
-                                    <FileText className="h-12 w-12 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-                                    <p className="text-gray-500 dark:text-gray-400 text-base font-medium">No learning materials uploaded yet.</p>
+                                <div className="col-span-full text-center py-12 sm:py-16 bg-white rounded-2xl border border-brand-surface backdrop-blur-xl">
+                                    <FileText className="h-12 w-12 text-brand-olive-light mx-auto mb-4" />
+                                    <p className="text-brand-olive text-base font-medium">No learning materials uploaded yet.</p>
                                 </div>
                             )}
                             {materials.map((item, idx) => (
-                                <div key={item._id} className="group relative overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700/50 bg-white dark:bg-gray-800/50 backdrop-blur-xl p-5 sm:p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col h-full animate-in fade-in slide-in-from-bottom duration-500" style={{ animationDelay: `${idx * 50}ms` }}>
-                                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                <div key={item._id} className="group relative overflow-hidden rounded-2xl border border-brand-surface bg-white backdrop-blur-xl p-5 sm:p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col h-full animate-in fade-in slide-in-from-bottom duration-500" style={{ animationDelay: `${idx * 50}ms` }}>
+                                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-olive/50 to-brand-olive/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                    <div className="absolute inset-0 bg-gradient-to-br from-brand-olive/50/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                     <div className="relative z-10 flex flex-col h-full">
                                         <div className="mb-4 flex items-start justify-between">
                                             <div className="flex gap-3 items-center">
-                                                <div className="flex flex-shrink-0 h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-50 to-green-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400 transition-transform group-hover:scale-110 duration-300">
+                                                <div className="flex flex-shrink-0 h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-brand-olive/5 to-brand-olive/5 text-brand-olive transition-transform group-hover:scale-110 duration-300">
                                                     {getFileIcon((item.attachments && item.attachments[0]) || item.fileUrl)}
                                                 </div>
                                                 {item.createdAt && (
-                                                    <span className="text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700/50 px-2 py-1 rounded-lg">
+                                                    <span className="text-xs font-medium text-brand-olive bg-brand-surface px-2 py-1 rounded-lg">
                                                         {new Date(item.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                                                     </span>
                                                 )}
                                             </div>
                                             {isTrainer && !item.isSystemMaterial && (
-                                                <button onClick={() => handleDeleteMaterial(item._id)} className="opacity-0 group-hover:opacity-100 transition-all duration-200 p-2 ml-2 rounded-lg bg-white/80 dark:bg-gray-800/80 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500 hover:text-red-600 dark:text-red-400 shadow-sm" title="Delete" aria-label="Delete material">
+                                                <button onClick={() => handleDeleteMaterial(item._id)} className="opacity-0 group-hover:opacity-100 transition-all duration-200 p-2 ml-2 rounded-lg bg-white/80 hover:bg-brand-red/5 text-brand-red hover:text-brand-red shadow-sm" title="Delete" aria-label="Delete material">
                                                     <Trash2 className="h-4 w-4" />
                                                 </button>
                                             )}
                                         </div>
                                         <div className="flex-1 mb-4">
-                                            <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-1 line-clamp-2 group-hover:text-[#d6b161] transition-colors" title={item.title}>{item.title}</h3>
-                                            {item.subtitle && <p className="text-sm font-semibold text-[#d6b161] mb-2 line-clamp-1">{item.subtitle}</p>}
-                                            <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 leading-relaxed">{item.description || 'No description provided.'}</p>
+                                            <h3 className="text-base sm:text-lg font-bold text-brand-black mb-1 line-clamp-2 group-hover:text-brand-gold transition-colors" title={item.title}>{item.title}</h3>
+                                            {item.subtitle && <p className="text-sm font-semibold text-brand-gold mb-2 line-clamp-1">{item.subtitle}</p>}
+                                            <p className="text-sm text-brand-olive-dark line-clamp-3 leading-relaxed">{item.description || 'No description provided.'}</p>
                                         </div>
                                         {((item.attachments && item.attachments.length > 0) || item.fileUrl) ? (
-                                            <div className="mt-auto flex flex-wrap items-center gap-2 pt-4 border-t border-gray-100 dark:border-gray-700/50">
+                                            <div className="mt-auto flex flex-wrap items-center gap-2 pt-4 border-t border-brand-surface">
                                                 {(item.attachments && item.attachments.length > 0 ? item.attachments : item.fileUrl ? [item.fileUrl] : []).map((attachment, attachmentIndex) => (
                                                     <React.Fragment key={`${item._id}-${attachment}-${attachmentIndex}`}>
-                                                        <a href={getAssetUrl(attachment)} target="_blank" rel="noopener noreferrer" className="inline-flex flex-1 min-w-[140px] items-center justify-center gap-2 rounded-xl bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-300 transition-all duration-300 border border-gray-200 dark:border-gray-700" aria-label={`View ${item.title}`}>
+                                                        <a href={getAssetUrl(attachment)} target="_blank" rel="noopener noreferrer" className="inline-flex flex-1 min-w-[140px] items-center justify-center gap-2 rounded-xl bg-brand-off-white hover:bg-brand-surface py-2.5 text-sm font-semibold text-brand-olive-dark transition-all duration-300 border border-brand-surface" aria-label={`View ${item.title}`}>
                                                             <Eye className="h-4 w-4" /> {item.attachments && item.attachments.length > 1 ? `View ${attachmentIndex + 1}` : 'View'}
                                                         </a>
-                                                        <a href={getAssetUrl(attachment)} download={item.title} target="_blank" rel="noopener noreferrer" className="inline-flex flex-1 min-w-[140px] items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500/10 to-green-500/10 hover:from-emerald-500 hover:to-green-500 py-2.5 text-sm font-semibold text-emerald-600 hover:text-white dark:bg-emerald-900/20 dark:text-emerald-400 dark:hover:text-white transition-all duration-300 border border-emerald-200 dark:border-emerald-700/50" aria-label={`Download ${item.title}`}>
+                                                        <a href={getAssetUrl(attachment)} download={item.title} target="_blank" rel="noopener noreferrer" className="inline-flex flex-1 min-w-[140px] items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand-olive/50/10 to-brand-olive/50/10 hover:from-brand-olive/50 hover:to-brand-olive/50 py-2.5 text-sm font-semibold text-brand-olive hover:text-white transition-all duration-300 border border-brand-olive/20" aria-label={`Download ${item.title}`}>
                                                             <Download className="h-4 w-4" /> {item.attachments && item.attachments.length > 1 ? `Download ${attachmentIndex + 1}` : 'Download'}
                                                         </a>
                                                     </React.Fragment>
                                                 ))}
                                             </div>
                                         ) : (
-                                            <div className="mt-auto w-full py-2.5 text-center text-sm font-medium text-gray-400 bg-gray-50 dark:bg-gray-700/50 rounded-xl">No file</div>
+                                            <div className="mt-auto w-full py-2.5 text-center text-sm font-medium text-brand-olive-light bg-brand-off-white rounded-xl">No file</div>
                                         )}
                                     </div>
                                 </div>
                             ))}
                             {matHasMore && (
                                 <div className="col-span-full flex justify-center mt-6 pb-4">
-                                    <button onClick={() => fetchTab('materials', matPage + 1, true)} disabled={matLoading} className="px-6 py-2.5 bg-white dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 font-semibold rounded-xl border border-gray-200 dark:border-gray-700/50 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors shadow-sm disabled:opacity-50">
+                                    <button onClick={() => fetchTab('materials', matPage + 1, true)} disabled={matLoading} className="px-6 py-2.5 bg-white text-brand-olive-dark font-semibold rounded-xl border border-brand-surface hover:bg-brand-off-white transition-colors shadow-sm disabled:opacity-50">
                                         {matLoading ? 'Loading...' : 'Load More'}
                                     </button>
                                 </div>
@@ -873,14 +866,14 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                     ) : activeTab === 'assessments' ? (
                         <div className="space-y-4 sm:space-y-5">
                             {!asmLoading && assessments.length === 0 && (
-                                <div className="text-center py-12 sm:py-16 bg-white dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-gray-700/50 backdrop-blur-xl">
-                                    <ClipboardList className="h-12 w-12 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-                                    <p className="text-gray-500 dark:text-gray-400 text-base font-medium">No assessments published for this batch yet.</p>
+                                <div className="text-center py-12 sm:py-16 bg-white rounded-2xl border border-brand-surface backdrop-blur-xl">
+                                    <ClipboardList className="h-12 w-12 text-brand-olive-light mx-auto mb-4" />
+                                    <p className="text-brand-olive text-base font-medium">No assessments published for this batch yet.</p>
                                     {(isTrainer || isAdmin) && (
                                         <button
                                             type="button"
                                             onClick={handleCreateAssessment}
-                                            className="mt-6 inline-flex items-center gap-2 rounded-xl bg-[#d6b161] px-5 py-3 text-sm font-bold text-[#0a192f] transition hover:bg-[#c4a055]"
+                                            className="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-gold px-5 py-3 text-sm font-bold text-brand-black transition hover:bg-brand-gold-hover"
                                         >
                                             <Plus className="h-4 w-4" />
                                             Create Assessment
@@ -892,43 +885,43 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                             {assessments.map((assessment, idx) => (
                                 <div
                                     key={assessment._id}
-                                    className="group relative overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700/50 bg-white dark:bg-gray-800/50 backdrop-blur-xl p-5 sm:p-6 lg:p-7 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom duration-500"
+                                    className="group relative overflow-hidden rounded-2xl border border-brand-surface bg-white backdrop-blur-xl p-5 sm:p-6 lg:p-7 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom duration-500"
                                     style={{ animationDelay: `${idx * 50}ms` }}
                                 >
-                                    <div className="absolute inset-0 bg-gradient-to-r from-[#d6b161]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                    <div className="absolute inset-0 bg-gradient-to-r from-brand-gold/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                     <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
                                         <div className="min-w-0 flex-1">
                                             <div className="mb-3 flex flex-wrap items-center gap-2">
-                                                <span className="inline-flex items-center gap-2 rounded-full bg-[#d6b161]/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#d6b161]">
+                                                <span className="inline-flex items-center gap-2 rounded-full bg-brand-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-brand-gold">
                                                     <ClipboardList className="h-3.5 w-3.5" />
                                                     Assessment
                                                 </span>
-                                                <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-600 dark:bg-gray-700/60 dark:text-gray-200">
+                                                <span className="rounded-full bg-brand-surface px-3 py-1 text-xs font-semibold text-brand-olive-dark">
                                                     Pass {assessment.passPercentage}%
                                                 </span>
-                                                <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-600 dark:bg-gray-700/60 dark:text-gray-200">
+                                                <span className="rounded-full bg-brand-surface px-3 py-1 text-xs font-semibold text-brand-olive-dark">
                                                     {assessment.questionCount} Questions
                                                 </span>
                                             </div>
 
-                                            <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-[#d6b161] transition-colors">
+                                            <h3 className="text-lg sm:text-xl font-bold text-brand-black mb-2 group-hover:text-brand-gold transition-colors">
                                                 {assessment.title}
                                             </h3>
-                                            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                                            <p className="text-sm text-brand-olive-dark leading-relaxed">
                                                 {assessment.description || 'No description added for this assessment.'}
                                             </p>
 
-                                            <div className="mt-4 flex flex-wrap items-center gap-3 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                                                <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-gray-700/50 px-3 py-1.5 rounded-lg font-medium">
+                                            <div className="mt-4 flex flex-wrap items-center gap-3 text-xs sm:text-sm text-brand-olive">
+                                                <span className="inline-flex items-center gap-1 bg-brand-surface px-3 py-1.5 rounded-lg font-medium">
                                                     Published {new Date(assessment.publishedAt || assessment.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                                                 </span>
                                                 {isLearner && typeof assessment.latestScore === 'number' && (
-                                                    <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-gray-700/50 px-3 py-1.5 rounded-lg font-medium">
+                                                    <span className="inline-flex items-center gap-1 bg-brand-surface px-3 py-1.5 rounded-lg font-medium">
                                                         Latest Score {assessment.latestScore}%
                                                     </span>
                                                 )}
                                                 {isLearner && assessment.finalized && (
-                                                    <span className="inline-flex items-center gap-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-3 py-1.5 rounded-lg font-bold text-xs uppercase tracking-wider">
+                                                    <span className="inline-flex items-center gap-1 bg-brand-olive/10 text-brand-olive-dark px-3 py-1.5 rounded-lg font-bold text-xs uppercase tracking-wider">
                                                         <BadgeCheck className="h-4 w-4" />
                                                         Finalized
                                                     </span>
@@ -937,31 +930,31 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
 
                                             {(isTrainer || isAdmin) && (
                                                 <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                                                    <div className="rounded-xl bg-gray-50 dark:bg-gray-900/30 px-4 py-3">
-                                                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">Attempts</p>
-                                                        <p className="mt-1 text-xl font-bold text-gray-900 dark:text-white">{assessment.attemptCount}</p>
+                                                    <div className="rounded-xl bg-brand-off-white px-4 py-3">
+                                                        <p className="text-xs font-semibold uppercase tracking-wide text-brand-olive-light">Attempts</p>
+                                                        <p className="mt-1 text-xl font-bold text-brand-black">{assessment.attemptCount}</p>
                                                     </div>
-                                                    <div className="rounded-xl bg-gray-50 dark:bg-gray-900/30 px-4 py-3">
-                                                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">Passed</p>
-                                                        <p className="mt-1 text-xl font-bold text-green-600 dark:text-green-400">{assessment.passedStudents ?? 0}</p>
+                                                    <div className="rounded-xl bg-brand-off-white px-4 py-3">
+                                                        <p className="text-xs font-semibold uppercase tracking-wide text-brand-olive-light">Passed</p>
+                                                        <p className="mt-1 text-xl font-bold text-brand-olive">{assessment.passedStudents ?? 0}</p>
                                                     </div>
-                                                    <div className="rounded-xl bg-gray-50 dark:bg-gray-900/30 px-4 py-3">
-                                                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">Pending</p>
-                                                        <p className="mt-1 text-xl font-bold text-orange-500">{assessment.studentsPendingPass ?? 0}</p>
+                                                    <div className="rounded-xl bg-brand-off-white px-4 py-3">
+                                                        <p className="text-xs font-semibold uppercase tracking-wide text-brand-olive-light">Pending</p>
+                                                        <p className="mt-1 text-xl font-bold text-brand-gold">{assessment.studentsPendingPass ?? 0}</p>
                                                     </div>
                                                 </div>
                                             )}
 
                                             {isLearner && (
-                                                <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
-                                                    <span className="rounded-xl bg-gray-100 dark:bg-gray-700/50 px-4 py-2 font-semibold">
+                                                <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-brand-olive">
+                                                    <span className="rounded-xl bg-brand-surface px-4 py-2 font-semibold">
                                                         Attempts: {assessment.attemptCount}
                                                     </span>
                                                     {assessment.latestStatus && (
                                                         <span className={`rounded-xl px-4 py-2 font-semibold ${
                                                             assessment.latestStatus === 'passed'
-                                                                ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                                                                : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300'
+                                                                ? 'bg-brand-olive/10 text-brand-olive-dark'
+                                                                : 'bg-brand-gold/10 text-brand-gold'
                                                         }`}>
                                                             {assessment.latestStatus === 'passed' ? 'Passed' : 'Needs Retry'}
                                                         </span>
@@ -974,7 +967,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                             <button
                                                 type="button"
                                                 onClick={() => handleOpenAssessment(assessment._id)}
-                                                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#d6b161] px-5 py-3 text-sm font-bold text-[#0a192f] transition hover:bg-[#c4a055]"
+                                                className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-gold px-5 py-3 text-sm font-bold text-brand-black transition hover:bg-brand-gold-hover"
                                             >
                                                 <ExternalLink className="h-4 w-4" />
                                                 {isLearner
@@ -988,7 +981,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                                     : 'Open Assessment'}
                                             </button>
                                             {isLearner && assessment.canRetry && assessment.attemptCount > 0 && !assessment.finalized && (
-                                                <span className="inline-flex items-center justify-center gap-2 rounded-xl border border-orange-200 bg-orange-50 px-4 py-2 text-xs font-semibold text-orange-700 dark:border-orange-800 dark:bg-orange-900/20 dark:text-orange-300">
+                                                <span className="inline-flex items-center justify-center gap-2 rounded-xl border border-brand-gold/20 bg-brand-gold/5 px-4 py-2 text-xs font-semibold text-brand-gold">
                                                     <RotateCcw className="h-3.5 w-3.5" />
                                                     Retry available
                                                 </span>
@@ -1000,7 +993,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
 
                             {asmHasMore && (
                                 <div className="flex justify-center mt-6 pb-4">
-                                    <button onClick={() => fetchTab('assessments', asmPage + 1, true)} disabled={asmLoading} className="px-6 py-2.5 bg-white dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 font-semibold rounded-xl border border-gray-200 dark:border-gray-700/50 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors shadow-sm disabled:opacity-50">
+                                    <button onClick={() => fetchTab('assessments', asmPage + 1, true)} disabled={asmLoading} className="px-6 py-2.5 bg-white text-brand-olive-dark font-semibold rounded-xl border border-brand-surface hover:bg-brand-off-white transition-colors shadow-sm disabled:opacity-50">
                                         {asmLoading ? 'Loading...' : 'Load More'}
                                     </button>
                                 </div>
@@ -1009,9 +1002,9 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                     ) : activeTab === 'students' ? (
                         <div className="space-y-4 sm:space-y-5">
                             {!stuLoading && students.length === 0 && (
-                                <div className="text-center py-12 sm:py-16 bg-white dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-gray-700/50 backdrop-blur-xl">
-                                    <Users className="h-12 w-12 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-                                    <p className="text-gray-500 dark:text-gray-400 text-base font-medium">No students enrolled yet.</p>
+                                <div className="text-center py-12 sm:py-16 bg-white rounded-2xl border border-brand-surface backdrop-blur-xl">
+                                    <Users className="h-12 w-12 text-brand-olive-light mx-auto mb-4" />
+                                    <p className="text-brand-olive text-base font-medium">No students enrolled yet.</p>
                                 </div>
                             )}
                             {students.map((student, idx) => {
@@ -1022,16 +1015,16 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                 );
 
                                 return (
-                                <div key={student._id} className="group relative overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700/50 bg-white dark:bg-gray-800/50 backdrop-blur-xl p-5 sm:p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-left duration-500" style={{ animationDelay: `${idx * 50}ms` }}>
-                                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                <div key={student._id} className="group relative overflow-hidden rounded-2xl border border-brand-surface bg-white backdrop-blur-xl p-5 sm:p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-left duration-500" style={{ animationDelay: `${idx * 50}ms` }}>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-brand-off-white0/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                     <div className="relative z-10 flex items-center justify-between gap-4">
                                         <div className="flex items-center gap-4 min-w-0 flex-1">
-                                            <div className="flex-shrink-0 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-100 to-cyan-100 text-blue-600 font-bold text-lg dark:bg-blue-900/20 dark:text-blue-400 transition-transform group-hover:scale-110 duration-300">
+                                            <div className="flex-shrink-0 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-brand-surface to-brand-gold/10 text-brand-red font-bold text-lg transition-transform group-hover:scale-110 duration-300">
                                                 {student.name.charAt(0).toUpperCase()}
                                             </div>
                                             <div className="min-w-0 flex-1">
-                                                <p className="font-bold text-gray-900 dark:text-white text-base sm:text-lg truncate">{student.name}</p>
-                                                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 truncate">{student.email}</p>
+                                                <p className="font-bold text-brand-black text-base sm:text-lg truncate">{student.name}</p>
+                                                <p className="text-xs sm:text-sm text-brand-olive truncate">{student.email}</p>
                                             </div>
                                         </div>
                                         {isTrainer && (
@@ -1046,12 +1039,12 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                                     aria-label={`Chat with ${student.name}`}
                                                 >
                                                     {hasUnreadChat && (
-                                                        <span className="h-2.5 w-2.5 rounded-full bg-[#0a192f]" />
+                                                        <span className="h-2.5 w-2.5 rounded-full bg-brand-black" />
                                                     )}
                                                     <MessageCircle className="h-4 w-4" />
                                                     <span className="hidden sm:inline">Chat</span>
                                                 </button>
-                                                <button onClick={() => setSelectedStudent(student)} className="flex-shrink-0 text-sm font-semibold text-gray-400 hover:text-[#d6b161] transition-colors duration-300 rounded px-3 py-2" aria-label={`View ${student.name}'s profile`}>
+                                                <button onClick={() => setSelectedStudent(student)} className="flex-shrink-0 text-sm font-semibold text-brand-olive-light hover:text-brand-gold transition-colors duration-300 rounded px-3 py-2" aria-label={`View ${student.name}'s profile`}>
                                                     <span className="hidden sm:inline">View Profile</span>
                                                     <span className="sm:hidden">→</span>
                                                 </button>
@@ -1063,7 +1056,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                             })}
                             {stuHasMore && (
                                 <div className="flex justify-center mt-6 pb-4">
-                                    <button onClick={() => fetchTab('students', stuPage + 1, true)} disabled={stuLoading} className="px-6 py-2.5 bg-white dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 font-semibold rounded-xl border border-gray-200 dark:border-gray-700/50 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors shadow-sm disabled:opacity-50">
+                                    <button onClick={() => fetchTab('students', stuPage + 1, true)} disabled={stuLoading} className="px-6 py-2.5 bg-white text-brand-olive-dark font-semibold rounded-xl border border-brand-surface hover:bg-brand-off-white transition-colors shadow-sm disabled:opacity-50">
                                         {stuLoading ? 'Loading...' : 'Load More'}
                                     </button>
                                 </div>
@@ -1072,60 +1065,60 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                     ) : (
                         <div className="space-y-4 sm:space-y-5">
                             {!clsLoading && classes.length === 0 && (
-                                <div className="text-center py-12 sm:py-16 bg-white dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-gray-700/50 backdrop-blur-xl">
-                                    <Video className="h-12 w-12 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-                                    <p className="text-gray-500 dark:text-gray-400 text-base font-medium">No live classes scheduled yet.</p>
+                                <div className="text-center py-12 sm:py-16 bg-white rounded-2xl border border-brand-surface backdrop-blur-xl">
+                                    <Video className="h-12 w-12 text-brand-olive-light mx-auto mb-4" />
+                                    <p className="text-brand-olive text-base font-medium">No live classes scheduled yet.</p>
                                 </div>
                             )}
                             {classes.map((cls, idx) => (
-                                <div key={cls._id} className="group relative overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700/50 bg-white dark:bg-gray-800/50 backdrop-blur-xl p-5 sm:p-6 lg:p-7 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-left duration-500" style={{ animationDelay: `${idx * 50}ms` }}>
-                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-green-500 to-emerald-400" />
-                                    <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                <div key={cls._id} className="group relative overflow-hidden rounded-2xl border border-brand-surface bg-white backdrop-blur-xl p-5 sm:p-6 lg:p-7 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-left duration-500" style={{ animationDelay: `${idx * 50}ms` }}>
+                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-brand-olive/50 to-brand-olive" />
+                                    <div className="absolute inset-0 bg-gradient-to-r from-brand-olive/50/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                     <div className="relative z-10">
                                         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                                             <div className="flex items-start gap-4 min-w-0 flex-1">
-                                                <div className="flex-shrink-0 rounded-xl bg-gradient-to-br from-green-50 to-emerald-50 p-3 text-green-600 dark:bg-green-900/20 dark:text-green-400 transition-transform group-hover:scale-110 duration-300">
+                                                <div className="flex-shrink-0 rounded-xl bg-gradient-to-br from-brand-olive/5 to-brand-olive/5 p-3 text-brand-olive transition-transform group-hover:scale-110 duration-300">
                                                     <Video className="h-6 w-6" />
                                                 </div>
                                                 <div className="min-w-0 flex-1">
-                                                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 truncate group-hover:text-[#d6b161] transition-colors">{cls.topic}</h3>
-                                                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                                                        <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-gray-700/50 px-3 py-1.5 rounded-lg font-medium">
+                                                    <h3 className="text-lg sm:text-xl font-bold text-brand-black mb-2 truncate group-hover:text-brand-gold transition-colors">{cls.topic}</h3>
+                                                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-brand-olive-dark">
+                                                        <span className="inline-flex items-center gap-1 bg-brand-surface px-3 py-1.5 rounded-lg font-medium">
                                                             {new Date(cls.startTime).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                                                         </span>
-                                                        <span className="inline-flex items-center gap-1 bg-gray-100 dark:bg-gray-700/50 px-3 py-1.5 rounded-lg font-medium">
+                                                        <span className="inline-flex items-center gap-1 bg-brand-surface px-3 py-1.5 rounded-lg font-medium">
                                                             {new Date(cls.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                         </span>
-                                                        <span className="inline-flex items-center gap-1 text-gray-500 dark:text-gray-400">
+                                                        <span className="inline-flex items-center gap-1 text-brand-olive">
                                                             <Users className="h-4 w-4" /> {cls.attendees?.length || 0} joined
                                                         </span>
                                                         {cls.status === 'completed' && (
-                                                            <span className="inline-flex items-center gap-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-3 py-1.5 rounded-lg font-bold text-xs uppercase tracking-wider">✓ Completed</span>
+                                                            <span className="inline-flex items-center gap-1 bg-brand-olive/10 text-brand-olive-dark px-3 py-1.5 rounded-lg font-bold text-xs uppercase tracking-wider">✓ Completed</span>
                                                         )}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
                                                 {cls.status !== 'completed' ? (
-                                                    <button onClick={() => handleJoinClass(cls._id, cls.meetLink)} className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-green-500/20 hover:-translate-y-0.5 transition-all duration-300 text-sm" aria-label="Join class">
+                                                    <button onClick={() => handleJoinClass(cls._id, cls.meetLink)} className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-brand-olive/50 to-brand-olive/50 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-green-500/20 hover:-translate-y-0.5 transition-all duration-300 text-sm" aria-label="Join class">
                                                         <Video className="h-4 w-4" />
                                                         <span className="hidden sm:inline">Join Class</span>
                                                         <span className="sm:hidden">Join</span>
                                                     </button>
                                                 ) : (
-                                                    <span className="px-4 py-2.5 bg-gray-100 dark:bg-gray-700/50 text-gray-600 dark:text-gray-400 rounded-xl font-semibold text-sm">Class Ended</span>
+                                                    <span className="px-4 py-2.5 bg-brand-surface text-brand-olive-dark rounded-xl font-semibold text-sm">Class Ended</span>
                                                 )}
                                                 {isTrainer && (
                                                     <div className="flex gap-1">
-                                                        <button onClick={() => setAttendanceClass(cls)} className="p-2.5 text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200" title="Attendance" aria-label="View attendance">
+                                                        <button onClick={() => setAttendanceClass(cls)} className="p-2.5 text-brand-red hover:bg-brand-gold/5 rounded-lg transition-colors duration-200" title="Attendance" aria-label="View attendance">
                                                             <UserCheck className="h-5 w-5" />
                                                         </button>
                                                         {cls.status !== 'completed' && (
-                                                            <button onClick={() => handleEndClass(cls._id)} className="p-2.5 text-orange-600 hover:bg-orange-50 dark:text-orange-400 dark:hover:bg-orange-900/20 rounded-lg transition-colors duration-200" title="End Class" aria-label="End class">
+                                                            <button onClick={() => handleEndClass(cls._id)} className="p-2.5 text-brand-gold hover:bg-brand-gold/5 rounded-lg transition-colors duration-200" title="End Class" aria-label="End class">
                                                                 <Ban className="h-5 w-5" />
                                                             </button>
                                                         )}
-                                                        <button onClick={() => handleDeleteClass(cls._id)} className="p-2.5 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors duration-200" title="Delete Class" aria-label="Delete class">
+                                                        <button onClick={() => handleDeleteClass(cls._id)} className="p-2.5 text-brand-olive-light hover:text-brand-red hover:bg-brand-red/5 rounded-lg transition-colors duration-200" title="Delete Class" aria-label="Delete class">
                                                             <Trash2 className="h-5 w-5" />
                                                         </button>
                                                     </div>
@@ -1137,7 +1130,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                             ))}
                             {clsHasMore && (
                                 <div className="flex justify-center mt-6 pb-4">
-                                    <button onClick={() => fetchTab('classes', clsPage + 1, true)} disabled={clsLoading} className="px-6 py-2.5 bg-white dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 font-semibold rounded-xl border border-gray-200 dark:border-gray-700/50 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors shadow-sm disabled:opacity-50">
+                                    <button onClick={() => fetchTab('classes', clsPage + 1, true)} disabled={clsLoading} className="px-6 py-2.5 bg-white text-brand-olive-dark font-semibold rounded-xl border border-brand-surface hover:bg-brand-off-white transition-colors shadow-sm disabled:opacity-50">
                                         {clsLoading ? 'Loading...' : 'Load More'}
                                     </button>
                                 </div>
@@ -1155,17 +1148,17 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                     aria-modal="true"
                     aria-label={`Add ${activeTab}`}
                 >
-                    <div className="w-full max-w-lg rounded-3xl bg-white dark:bg-gray-800 shadow-2xl max-h-[85vh] overflow-y-auto animate-in zoom-in-95 fade-in duration-300">
-                        <div className="sticky top-0 z-10 border-b border-gray-200 dark:border-gray-700/50 bg-white dark:bg-gray-800 px-6 sm:px-8 py-5 sm:py-6 backdrop-blur-xl">
+                    <div className="w-full max-w-lg rounded-3xl bg-white shadow-2xl max-h-[85vh] overflow-y-auto animate-in zoom-in-95 fade-in duration-300">
+                        <div className="sticky top-0 z-10 border-b border-brand-surface bg-white px-6 sm:px-8 py-5 sm:py-6 backdrop-blur-xl">
                             <div className="flex justify-between items-start gap-4">
                                 <div>
-                                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
+                                    <h2 className="text-2xl sm:text-3xl font-bold text-brand-black">
                                         {activeTab === 'classes' ? 'Schedule Live Class' : `Add ${activeTab === 'announcements' ? 'Announcement' : 'Material'}`}
                                     </h2>
                                 </div>
                                 <button
                                     onClick={() => setShowAddModal(false)}
-                                    className="flex-shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors rounded-lg p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b161]/30"
+                                    className="flex-shrink-0 text-brand-olive-light hover:text-brand-olive-dark transition-colors rounded-lg p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold/30"
                                     aria-label="Close modal"
                                 >
                                     <X className="h-6 w-6" />
@@ -1176,7 +1169,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                         <form onSubmit={handleAddItem} className="p-6 sm:p-8 space-y-5 sm:space-y-6">
                             {/* Title Field */}
                             <div>
-                                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
+                                <label className="block text-sm font-bold text-brand-olive-dark mb-2">
                                     Title
                                 </label>
                                 <input
@@ -1184,7 +1177,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                     placeholder="e.g. Chapter 1 Notes"
                                     value={title}
                                     onChange={e => setTitle(e.target.value)}
-                                    className="w-full rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/50 p-3 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-all duration-200 focus:border-[#d6b161] focus:ring-2 focus:ring-[#d6b161]/20 dark:focus:border-[#d6b161]"
+                                    className="w-full rounded-xl border border-brand-surface bg-brand-off-white p-3 text-sm text-brand-black placeholder-brand-olive-light outline-none transition-all duration-200 focus:border-brand-red focus:ring-2 focus:ring-brand-gold/20"
                                     required
                                     aria-label="Title"
                                 />
@@ -1194,27 +1187,27 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                 <>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
-                                            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
+                                            <label className="block text-sm font-bold text-brand-olive-dark mb-2">
                                                 Date
                                             </label>
                                             <input
                                                 type="date"
                                                 value={classDate}
                                                 onChange={e => setClassDate(e.target.value)}
-                                                className="w-full rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/50 p-3 text-sm text-gray-900 dark:text-white outline-none transition-all duration-200 focus:border-[#d6b161] focus:ring-2 focus:ring-[#d6b161]/20 dark:focus:border-[#d6b161]"
+                                                className="w-full rounded-xl border border-brand-surface bg-brand-off-white p-3 text-sm text-brand-black outline-none transition-all duration-200 focus:border-brand-red focus:ring-2 focus:ring-brand-gold/20"
                                                 required
                                                 aria-label="Class date"
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
+                                            <label className="block text-sm font-bold text-brand-olive-dark mb-2">
                                                 Time
                                             </label>
                                             <input
                                                 type="time"
                                                 value={classTime}
                                                 onChange={e => setClassTime(e.target.value)}
-                                                className="w-full rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/50 p-3 text-sm text-gray-900 dark:text-white outline-none transition-all duration-200 focus:border-[#d6b161] focus:ring-2 focus:ring-[#d6b161]/20 dark:focus:border-[#d6b161]"
+                                                className="w-full rounded-xl border border-brand-surface bg-brand-off-white p-3 text-sm text-brand-black outline-none transition-all duration-200 focus:border-brand-red focus:ring-2 focus:ring-brand-gold/20"
                                                 required
                                                 aria-label="Class time"
                                             />
@@ -1223,22 +1216,22 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
 
                                     {/* Google Calendar Connection Status */}
                                     <div className={`p-4 sm:p-5 rounded-xl border transition-all duration-300 ${isGoogleConnected
-                                        ? 'bg-green-50 dark:bg-green-900/10 border-green-200 dark:border-green-800/50'
-                                        : 'bg-blue-50 dark:bg-blue-900/10 border-blue-100 dark:border-blue-800/50'
+                                        ? 'bg-brand-olive/5 border-brand-olive/20'
+                                        : 'bg-brand-gold/5 border-brand-surface'
                                         }`}>
                                         <div className="flex items-center gap-3 flex-col sm:flex-row">
                                             <div className={`p-2.5 rounded-xl flex-shrink-0 ${isGoogleConnected
-                                                ? 'bg-green-100 dark:bg-green-800/30'
-                                                : 'bg-blue-100 dark:bg-blue-800/30'
+                                                ? 'bg-brand-olive/10'
+                                                : 'bg-brand-gold/10'
                                                 }`}>
                                                 <Video className={`h-5 w-5 ${isGoogleConnected
-                                                    ? 'text-green-600 dark:text-green-400'
-                                                    : 'text-blue-600 dark:text-blue-400'
+                                                    ? 'text-brand-olive'
+                                                    : 'text-brand-red'
                                                     }`} />
                                             </div>
                                             <div className="flex-1">
-                                                <h3 className="font-bold text-gray-900 dark:text-white text-sm">Google Calendar</h3>
-                                                <p className="text-xs text-gray-600 dark:text-gray-400">
+                                                <h3 className="font-bold text-brand-black text-sm">Google Calendar</h3>
+                                                <p className="text-xs text-brand-olive-dark">
                                                     {isGoogleConnected
                                                         ? '✅ Connected - Meeting links auto-generated'
                                                         : '⚠️ Not connected - Click to connect'}
@@ -1248,8 +1241,8 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                                 type="button"
                                                 onClick={handleConnectGoogle}
                                                 className={`flex-shrink-0 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${isGoogleConnected
-                                                    ? 'bg-green-600 hover:bg-green-700 text-white focus-visible:ring-offset-green-100 dark:focus-visible:ring-offset-gray-800'
-                                                    : 'bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:text-white focus-visible:ring-offset-gray-800'
+                                                    ? 'bg-brand-olive hover:bg-brand-olive-dark text-white focus-visible:ring-offset-brand-olive/10'
+                                                    : 'bg-white border border-brand-surface hover:bg-brand-off-white text-brand-olive-dark focus-visible:ring-offset-brand-surface'
                                                     }`}
                                                 aria-label={`${isGoogleConnected ? 'Reconnect' : 'Connect'} Google Calendar`}
                                             >
@@ -1262,15 +1255,15 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
 
                             {activeTab === 'materials' && (
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
-                                        Subtitle <span className="text-gray-400 font-normal text-xs">(Optional)</span>
+                                    <label className="block text-sm font-bold text-brand-olive-dark mb-2">
+                                        Subtitle <span className="text-brand-olive-light font-normal text-xs">(Optional)</span>
                                     </label>
                                     <input
                                         type="text"
                                         placeholder="e.g. Grammar Basics"
                                         value={subtitle}
                                         onChange={e => setSubtitle(e.target.value)}
-                                        className="w-full rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/50 p-3 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-all duration-200 focus:border-[#d6b161] focus:ring-2 focus:ring-[#d6b161]/20 dark:focus:border-[#d6b161]"
+                                        className="w-full rounded-xl border border-brand-surface bg-brand-off-white p-3 text-sm text-brand-black placeholder-brand-olive-light outline-none transition-all duration-200 focus:border-brand-red focus:ring-2 focus:ring-brand-gold/20"
                                         aria-label="Subtitle"
                                     />
                                 </div>
@@ -1279,7 +1272,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                             {/* Content/Description Field */}
                             {activeTab !== 'classes' && (
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
+                                    <label className="block text-sm font-bold text-brand-olive-dark mb-2">
                                         {activeTab === 'announcements' ? 'Content' : 'Description'}
                                     </label>
                                     <textarea
@@ -1287,7 +1280,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                         value={content}
                                         onChange={e => setContent(e.target.value)}
                                         rows={4}
-                                        className="w-full rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/50 p-3 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-all duration-200 focus:border-[#d6b161] focus:ring-2 focus:ring-[#d6b161]/20 dark:focus:border-[#d6b161] resize-none"
+                                        className="w-full rounded-xl border border-brand-surface bg-brand-off-white p-3 text-sm text-brand-black placeholder-brand-olive-light outline-none transition-all duration-200 focus:border-brand-red focus:ring-2 focus:ring-brand-gold/20 resize-none"
                                         required
                                         aria-label={activeTab === 'announcements' ? 'Content' : 'Description'}
                                     />
@@ -1297,19 +1290,19 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                             {/* File Upload Field */}
                             {activeTab === 'materials' && (
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
+                                    <label className="block text-sm font-bold text-brand-olive-dark mb-2">
                                         Upload File
                                     </label>
                                     <div className="relative">
                                         <input
                                             type="file"
                                             onChange={handleFileChange}
-                                            className="block w-full text-xs sm:text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-[#d6b161]/10 file:text-[#d6b161] hover:file:bg-[#d6b161]/20 file:cursor-pointer cursor-pointer transition-all"
+                                            className="block w-full text-xs sm:text-sm text-brand-olive file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-brand-gold/10 file:text-brand-gold hover:file:bg-brand-gold/20 file:cursor-pointer cursor-pointer transition-all"
                                             accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.jpg,.jpeg,.png"
                                             aria-label="Upload file"
                                         />
                                     </div>
-                                    <p className="mt-2 text-xs text-gray-400 dark:text-gray-500">
+                                    <p className="mt-2 text-xs text-brand-olive-light">
                                         Supported: PDF, Doc, Images (Max 10MB)
                                     </p>
                                 </div>
@@ -1320,7 +1313,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                 <button
                                     type="button"
                                     onClick={() => setShowAddModal(false)}
-                                    className="w-full px-4 py-3 bg-gray-100 dark:bg-gray-700/50 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-xl font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-500/30"
+                                    className="w-full px-4 py-3 bg-brand-surface text-brand-olive-dark hover:bg-brand-surface rounded-xl font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-olive/30"
                                     aria-label="Cancel"
                                 >
                                     Cancel
@@ -1328,12 +1321,12 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                 <button
                                     type="submit"
                                     disabled={submitting}
-                                    className="w-full px-4 py-3 bg-gradient-to-r from-[#d6b161] to-[#c4a055] text-[#0a192f] hover:shadow-lg hover:shadow-[#d6b161]/20 hover:-translate-y-0.5 rounded-xl font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b161]/30"
+                                    className="w-full px-4 py-3 bg-gradient-to-r from-brand-gold to-brand-gold-hover text-brand-black hover:shadow-lg hover:shadow-brand-gold/20 hover:-translate-y-0.5 rounded-xl font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold/30"
                                     aria-busy={submitting}
                                 >
                                     {submitting ? (
                                         <span className="inline-flex items-center gap-2">
-                                            <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#0a192f]/20 border-t-[#0a192f]"></div>
+                                            <div className="h-4 w-4 animate-spin rounded-full border-2 border-brand-black/20 border-t-brand-black"></div>
                                             Adding...
                                         </span>
                                     ) : (
@@ -1354,16 +1347,16 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                     aria-modal="true"
                     aria-label="Attendance"
                 >
-                    <div className="w-full max-w-lg rounded-3xl bg-white dark:bg-gray-800 shadow-2xl max-h-[85vh] overflow-y-auto animate-in zoom-in-95 fade-in duration-300">
-                        <div className="sticky top-0 z-10 border-b border-gray-200 dark:border-gray-700/50 bg-white dark:bg-gray-800 px-6 sm:px-8 py-5 sm:py-6 backdrop-blur-xl">
+                    <div className="w-full max-w-lg rounded-3xl bg-white shadow-2xl max-h-[85vh] overflow-y-auto animate-in zoom-in-95 fade-in duration-300">
+                        <div className="sticky top-0 z-10 border-b border-brand-surface bg-white px-6 sm:px-8 py-5 sm:py-6 backdrop-blur-xl">
                             <div className="flex justify-between items-start gap-4">
                                 <div>
-                                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Attendance</h2>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 truncate">{attendanceClass.topic}</p>
+                                    <h2 className="text-2xl sm:text-3xl font-bold text-brand-black">Attendance</h2>
+                                    <p className="text-sm text-brand-olive mt-1 truncate">{attendanceClass.topic}</p>
                                 </div>
                                 <button
                                     onClick={() => setAttendanceClass(null)}
-                                    className="flex-shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors rounded-lg p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b161]/30"
+                                    className="flex-shrink-0 text-brand-olive-light hover:text-brand-olive-dark transition-colors rounded-lg p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold/30"
                                     aria-label="Close modal"
                                 >
                                     <X className="h-6 w-6" />
@@ -1374,7 +1367,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                         <div className="p-6 sm:p-8">
                             <div className="space-y-3">
                                 {(!batch?.students || batch.students.length === 0) && (
-                                    <p className="text-center text-gray-500 dark:text-gray-400 py-8">No students enrolled.</p>
+                                    <p className="text-center text-brand-olive py-8">No students enrolled.</p>
                                 )}
 
                                 {batch?.students.map((student, idx) => {
@@ -1382,20 +1375,20 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                     return (
                                         <div
                                             key={student._id}
-                                            className="group relative overflow-hidden flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/30 rounded-xl border border-gray-200 dark:border-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-300 animate-in fade-in slide-in-from-left duration-500"
+                                            className="group relative overflow-hidden flex items-center justify-between p-4 bg-brand-off-white rounded-xl border border-brand-surface hover:bg-brand-surface transition-all duration-300 animate-in fade-in slide-in-from-left duration-500"
                                             style={{ animationDelay: `${idx * 30}ms` }}
                                         >
-                                            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                            <div className="absolute inset-0 bg-gradient-to-r from-brand-off-white0/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                                             <div className="relative z-10 flex items-center gap-3 min-w-0 flex-1">
-                                                <div className="flex-shrink-0 h-10 w-10 rounded-lg bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/30 dark:to-cyan-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm transition-transform group-hover:scale-110 duration-300">
+                                                <div className="flex-shrink-0 h-10 w-10 rounded-lg bg-gradient-to-br from-brand-surface to-brand-gold/10 flex items-center justify-center text-brand-red font-bold text-sm transition-transform group-hover:scale-110 duration-300">
                                                     {student.name.charAt(0)}
                                                 </div>
                                                 <div className="min-w-0 flex-1">
-                                                    <p className="font-bold text-gray-900 dark:text-white text-sm truncate">
+                                                    <p className="font-bold text-brand-black text-sm truncate">
                                                         {student.name}
                                                     </p>
-                                                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                                                    <p className="text-xs text-brand-olive truncate">
                                                         {student.email}
                                                     </p>
                                                 </div>
@@ -1405,8 +1398,8 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                                 disabled={attendanceLoading}
                                                 onClick={() => handleUpdateAttendance(student._id, !isPresent)}
                                                 className={`flex-shrink-0 p-2.5 rounded-lg transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${isPresent
-                                                    ? 'bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/50 focus-visible:ring-green-500/30 focus-visible:ring-offset-gray-50 dark:focus-visible:ring-offset-gray-800'
-                                                    : 'bg-gray-200 text-gray-500 hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:hover:bg-gray-500 focus-visible:ring-gray-500/30 focus-visible:ring-offset-gray-50 dark:focus-visible:ring-offset-gray-800'
+                                                    ? 'bg-brand-olive/10 text-brand-olive-dark hover:bg-brand-olive/20 focus-visible:ring-brand-olive/30 focus-visible:ring-offset-brand-off-white'
+                                                    : 'bg-brand-surface text-brand-olive hover:bg-brand-olive-light focus-visible:ring-brand-olive/30 focus-visible:ring-offset-brand-off-white'
                                                     }`}
                                                 title={isPresent ? "Mark Absent" : "Mark Present"}
                                                 aria-label={`Mark ${student.name} as ${isPresent ? 'absent' : 'present'}`}
@@ -1430,17 +1423,17 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                     role="dialog"
                     aria-modal="true"
                 >
-                    <div className="bg-white dark:bg-[#112240] rounded-2xl shadow-2xl w-full max-w-lg overflow-y-auto animate-in zoom-in-95 fade-in duration-300 relative">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-y-auto animate-in zoom-in-95 fade-in duration-300 relative">
                         <button
                             onClick={() => setSelectedStudent(null)}
-                            className="absolute top-4 right-4 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors text-gray-500"
+                            className="absolute top-4 right-4 p-2 hover:bg-brand-surface rounded-full transition-colors text-brand-olive"
                         >
                             <X className="w-6 h-6" />
                         </button>
 
                         <div className="p-8">
                             <div className="flex flex-col sm:flex-row items-center gap-6 mb-8">
-                                <div className="w-24 h-24 rounded-full bg-[#d6b161] text-[#0a192f] text-4xl font-bold flex items-center justify-center shadow-lg shrink-0">
+                                <div className="w-24 h-24 rounded-full bg-brand-gold text-brand-black text-4xl font-bold flex items-center justify-center shadow-lg shrink-0">
                                     {selectedStudent.avatar ? (
                                         <img 
                                             src={getAssetUrl(selectedStudent.avatar)} 
@@ -1454,13 +1447,13 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                     )}
                                 </div>
                                 <div className="text-center sm:text-left w-full">
-                                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                                    <h2 className="text-3xl font-bold text-brand-black mb-2">
                                         {selectedStudent.name}
                                     </h2>
                                     <div className="flex flex-wrap justify-center sm:justify-start gap-4">
                                         <a
                                             href={`mailto:${selectedStudent.email}`}
-                                            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
+                                            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-brand-gold/5 text-brand-red hover:bg-brand-gold/10 transition-colors"
                                         >
                                             <Mail className="w-4 h-4" />
                                             <span className="font-medium text-sm">{selectedStudent.email}</span>
@@ -1468,7 +1461,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                         {selectedStudent.phoneNumber && (
                                             <a
                                                 href={`tel:${selectedStudent.phoneNumber}`}
-                                                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors"
+                                                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-brand-olive/5 text-brand-olive hover:bg-brand-olive/10 transition-colors"
                                             >
                                                 <Phone className="w-4 h-4" />
                                                 <span className="font-medium text-sm">{selectedStudent.phoneNumber}</span>
@@ -1480,49 +1473,49 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 {/* Date of Birth */}
-                                <div className="p-4 rounded-xl bg-gray-50 dark:bg-[#0a192f] border border-gray-100 dark:border-gray-800">
+                                <div className="p-4 rounded-xl bg-brand-off-white border border-brand-surface">
                                     <div className="flex items-center gap-3 mb-2">
-                                        <div className="p-2 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400">
+                                        <div className="p-2 rounded-lg bg-brand-olive/10 text-brand-olive">
                                             <Calendar className="w-5 h-5" />
                                         </div>
-                                        <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Date of Birth</span>
+                                        <span className="text-sm font-semibold text-brand-olive">Date of Birth</span>
                                     </div>
-                                    <p className="text-lg font-bold text-gray-900 dark:text-white ml-12">
+                                    <p className="text-lg font-bold text-brand-black ml-12">
                                         {selectedStudent.dateOfBirth ? new Date(selectedStudent.dateOfBirth).toLocaleDateString() : "Not Specified"}
                                     </p>
                                 </div>
 
                                 {/* Qualification */}
-                                <div className="p-4 rounded-xl bg-gray-50 dark:bg-[#0a192f] border border-gray-100 dark:border-gray-800">
+                                <div className="p-4 rounded-xl bg-brand-off-white border border-brand-surface">
                                     <div className="flex items-center gap-3 mb-2">
-                                        <div className="p-2 rounded-lg bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400">
+                                        <div className="p-2 rounded-lg bg-brand-gold/10 text-brand-gold">
                                             <GraduationCap className="w-5 h-5" />
                                         </div>
-                                        <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Qualification</span>
+                                        <span className="text-sm font-semibold text-brand-olive">Qualification</span>
                                     </div>
-                                    <p className="text-lg font-bold text-gray-900 dark:text-white ml-12">
+                                    <p className="text-lg font-bold text-brand-black ml-12">
                                         {selectedStudent.qualification || "Not Specified"}
                                     </p>
                                 </div>
 
                                 {/* Guardian Info */}
-                                <div className="p-4 rounded-xl bg-gray-50 dark:bg-[#0a192f] border border-gray-100 dark:border-gray-800 sm:col-span-2">
+                                <div className="p-4 rounded-xl bg-brand-off-white border border-brand-surface sm:col-span-2">
                                     <div className="flex items-center gap-3 mb-3">
-                                        <div className="p-2 rounded-lg bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400">
+                                        <div className="p-2 rounded-lg bg-brand-red/10 text-brand-red">
                                             <UserIcon className="w-5 h-5" />
                                         </div>
-                                        <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Guardian Information</span>
+                                        <span className="text-sm font-semibold text-brand-olive">Guardian Information</span>
                                     </div>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 ml-12">
                                         <div>
-                                            <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Name</p>
-                                            <p className="text-base font-bold text-gray-900 dark:text-white">
+                                            <p className="text-xs text-brand-olive mb-1">Name</p>
+                                            <p className="text-base font-bold text-brand-black">
                                                 {selectedStudent.guardianName || "Not Provided"}
                                             </p>
                                         </div>
                                         <div>
-                                            <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Phone</p>
-                                            <p className="text-base font-bold text-gray-900 dark:text-white">
+                                            <p className="text-xs text-brand-olive mb-1">Phone</p>
+                                            <p className="text-base font-bold text-brand-black">
                                                 {selectedStudent.guardianPhone || "Not Provided"}
                                             </p>
                                         </div>
@@ -1541,7 +1534,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                     onClick={() => setIsAvatarFullScreen(false)}
                 >
                     <button 
-                        className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors p-2"
+                        className="absolute top-4 right-4 text-white hover:text-brand-olive-light transition-colors p-2"
                         onClick={() => setIsAvatarFullScreen(false)}
                     >
                         <X className="w-8 h-8" />

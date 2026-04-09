@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -14,7 +14,7 @@ import {
 import Button from '../components/ui/Button';
 import { Header, Footer } from '../components/layout';
 import UnifiedBookingForm from '../components/ui/UnifiedBookingForm';
-import { skillAPI } from '../lib/api';
+
 import { formatTrainingPrice } from '../lib/trainingPricing';
 
 // Animation variants
@@ -31,10 +31,10 @@ const StarRating: React.FC<{ rating: number }> = ({ rating }) => {
                 <Star
                     key={star}
                     className={`w-4 h-4 ${star <= Math.floor(rating)
-                        ? 'fill-yellow-400 text-yellow-400'
+                        ? 'fill-brand-gold text-brand-gold'
                         : star <= rating
-                            ? 'fill-yellow-400/50 text-yellow-400'
-                            : 'fill-gray-200 text-gray-200 dark:fill-gray-600 dark:text-gray-600'
+                            ? 'fill-brand-gold/50 text-brand-gold'
+                            : 'fill-brand-surface text-brand-surface'
                         }`}
                 />
             ))}
@@ -66,24 +66,6 @@ interface SkillCardProps {
     course: SkillCourseStatic;
 }
 
-const matchesSkillCard = (card: SkillCourseStatic, title?: string) => {
-    const normalizedTitle = String(title || '').trim().toLowerCase();
-
-    if (card.link === '/skill-training/scada') {
-        return normalizedTitle.includes('scada');
-    }
-
-    if (card.link === '/skill-training/plc') {
-        return normalizedTitle.includes('plc');
-    }
-
-    if (card.link === '/skill-training/drives') {
-        return normalizedTitle.includes('drives') || normalizedTitle.includes('motion');
-    }
-
-    return false;
-};
-
 const SkillCard: React.FC<SkillCardProps> = ({ course }) => {
     return (
         <motion.div
@@ -92,7 +74,7 @@ const SkillCard: React.FC<SkillCardProps> = ({ course }) => {
             className={`relative rounded-2xl border-2 ${course.borderColor} ${course.bgColor} shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group cursor-default`}
         >
             {/* Image Area */}
-            <div className="h-48 relative overflow-hidden bg-gray-200 dark:bg-gray-800 z-20">
+            <div className="h-48 relative overflow-hidden bg-brand-surface z-20">
                 <img
                     src={course.image}
                     alt={course.title}
@@ -102,23 +84,23 @@ const SkillCard: React.FC<SkillCardProps> = ({ course }) => {
             </div>
 
             {/* Decorative gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent dark:from-white/5 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent pointer-events-none" />
 
             {/* Content wrapper with z-index */}
             <div className="relative z-10 p-6">
                 {/* Title */}
-                <h3 className="text-xl font-sans font-bold text-center text-[#0a192f] dark:text-white mb-5 line-clamp-2 min-h-[3.5rem] flex items-center justify-center">
+                <h3 className="text-xl font-sans font-bold text-center text-brand-black mb-5 line-clamp-2 min-h-[3.5rem] flex items-center justify-center">
                     {course.title}
                 </h3>
 
                 {/* Stats Row */}
-                <div className="flex items-center justify-center gap-6 text-sm text-gray-700 dark:text-gray-300 mb-4">
+                <div className="flex items-center justify-center gap-6 text-sm text-brand-olive-dark mb-4">
                     <div className="flex items-center gap-1.5">
-                        <Users className="w-4 h-4 text-[#0a192f] dark:text-gray-400" />
+                        <Users className="w-4 h-4 text-brand-olive" />
                         <span className="font-medium">{course.students} students</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                        <BookOpen className="w-4 h-4 text-[#0a192f] dark:text-gray-400" />
+                        <BookOpen className="w-4 h-4 text-brand-olive" />
                         <span className="font-medium">{course.courses} modules</span>
                     </div>
                 </div>
@@ -126,8 +108,8 @@ const SkillCard: React.FC<SkillCardProps> = ({ course }) => {
                 {/* Rating */}
                 <div className="flex items-center justify-center gap-2 mb-5">
                     <StarRating rating={course.rating} />
-                    <span className="text-sm font-semibold text-[#0a192f] dark:text-white">{course.rating}</span>
-                    <span className="text-sm text-gray-600 dark:text-gray-400">({course.reviews} reviews)</span>
+                    <span className="text-sm font-semibold text-brand-black">{course.rating}</span>
+                    <span className="text-sm text-brand-olive">({course.reviews} reviews)</span>
                 </div>
 
                 {/* Level Tags */}
@@ -135,7 +117,7 @@ const SkillCard: React.FC<SkillCardProps> = ({ course }) => {
                     {course.levels.map((level) => (
                         <span
                             key={level}
-                            className="px-3 py-1.5 text-xs font-semibold rounded-full bg-white dark:bg-gray-800 text-[#0a192f] dark:text-gray-200 border border-gray-300 dark:border-gray-600 shadow-sm"
+                            className="px-3 py-1.5 text-xs font-semibold rounded-full bg-brand-white text-brand-black border border-brand-surface shadow-sm"
                         >
                             {level}
                         </span>
@@ -143,15 +125,15 @@ const SkillCard: React.FC<SkillCardProps> = ({ course }) => {
                 </div>
 
                 {/* Price and CTA */}
-                <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-300 dark:border-gray-600">
+                <div className="flex items-center justify-between mt-6 pt-4 border-t border-brand-surface">
                     <div>
-                        <span className="text-xs font-medium text-gray-600 dark:text-gray-400 block mb-1">Starting at</span>
-                        <span className="text-2xl font-bold text-[#0a192f] dark:text-white">{formatTrainingPrice(course.price)}</span>
+                        <span className="text-xs font-medium text-brand-olive block mb-1">Starting at</span>
+                        <span className="text-2xl font-bold text-brand-black">{formatTrainingPrice(course.price)}</span>
                     </div>
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                         <Link
                             to={course.link}
-                            className="flex items-center gap-2 px-5 py-2.5 bg-[#0a192f] dark:bg-[#d6b161] text-white dark:text-[#0a192f] rounded-lg font-semibold text-sm hover:bg-[#112240] dark:hover:bg-[#c4a055] transition-colors shadow-md hover:shadow-lg"
+                            className="flex items-center gap-2 px-5 py-2.5 bg-brand-red text-white rounded-lg font-semibold text-sm hover:bg-brand-red-hover transition-colors shadow-md hover:shadow-lg"
                         >
                             Explore
                             <ArrowRight className="w-4 h-4" />
@@ -165,7 +147,7 @@ const SkillCard: React.FC<SkillCardProps> = ({ course }) => {
 
 const LandingPage: React.FC = () => {
     const [isBookingFormOpen, setIsBookingFormOpen] = useState(false);
-    const [skillCourses, setSkillCourses] = useState<SkillCourseStatic[]>([
+    const skillCourses: SkillCourseStatic[] = [
         {
             _id: '1',
             title: 'SCADA & HMI Training',
@@ -177,8 +159,8 @@ const LandingPage: React.FC = () => {
             image: 'https://sovirtechnologies.in/api/uploads/tariningwebsite/landing/scada.png',
             rating: 4.8,
             link: '/skill-training/scada',
-            bgColor: 'bg-blue-50 dark:bg-blue-950/30',
-            borderColor: 'border-blue-200 dark:border-blue-800'
+            bgColor: 'bg-brand-off-white',
+            borderColor: 'border-brand-surface'
         },
         {
             _id: '2',
@@ -191,8 +173,8 @@ const LandingPage: React.FC = () => {
             image: 'https://sovirtechnologies.in/api/uploads/tariningwebsite/landing/plc.png',
             rating: 4.9,
             link: '/skill-training/plc',
-            bgColor: 'bg-purple-50 dark:bg-purple-950/30',
-            borderColor: 'border-purple-200 dark:border-purple-800'
+            bgColor: 'bg-brand-off-white',
+            borderColor: 'border-brand-surface'
         },
         {
             _id: '3',
@@ -205,44 +187,17 @@ const LandingPage: React.FC = () => {
             image: 'https://sovirtechnologies.in/api/uploads/tariningwebsite/landing/industrial.png',
             rating: 4.7,
             link: '/skill-training/drives',
-            bgColor: 'bg-green-50 dark:bg-green-950/30',
-            borderColor: 'border-green-200 dark:border-green-800'
+            bgColor: 'bg-brand-off-white',
+            borderColor: 'border-brand-surface'
         }
-    ]);
-
-    useEffect(() => {
-        const syncSkillPrices = async () => {
-            try {
-                const apiCourses = await skillAPI.getAll();
-
-                setSkillCourses((currentCourses) =>
-                    currentCourses.map((card) => {
-                        const matchedCourse = apiCourses.find((course: any) => matchesSkillCard(card, course?.title));
-
-                        if (!matchedCourse?.price) {
-                            return card;
-                        }
-
-                        return {
-                            ...card,
-                            price: matchedCourse.price,
-                        };
-                    })
-                );
-            } catch (error) {
-                console.error('Failed to sync landing page skill prices:', error);
-            }
-        };
-
-        syncSkillPrices();
-    }, []);
+    ];
 
     return (
-        <div className="min-h-screen bg-white dark:bg-[#0a192f] transition-colors duration-300 font-sans">
+        <div className="min-h-screen bg-brand-white font-sans">
             {/* Skip to content */}
             <a
                 href="#main-content"
-                className="sr-only focus:not-sr-only focus:absolute focus:top-6 focus:left-6 focus:z-50 focus:rounded-lg focus:bg-white focus:px-6 focus:py-3 focus:font-bold focus:text-[#0a192f] focus:shadow-2xl focus:ring-2 focus:ring-[#d6b161]"
+                className="sr-only focus:not-sr-only focus:absolute focus:top-6 focus:left-6 focus:z-50 focus:rounded-lg focus:bg-brand-white focus:px-6 focus:py-3 focus:font-bold focus:text-brand-black focus:shadow-2xl focus:ring-2 focus:ring-brand-gold"
             >
                 Skip to content
             </a>
@@ -251,12 +206,12 @@ const LandingPage: React.FC = () => {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-white to-gray-50 dark:from-[#0a192f] dark:via-[#0d1f3a] dark:to-[#0a192f]">
+            <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-brand-black">
                 {/* Subtle radial glow from center */}
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_40%,rgba(214,177,97,0.06),transparent)]" aria-hidden="true" />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_40%,rgba(232,160,32,0.08),transparent)]" aria-hidden="true" />
 
                 {/* Bottom vignette for seamless transition to next section */}
-                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white dark:from-[#0a192f] to-transparent" aria-hidden="true" />
+                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-brand-black to-transparent" aria-hidden="true" />
 
                 {/* Content */}
                 <div className="relative z-10 w-full max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 pt-32 pb-24">
@@ -266,30 +221,33 @@ const LandingPage: React.FC = () => {
                         transition={{ duration: 0.8, ease: [0.0, 0.0, 0.2, 1] }}
                         className="flex flex-col items-center text-center space-y-6 md:space-y-8 w-full mx-auto"
                     >
-                        <div className="inline-block px-4 py-2 bg-[#d6b161]/10 dark:bg-[#d6b161]/15 backdrop-blur-sm rounded-full border border-[#d6b161]/20 dark:border-[#d6b161]/30">
-                            <span className="text-[#c4a055] dark:text-[#d6b161] font-medium text-sm flex items-center gap-2">
-                                <span className="w-2 h-2 rounded-full bg-[#c4a055] dark:bg-[#d6b161] animate-pulse"></span>
+                        <div className="inline-block px-4 py-2 bg-brand-gold/10 backdrop-blur-sm rounded-full border border-brand-gold/20">
+                            <span className="text-brand-gold font-medium text-sm flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span>
                                 New: Summer 2026 Batches Now Open
                             </span>
                         </div>
 
-                        <h1 className="font-sans text-4xl md:text-5xl lg:text-7xl font-bold text-gray-900 dark:text-white leading-[1.1] tracking-tight max-w-5xl mx-auto">
+                        <h1 className="font-sans text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight max-w-5xl mx-auto">
                             SoVir Skilling & <br className="hidden sm:block" />
                             <span>Training Center</span>
                         </h1>
 
-                        <p className="text-base md:text-lg lg:text-xl font-medium text-gray-700 dark:text-gray-200 max-w-3xl mx-auto">
+                        {/* Decorative gold line */}
+                        <div className="w-[60px] h-[3px] bg-brand-gold mx-auto" />
+
+                        <p className="text-base md:text-lg lg:text-xl font-medium text-brand-gold max-w-3xl mx-auto">
                             A Training & Career Services Division of SoVir Technologies LLP
                         </p>
 
-                        <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-3xl mx-auto">
+                        <p className="text-sm sm:text-base md:text-lg text-white/75 leading-relaxed max-w-3xl mx-auto">
                             A professional training academy empowering individuals with industry-ready skills and global career opportunities through specialized skill development and abroad placement support.
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center pt-2">
                             <Link
-                                to="/skill-training"
-                                className="bg-[#d6b161] hover:bg-[#c4a055] text-[#0a192f] font-semibold px-8 py-4 text-base sm:text-lg rounded-full w-full sm:w-auto inline-flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-[#d6b161] transition-all duration-300 hover:shadow-lg hover:shadow-[#d6b161]/25 min-h-[48px]"
+                                to="/language-training"
+                                className="bg-brand-red hover:bg-brand-red-hover text-white font-semibold px-8 py-4 text-base sm:text-lg rounded w-full sm:w-auto inline-flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-brand-gold transition-all duration-300 hover:shadow-lg min-h-[48px]"
                             >
                                 Start Learning
                                 <ArrowRight className="w-5 h-5" />
@@ -297,7 +255,7 @@ const LandingPage: React.FC = () => {
                             <Button
                                 onClick={() => setIsBookingFormOpen(true)}
                                 variant="outline"
-                                className="border-gray-200 dark:border-white/10 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 backdrop-blur-sm px-8 py-4 text-base sm:text-lg rounded-full w-full sm:w-auto flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-[#d6b161] transition-all duration-300 hover:shadow-lg min-h-[48px]"
+                                className="border-2 border-brand-gold text-brand-gold hover:bg-brand-gold/10 backdrop-blur-sm px-8 py-4 text-base sm:text-lg rounded w-full sm:w-auto flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-brand-gold transition-all duration-300 hover:shadow-lg min-h-[48px]"
                             >
                                 <Play className="w-5 h-5" />
                                 Book Free Consultation
@@ -309,50 +267,52 @@ const LandingPage: React.FC = () => {
 
 
             {/* About Us Section */}
-            <section id="about" className="py-24 bg-white dark:bg-[#0a192f]">
+            <section id="about" className="py-24 bg-brand-off-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* Section Header */}
                     <div className="text-center mb-16">
-                        <span className="text-[#d6b161] font-semibold text-sm tracking-widest uppercase">About Us</span>
-                        <h2 className="font-sans text-4xl lg:text-5xl font-medium text-gray-900 dark:text-white mt-4 mb-6">
+                        <span className="text-brand-red font-semibold text-sm tracking-widest uppercase">About Us</span>
+                        <h2 className="font-sans text-4xl lg:text-5xl font-bold text-brand-black mt-4 mb-6">
                             Empowering Careers Through Excellence
                         </h2>
-                        <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                        {/* Section heading decorative rule — red on light bg */}
+                        <div className="w-12 h-[3px] bg-brand-red mx-auto mb-6" />
+                        <p className="text-lg text-brand-olive-dark max-w-3xl mx-auto">
                             Part of SoVir Technologies LLP's commitment to professional development and global opportunities
                         </p>
                     </div>
 
                     <div className="grid lg:grid-cols-2 gap-12 mb-16">
                         {/* About SoVir Technologies LLP */}
-                        <div className="bg-gray-50 dark:bg-[#112240] rounded-[2rem] p-10 border border-gray-100 dark:border-white/5">
-                            <div className="w-14 h-14 rounded-xl bg-[#d6b161]/10 flex items-center justify-center mb-6">
-                                <Globe className="w-7 h-7 text-[#d6b161]" />
+                        <div className="bg-brand-white rounded-[2rem] p-10 border border-brand-surface shadow-[0_2px_12px_rgba(110,110,80,0.10)]">
+                            <div className="w-14 h-14 rounded-xl bg-brand-gold/10 flex items-center justify-center mb-6">
+                                <Globe className="w-7 h-7 text-brand-red" />
                             </div>
-                            <h3 className="font-sans text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                            <h3 className="font-sans text-2xl font-semibold text-brand-black mb-4">
                                 About SoVir Technologies LLP
                             </h3>
-                            <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                            <p className="text-brand-olive-dark leading-relaxed mb-6">
                                 SoVir Technologies LLP is a professional services organization focused on technology, training, and workforce development. With a strong commitment to quality and innovation, the company supports individuals and industries through specialized skill-building solutions.
                             </p>
-                            <div className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400">
-                                <CheckCircle className="w-5 h-5 text-[#d6b161] flex-shrink-0 mt-0.5" />
+                            <div className="flex items-start gap-3 text-sm text-brand-olive-dark">
+                                <CheckCircle className="w-5 h-5 text-brand-red flex-shrink-0 mt-0.5" />
                                 <span>Professional technology and training services</span>
                             </div>
                         </div>
 
                         {/* About SoVir Skilling & Training Center */}
-                        <div className="bg-gray-50 dark:bg-[#112240] rounded-[2rem] p-10 border border-gray-100 dark:border-white/5">
-                            <div className="w-14 h-14 rounded-xl bg-[#d6b161]/10 flex items-center justify-center mb-6">
-                                <GraduationCap className="w-7 h-7 text-[#d6b161]" />
+                        <div className="bg-brand-white rounded-[2rem] p-10 border border-brand-surface shadow-[0_2px_12px_rgba(110,110,80,0.10)]">
+                            <div className="w-14 h-14 rounded-xl bg-brand-gold/10 flex items-center justify-center mb-6">
+                                <GraduationCap className="w-7 h-7 text-brand-red" />
                             </div>
-                            <h3 className="font-sans text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                            <h3 className="font-sans text-2xl font-semibold text-brand-black mb-4">
                                 About SoVir Skilling & Training Center
                             </h3>
-                            <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                            <p className="text-brand-olive-dark leading-relaxed mb-6">
                                 SoVir Skilling & Training Center is the training and education wing of SoVir Technologies LLP. Our academy is built to deliver practical learning, certification-oriented training, and career-focused guidance for students, working professionals, and international aspirants.
                             </p>
-                            <div className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400">
-                                <CheckCircle className="w-5 h-5 text-[#d6b161] flex-shrink-0 mt-0.5" />
+                            <div className="flex items-start gap-3 text-sm text-brand-olive-dark">
+                                <CheckCircle className="w-5 h-5 text-brand-red flex-shrink-0 mt-0.5" />
                                 <span>Practical learning and career-focused training</span>
                             </div>
                         </div>
@@ -360,26 +320,26 @@ const LandingPage: React.FC = () => {
 
                     {/* Mission & Vision */}
                     <div className="grid md:grid-cols-2 gap-8">
-                        <div className="bg-gradient-to-br from-[#d6b161]/10 to-transparent dark:from-[#d6b161]/5 rounded-2xl p-8 border border-[#d6b161]/20">
+                        <div className="bg-brand-gold/10 rounded-2xl p-8 border border-brand-gold/20">
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="w-10 h-10 rounded-lg bg-[#d6b161] flex items-center justify-center">
-                                    <Star className="w-5 h-5 text-[#0a192f]" />
+                                <div className="w-10 h-10 rounded-lg bg-brand-gold flex items-center justify-center">
+                                    <Star className="w-5 h-5 text-brand-black" />
                                 </div>
-                                <h4 className="font-sans text-xl font-semibold text-gray-900 dark:text-white">Our Mission</h4>
+                                <h4 className="font-sans text-xl font-semibold text-brand-black">Our Mission</h4>
                             </div>
-                            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                            <p className="text-brand-olive-dark leading-relaxed">
                                 To provide high-quality training programs that enhance technical competence and global employability.
                             </p>
                         </div>
 
-                        <div className="bg-gradient-to-br from-[#d6b161]/10 to-transparent dark:from-[#d6b161]/5 rounded-2xl p-8 border border-[#d6b161]/20">
+                        <div className="bg-brand-gold/10 rounded-2xl p-8 border border-brand-gold/20">
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="w-10 h-10 rounded-lg bg-[#d6b161] flex items-center justify-center">
-                                    <Globe className="w-5 h-5 text-[#0a192f]" />
+                                <div className="w-10 h-10 rounded-lg bg-brand-gold flex items-center justify-center">
+                                    <Globe className="w-5 h-5 text-brand-black" />
                                 </div>
-                                <h4 className="font-sans text-xl font-semibold text-gray-900 dark:text-white">Our Vision</h4>
+                                <h4 className="font-sans text-xl font-semibold text-brand-black">Our Vision</h4>
                             </div>
-                            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                            <p className="text-brand-olive-dark leading-relaxed">
                                 To become a global leader in industrial automation training, empowering businesses with smart, efficient, and sustainable solutions.
                             </p>
                         </div>
@@ -388,15 +348,16 @@ const LandingPage: React.FC = () => {
             </section>
 
             {/* Skill Training Services Section */}
-            <section id="main-content" className="py-24 bg-gray-50 dark:bg-[#0d1f3a]">
+            <section id="main-content" className="py-24 bg-brand-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* Section Header */}
                     <div className="text-center mb-16">
-                        <span className="text-[#d6b161] font-semibold text-sm tracking-widest uppercase">Skill Training</span>
-                        <h2 className="font-sans text-4xl lg:text-5xl font-medium text-gray-900 dark:text-white mt-4 mb-6">
+                        <span className="text-brand-red font-semibold text-sm tracking-widest uppercase">Skill Training</span>
+                        <h2 className="font-sans text-4xl lg:text-5xl font-bold text-brand-black mt-4 mb-6">
                             Industry-Ready Technical Training
                         </h2>
-                        <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                        <div className="w-12 h-[3px] bg-brand-red mx-auto mb-6" />
+                        <p className="text-lg text-brand-olive-dark max-w-3xl mx-auto">
                             Practical, hands-on training programs combining theory with real-world applications
                         </p>
                     </div>
@@ -415,7 +376,7 @@ const LandingPage: React.FC = () => {
                     <div className="text-center mt-12">
                         <Link
                             to="/skill-training"
-                            className="bg-[#0a192f] dark:bg-[#d6b161] text-white dark:text-[#0a192f] hover:bg-[#112240] dark:hover:bg-[#c4a055] font-semibold px-8 py-3 rounded-lg inline-flex items-center gap-2 mx-auto focus-visible:ring-2 focus-visible:ring-[#d6b161]"
+                            className="bg-brand-red hover:bg-brand-red-hover text-white font-semibold px-8 py-3 rounded inline-flex items-center gap-2 mx-auto focus-visible:ring-2 focus-visible:ring-brand-gold transition-colors"
                         >
                             View All Courses
                             <ArrowRight className="w-5 h-5" />

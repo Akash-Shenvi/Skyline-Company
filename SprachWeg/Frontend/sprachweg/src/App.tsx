@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { ThemeProvider } from './context/ThemeContext';
+
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -16,25 +16,16 @@ import ResetPasswordPage from './pages/ResetPasswordPage';
 import StudentDashboard from './pages/StudentDashboard';
 import TrainerDashboard from './pages/TrainerDashboard';
 import AdminDashboard from './pages/Admin/AdminDashboard';
-import SkillDashboard from './pages/Admin/SkillDashboard';
-import SkillDashboard1 from './pages/Admin/SkillDashboard1';
 import LanguageDashboard from './pages/Admin/LanguageDashboard';
 import LanguageEnrollmentDetails from './pages/Admin/LanguageEnrollmentDetails';
 import LanguageBatches from './pages/Admin/LanguageBatches';
 import LanguageBatchDetails from './pages/LanguageBatchDetails';
-import SkillBatchDetails from './pages/SkillBatchDetails';
 import BatchAssessmentPage from './pages/BatchAssessmentPage';
 import LanguageTraining from './pages/LanguageTraining';
 import CourseEnglishPage from './pages/CourseEnglishPage';
 import CourseGermanPage from './pages/CourseGermanPage';
 import CourseJapanesePage from './pages/CourseJapanesePage';
-import SkillTrainingOverviewPage from './pages/skill_training/SkillTrainingOverviewPage';
-import SCADAAndHMIPage from './pages/skill_training/SCADAAndHMIPage';
-import PLCIndustrialAutomationPage from './pages/skill_training/PLCIndustrialAutomationPage';
-import IndustrialDrivesMotionPage from './pages/skill_training/IndustrialDrivesMotionPage';
-import AdvancedIndustry4Page from './pages/skill_training/AdvancedIndustry4Page';
-import CustomizedCorporateTrainingPage from './pages/skill_training/CustomizedCorporateTrainingPage';
-import InternshipApplicationPage from './pages/skill_training/InternshipApplicationPage';
+import InternshipApplicationPage from './pages/InternshipApplicationPage';
 import NotFound404 from './pages/NotFound404';
 import AboutPage from './pages/About';
 import GoogleCallback from './pages/GoogleCallback';
@@ -53,452 +44,324 @@ import ManageStudents from './pages/Admin/ManageStudents';
 import ChatPage from './pages/ChatPage';
 import VerificationPage from './pages/VerificationPage';
 import CareersPage from './pages/CareersPage';
-import WebinarsPage from './pages/WebinarsPage';
 import PaymentResultPage from './pages/PaymentResultPage';
-import AdminWebinarCatalog from './pages/Admin/AdminWebinarCatalog';
-import AdminWebinarRegistrations from './pages/Admin/AdminWebinarRegistrations';
-import InstitutionLoginPage from './pages/InstitutionLoginPage';
-import InstitutionRegisterPage from './pages/InstitutionRegisterPage';
-import InstitutionDashboard from './pages/InstitutionDashboard';
-import AdminInstitutionRequests from './pages/Admin/AdminInstitutionRequests';
 import { getDashboardPathForRole } from './lib/authRouting';
-import { isInstitutionStudentRole } from './lib/roles';
 
 
 
 // Protected Route Component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user, loading } = useAuth();
-  const location = useLocation();
+    const { user, loading } = useAuth();
+    const location = useLocation();
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
-        </div>
-      </div>
-    );
-  }
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-brand-off-white">
+                <div className="text-center">
+                    <div className="w-16 h-16 border-4 border-brand-gold border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                    <p className="text-brand-olive-dark">Loading...</p>
+                </div>
+            </div>
+        );
+    }
 
-  if (!user) {
-    const redirectTo = `${location.pathname}${location.search}${location.hash}`;
-    return <Navigate to={`/login?redirect=${encodeURIComponent(redirectTo)}`} replace state={{ from: location }} />;
-  }
+    if (!user) {
+        const redirectTo = `${location.pathname}${location.search}${location.hash}`;
+        return <Navigate to={`/login?redirect=${encodeURIComponent(redirectTo)}`} replace state={{ from: location }} />;
+    }
 
-  return <>{children}</>;
+    return <>{children}</>;
 };
 
 // Public Route Component (redirect if already logged in)
 const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user, loading } = useAuth();
-  const location = useLocation();
+    const { user, loading } = useAuth();
+    const location = useLocation();
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (user) {
-    const redirectTarget = new URLSearchParams(location.search).get('redirect');
-    if (redirectTarget && redirectTarget.startsWith('/')) {
-      return <Navigate to={redirectTarget} replace />;
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-brand-off-white">
+                <div className="text-center">
+                    <div className="w-16 h-16 border-4 border-brand-gold border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                    <p className="text-brand-olive-dark">Loading...</p>
+                </div>
+            </div>
+        );
     }
-    return <Navigate to={getDashboardPathForRole(user.role)} replace />;
-  }
 
-  return <>{children}</>;
+    if (user) {
+        const redirectTarget = new URLSearchParams(location.search).get('redirect');
+        if (redirectTarget && redirectTarget.startsWith('/')) {
+            return <Navigate to={redirectTarget} replace />;
+        }
+        return <Navigate to={getDashboardPathForRole(user.role)} replace />;
+    }
+
+    return <>{children}</>;
 };
 
 const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user, loading } = useAuth();
+    const { user, loading } = useAuth();
 
-  if (loading) return <div>Loading...</div>;
+    if (loading) return <div>Loading...</div>;
 
-  if (!user || user.role !== 'admin') {
-    return <Navigate to="/login" replace />;
-  }
+    if (!user || user.role !== 'admin') {
+        return <Navigate to="/login" replace />;
+    }
 
-  return <>{children}</>;
+    return <>{children}</>;
 };
 
 const TrainerRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user, loading } = useAuth();
+    const { user, loading } = useAuth();
 
-  if (loading) return <div>Loading...</div>;
+    if (loading) return <div>Loading...</div>;
 
-  if (!user || user.role !== 'trainer') {
-    return <Navigate to="/login" replace />;
-  }
+    if (!user || user.role !== 'trainer') {
+        return <Navigate to="/login" replace />;
+    }
 
-  return <>{children}</>;
-};
-
-const InstitutionRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user, loading } = useAuth();
-  const location = useLocation();
-
-  if (loading) return <div>Loading...</div>;
-
-  if (!user || user.role !== 'institution') {
-    const redirectTo = `${location.pathname}${location.search}${location.hash}`;
-    return <Navigate to={`/institution/login?redirect=${encodeURIComponent(redirectTo)}`} replace />;
-  }
-
-  return <>{children}</>;
+    return <>{children}</>;
 };
 
 const AppContent = () => {
-  const { user } = useAuth();
+    const { user } = useAuth();
 
-  // Determine if profile is incomplete
-  // user.isProfileComplete is virtual from backend, so it relies on the response
-  // If undefined, we assume false or check specific fields if needed. 
-  // But safer to rely on flag if backend sends it.
-  const isProfileIncomplete = user
-    && user.role !== 'institution'
-    && !isInstitutionStudentRole(user.role)
-    && user.isProfileComplete === false;
+    const isProfileIncomplete = user
+        && user.isProfileComplete === false;
 
-  return (
-    <>
-      <ScrollToTop />
-      <ProfileCompletionModal isOpen={!!isProfileIncomplete} />
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/language-training" element={<LanguageTraining />} />
-        <Route path="/training/english" element={<CourseEnglishPage />} />
-        <Route path="/training/german" element={<CourseGermanPage />} />
-        <Route path="/training/japanese" element={<CourseJapanesePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/feedback" element={<FeedbackPage />} />
-        <Route path="/verify" element={<VerificationPage />} />
-        <Route path="/careers" element={<CareersPage />} />
-        <Route path="/webinars" element={<WebinarsPage />} />
-        <Route path="/payment-result" element={<PaymentResultPage />} />
+    return (
+        <>
+            <ScrollToTop />
+            <ProfileCompletionModal isOpen={!!isProfileIncomplete} />
+            <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/language-training" element={<LanguageTraining />} />
+                <Route path="/training/english" element={<CourseEnglishPage />} />
+                <Route path="/training/german" element={<CourseGermanPage />} />
+                <Route path="/training/japanese" element={<CourseJapanesePage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/feedback" element={<FeedbackPage />} />
+                <Route path="/verify" element={<VerificationPage />} />
+                <Route path="/careers" element={<CareersPage />} />
+                <Route path="/payment-result" element={<PaymentResultPage />} />
 
+                <Route
+                    path="/internship-application"
+                    element={
+                        <ProtectedRoute>
+                            <InternshipApplicationPage />
+                        </ProtectedRoute>
+                    }
+                />
 
-        {/* Skill Training Routes */}
-        <Route path="/skill-training" element={<SkillTrainingOverviewPage />} />
-        <Route path="/skill-training/scada" element={<SCADAAndHMIPage />} />
-        <Route path="/skill-training/plc" element={<PLCIndustrialAutomationPage />} />
-        <Route path="/skill-training/drives" element={<IndustrialDrivesMotionPage />} />
-        <Route path="/skill-training/industry4" element={<AdvancedIndustry4Page />} />
-        <Route path="/skill-training/industry4" element={<AdvancedIndustry4Page />} />
-        <Route path="/skill-training/corporate" element={<CustomizedCorporateTrainingPage />} />
-        <Route
-          path="/internship-application"
-          element={
-            <ProtectedRoute>
-              <InternshipApplicationPage />
-            </ProtectedRoute>
-          }
-        />
+                <Route
+                    path="/login"
+                    element={
+                        <PublicRoute>
+                            <LoginPage />
+                        </PublicRoute>
+                    }
+                />
+                <Route
+                    path="/register"
+                    element={
+                        <PublicRoute>
+                            <RegisterPage />
+                        </PublicRoute>
+                    }
+                />
+                <Route
+                    path="/forgot-password"
+                    element={
+                        <PublicRoute>
+                            <ForgotPasswordPage />
+                        </PublicRoute>
+                    }
+                />
+                <Route
+                    path="/reset-password"
+                    element={
+                        <PublicRoute>
+                            <ResetPasswordPage />
+                        </PublicRoute>
+                    }
+                />
 
-        <Route
-          path="/login"
-          element={
-            <PublicRoute>
-              <LoginPage />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <PublicRoute>
-              <RegisterPage />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/institution/login"
-          element={
-            <PublicRoute>
-              <InstitutionLoginPage />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/institution/register"
-          element={
-            <PublicRoute>
-              <InstitutionRegisterPage />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/forgot-password"
-          element={
-            <PublicRoute>
-              <ForgotPasswordPage />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/reset-password"
-          element={
-            <PublicRoute>
-              <ResetPasswordPage />
-            </PublicRoute>
-          }
-        />
+                {/* Protected Routes */}
+                <Route
+                    path="/student-dashboard"
+                    element={
+                        <ProtectedRoute>
+                            <StudentDashboard />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/trainer-dashboard"
+                    element={
+                        <TrainerRoute>
+                            <TrainerDashboard />
+                        </TrainerRoute>
+                    }
+                />
 
-        {/* Protected Routes */}
-        <Route
-          path="/student-dashboard"
-          element={
-            <ProtectedRoute>
-              <StudentDashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/trainer-dashboard"
-          element={
-            <TrainerRoute>
-              <TrainerDashboard />
-            </TrainerRoute>
-          }
-        />
-        <Route
-          path="/institution-dashboard"
-          element={
-            <InstitutionRoute>
-              <InstitutionDashboard />
-            </InstitutionRoute>
-          }
-        />
+                {/* Admin Routes */}
+                <Route path="/auth/google/callback" element={<GoogleCallback />} />
+                <Route
+                    path="/admin-dashboard"
+                    element={
+                        <AdminRoute>
+                            <AdminDashboard />
+                        </AdminRoute>
+                    }
+                />
+                <Route
+                    path="/admin/languages"
+                    element={
+                        <AdminRoute>
+                            <LanguageDashboard />
+                        </AdminRoute>
+                    }
+                />
+                <Route
+                    path="/admin/language-enrollment-details"
+                    element={
+                        <AdminRoute>
+                            <LanguageEnrollmentDetails />
+                        </AdminRoute>
+                    }
+                />
+                <Route
+                    path="/admin/language-batches"
+                    element={
+                        <AdminRoute>
+                            <LanguageBatches />
+                        </AdminRoute>
+                    }
+                />
+                <Route
+                    path="/language-batch/:batchId"
+                    element={
+                        <ProtectedRoute>
+                            <LanguageBatchDetails />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/language-batch/:batchId/assessments/new"
+                    element={
+                        <ProtectedRoute>
+                            <BatchAssessmentPage trainingType="language" />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/language-batch/:batchId/assessments/:assessmentId"
+                    element={
+                        <ProtectedRoute>
+                            <BatchAssessmentPage trainingType="language" />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/admin/messages"
+                    element={
+                        <AdminRoute>
+                            <AdminContactMessages />
+                        </AdminRoute>
+                    }
+                />
+                <Route
+                    path="/admin/booking-requests"
+                    element={
+                        <AdminRoute>
+                            <AdminBookingRequests />
+                        </AdminRoute>
+                    }
+                />
+                <Route
+                    path="/admin/internship-applications"
+                    element={
+                        <AdminRoute>
+                            <AdminInternshipApplications />
+                        </AdminRoute>
+                    }
+                />
+                <Route
+                    path="/admin/internships"
+                    element={
+                        <AdminRoute>
+                            <AdminInternshipCatalog />
+                        </AdminRoute>
+                    }
+                />
+                <Route
+                    path="/admin/trainers"
+                    element={
+                        <AdminRoute>
+                            <ManageTrainers />
+                        </AdminRoute>
+                    }
+                />
+                <Route
+                    path="/admin/users"
+                    element={
+                        <AdminRoute>
+                            <ManageStudents />
+                        </AdminRoute>
+                    }
+                />
+                <Route path="/admin/students" element={<Navigate to="/admin/users" replace />} />
+                <Route
+                    path="/admin/feedback"
+                    element={
+                        <AdminRoute>
+                            <AdminFeedback />
+                        </AdminRoute>
+                    }
+                />
+                <Route
+                    path="/admin/file-links"
+                    element={
+                        <AdminRoute>
+                            <AdminFileLinks />
+                        </AdminRoute>
+                    }
+                />
 
-        {/* Admin Routes */}
-        <Route path="/auth/google/callback" element={<GoogleCallback />} />
-        <Route
-          path="/admin-dashboard"
-          element={
-            <AdminRoute>
-              <AdminDashboard />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/skills"
-          element={
-            <AdminRoute>
-              <SkillDashboard />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/skills-details"
-          element={
-            <AdminRoute>
-              <SkillDashboard1 />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/languages"
-          element={
-            <AdminRoute>
-              <LanguageDashboard />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/language-enrollment-details"
-          element={
-            <AdminRoute>
-              <LanguageEnrollmentDetails />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/language-batches"
-          element={
-            <AdminRoute>
-              <LanguageBatches />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/language-batch/:batchId"
-          element={
-            <ProtectedRoute>
-              <LanguageBatchDetails />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/language-batch/:batchId/assessments/new"
-          element={
-            <ProtectedRoute>
-              <BatchAssessmentPage trainingType="language" />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/language-batch/:batchId/assessments/:assessmentId"
-          element={
-            <ProtectedRoute>
-              <BatchAssessmentPage trainingType="language" />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/skill-batch/:batchId"
-          element={
-            <ProtectedRoute>
-              <SkillBatchDetails />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/skill-batch/:batchId/assessments/new"
-          element={
-            <ProtectedRoute>
-              <BatchAssessmentPage trainingType="skill" />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/skill-batch/:batchId/assessments/:assessmentId"
-          element={
-            <ProtectedRoute>
-              <BatchAssessmentPage trainingType="skill" />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/messages"
-          element={
-            <AdminRoute>
-              <AdminContactMessages />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/booking-requests"
-          element={
-            <AdminRoute>
-              <AdminBookingRequests />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/internship-applications"
-          element={
-            <AdminRoute>
-              <AdminInternshipApplications />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/internships"
-          element={
-            <AdminRoute>
-              <AdminInternshipCatalog />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/webinars"
-          element={
-            <AdminRoute>
-              <AdminWebinarCatalog />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/webinar-registrations"
-          element={
-            <AdminRoute>
-              <AdminWebinarRegistrations />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/trainers"
-          element={
-            <AdminRoute>
-              <ManageTrainers />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/users"
-          element={
-            <AdminRoute>
-              <ManageStudents />
-            </AdminRoute>
-          }
-        />
-        <Route path="/admin/students" element={<Navigate to="/admin/users" replace />} />
-        <Route
-          path="/admin/feedback"
-          element={
-            <AdminRoute>
-              <AdminFeedback />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/file-links"
-          element={
-            <AdminRoute>
-              <AdminFileLinks />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/institutions"
-          element={
-            <AdminRoute>
-              <AdminInstitutionRequests />
-            </AdminRoute>
-          }
-        />
+                <Route
+                    path="/chat/:studentId"
+                    element={
+                        <ProtectedRoute>
+                            <ChatPage />
+                        </ProtectedRoute>
+                    }
+                />
 
-        <Route
-          path="/chat/:studentId"
-          element={
-            <ProtectedRoute>
-              <ChatPage />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Fallback */}
-        <Route path="*" element={<NotFound404 />} />
-      </Routes >
-    </>
-  );
+                {/* Fallback */}
+                <Route path="*" element={<NotFound404 />} />
+            </Routes >
+        </>
+    );
 };
 
 const App = () => {
-  return (
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID"}>
-      <ThemeProvider>
-        <AuthProvider>
-          <BrowserRouter>
-            <NotificationProvider>
-              <AppContent />
-            </NotificationProvider>
-          </BrowserRouter>
-        </AuthProvider>
-      </ThemeProvider>
-    </GoogleOAuthProvider>
-  );
+    return (
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID"}>
+            <AuthProvider>
+                <BrowserRouter>
+                    <NotificationProvider>
+                        <AppContent />
+                    </NotificationProvider>
+                </BrowserRouter>
+            </AuthProvider>
+        </GoogleOAuthProvider>
+    );
 };
 
 export default App;

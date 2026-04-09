@@ -92,7 +92,7 @@ const HeroBackground: React.FC = () => {
                     opacity: [0.4, 0.6, 0.4]
                 }}
                 transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-[10%] -right-[10%] h-[600px] w-[600px] rounded-full bg-gradient-to-br from-[#d6b161]/20 to-[#0a192f]/10 blur-[120px]"
+                className="absolute -top-[10%] -right-[10%] h-[600px] w-[600px] rounded-full bg-gradient-to-br from-brand-gold/20 to-brand-black/10 blur-[120px]"
             />
             <motion.div
                 style={{ y: y2 }}
@@ -101,7 +101,7 @@ const HeroBackground: React.FC = () => {
                     opacity: [0.3, 0.5, 0.3]
                 }}
                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute top-[20%] -left-[10%] h-[500px] w-[500px] rounded-full bg-blue-600/10 blur-[100px]"
+                className="absolute top-[20%] -left-[10%] h-[500px] w-[500px] rounded-full bg-brand-red/10 blur-[100px]"
             />
             <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay"></div>
         </motion.div>
@@ -122,8 +122,8 @@ const languageCards = [
         levels: ['Beginner', 'Intermediate', 'Advanced'],
         categories: ['Business', 'Academic'],
         price: '₹9,999',
-        bgColor: 'bg-blue-50 dark:bg-blue-950/30',
-        borderColor: 'border-blue-200 dark:border-blue-800',
+        bgColor: 'bg-brand-gold/5',
+        borderColor: 'border-brand-surface',
         route: '/training/english',
         image: "https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
@@ -137,8 +137,8 @@ const languageCards = [
         levels: ['A1', 'A2', 'B1', 'B2', 'TELC / Goethe'],
         categories: [],
         price: '₹15,999',
-        bgColor: 'bg-pink-50 dark:bg-pink-950/30',
-        borderColor: 'border-pink-200 dark:border-pink-800',
+        bgColor: 'bg-brand-red/5',
+        borderColor: 'border-brand-red/20',
         route: '/training/german',
         image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
@@ -152,8 +152,8 @@ const languageCards = [
         levels: ['N5', 'N4', 'N3', 'N2', 'N1'],
         categories: [],
         price: '₹17,999',
-        bgColor: 'bg-pink-50 dark:bg-pink-950/30',
-        borderColor: 'border-pink-200 dark:border-pink-800',
+        bgColor: 'bg-brand-red/5',
+        borderColor: 'border-brand-red/20',
         route: '/training/japanese',
         image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     }
@@ -209,10 +209,10 @@ const StarRating: React.FC<{ rating: number }> = ({ rating }) => {
                 <Star
                     key={star}
                     className={`w-4 h-4 ${star <= Math.floor(rating)
-                        ? 'fill-yellow-400 text-yellow-400'
+                        ? 'fill-brand-gold text-brand-gold'
                         : star <= rating
-                            ? 'fill-yellow-400/50 text-yellow-400'
-                            : 'fill-gray-200 text-gray-200 dark:fill-gray-600 dark:text-gray-600'
+                            ? 'fill-brand-gold/50 text-brand-gold'
+                            : 'fill-brand-surface text-brand-olive-light'
                         }`}
                 />
             ))}
@@ -232,7 +232,7 @@ const LanguageCard: React.FC<{
             className={`relative rounded-2xl border-2 ${card.borderColor} ${card.bgColor} shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group`}
         >
             {/* Image Area */}
-            <div className="h-48 relative overflow-hidden bg-gray-200 dark:bg-gray-800 z-20">
+            <div className="h-48 relative overflow-hidden bg-brand-surface z-20">
                 <img
                     src={card.image}
                     alt={card.title}
@@ -241,23 +241,23 @@ const LanguageCard: React.FC<{
             </div>
 
             {/* Decorative gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent dark:from-white/5 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent pointer-events-none" />
 
             {/* Content wrapper with z-index */}
             <div className="relative z-10 p-6">
                 {/* Title */}
-                <h3 className="text-xl font-sans font-bold text-center text-[#0a192f] dark:text-white mb-5">
+                <h3 className="text-xl font-sans font-bold text-center text-brand-black mb-5">
                     {card.title}
                 </h3>
 
                 {/* Stats Row */}
-                <div className="flex items-center justify-center gap-6 text-sm text-gray-700 dark:text-gray-300 mb-4">
+                <div className="flex items-center justify-center gap-6 text-sm text-brand-olive-dark mb-4">
                     <div className="flex items-center gap-1.5">
-                        <Users className="w-4 h-4 text-[#0a192f] dark:text-gray-400" />
+                        <Users className="w-4 h-4 text-brand-black" />
                         <span className="font-medium">{card.students} students</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                        <BookOpen className="w-4 h-4 text-[#0a192f] dark:text-gray-400" />
+                        <BookOpen className="w-4 h-4 text-brand-black" />
                         <span className="font-medium">{card.courses} courses</span>
                     </div>
                 </div>
@@ -265,8 +265,8 @@ const LanguageCard: React.FC<{
                 {/* Rating */}
                 <div className="flex items-center justify-center gap-2 mb-5">
                     <StarRating rating={card.rating} />
-                    <span className="text-sm font-semibold text-[#0a192f] dark:text-white">{card.rating}</span>
-                    <span className="text-sm text-gray-600 dark:text-gray-400">({card.reviews} reviews)</span>
+                    <span className="text-sm font-semibold text-brand-black">{card.rating}</span>
+                    <span className="text-sm text-brand-olive-dark">({card.reviews} reviews)</span>
                 </div>
 
                 {/* Level Tags */}
@@ -274,7 +274,7 @@ const LanguageCard: React.FC<{
                     {card.levels.map((level) => (
                         <span
                             key={level}
-                            className="px-3 py-1.5 text-xs font-semibold rounded-full bg-white dark:bg-gray-800 text-[#0a192f] dark:text-gray-200 border border-gray-300 dark:border-gray-600 shadow-sm"
+                            className="px-3 py-1.5 text-xs font-semibold rounded-full bg-white text-brand-black border border-brand-surface shadow-sm"
                         >
                             {level}
                         </span>
@@ -287,7 +287,7 @@ const LanguageCard: React.FC<{
                         {card.categories.map((category) => (
                             <span
                                 key={category}
-                                className="px-3 py-1.5 text-xs font-semibold rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-700"
+                                className="px-3 py-1.5 text-xs font-semibold rounded-full bg-brand-gold/10 text-brand-black border border-brand-surface"
                             >
                                 {category}
                             </span>
@@ -296,16 +296,16 @@ const LanguageCard: React.FC<{
                 )}
 
                 {/* Price and CTA */}
-                <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-300 dark:border-gray-600">
+                <div className="flex items-center justify-between mt-6 pt-4 border-t border-brand-surface">
                     <div>
-                        <span className="text-xs font-medium text-gray-600 dark:text-gray-400 block mb-1">Starting at</span>
-                        <span className="text-2xl font-bold text-[#0a192f] dark:text-white">{card.price}</span>
+                        <span className="text-xs font-medium text-brand-olive-dark block mb-1">Starting at</span>
+                        <span className="text-2xl font-bold text-brand-black">{card.price}</span>
                     </div>
                     <Link to={card.route}>
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="flex items-center gap-2 px-5 py-2.5 bg-[#0a192f] dark:bg-[#d6b161] text-white dark:text-[#0a192f] rounded-lg font-semibold text-sm hover:bg-[#112240] dark:hover:bg-[#c4a055] transition-colors shadow-md hover:shadow-lg"
+                            className="flex items-center gap-2 px-5 py-2.5 bg-brand-black text-white rounded-lg font-semibold text-sm hover:bg-brand-olive-dark transition-colors shadow-md hover:shadow-lg"
                         >
                             Explore
                             <ArrowRight className="w-4 h-4" />
@@ -328,23 +328,23 @@ const BenefitCard: React.FC<{
         <motion.div
             variants={scaleIn}
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
-            className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 text-center group"
+            className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 text-center group"
         >
             {/* Icon */}
             <motion.div
                 whileHover={{ rotate: 10, scale: 1.1 }}
-                className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center group-hover:bg-[#d6b161]/20 transition-colors"
+                className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-brand-gold/5 flex items-center justify-center group-hover:bg-brand-gold/20 transition-colors"
             >
-                <Icon className="w-8 h-8 text-[#0a192f] dark:text-[#d6b161]" />
+                <Icon className="w-8 h-8 text-brand-black" />
             </motion.div>
 
             {/* Title */}
-            <h3 className="text-lg font-bold text-[#0a192f] dark:text-white mb-2">
+            <h3 className="text-lg font-bold text-brand-black mb-2">
                 {benefit.title}
             </h3>
 
             {/* Description */}
-            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+            <p className="text-sm text-brand-olive-dark leading-relaxed">
                 {benefit.description}
             </p>
         </motion.div>
@@ -386,12 +386,12 @@ const LanguageTraining: React.FC = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+        <div className="min-h-screen bg-white transition-colors duration-300">
             <Header />
 
             {/* Hero Section */}
             <section className="relative py-28 sm:py-36 text-center overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-gray-50 to-white dark:from-[#0d1f3a] dark:to-[#0a192f]" />
+                <div className="absolute inset-0 bg-gradient-to-b from-brand-off-white to-white" />
                 <HeroBackground />
 
                 <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
@@ -402,7 +402,7 @@ const LanguageTraining: React.FC = () => {
                         className="mx-auto max-w-4xl"
                     >
                         <motion.div variants={fadeInUp} className="mb-8 flex justify-center">
-                            <span className="inline-flex items-center gap-2 rounded-full border border-[#d6b161]/20 bg-[#d6b161]/10 px-4 py-1.5 text-sm font-semibold text-[#d6b161] backdrop-blur-sm">
+                            <span className="inline-flex items-center gap-2 rounded-full border border-brand-gold/20 bg-brand-gold/10 px-4 py-1.5 text-sm font-semibold text-brand-gold backdrop-blur-sm">
                                 <Star className="h-4 w-4 fill-current" />
                                 Global Language Certification
                             </span>
@@ -410,26 +410,26 @@ const LanguageTraining: React.FC = () => {
 
                         <motion.h1
                             variants={fadeInUp}
-                            className="font-display mb-6 text-5xl font-bold tracking-tight text-[#0a192f] dark:text-white sm:text-6xl lg:text-7xl"
+                            className="font-display mb-6 text-5xl font-bold tracking-tight text-brand-black sm:text-6xl lg:text-7xl"
                         >
                             Master Languages for <br className="hidden sm:inline" />
-                            <span className="bg-gradient-to-r from-[#d6b161] to-[#b38f3f] bg-clip-text text-transparent">Global Success</span>
+                            <span className="bg-gradient-to-r from-brand-gold to-brand-gold-hover bg-clip-text text-transparent">Global Success</span>
                         </motion.h1>
 
                         <motion.p
                             variants={fadeInUp}
-                            className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-gray-600 dark:text-gray-300 sm:text-xl"
+                            className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-brand-olive-dark sm:text-xl"
                         >
                             Learn English, German, or Japanese with live interactive classes, flexible schedules, and internationally recognized certifications.
                         </motion.p>
 
-                        <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-4 text-sm font-medium text-gray-500 dark:text-gray-400">
-                            <div className="flex items-center gap-2 rounded-lg bg-white/50 px-4 py-2 dark:bg-white/5">
-                                <Shield className="h-5 w-5 text-emerald-500" />
+                        <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-4 text-sm font-medium text-brand-olive">
+                            <div className="flex items-center gap-2 rounded-lg bg-white/50 px-4 py-2">
+                                <Shield className="h-5 w-5 text-brand-olive" />
                                 <span>Official Certification</span>
                             </div>
-                            <div className="flex items-center gap-2 rounded-lg bg-white/50 px-4 py-2 dark:bg-white/5">
-                                <Zap className="h-5 w-5 text-[#d6b161]" />
+                            <div className="flex items-center gap-2 rounded-lg bg-white/50 px-4 py-2">
+                                <Zap className="h-5 w-5 text-brand-gold" />
                                 <span>Fast-track Options</span>
                             </div>
                         </motion.div>
@@ -438,25 +438,25 @@ const LanguageTraining: React.FC = () => {
             </section>
 
             {/* Language Cards Section */}
-            <section className="py-20 bg-gray-50 dark:bg-gray-900">
+            <section className="py-20 bg-brand-off-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <AnimatedSection className="flex flex-col items-center text-center mb-16">
                         <motion.span
                             variants={fadeInUp}
-                            className="inline-flex items-center gap-2 px-4 py-2 bg-[#d6b161]/10 text-[#d6b161] rounded-full text-sm font-medium mb-4"
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-brand-gold/10 text-brand-gold rounded-full text-sm font-medium mb-4"
                         >
                             <GraduationCap className="w-4 h-4" />
                             Our Programs
                         </motion.span>
                         <motion.h2
                             variants={fadeInUp}
-                            className="text-3xl md:text-4xl lg:text-5xl font-sans font-bold text-[#0a192f] dark:text-white mb-4 text-center mx-auto"
+                            className="text-3xl md:text-4xl lg:text-5xl font-sans font-bold text-brand-black mb-4 text-center mx-auto"
                         >
                             Choose Your Language Path
                         </motion.h2>
                         <motion.p
                             variants={fadeInUp}
-                            className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
+                            className="text-lg text-brand-olive-dark max-w-2xl mx-auto"
                         >
                             Professional training programs designed for global careers
                         </motion.p>
@@ -471,18 +471,18 @@ const LanguageTraining: React.FC = () => {
             </section>
 
             {/* Benefits Section */}
-            <section className="py-20 bg-white dark:bg-gray-800">
+            <section className="py-20 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <AnimatedSection className="flex flex-col items-center text-center mb-16">
                         <motion.h2
                             variants={fadeInUp}
-                            className="text-3xl md:text-4xl lg:text-5xl font-sans font-bold text-[#0a192f] dark:text-white mb-4 text-center mx-auto"
+                            className="text-3xl md:text-4xl lg:text-5xl font-sans font-bold text-brand-black mb-4 text-center mx-auto"
                         >
                             Why Choose SoVir Academy?
                         </motion.h2>
                         <motion.p
                             variants={fadeInUp}
-                            className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
+                            className="text-lg text-brand-olive-dark max-w-2xl mx-auto"
                         >
                             World-class language training with proven results
                         </motion.p>
@@ -497,13 +497,13 @@ const LanguageTraining: React.FC = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="relative bg-gradient-to-r from-[#0a192f] via-[#112240] to-[#1a365d] py-20 overflow-hidden">
+            <section className="relative bg-gradient-to-r from-brand-black via-brand-olive-dark to-[#1a365d] py-20 overflow-hidden">
                 {/* Animated background */}
                 <div className="absolute inset-0">
                     <motion.div
                         animate={{ rotate: 360 }}
                         transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
-                        className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-[#d6b161]/10 to-transparent rounded-full"
+                        className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-brand-gold/10 to-transparent rounded-full"
                     />
                 </div>
 
@@ -517,7 +517,7 @@ const LanguageTraining: React.FC = () => {
                         </motion.h2>
                         <motion.p
                             variants={fadeInUp}
-                            className="text-lg text-gray-300 mb-10 max-w-2xl mx-auto"
+                            className="text-lg text-brand-olive-light mb-10 max-w-2xl mx-auto"
                         >
                             Book a free trial class and experience our world-class teaching methodology
                         </motion.p>
@@ -529,14 +529,14 @@ const LanguageTraining: React.FC = () => {
                                 onClick={() => setIsBookingOpen(true)}
                                 whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(214, 177, 97, 0.4)' }}
                                 whileTap={{ scale: 0.95 }}
-                                className="px-8 py-4 bg-[#d6b161] text-[#0a192f] font-bold rounded-xl hover:bg-[#c4a055] transition-all shadow-lg"
+                                className="px-8 py-4 bg-brand-gold text-brand-black font-bold rounded-xl hover:bg-brand-gold-hover transition-all shadow-lg"
                             >
                                 Book Free Trial
                             </motion.button>
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="px-8 py-4 bg-white text-[#0a192f] font-bold rounded-xl hover:bg-gray-100 transition-all shadow-lg"
+                                className="px-8 py-4 bg-white text-brand-black font-bold rounded-xl hover:bg-brand-surface transition-all shadow-lg"
                             >
                                 Contact Us
                             </motion.button>

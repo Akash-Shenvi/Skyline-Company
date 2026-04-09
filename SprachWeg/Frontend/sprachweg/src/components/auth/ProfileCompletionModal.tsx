@@ -186,7 +186,7 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
     if (!isOpen || isDismissed) return null;
 
     // Input field classes (shared)
-    const inputClasses = "mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2.5 shadow-sm focus:border-[#d6b161] focus:outline-none focus:ring-1 focus:ring-[#d6b161] text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-colors";
+    const inputClasses = "mt-1 block w-full rounded-lg border border-brand-surface bg-white px-3 py-2.5 shadow-sm focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-gold text-sm text-brand-black placeholder-brand-olive-light transition-colors";
 
     return (
         <AnimatePresence>
@@ -205,7 +205,7 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                     dragElastic={0.05}
                     dragMomentum={false}
                     className={`
-                        flex flex-col bg-white dark:bg-gray-800 shadow-2xl
+                        flex flex-col bg-white shadow-2xl
                         ${isMobile
                             ? 'w-full h-full rounded-none'
                             : 'w-[85vw] md:w-[480px] max-h-[90vh] rounded-2xl'
@@ -213,12 +213,12 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                     `}
                 >
                     {/* ═══════════ STICKY HEADER — never scrolls ═══════════ */}
-                    <div className={`flex-shrink-0 px-5 pt-4 pb-3 sm:px-6 sm:pt-5 sm:pb-4 border-b border-gray-200 dark:border-gray-700 ${!isMobile ? 'cursor-grab active:cursor-grabbing' : ''}`}>
+                    <div className={`flex-shrink-0 px-5 pt-4 pb-3 sm:px-6 sm:pt-5 sm:pb-4 border-b border-brand-surface ${!isMobile ? 'cursor-grab active:cursor-grabbing' : ''}`}>
                         <div className="flex items-center justify-between mb-2">
                             <button
                                 type="button"
                                 onClick={handleClose}
-                                className="flex items-center gap-1.5 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
+                                className="flex items-center gap-1.5 text-sm font-medium text-brand-olive hover:text-brand-olive-dark transition-colors"
                             >
                                 <ArrowLeft className="h-4 w-4" />
                                 Back
@@ -227,15 +227,15 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                             {onClose && (
                                 <button
                                     onClick={handleClose}
-                                    className="p-1 rounded-lg text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                    className="p-1 rounded-lg text-brand-olive-light hover:text-brand-olive-dark hover:bg-brand-surface transition-colors"
                                 >
                                     <X className="h-5 w-5" />
                                 </button>
                             )}
                         </div>
 
-                        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Complete Your Profile</h2>
-                        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                        <h2 className="text-xl sm:text-2xl font-bold text-brand-black">Complete Your Profile</h2>
+                        <p className="mt-1 text-sm text-brand-olive">
                             Please provide the following details to continue.
                         </p>
                     </div>
@@ -243,7 +243,7 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                     {/* ═══════════ SCROLLABLE BODY — all form fields ═══════════ */}
                     <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-5 py-4 sm:px-6 sm:py-5">
                         {error && (
-                            <div className="mb-4 rounded-lg bg-red-50 dark:bg-red-900/20 p-3 text-sm text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800/30">
+                            <div className="mb-4 rounded-lg bg-brand-red/5 p-3 text-sm text-brand-red border border-brand-red/20">
                                 {error}
                             </div>
                         )}
@@ -252,7 +252,7 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                         <div className="flex flex-col items-center mb-6">
                             <div className="relative group">
                                 <div
-                                    className="w-22 h-22 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center bg-gray-50 dark:bg-gray-700 cursor-pointer hover:border-[#d6b161] dark:hover:border-[#d6b161] transition-colors"
+                                    className="w-22 h-22 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-dashed border-brand-surface flex items-center justify-center bg-brand-off-white cursor-pointer hover:border-brand-gold transition-colors"
                                     onClick={() => fileInputRef.current?.click()}
                                 >
                                     {imagePreview ? (
@@ -268,14 +268,14 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                                             className="w-full h-full object-cover"
                                         />
                                     ) : (
-                                        <Camera className="w-7 h-7 sm:w-8 sm:h-8 text-gray-400 dark:text-gray-500" />
+                                        <Camera className="w-7 h-7 sm:w-8 sm:h-8 text-brand-olive-light" />
                                     )}
                                 </div>
                                 {imagePreview && (
                                     <button
                                         type="button"
                                         onClick={handleRemoveImage}
-                                        className="absolute -top-1 -right-1 p-1 bg-red-500 text-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
+                                        className="absolute -top-1 -right-1 p-1 bg-brand-red/50 text-white rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
                                     >
                                         <X className="w-3 h-3" />
                                     </button>
@@ -289,13 +289,13 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                                 className="hidden"
                                 id="profile-image-upload"
                             />
-                            <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                            <p className="mt-2 text-xs text-brand-olive">
                                 Upload profile photo (max {MAX_IMAGE_SIZE_MB} MB)
                             </p>
 
                             {/* Image validation error */}
                             {imageError && (
-                                <p className="mt-1 text-xs text-red-600 dark:text-red-400 text-center">
+                                <p className="mt-1 text-xs text-brand-red text-center">
                                     {imageError}
                                 </p>
                             )}
@@ -303,15 +303,15 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                             {/* Upload progress bar */}
                             {(isUploading || uploadProgress > 0) && !imageError && imagePreview && (
                                 <div className="w-full max-w-[200px] mt-2">
-                                    <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-1.5 overflow-hidden">
+                                    <div className="w-full bg-brand-surface rounded-full h-1.5 overflow-hidden">
                                         <motion.div
-                                            className="h-full rounded-full bg-[#d6b161]"
+                                            className="h-full rounded-full bg-brand-gold"
                                             initial={{ width: 0 }}
                                             animate={{ width: `${uploadProgress}%` }}
                                             transition={{ duration: 0.2, ease: 'easeOut' }}
                                         />
                                     </div>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-1">
+                                    <p className="text-xs text-brand-olive text-center mt-1">
                                         {uploadProgress < 100 ? `Uploading... ${uploadProgress}%` : 'Upload complete'}
                                     </p>
                                 </div>
@@ -324,7 +324,7 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                                         initial={{ opacity: 0, y: -5 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -5 }}
-                                        className="mt-2 flex items-center gap-1.5 rounded-lg bg-green-50 dark:bg-green-900/20 px-3 py-1.5 text-xs text-green-700 dark:text-green-400"
+                                        className="mt-2 flex items-center gap-1.5 rounded-lg bg-brand-olive/5 px-3 py-1.5 text-xs text-brand-olive-dark"
                                     >
                                         <CheckCircle className="w-3.5 h-3.5 flex-shrink-0" />
                                         <span>Profile image uploaded successfully.</span>
@@ -336,7 +336,7 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                         {/* Form Fields */}
                         <form id="profile-form" onSubmit={handleSubmit} className="space-y-4">
                             <div>
-                                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Name <span className="text-red-500">*</span></label>
+                                <label htmlFor="name" className="block text-sm font-medium text-brand-olive-dark">Name <span className="text-brand-red">*</span></label>
                                 <input
                                     type="text"
                                     name="name"
@@ -349,17 +349,17 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+                                <label className="block text-sm font-medium text-brand-olive-dark">Email</label>
                                 <input
                                     type="email"
                                     value={user?.email || ''}
                                     disabled
-                                    className="mt-1 block w-full rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/50 px-3 py-2.5 text-sm text-gray-500 dark:text-gray-400 shadow-sm cursor-not-allowed"
+                                    className="mt-1 block w-full rounded-lg border border-brand-surface bg-brand-off-white px-3 py-2.5 text-sm text-brand-olive shadow-sm cursor-not-allowed"
                                 />
                             </div>
 
                             <div>
-                                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Phone Number <span className="text-red-500">*</span></label>
+                                <label htmlFor="phoneNumber" className="block text-sm font-medium text-brand-olive-dark">Phone Number <span className="text-brand-red">*</span></label>
                                 <input
                                     type="tel"
                                     name="phoneNumber"
@@ -372,7 +372,7 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                             </div>
 
                             <div>
-                                <label htmlFor="guardianName" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Guardian Name <span className="text-red-500">*</span></label>
+                                <label htmlFor="guardianName" className="block text-sm font-medium text-brand-olive-dark">Guardian Name <span className="text-brand-red">*</span></label>
                                 <input
                                     type="text"
                                     name="guardianName"
@@ -385,7 +385,7 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                             </div>
 
                             <div>
-                                <label htmlFor="guardianPhone" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Guardian Phone Number <span className="text-red-500">*</span></label>
+                                <label htmlFor="guardianPhone" className="block text-sm font-medium text-brand-olive-dark">Guardian Phone Number <span className="text-brand-red">*</span></label>
                                 <input
                                     type="tel"
                                     name="guardianPhone"
@@ -398,7 +398,7 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                             </div>
 
                             <div>
-                                <label htmlFor="dateOfBirth" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Date of Birth <span className="text-red-500">*</span></label>
+                                <label htmlFor="dateOfBirth" className="block text-sm font-medium text-brand-olive-dark">Date of Birth <span className="text-brand-red">*</span></label>
                                 <input
                                     type="date"
                                     name="dateOfBirth"
@@ -411,7 +411,7 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                             </div>
 
                             <div>
-                                <label htmlFor="qualification" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Highest Educational Qualification <span className="text-red-500">*</span></label>
+                                <label htmlFor="qualification" className="block text-sm font-medium text-brand-olive-dark">Highest Educational Qualification <span className="text-brand-red">*</span></label>
                                 <select
                                     name="qualification"
                                     id="qualification"
@@ -432,13 +432,13 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                     </div>
 
                     {/* ═══════════ STICKY FOOTER — always visible ═══════════ */}
-                    <div className="flex-shrink-0 px-5 py-4 sm:px-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 rounded-b-2xl">
+                    <div className="flex-shrink-0 px-5 py-4 sm:px-6 border-t border-brand-surface bg-brand-off-white rounded-b-2xl">
                         <div className="flex gap-3">
                             {onClose && (
                                 <Button
                                     type="button"
                                     onClick={handleClose}
-                                    className="flex-1 justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-[#d6b161] focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition-colors min-h-[48px]"
+                                    className="flex-1 justify-center rounded-lg border border-brand-surface bg-white px-4 py-2.5 text-sm font-medium text-brand-olive-dark shadow-sm hover:bg-brand-off-white focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2 transition-colors min-h-[48px]"
                                 >
                                     Cancel
                                 </Button>
@@ -447,7 +447,7 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                                 type="submit"
                                 form="profile-form"
                                 disabled={loading}
-                                className="flex-1 justify-center rounded-lg bg-[#d6b161] px-4 py-2.5 text-sm font-semibold text-[#0a192f] shadow-sm hover:bg-[#c4a055] focus:outline-none focus:ring-2 focus:ring-[#d6b161] focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-50 transition-colors min-h-[48px]"
+                                className="flex-1 justify-center rounded-lg bg-brand-gold px-4 py-2.5 text-sm font-semibold text-brand-black shadow-sm hover:bg-brand-gold-hover focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2 disabled:opacity-50 transition-colors min-h-[48px]"
                             >
                                 {loading ? 'Saving...' : 'Save & Continue'}
                             </Button>

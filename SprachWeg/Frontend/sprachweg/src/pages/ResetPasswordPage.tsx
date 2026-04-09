@@ -54,16 +54,16 @@ const ResetPasswordPage: React.FC = () => {
     };
 
     return createPortal(
-        <div className="fixed inset-0 z-50 bg-gray-50 dark:bg-gray-900 font-sans text-left overflow-y-auto">
+        <div className="fixed inset-0 z-50 bg-brand-off-white font-sans text-left overflow-y-auto">
             <Header />
 
             <main className="min-h-screen flex items-center justify-center p-4 pt-20">
                 <div className="w-full max-w-md">
-                    <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 border border-gray-100 dark:border-gray-700">
+                    <div className="bg-white rounded-3xl shadow-xl p-8 border border-brand-surface">
                         {!submitted && (
                             <Link
                                 to="/forgot-password"
-                                className="inline-flex items-center text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white mb-6 transition-colors"
+                                className="inline-flex items-center text-sm text-brand-olive hover:text-brand-black mb-6 transition-colors"
                             >
                                 <ArrowLeft className="w-4 h-4 mr-1" />
                                 Back
@@ -71,11 +71,11 @@ const ResetPasswordPage: React.FC = () => {
                         )}
 
                         <div className="mb-6">
-                            <h2 className="font-sans text-3xl font-bold text-[#0e5cad] dark:text-white mb-2">
+                            <h2 className="font-sans text-3xl font-bold text-[#0e5cad] mb-2">
                                 {submitted ? 'Password Reset!' : 'Reset Password'}
                             </h2>
                             {!submitted && (
-                                <p className="text-gray-500 dark:text-gray-400">
+                                <p className="text-brand-olive">
                                     Enter the verification code and your new password.
                                 </p>
                             )}
@@ -83,11 +83,11 @@ const ResetPasswordPage: React.FC = () => {
 
                         {submitted ? (
                             <div className="text-center py-6">
-                                <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
+                                <div className="w-16 h-16 bg-brand-olive/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <CheckCircle className="w-8 h-8 text-brand-olive" />
                                 </div>
-                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Success!</h3>
-                                <p className="text-gray-500 dark:text-gray-400 mb-6">
+                                <h3 className="text-xl font-semibold text-brand-black mb-2">Success!</h3>
+                                <p className="text-brand-olive mb-6">
                                     Your password has been reset successfully. <br />
                                     Redirecting to login...
                                 </p>
@@ -101,19 +101,19 @@ const ResetPasswordPage: React.FC = () => {
                         ) : (
                             <form onSubmit={handleSubmit} className="space-y-5">
                                 {error && (
-                                    <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm">
+                                    <div className="p-4 bg-brand-red/5 border border-brand-red/20 rounded-lg text-brand-red text-sm">
                                         {error}
                                     </div>
                                 )}
 
                                 {/* Email Field - Read Only if pre-filled, or editable */}
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
+                                    <label className="block text-sm font-semibold text-brand-olive-dark mb-1.5">
                                         Email
                                     </label>
                                     <input
                                         type="email"
-                                        className="w-full rounded-xl border border-gray-200 bg-gray-100 px-4 py-3 text-gray-500 transition-all focus:outline-none dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400"
+                                        className="w-full rounded-xl border border-brand-surface bg-brand-surface px-4 py-3 text-brand-olive transition-all focus:outline-none"
                                         value={formData.email}
                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                         required
@@ -121,13 +121,13 @@ const ResetPasswordPage: React.FC = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
+                                    <label className="block text-sm font-semibold text-brand-olive-dark mb-1.5">
                                         Enter OTP Code
                                     </label>
                                     <input
                                         type="text"
                                         placeholder="123456"
-                                        className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-center text-2xl tracking-widest font-mono text-gray-900 placeholder:text-gray-300 transition-all focus:outline-none focus:ring-2 focus:ring-[#0e5cad] focus:bg-white dark:focus:bg-gray-900 dark:bg-gray-900 dark:border-gray-700 dark:text-white"
+                                        className="w-full rounded-xl border border-brand-surface bg-brand-off-white px-4 py-3 text-center text-2xl tracking-widest font-mono text-brand-black placeholder:text-brand-olive-light transition-all focus:outline-none focus:ring-2 focus:ring-[#0e5cad] focus:bg-white"
                                         value={formData.otp}
                                         onChange={(e) => setFormData({ ...formData, otp: e.target.value })}
                                         maxLength={6}
@@ -136,17 +136,17 @@ const ResetPasswordPage: React.FC = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
+                                    <label className="block text-sm font-semibold text-brand-olive-dark mb-1.5">
                                         New Password
                                     </label>
                                     <div className="relative group">
-                                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#0e5cad] transition-colors">
+                                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-olive-light group-focus-within:text-[#0e5cad] transition-colors">
                                             <Lock className="w-5 h-5" />
                                         </div>
                                         <input
                                             type={showPassword ? 'text' : 'password'}
                                             placeholder="••••••••"
-                                            className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pl-10 pr-10 text-gray-900 placeholder:text-gray-400 transition-all focus:outline-none focus:ring-2 focus:ring-[#0e5cad] focus:bg-white dark:focus:bg-gray-900 dark:bg-gray-900 dark:border-gray-700 dark:text-white"
+                                            className="w-full rounded-xl border border-brand-surface bg-brand-off-white px-4 py-3 pl-10 pr-10 text-brand-black placeholder:text-brand-olive-light transition-all focus:outline-none focus:ring-2 focus:ring-[#0e5cad] focus:bg-white"
                                             value={formData.newPassword}
                                             onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
                                             required
@@ -155,7 +155,7 @@ const ResetPasswordPage: React.FC = () => {
                                         <button
                                             type="button"
                                             onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-olive-light hover:text-brand-olive-dark focus:outline-none"
                                         >
                                             {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                         </button>
@@ -163,17 +163,17 @@ const ResetPasswordPage: React.FC = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
+                                    <label className="block text-sm font-semibold text-brand-olive-dark mb-1.5">
                                         Confirm Password
                                     </label>
                                     <div className="relative group">
-                                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#0e5cad] transition-colors">
+                                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-olive-light group-focus-within:text-[#0e5cad] transition-colors">
                                             <Lock className="w-5 h-5" />
                                         </div>
                                         <input
                                             type={showPassword ? 'text' : 'password'}
                                             placeholder="••••••••"
-                                            className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pl-10 pr-10 text-gray-900 placeholder:text-gray-400 transition-all focus:outline-none focus:ring-2 focus:ring-[#0e5cad] focus:bg-white dark:focus:bg-gray-900 dark:bg-gray-900 dark:border-gray-700 dark:text-white"
+                                            className="w-full rounded-xl border border-brand-surface bg-brand-off-white px-4 py-3 pl-10 pr-10 text-brand-black placeholder:text-brand-olive-light transition-all focus:outline-none focus:ring-2 focus:ring-[#0e5cad] focus:bg-white"
                                             value={formData.confirmPassword}
                                             onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                                             required

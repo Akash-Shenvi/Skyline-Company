@@ -2,9 +2,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sun, Moon, ChevronDown, Settings } from 'lucide-react';
+import { Menu, X, ChevronDown, Settings } from 'lucide-react';
 import Button from '../ui/Button';
-import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { internshipCatalogAPI } from '../../lib/api';
 import type { InternshipListing } from '../../types/internship';
@@ -17,7 +16,7 @@ const Header: React.FC = () => {
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [internships, setInternships] = useState<InternshipListing[]>([]);
-    const { theme, toggleTheme } = useTheme();
+
     const { user } = useAuth();
     const location = useLocation();
     const showTrainerNotifications = String(user?.role || '').trim().toLowerCase() === 'trainer';
@@ -67,7 +66,7 @@ const Header: React.FC = () => {
     }, [location.pathname, location.search]);
 
     return (
-        <nav ref={navRef} className="fixed w-full z-50 bg-white/90 dark:bg-[#0a192f]/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
+        <nav ref={navRef} className="fixed w-full z-50 bg-brand-black border-b border-brand-black">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-20">
                     {/* Logo */}
@@ -75,125 +74,70 @@ const Header: React.FC = () => {
                         <img
                             src="/sovir-logo.png"
                             alt="SoVir Logo"
-                            className="h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32 w-auto object-contain dark:brightness-0 dark:invert transition-all duration-300 mt-2"
+                            className="h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32 w-auto object-contain brightness-0 invert transition-all duration-300 mt-2"
                         />
-                        <span className="font-serif font-bold text-base lg:text-lg text-gray-900 dark:text-white"></span>
+                        <span className="font-serif font-bold text-base lg:text-lg text-brand-white"></span>
                     </Link>
 
                     {/* Desktop Navigation */}
                     <div className="hidden lg:flex items-center gap-1">
                         <Link
                             to="/"
-                            className="text-gray-700 dark:text-gray-300 hover:text-[#d6b161] font-medium transition-colors text-sm px-3 py-2"
+                            className="text-brand-white hover:text-brand-gold font-medium transition-colors text-sm px-3 py-2"
                         >
                             Home
                         </Link>
 
-
-
-                        {/* Skill Training Mega Menu */}
+                        {/* Language Training Dropdown */}
                         <div className="relative group">
                             <div className="flex items-center gap-1">
                                 <Link
-                                    to="/skill-training"
-                                    className="text-gray-700 dark:text-gray-300 hover:text-[#d6b161] font-medium transition-colors text-sm px-2 py-2"
+                                    to="/language-training"
+                                    className="text-brand-white hover:text-brand-gold font-medium transition-colors text-sm px-2 py-2"
                                 >
-                                    Skill Training
+                                    Language Training
                                 </Link>
                                 <button
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        toggleDropdown('skill-desktop');
+                                        toggleDropdown('language-desktop');
                                     }}
-                                    className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors focus:outline-none"
+                                    className="p-1 rounded-full hover:bg-brand-olive-dark transition-colors focus:outline-none"
                                 >
-                                    <ChevronDown className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform duration-200 ${openDropdown === 'skill-desktop' ? 'rotate-180' : ''}`} />
+                                    <ChevronDown className={`w-5 h-5 text-brand-gold transition-transform duration-200 ${openDropdown === 'language-desktop' ? 'rotate-180' : ''}`} />
                                 </button>
                             </div>
-                            <div className={`absolute left-0 top-full mt-2 w-[750px] bg-white/95 dark:bg-[#0a192f]/95 backdrop-blur-sm border border-gray-200 dark:border-gray-700 rounded-lg shadow-2xl transition-all duration-200 z-50 ${openDropdown === 'skill-desktop' ? 'opacity-100 visible' : 'opacity-0 invisible group-hover:opacity-100 group-hover:visible'}`}>
-                                <div className="grid grid-cols-3 gap-6 p-6">
-                                    {/* INDUSTRIAL AUTOMATION Column */}
-                                    <div>
-                                        <h3 className="text-xs font-bold uppercase tracking-wider text-[#d6b161] mb-4">Industrial Automation</h3>
-                                        <div className="space-y-3">
-                                            <Link to="/skill-training" className="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group/item">
-                                                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#d6b161]/10 flex items-center justify-center text-[#d6b161]">
-                                                    <span className="text-lg">⚙️</span>
-                                                </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 group-hover/item:text-[#d6b161]">Overview</p>
-                                                    <p className="text-xs text-gray-600 dark:text-gray-400">All skill training courses</p>
-                                                </div>
-                                            </Link>
-                                            <Link to="/skill-training/scada" className="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group/item">
-                                                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#d6b161]/10 flex items-center justify-center text-[#d6b161]">
-                                                    <span className="text-lg">🖥️</span>
-                                                </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 group-hover/item:text-[#d6b161]">SCADA & HMI</p>
-                                                    <p className="text-xs text-gray-600 dark:text-gray-400">Interface design & control</p>
-                                                </div>
-                                            </Link>
-                                            <Link to="/skill-training/plc" className="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group/item">
-                                                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#d6b161]/10 flex items-center justify-center text-[#d6b161]">
-                                                    <span className="text-lg">🔧</span>
-                                                </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 group-hover/item:text-[#d6b161]">PLC Programming</p>
-                                                    <p className="text-xs text-gray-600 dark:text-gray-400">Industrial automation</p>
-                                                </div>
-                                            </Link>
-                                            <Link to="/skill-training/drives" className="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group/item">
-                                                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#d6b161]/10 flex items-center justify-center text-[#d6b161]">
-                                                    <span className="text-lg">⚡</span>
-                                                </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 group-hover/item:text-[#d6b161]">Industrial Drives</p>
-                                                    <p className="text-xs text-gray-600 dark:text-gray-400">Motion control systems</p>
-                                                </div>
-                                            </Link>
-                                            <Link to="/language-training" className="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group/item">
-                                                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#d6b161]/10 flex items-center justify-center text-[#d6b161]">
-                                                    <span className="text-lg">🌍</span>
-                                                </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 group-hover/item:text-[#d6b161]">Language Training</p>
-                                                    <p className="text-xs text-gray-600 dark:text-gray-400">English, German, Japanese</p>
-                                                </div>
-                                            </Link>
-                                        </div>
-                                    </div>
-
-                                    {/* ADVANCED TRAINING Column */}
-                                    <div>
-                                        <h3 className="text-xs font-bold uppercase tracking-wider text-[#d6b161] mb-4">Advanced Training</h3>
-                                        <div className="space-y-3">
-                                            <Link to="/skill-training/industry4" className="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group/item">
-                                                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#d6b161]/10 flex items-center justify-center text-[#d6b161]">
-                                                    <span className="text-lg">🏭</span>
-                                                </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 group-hover/item:text-[#d6b161]">Industry 4.0</p>
-                                                    <p className="text-xs text-gray-600 dark:text-gray-400">Smart factory & IIoT</p>
-                                                </div>
-                                            </Link>
-                                        </div>
-                                    </div>
-
-                                    {/* CORPORATE TRAINING Column */}
-                                    <div>
-                                        <h3 className="text-xs font-bold uppercase tracking-wider text-[#d6b161] mb-4">Corporate Training</h3>
-                                        <div className="space-y-3">
-                                            <Link to="/skill-training/corporate" className="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group/item">
-                                                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#d6b161]/10 flex items-center justify-center text-[#d6b161]">
-                                                    <span className="text-lg">🎯</span>
-                                                </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 group-hover/item:text-[#d6b161]">Customized Training</p>
-                                                    <p className="text-xs text-gray-600 dark:text-gray-400">Tailored solutions</p>
-                                                </div>
-                                            </Link>
-                                        </div>
+                            <div className={`absolute left-0 top-full mt-2 w-[340px] bg-brand-black border border-brand-olive-dark rounded-lg shadow-2xl transition-all duration-200 z-50 ${openDropdown === 'language-desktop' ? 'opacity-100 visible' : 'opacity-0 invisible group-hover:opacity-100 group-hover:visible'}`}>
+                                <div className="p-6">
+                                    <h3 className="text-xs font-bold uppercase tracking-wider text-brand-gold mb-4">Languages</h3>
+                                    <div className="space-y-3">
+                                        <Link to="/training/english" className="flex items-start gap-3 p-2 rounded-lg hover:bg-brand-olive-dark transition-colors group/item">
+                                            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-brand-gold/10 flex items-center justify-center text-brand-gold">
+                                                <span className="text-lg">🇬🇧</span>
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-sm font-semibold text-brand-white group-hover/item:text-brand-gold">English</p>
+                                                <p className="text-xs text-white/60">Business & academic English</p>
+                                            </div>
+                                        </Link>
+                                        <Link to="/training/german" className="flex items-start gap-3 p-2 rounded-lg hover:bg-brand-olive-dark transition-colors group/item">
+                                            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-brand-gold/10 flex items-center justify-center text-brand-gold">
+                                                <span className="text-lg">🇩🇪</span>
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-sm font-semibold text-brand-white group-hover/item:text-brand-gold">German</p>
+                                                <p className="text-xs text-white/60">A1 to C1 proficiency levels</p>
+                                            </div>
+                                        </Link>
+                                        <Link to="/training/japanese" className="flex items-start gap-3 p-2 rounded-lg hover:bg-brand-olive-dark transition-colors group/item">
+                                            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-brand-gold/10 flex items-center justify-center text-brand-gold">
+                                                <span className="text-lg">🇯🇵</span>
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-sm font-semibold text-brand-white group-hover/item:text-brand-gold">Japanese</p>
+                                                <p className="text-xs text-white/60">JLPT preparation & fluency</p>
+                                            </div>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
@@ -204,7 +148,7 @@ const Header: React.FC = () => {
                             <div className="flex items-center gap-1">
                                 <Link
                                     to="/careers"
-                                    className="text-gray-700 dark:text-gray-300 hover:text-[#d6b161] font-medium transition-colors text-sm px-2 py-2"
+                                    className="text-brand-white hover:text-brand-gold font-medium transition-colors text-sm px-2 py-2"
                                 >
                                     Career
                                 </Link>
@@ -213,20 +157,20 @@ const Header: React.FC = () => {
                                         e.preventDefault();
                                         toggleDropdown('career-desktop');
                                     }}
-                                    className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors focus:outline-none"
+                                    className="p-1 rounded-full hover:bg-brand-olive-dark transition-colors focus:outline-none"
                                 >
-                                    <ChevronDown className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform duration-200 ${openDropdown === 'career-desktop' ? 'rotate-180' : ''}`} />
+                                    <ChevronDown className={`w-5 h-5 text-brand-gold transition-transform duration-200 ${openDropdown === 'career-desktop' ? 'rotate-180' : ''}`} />
                                 </button>
                             </div>
-                            <div className={`absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[300px] max-w-[90vw] bg-white/95 dark:bg-[#0a192f]/95 backdrop-blur-sm border border-gray-200 dark:border-gray-700 rounded-lg shadow-2xl transition-all duration-200 z-50 ${openDropdown === 'career-desktop' ? 'opacity-100 visible' : 'opacity-0 invisible group-hover:opacity-100 group-hover:visible'}`}>
+                            <div className={`absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[300px] max-w-[90vw] bg-brand-black border border-brand-olive-dark rounded-lg shadow-2xl transition-all duration-200 z-50 ${openDropdown === 'career-desktop' ? 'opacity-100 visible' : 'opacity-0 invisible group-hover:opacity-100 group-hover:visible'}`}>
                                 <div className="p-6">
 
                                     {/* INTERNSHIP Column */}
                                     <div>
-                                        <h3 className="text-xs font-bold uppercase tracking-wider text-[#d6b161] mb-4">Internship</h3>
+                                        <h3 className="text-xs font-bold uppercase tracking-wider text-brand-gold mb-4">Internship</h3>
                                         <div className="space-y-1">
                                             {internships.map((internship) => (
-                                                <Link key={internship._id} to="/careers" className="block text-sm text-gray-600 dark:text-gray-400 hover:text-[#d6b161] dark:hover:text-[#d6b161] py-1 transition-colors">
+                                                <Link key={internship._id} to="/careers" className="block text-sm text-white/75 hover:text-brand-gold py-1 transition-colors">
                                                     {internship.title}
                                                 </Link>
                                             ))}
@@ -235,7 +179,7 @@ const Header: React.FC = () => {
 
                                     {/* CAREER ABROAD Column — commented out for future use
                                     <div>
-                                        <h3 className="text-xs font-bold uppercase tracking-wider text-[#d6b161] mb-4">Career Abroad</h3>
+                                        <h3 className="text-xs font-bold uppercase tracking-wider text-brand-gold mb-4">Career Abroad</h3>
                                         <div className="space-y-3">
                                             Work in Canada — /404
                                             Career in Germany — #
@@ -247,7 +191,7 @@ const Header: React.FC = () => {
 
                                     {/* SERVICES Column — commented out for future use
                                     <div>
-                                        <h3 className="text-xs font-bold uppercase tracking-wider text-[#d6b161] mb-4">Services</h3>
+                                        <h3 className="text-xs font-bold uppercase tracking-wider text-brand-gold mb-4">Services</h3>
                                         <div className="space-y-3">
                                             Visa Assistance — /404
                                             Job Placement — /404
@@ -258,7 +202,7 @@ const Header: React.FC = () => {
 
                                     {/* FULL TIME Column — commented out for future use
                                     <div>
-                                        <h3 className="text-xs font-bold uppercase tracking-wider text-[#d6b161] mb-4">Full Time</h3>
+                                        <h3 className="text-xs font-bold uppercase tracking-wider text-brand-gold mb-4">Full Time</h3>
                                         <div className="space-y-1">
                                             PLC Automation Engineer
                                             Controls & Automation Engineer
@@ -274,20 +218,14 @@ const Header: React.FC = () => {
 
 
                         <Link
-                            to="/webinars"
-                            className="text-gray-700 dark:text-gray-300 hover:text-[#d6b161] font-medium transition-colors text-sm px-3 py-2"
-                        >
-                            Webinars
-                        </Link>
-                        <Link
                             to="/about"
-                            className="text-gray-700 dark:text-gray-300 hover:text-[#d6b161] font-medium transition-colors text-sm px-3 py-2"
+                            className="text-brand-white hover:text-brand-gold font-medium transition-colors text-sm px-3 py-2"
                         >
                             About
                         </Link>
                         <Link
                             to="/contact"
-                            className="text-gray-700 dark:text-gray-300 hover:text-[#d6b161] font-medium transition-colors text-sm px-3 py-2"
+                            className="text-brand-white hover:text-brand-gold font-medium transition-colors text-sm px-3 py-2"
                         >
                             Contact
                         </Link>
@@ -301,42 +239,16 @@ const Header: React.FC = () => {
                         <div className="relative">
                             <button
                                 onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-                                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300 transition-colors"
+                                className="p-2 rounded-full hover:bg-brand-olive-dark text-brand-olive-light transition-colors"
                             >
                                 <Settings className="w-5 h-5" />
                             </button>
 
                             {isSettingsOpen && (
-                                <div className="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-[#0a192f] border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50">
+                                <div className="absolute right-0 top-full mt-2 w-64 bg-brand-black border border-brand-olive-dark rounded-lg shadow-lg z-50">
                                     <div className="p-4">
                                         {/* Settings Header */}
-                                        <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3">Settings</h3>
-
-                                        {/* Theme Toggle */}
-                                        <div className="flex items-center justify-between py-2">
-                                            <div className="flex items-center gap-2">
-                                                {theme === 'dark' ? <Moon className="w-4 h-4 text-gray-700 dark:text-gray-300" /> : <Sun className="w-4 h-4 text-gray-700 dark:text-gray-300" />}
-                                                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                                                    {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
-                                                </span>
-                                            </div>
-
-                                            {/* Sliding Toggle Switch */}
-                                            <button
-                                                onClick={toggleTheme}
-                                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#d6b161] focus:ring-offset-2 ${theme === 'dark' ? 'bg-[#d6b161]' : 'bg-gray-300'
-                                                    }`}
-                                                aria-label="Toggle theme"
-                                            >
-                                                <span
-                                                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${theme === 'dark' ? 'translate-x-6' : 'translate-x-1'
-                                                        }`}
-                                                />
-                                            </button>
-                                        </div>
-
-                                        {/* Divider for future settings */}
-                                        <div className="border-t border-gray-200 dark:border-gray-700 my-3"></div>
+                                        <h3 className="text-xs font-bold uppercase tracking-wider text-brand-gold mb-3">Settings</h3>
 
                                         {showTrainerNotifications && <PushNotificationToggle />}
 
@@ -344,7 +256,7 @@ const Header: React.FC = () => {
                                         <Link
                                             to="/feedback"
                                             onClick={() => setIsSettingsOpen(false)}
-                                            className="flex items-center gap-2 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#d6b161] dark:hover:text-[#d6b161] transition-colors"
+                                            className="flex items-center gap-2 py-2 text-sm font-medium text-white/75 hover:text-brand-gold transition-colors"
                                         >
                                             <span className="text-lg">🐞</span>
                                             Report an Issue / Feedback
@@ -358,19 +270,19 @@ const Header: React.FC = () => {
 
                         {user ? (
                             <div className="flex items-center gap-3">
-                                <Link to={getDashboardPathForRole(user.role)} className="text-gray-700 dark:text-white font-medium hover:text-[#d6b161] transition-colors text-sm">
-                                    <Button className="bg-[#0a192f] hover:bg-[#112240] text-white font-semibold px-6 py-2 rounded-full text-sm dark:bg-gray-700 dark:hover:bg-gray-600">
+                                <Link to={getDashboardPathForRole(user.role)} className="text-brand-white font-medium hover:text-brand-gold transition-colors text-sm">
+                                    <Button className="bg-brand-red hover:bg-brand-red-hover text-white font-semibold px-6 py-2 rounded text-sm">
                                         Dashboard
                                     </Button>
                                 </Link>
                             </div>
                         ) : (
                             <>
-                                <Link to="/login" className="text-gray-700 dark:text-white font-medium hover:text-[#d6b161] transition-colors text-sm">
+                                <Link to="/login" className="text-brand-white font-medium hover:text-brand-gold transition-colors text-sm">
                                     Sign In
                                 </Link>
                                 <Link to="/register">
-                                    <Button className="bg-[#d6b161] hover:bg-[#c4a055] text-[#0a192f] font-semibold px-6 py-2 rounded-full text-sm">
+                                    <Button className="bg-brand-red hover:bg-brand-red-hover text-white font-semibold px-6 py-2 rounded text-sm">
                                         Enroll Now
                                     </Button>
                                 </Link>
@@ -384,42 +296,16 @@ const Header: React.FC = () => {
 
                         <button
                             onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-                            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300"
+                            className="p-2 rounded-full hover:bg-brand-olive-dark text-brand-olive-light"
                         >
                             <Settings className="w-5 h-5" />
                         </button>
 
                         {isSettingsOpen && (
-                            <div className="absolute right-4 top-20 w-64 bg-white dark:bg-[#0a192f] border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50">
+                            <div className="absolute right-4 top-20 w-64 bg-brand-black border border-brand-olive-dark rounded-lg shadow-lg z-50">
                                 <div className="p-4">
                                     {/* Settings Header */}
-                                    <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3">Settings</h3>
-
-                                    {/* Theme Toggle */}
-                                    <div className="flex items-center justify-between py-2">
-                                        <div className="flex items-center gap-2">
-                                            {theme === 'dark' ? <Moon className="w-4 h-4 text-gray-700 dark:text-gray-300" /> : <Sun className="w-4 h-4 text-gray-700 dark:text-gray-300" />}
-                                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                                                {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
-                                            </span>
-                                        </div>
-
-                                        {/* Sliding Toggle Switch */}
-                                        <button
-                                            onClick={toggleTheme}
-                                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#d6b161] focus:ring-offset-2 ${theme === 'dark' ? 'bg-[#d6b161]' : 'bg-gray-300'
-                                                }`}
-                                            aria-label="Toggle theme"
-                                        >
-                                            <span
-                                                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${theme === 'dark' ? 'translate-x-6' : 'translate-x-1'
-                                                    }`}
-                                            />
-                                        </button>
-                                    </div>
-
-                                    {/* Divider for future settings */}
-                                    <div className="border-t border-gray-200 dark:border-gray-700 my-3"></div>
+                                    <h3 className="text-xs font-bold uppercase tracking-wider text-brand-gold mb-3">Settings</h3>
 
                                     {showTrainerNotifications && <PushNotificationToggle />}
 
@@ -427,7 +313,7 @@ const Header: React.FC = () => {
                                     <Link
                                         to="/feedback"
                                         onClick={() => setIsSettingsOpen(false)}
-                                        className="flex items-center gap-2 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#d6b161] dark:hover:text-[#d6b161] transition-colors"
+                                        className="flex items-center gap-2 py-2 text-sm font-medium text-white/75 hover:text-brand-gold transition-colors"
                                     >
                                         <span className="text-lg">🐞</span>
                                         Report an Issue / Feedback
@@ -439,7 +325,7 @@ const Header: React.FC = () => {
                         )}
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="text-gray-700 dark:text-white p-2"
+                            className="text-brand-gold p-2"
                         >
                             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                         </button>
@@ -454,51 +340,33 @@ const Header: React.FC = () => {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="lg:hidden bg-white dark:bg-[#0a192f] border-t border-gray-100 dark:border-gray-800 max-h-[calc(100vh-5rem)] overflow-y-auto"
+                        className="lg:hidden bg-brand-black border-t border-brand-olive-dark max-h-[calc(100vh-5rem)] overflow-y-auto"
                     >
                         <div className="px-4 py-4 space-y-2">
-                            <Link to="/" className="block text-gray-700 dark:text-gray-300 font-medium py-2 text-sm" onClick={() => setIsMenuOpen(false)}>Home</Link>
+                            <Link to="/" className="block text-brand-white font-medium py-2 text-sm" onClick={() => setIsMenuOpen(false)}>Home</Link>
 
-
-
+                            {/* Language Training mobile dropdown */}
                             <div className="flex items-center justify-between w-full">
                                 <Link
-                                    to="/skill-training"
+                                    to="/language-training"
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="text-gray-700 dark:text-gray-300 font-medium py-2 text-sm flex-1"
+                                    className="text-brand-white font-medium py-2 text-sm flex-1"
                                 >
-                                    Skill Training
+                                    Language Training
                                 </Link>
                                 <button
-                                    onClick={() => toggleDropdown('skill')}
-                                    className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10"
+                                    onClick={() => toggleDropdown('language')}
+                                    className="p-2 rounded-full hover:bg-brand-olive-dark"
                                 >
-                                    <ChevronDown className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform ${openDropdown === 'skill' ? 'rotate-180' : ''}`} />
+                                    <ChevronDown className={`w-5 h-5 text-brand-gold transition-transform ${openDropdown === 'language' ? 'rotate-180' : ''}`} />
                                 </button>
                             </div>
-                            {openDropdown === 'skill' && (
-                                <div className="bg-gray-50 dark:bg-white/5 rounded pl-4 pr-2 py-2 space-y-3">
-                                    {/* Industrial Automation */}
-                                    <div className="space-y-1">
-                                        <h4 className="text-xs font-bold uppercase text-[#d6b161] mb-2">Industrial Automation</h4>
-                                        <Link to="/skill-training" className="block text-gray-600 dark:text-gray-400 py-1 text-xs font-medium" onClick={() => setIsMenuOpen(false)}>Overview</Link>
-                                        <Link to="/skill-training/scada" className="block text-gray-600 dark:text-gray-400 py-1 text-xs" onClick={() => setIsMenuOpen(false)}>SCADA & HMI</Link>
-                                        <Link to="/skill-training/plc" className="block text-gray-600 dark:text-gray-400 py-1 text-xs" onClick={() => setIsMenuOpen(false)}>PLC Programming</Link>
-                                        <Link to="/skill-training/drives" className="block text-gray-600 dark:text-gray-400 py-1 text-xs" onClick={() => setIsMenuOpen(false)}>Industrial Drives</Link>
-                                        <Link to="/language-training" className="block text-gray-600 dark:text-gray-400 py-1 text-xs font-medium" onClick={() => setIsMenuOpen(false)}>Language Training</Link>
-                                    </div>
-
-                                    {/* Advanced Training */}
-                                    <div className="space-y-1 border-t border-gray-100 dark:border-gray-700 pt-2">
-                                        <h4 className="text-xs font-bold uppercase text-[#d6b161] mb-2">Advanced Training</h4>
-                                        <Link to="/skill-training/industry4" className="block text-gray-600 dark:text-gray-400 py-1 text-xs" onClick={() => setIsMenuOpen(false)}>Industry 4.0</Link>
-                                    </div>
-
-                                    {/* Corporate */}
-                                    <div className="space-y-1 border-t border-gray-100 dark:border-gray-700 pt-2">
-                                        <h4 className="text-xs font-bold uppercase text-[#d6b161] mb-2">Corporate</h4>
-                                        <Link to="/skill-training/corporate" className="block text-gray-600 dark:text-gray-400 py-1 text-xs" onClick={() => setIsMenuOpen(false)}>Customized Training</Link>
-                                    </div>
+                            {openDropdown === 'language' && (
+                                <div className="bg-brand-olive-dark/30 rounded pl-4 pr-2 py-2 space-y-1">
+                                    <h4 className="text-xs font-bold uppercase text-brand-gold mb-2">Languages</h4>
+                                    <Link to="/training/english" className="block text-white/75 py-1 text-xs" onClick={() => setIsMenuOpen(false)}>🇬🇧 English</Link>
+                                    <Link to="/training/german" className="block text-white/75 py-1 text-xs" onClick={() => setIsMenuOpen(false)}>🇩🇪 German</Link>
+                                    <Link to="/training/japanese" className="block text-white/75 py-1 text-xs" onClick={() => setIsMenuOpen(false)}>🇯🇵 Japanese</Link>
                                 </div>
                             )}
 
@@ -506,45 +374,45 @@ const Header: React.FC = () => {
                                 <Link
                                     to="/careers"
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="text-gray-700 dark:text-gray-300 font-medium py-2 text-sm flex-1"
+                                    className="text-brand-white font-medium py-2 text-sm flex-1"
                                 >
                                     Career
                                 </Link>
                                 <button
                                     onClick={() => toggleDropdown('career')}
-                                    className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10"
+                                    className="p-2 rounded-full hover:bg-brand-olive-dark"
                                 >
-                                    <ChevronDown className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform ${openDropdown === 'career' ? 'rotate-180' : ''}`} />
+                                    <ChevronDown className={`w-5 h-5 text-brand-gold transition-transform ${openDropdown === 'career' ? 'rotate-180' : ''}`} />
                                 </button>
                             </div>
                             {openDropdown === 'career' && (
-                                <div className="bg-gray-50 dark:bg-white/5 rounded pl-4 pr-2 py-2 space-y-3">
+                                <div className="bg-brand-olive-dark/30 rounded pl-4 pr-2 py-2 space-y-3">
                                     {/* INTERNSHIP Section */}
                                     <div className="space-y-1">
-                                        <h4 className="text-xs font-bold uppercase text-[#d6b161] mb-2">Internship</h4>
+                                        <h4 className="text-xs font-bold uppercase text-brand-gold mb-2">Internship</h4>
                                         {internships.map((internship) => (
-                                            <Link key={internship._id} to="/careers" className="block text-gray-600 dark:text-gray-400 py-1 text-xs" onClick={() => setIsMenuOpen(false)}>
+                                            <Link key={internship._id} to="/careers" className="block text-white/75 py-1 text-xs" onClick={() => setIsMenuOpen(false)}>
                                                 {internship.title}
                                             </Link>
                                         ))}
                                     </div>
 
                                     {/* CAREER ABROAD Section — commented out for future use
-                                    <div className="space-y-1 border-t border-gray-100 dark:border-gray-700 pt-2">
+                                    <div className="space-y-1 border-t border-brand-olive-dark pt-2">
                                         <h4>Career Abroad</h4>
                                         Work in Canada, Career in Germany, Jobs in Australia, UK Employment
                                     </div>
                                     */}
 
                                     {/* SERVICES Section — commented out for future use
-                                    <div className="space-y-1 border-t border-gray-100 dark:border-gray-700 pt-2">
+                                    <div className="space-y-1 border-t border-brand-olive-dark pt-2">
                                         <h4>Services</h4>
                                         Visa Assistance, Job Placement, Interview Prep
                                     </div>
                                     */}
 
                                     {/* FULL TIME Section — commented out for future use
-                                    <div className="space-y-1 border-t border-gray-100 dark:border-gray-700 pt-2">
+                                    <div className="space-y-1 border-t border-brand-olive-dark pt-2">
                                         <h4>Full Time</h4>
                                         PLC Automation Engineer
                                         Controls & Automation Engineer
@@ -555,27 +423,26 @@ const Header: React.FC = () => {
                                 </div>
                             )}
 
-                            <Link to="/webinars" className="block text-gray-700 dark:text-gray-300 font-medium py-2 text-sm" onClick={() => setIsMenuOpen(false)}>Webinars</Link>
-                            <Link to="/about" className="block text-gray-700 dark:text-gray-300 font-medium py-2 text-sm" onClick={() => setIsMenuOpen(false)}>About</Link>
-                            <Link to="/contact" className="block text-gray-700 dark:text-gray-300 font-medium py-2 text-sm" onClick={() => setIsMenuOpen(false)}>Contact</Link>
+                            <Link to="/about" className="block text-brand-white font-medium py-2 text-sm" onClick={() => setIsMenuOpen(false)}>About</Link>
+                            <Link to="/contact" className="block text-brand-white font-medium py-2 text-sm" onClick={() => setIsMenuOpen(false)}>Contact</Link>
 
-                            <div className="pt-4 border-t border-gray-100 dark:border-gray-800 flex flex-col gap-3">
+                            <div className="pt-4 border-t border-brand-olive-dark flex flex-col gap-3">
                                 {user ? (
                                     <Link
                                         to={getDashboardPathForRole(user.role)}
                                         onClick={() => setIsMenuOpen(false)}
                                     >
-                                        <Button className="w-full bg-[#0a192f] hover:bg-[#112240] text-white font-semibold rounded-full text-sm py-2 dark:bg-gray-700 dark:hover:bg-gray-600">
+                                        <Button className="w-full bg-brand-red hover:bg-brand-red-hover text-white font-semibold rounded text-sm py-2">
                                             Dashboard
                                         </Button>
                                     </Link>
                                 ) : (
                                     <>
-                                        <Link to="/login" className="text-center text-gray-700 dark:text-white font-medium py-2 text-sm" onClick={() => setIsMenuOpen(false)}>
+                                        <Link to="/login" className="text-center text-brand-white font-medium py-2 text-sm" onClick={() => setIsMenuOpen(false)}>
                                             Sign In
                                         </Link>
                                         <Link to="/register" onClick={() => setIsMenuOpen(false)}>
-                                            <Button className="w-full bg-[#d6b161] text-[#0a192f] font-semibold rounded-full text-sm py-2">
+                                            <Button className="w-full bg-brand-red hover:bg-brand-red-hover text-white font-semibold rounded text-sm py-2">
                                                 Enroll Now
                                             </Button>
                                         </Link>

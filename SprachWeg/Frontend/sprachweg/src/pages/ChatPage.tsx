@@ -73,7 +73,7 @@ const appendUniqueChatMessage = (currentMessages: ChatMessage[], nextMessage?: C
 // ============================================================================
 
 const Avatar: React.FC<{ user: { name: string; avatar?: string }; size?: string }> = ({ user, size = 'w-8 h-8' }) => (
-    <div className={`${size} rounded-full overflow-hidden flex-shrink-0 bg-[#d6b161]/20 border border-[#d6b161]/30 flex items-center justify-center text-[#d6b161] font-bold text-sm`}>
+    <div className={`${size} rounded-full overflow-hidden flex-shrink-0 bg-brand-gold/20 border border-brand-gold/30 flex items-center justify-center text-brand-gold font-bold text-sm`}>
         {user.avatar ? (
             <img src={getAssetUrl(user.avatar)} alt={user.name} className="w-full h-full object-cover" />
         ) : (
@@ -300,30 +300,30 @@ const ChatPage: React.FC = () => {
     // ─────────────────────────────────────────────────────────────────────────
 
     return (
-        <div className="flex flex-col h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="flex flex-col h-screen bg-brand-off-white">
             <Header />
 
             <div className="flex-1 flex flex-col max-w-3xl w-full mx-auto overflow-hidden">
                 {/* Chat Header */}
-                <div className="px-4 py-3 bg-white dark:bg-[#112240] border-b border-gray-200 dark:border-gray-800 flex items-center gap-3 shadow-sm">
+                <div className="px-4 py-3 bg-white border-b border-brand-surface flex items-center gap-3 shadow-sm">
                     <button
                         onClick={() => navigate(backTarget)}
-                        className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 transition-colors"
+                        className="p-2 rounded-full hover:bg-brand-surface text-brand-olive transition-colors"
                     >
                         <ArrowLeft className="w-5 h-5" />
                     </button>
 
-                    <div className="w-10 h-10 rounded-full bg-[#d6b161]/20 flex items-center justify-center text-[#d6b161] font-bold text-lg border border-[#d6b161]/30">
+                    <div className="w-10 h-10 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold font-bold text-lg border border-brand-gold/30">
                         {otherPartyName.charAt(0).toUpperCase() || <MessageCircle className="w-5 h-5" />}
                     </div>
 
                     <div className="flex-1 min-w-0">
-                        <h2 className="font-bold text-gray-900 dark:text-white truncate">
+                        <h2 className="font-bold text-brand-black truncate">
                             {otherPartyName || (isStudent ? 'Trainer' : 'Student')}
                         </h2>
                         <div className="flex items-center gap-1.5">
-                            <div className={`w-2 h-2 rounded-full ${connected ? 'bg-green-500' : 'bg-gray-400'}`} />
-                            <p className={`text-xs font-medium ${connected ? 'text-green-500' : 'text-gray-400'}`}>
+                            <div className={`w-2 h-2 rounded-full ${connected ? 'bg-brand-olive/50' : 'bg-brand-olive-light'}`} />
+                            <p className={`text-xs font-medium ${connected ? 'text-brand-olive' : 'text-brand-olive-light'}`}>
                                 {connected ? 'Connected' : (loading ? 'Loading...' : 'Offline')}
                             </p>
                         </div>
@@ -332,7 +332,7 @@ const ChatPage: React.FC = () => {
 
                 {/* Socket error banner */}
                 {socketError && (
-                    <div className="px-4 py-2 bg-red-50 dark:bg-red-900/20 border-b border-red-200 dark:border-red-800 flex items-center gap-2 text-red-600 dark:text-red-400 text-sm">
+                    <div className="px-4 py-2 bg-brand-red/5 border-b border-brand-red/20 flex items-center gap-2 text-brand-red text-sm">
                         <WifiOff className="w-4 h-4 flex-shrink-0" />
                         <span>{socketError}. Real-time updates may not work.</span>
                     </div>
@@ -342,21 +342,21 @@ const ChatPage: React.FC = () => {
                 <div className="flex-1 overflow-y-auto px-4 py-4 space-y-1">
                     {loading ? (
                         <div className="flex items-center justify-center h-full">
-                            <div className="w-8 h-8 border-2 border-[#d6b161] border-t-transparent rounded-full animate-spin" />
+                            <div className="w-8 h-8 border-2 border-brand-gold border-t-transparent rounded-full animate-spin" />
                         </div>
                     ) : error ? (
                         <div className="flex items-center justify-center h-full">
                             <div className="text-center">
-                                <p className="text-red-500 font-medium">{error}</p>
+                                <p className="text-brand-red font-medium">{error}</p>
                             </div>
                         </div>
                     ) : messages.length === 0 ? (
                         <div className="flex flex-col items-center justify-center h-full text-center gap-3">
-                            <div className="w-16 h-16 rounded-full bg-[#d6b161]/20 flex items-center justify-center">
-                                <MessageCircle className="w-8 h-8 text-[#d6b161]" />
+                            <div className="w-16 h-16 rounded-full bg-brand-gold/20 flex items-center justify-center">
+                                <MessageCircle className="w-8 h-8 text-brand-gold" />
                             </div>
-                            <p className="text-gray-500 dark:text-gray-400 font-medium">No messages yet</p>
-                            <p className="text-sm text-gray-400 dark:text-gray-500">
+                            <p className="text-brand-olive font-medium">No messages yet</p>
+                            <p className="text-sm text-brand-olive-light">
                                 {connected ? 'Send a message to start the conversation!' : 'Connecting to chat...'}
                             </p>
                         </div>
@@ -370,11 +370,11 @@ const ChatPage: React.FC = () => {
                                 <React.Fragment key={msg._id || idx}>
                                     {showDivider && (
                                         <div className="flex items-center gap-3 my-4">
-                                            <div className="flex-1 h-px bg-gray-200 dark:bg-gray-800" />
-                                            <span className="text-xs font-medium text-gray-400 dark:text-gray-500 px-2">
+                                            <div className="flex-1 h-px bg-brand-surface" />
+                                            <span className="text-xs font-medium text-brand-olive-light px-2">
                                                 {formatDateDivider(msg.createdAt)}
                                             </span>
-                                            <div className="flex-1 h-px bg-gray-200 dark:bg-gray-800" />
+                                            <div className="flex-1 h-px bg-brand-surface" />
                                         </div>
                                     )}
                                     <motion.div
@@ -388,12 +388,12 @@ const ChatPage: React.FC = () => {
                                         <div className={`max-w-[72%] ${isMine ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
                                             <div className={`px-4 py-2.5 rounded-2xl text-sm leading-relaxed break-words ${
                                                 isMine
-                                                    ? 'bg-[#d6b161] text-[#0a192f] rounded-tr-sm font-medium'
-                                                    : 'bg-white dark:bg-[#112240] text-gray-900 dark:text-white border border-gray-100 dark:border-gray-800 rounded-tl-sm'
+                                                    ? 'bg-brand-gold text-brand-black rounded-tr-sm font-medium'
+                                                    : 'bg-white text-brand-black border border-brand-surface rounded-tl-sm'
                                             }`}>
                                                 {msg.content}
                                             </div>
-                                            <span className="text-xs text-gray-400 dark:text-gray-500 px-1">
+                                            <span className="text-xs text-brand-olive-light px-1">
                                                 {formatTime(msg.createdAt)}
                                             </span>
                                         </div>
@@ -406,7 +406,7 @@ const ChatPage: React.FC = () => {
                 </div>
 
                 {/* Input Area */}
-                <div className="px-4 py-3 bg-white dark:bg-[#112240] border-t border-gray-200 dark:border-gray-800">
+                <div className="px-4 py-3 bg-white border-t border-brand-surface">
                     <div className="flex items-end gap-3">
                         <textarea
                             ref={inputRef}
@@ -416,18 +416,18 @@ const ChatPage: React.FC = () => {
                             placeholder={connected ? 'Type a message... (Enter to send)' : 'Connecting...'}
                             disabled={!connected}
                             rows={1}
-                            className="flex-1 resize-none px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#0a192f] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#d6b161]/50 focus:border-[#d6b161] transition-colors text-sm max-h-32 overflow-y-auto disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex-1 resize-none px-4 py-2.5 rounded-xl border border-brand-surface bg-brand-off-white text-brand-black placeholder-brand-olive-light focus:outline-none focus:ring-2 focus:ring-brand-gold/50 focus:border-brand-red transition-colors text-sm max-h-32 overflow-y-auto disabled:opacity-50 disabled:cursor-not-allowed"
                             style={{ minHeight: '42px' }}
                         />
                         <button
                             onClick={handleSend}
                             disabled={!input.trim() || !connected}
-                            className="p-2.5 rounded-xl bg-[#d6b161] text-[#0a192f] hover:bg-[#c4a055] disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex-shrink-0 shadow-sm"
+                            className="p-2.5 rounded-xl bg-brand-gold text-brand-black hover:bg-brand-gold-hover disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex-shrink-0 shadow-sm"
                         >
                             <Send className="w-5 h-5" />
                         </button>
                     </div>
-                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-2 text-center">
+                    <p className="text-xs text-brand-olive-light mt-2 text-center">
                         Messages are automatically deleted after 7 days
                     </p>
                 </div>

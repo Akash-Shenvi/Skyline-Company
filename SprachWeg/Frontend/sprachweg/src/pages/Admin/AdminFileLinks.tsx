@@ -128,44 +128,44 @@ const AdminFileLinks: React.FC = () => {
             <div className="max-w-7xl mx-auto space-y-8 p-4 sm:p-6 lg:p-8">
                 
                 {toast && (
-                    <div className={`fixed top-4 right-4 z-50 p-4 rounded-md shadow-lg text-white ${toast.type === 'success' ? 'bg-green-500' : 'bg-red-500'}`}>
+                    <div className={`fixed top-4 right-4 z-50 p-4 rounded-md shadow-lg text-white ${toast.type === 'success' ? 'bg-brand-olive/50' : 'bg-brand-red/50'}`}>
                         {toast.message}
                     </div>
                 )}
 
-                <div className="flex justify-between items-center bg-white dark:bg-[#112240] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
+                <div className="flex justify-between items-center bg-white p-6 rounded-2xl border border-brand-surface shadow-sm">
                     <div>
-                        <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">File Links Management</h1>
-                        <p className="text-gray-600 dark:text-gray-400 mt-1">Upload files and generate shareable links</p>
+                        <h1 className="text-2xl font-bold bg-gradient-to-r from-brand-gold to-brand-gold bg-clip-text text-transparent">File Links Management</h1>
+                        <p className="text-brand-olive-dark mt-1">Upload files and generate shareable links</p>
                     </div>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Upload Form */}
-                    <div className="lg:col-span-1 border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#112240] rounded-2xl p-6 shadow-sm self-start">
-                        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
-                            <Upload className="w-5 h-5 mr-2 text-orange-500" />
+                    <div className="lg:col-span-1 border border-brand-surface bg-white rounded-2xl p-6 shadow-sm self-start">
+                        <h2 className="text-xl font-semibold text-brand-black mb-6 flex items-center">
+                            <Upload className="w-5 h-5 mr-2 text-brand-gold" />
                             Upload Files
                         </h2>
                         <form onSubmit={handleUpload} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                <label className="block text-sm font-medium text-brand-olive-dark mb-1">
                                     File Title
                                 </label>
                                 <input
                                     type="text"
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
-                                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 dark:bg-[#0a192f] dark:text-white"
+                                    className="w-full px-4 py-2 border border-brand-surface rounded-lg focus:ring-2 focus:ring-brand-gold focus:border-brand-gold"
                                     placeholder="Optional title or title prefix"
                                 />
-                                <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                                <p className="mt-2 text-xs text-brand-olive">
                                     Leave blank to use each file name automatically. If you upload multiple files, this title will be used as a prefix.
                                 </p>
                             </div>
                             
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                <label className="block text-sm font-medium text-brand-olive-dark mb-1">
                                     Files
                                 </label>
                                 <input
@@ -173,18 +173,18 @@ const AdminFileLinks: React.FC = () => {
                                     type="file"
                                     multiple
                                     onChange={(e) => setSelectedFiles(e.target.files ? Array.from(e.target.files) : [])}
-                                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 dark:bg-[#0a192f] dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100 dark:file:bg-orange-900/20 dark:file:text-orange-400"
+                                    className="w-full px-4 py-2 border border-brand-surface rounded-lg focus:ring-2 focus:ring-brand-gold focus:border-brand-gold file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-gold/5 file:text-brand-gold hover:file:bg-brand-gold/10"
                                     required
                                 />
-                                <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                                <p className="mt-2 text-xs text-brand-olive">
                                     You can select and upload multiple files in one go.
                                 </p>
                             </div>
 
                             {selectedFiles.length > 0 && (
-                                <div className="rounded-xl border border-orange-200 bg-orange-50/70 p-4 dark:border-orange-900/30 dark:bg-orange-900/10">
+                                <div className="rounded-xl border border-brand-gold/20 bg-brand-gold/5/70 p-4">
                                     <div className="flex items-center justify-between gap-3">
-                                        <p className="text-sm font-semibold text-orange-700 dark:text-orange-300">
+                                        <p className="text-sm font-semibold text-brand-gold">
                                             {selectedFiles.length} file{selectedFiles.length === 1 ? '' : 's'} selected
                                         </p>
                                         <button
@@ -194,7 +194,7 @@ const AdminFileLinks: React.FC = () => {
                                                 const fileInput = document.getElementById('file-upload') as HTMLInputElement;
                                                 if (fileInput) fileInput.value = '';
                                             }}
-                                            className="text-xs font-medium text-orange-700 hover:text-orange-900 dark:text-orange-300 dark:hover:text-orange-200"
+                                            className="text-xs font-medium text-brand-gold hover:text-brand-black"
                                         >
                                             Clear
                                         </button>
@@ -203,18 +203,18 @@ const AdminFileLinks: React.FC = () => {
                                         {selectedFiles.slice(0, 5).map((file) => (
                                             <div
                                                 key={`${file.name}-${file.size}-${file.lastModified}`}
-                                                className="flex items-center justify-between gap-3 rounded-lg bg-white px-3 py-2 text-sm dark:bg-[#112240]"
+                                                className="flex items-center justify-between gap-3 rounded-lg bg-white px-3 py-2 text-sm"
                                             >
                                                 <div className="min-w-0">
-                                                    <p className="truncate font-medium text-gray-900 dark:text-white">{file.name}</p>
-                                                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                    <p className="truncate font-medium text-brand-black">{file.name}</p>
+                                                    <p className="text-xs text-brand-olive">
                                                         {(file.size / (1024 * 1024)).toFixed(2)} MB
                                                     </p>
                                                 </div>
                                             </div>
                                         ))}
                                         {selectedFiles.length > 5 && (
-                                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                                            <p className="text-xs text-brand-olive">
                                                 +{selectedFiles.length - 5} more file{selectedFiles.length - 5 === 1 ? '' : 's'}
                                             </p>
                                         )}
@@ -225,7 +225,7 @@ const AdminFileLinks: React.FC = () => {
                             <button
                                 type="submit"
                                 disabled={uploading}
-                                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center"
+                                className="w-full bg-brand-gold/50 hover:bg-brand-gold text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center"
                             >
                                 {uploading ? (
                                     <span className="flex items-center">
@@ -243,40 +243,40 @@ const AdminFileLinks: React.FC = () => {
                     </div>
 
                     {/* Files List */}
-                    <div className="lg:col-span-2 border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#112240] rounded-2xl shadow-sm overflow-hidden flex flex-col">
-                        <div className="p-6 border-b border-gray-200 dark:border-gray-800">
-                            <h2 className="text-xl font-semibold text-gray-900 dark:text-white flex items-center">
-                                <Link className="w-5 h-5 mr-2 text-orange-500" />
+                    <div className="lg:col-span-2 border border-brand-surface bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col">
+                        <div className="p-6 border-b border-brand-surface">
+                            <h2 className="text-xl font-semibold text-brand-black flex items-center">
+                                <Link className="w-5 h-5 mr-2 text-brand-gold" />
                                 Managed File Links
                             </h2>
                         </div>
                         
                         <div className="flex-grow overflow-auto p-0">
                             {loading ? (
-                                <div className="flex justify-center items-center h-48 text-gray-500">Loading files...</div>
+                                <div className="flex justify-center items-center h-48 text-brand-olive">Loading files...</div>
                             ) : files.length === 0 ? (
-                                <div className="flex justify-center items-center h-48 text-gray-500 flex-col">
-                                    <FileIcon className="h-12 w-12 text-gray-300 dark:text-gray-700 mb-2" />
+                                <div className="flex justify-center items-center h-48 text-brand-olive flex-col">
+                                    <FileIcon className="h-12 w-12 text-brand-olive-light mb-2" />
                                     <p>No files uploaded yet.</p>
                                 </div>
                             ) : (
-                                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
-                                    <thead className="bg-gray-50 dark:bg-gray-900">
+                                <table className="min-w-full divide-y divide-brand-surface">
+                                    <thead className="bg-brand-off-white">
                                         <tr>
-                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">File Details</th>
-                                            <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-brand-olive uppercase tracking-wider">File Details</th>
+                                            <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-brand-olive uppercase tracking-wider">Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="bg-white dark:bg-[#112240] divide-y divide-gray-200 dark:divide-gray-800">
+                                    <tbody className="bg-white divide-y divide-brand-surface">
                                         {files.map((file) => (
-                                            <tr key={file._id} className="hover:bg-gray-50 dark:hover:bg-[#0a192f]/50 transition-colors">
+                                            <tr key={file._id} className="hover:bg-brand-off-white transition-colors">
                                                 <td className="px-6 py-4">
                                                     <div className="flex items-center">
-                                                        <FileIcon className="h-6 w-6 text-gray-400 mr-3 flex-shrink-0" />
+                                                        <FileIcon className="h-6 w-6 text-brand-olive-light mr-3 flex-shrink-0" />
                                                         <div>
-                                                            <div className="text-sm font-medium text-gray-900 dark:text-white">{file.title}</div>
-                                                            <div className="text-sm text-gray-500 truncate max-w-[200px] sm:max-w-xs">{file.originalName}</div>
-                                                            <div className="text-xs text-gray-400 mt-1">{new Date(file.createdAt).toLocaleDateString()}</div>
+                                                            <div className="text-sm font-medium text-brand-black">{file.title}</div>
+                                                            <div className="text-sm text-brand-olive truncate max-w-[200px] sm:max-w-xs">{file.originalName}</div>
+                                                            <div className="text-xs text-brand-olive-light mt-1">{new Date(file.createdAt).toLocaleDateString()}</div>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -284,14 +284,14 @@ const AdminFileLinks: React.FC = () => {
                                                     <div className="flex items-center justify-end space-x-3">
                                                         <button 
                                                             onClick={() => copyToClipboard(file.fileUrl)}
-                                                            className="text-gray-500 hover:text-orange-500 transition-colors flex items-center bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-md"
+                                                            className="text-brand-olive hover:text-brand-gold transition-colors flex items-center bg-brand-surface px-3 py-1.5 rounded-md"
                                                         >
                                                             <Copy className="h-4 w-4 mr-1.5" />
                                                             Copy Link
                                                         </button>
                                                         <button 
                                                             onClick={() => handleDelete(file._id)}
-                                                            className="text-red-500 hover:text-red-700 transition-colors p-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20"
+                                                            className="text-brand-red hover:text-brand-red transition-colors p-1.5 rounded-md hover:bg-brand-red/5"
                                                         >
                                                             <Trash2 className="h-5 w-5" />
                                                         </button>
@@ -306,22 +306,22 @@ const AdminFileLinks: React.FC = () => {
 
                         {/* Pagination */}
                         {!loading && files.length > 0 && (
-                            <div className="p-4 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between bg-gray-50 dark:bg-gray-900/50">
-                                <span className="text-sm text-gray-500 dark:text-gray-400">
+                            <div className="p-4 border-t border-brand-surface flex items-center justify-between bg-brand-off-white">
+                                <span className="text-sm text-brand-olive">
                                     Page {currentPage} of {totalPages}
                                 </span>
                                 <div className="flex space-x-2">
                                     <button
                                         onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                                         disabled={currentPage === 1}
-                                        className={`p-2 rounded-md ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}`}
+                                        className={`p-2 rounded-md ${currentPage === 1 ? 'text-brand-olive-light cursor-not-allowed' : 'text-brand-olive-dark hover:bg-brand-surface'}`}
                                     >
                                         <ChevronLeft className="h-5 w-5" />
                                     </button>
                                     <button
                                         onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                                         disabled={currentPage === totalPages}
-                                        className={`p-2 rounded-md ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}`}
+                                        className={`p-2 rounded-md ${currentPage === totalPages ? 'text-brand-olive-light cursor-not-allowed' : 'text-brand-olive-dark hover:bg-brand-surface'}`}
                                     >
                                         <ChevronRight className="h-5 w-5" />
                                     </button>

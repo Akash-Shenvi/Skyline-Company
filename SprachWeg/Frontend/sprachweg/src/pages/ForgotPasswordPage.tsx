@@ -28,13 +28,13 @@ const ForgotPasswordPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white dark:bg-[#0a192f] font-sans">
+        <div className="min-h-screen bg-white font-sans">
             <Header />
             <a href="#main" className="sr-only focus:not-sr-only">Skip to content</a>
 
             <main id="main" role="main" className="min-h-screen pt-20 flex">
                 {/* Left Panel - Hero */}
-                <div className="hidden lg:flex lg:w-1/2 bg-[#0a192f] text-white p-16 flex-col justify-between relative overflow-hidden">
+                <div className="hidden lg:flex lg:w-1/2 bg-brand-black text-white p-16 flex-col justify-between relative overflow-hidden">
                     {/* Decorative Elements */}
                     <div className="absolute top-12 right-12 w-32 h-32 border border-white/20 rounded-3xl transform rotate-12" />
                     <div className="absolute bottom-12 left-12 w-24 h-24 border border-white/10 rounded-full" />
@@ -51,7 +51,7 @@ const ForgotPasswordPage: React.FC = () => {
                             transition={{ duration: 0.6 }}
                         >
                             <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full border border-white/20 text-sm font-medium backdrop-blur-sm">
-                                <span className="w-2 h-2 rounded-full bg-[#d6b161]" />
+                                <span className="w-2 h-2 rounded-full bg-brand-gold" />
                                 Secure Account Recovery
                             </div>
 
@@ -60,7 +60,7 @@ const ForgotPasswordPage: React.FC = () => {
                                 Recovery
                             </h1>
 
-                            <p className="text-blue-100 text-lg mb-12 max-w-md leading-relaxed">
+                            <p className="text-white/75 text-lg mb-12 max-w-md leading-relaxed">
                                 Don't worry, even the best of us forget. We'll help you get back to your skill training journey in no time.
                             </p>
 
@@ -79,16 +79,16 @@ const ForgotPasswordPage: React.FC = () => {
                                         className="flex items-center gap-4"
                                     >
                                         <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                                            <CheckCircle className="w-4 h-4 text-[#d6b161]" />
+                                            <CheckCircle className="w-4 h-4 text-brand-gold" />
                                         </div>
-                                        <span className="text-blue-50">{item}</span>
+                                        <span className="text-white">{item}</span>
                                     </motion.div>
                                 ))}
                             </div>
                         </motion.div>
                     </div>
 
-                    <div className="text-sm text-blue-200/60">
+                    <div className="text-sm text-white/75/60">
                         SoVir Technologies LLP © {new Date().getFullYear()}
                     </div>
                 </div>
@@ -97,10 +97,10 @@ const ForgotPasswordPage: React.FC = () => {
                 <div className="w-full lg:w-1/2 flex items-center justify-center p-8 relative">
                     {/* Mobile Header (Visible only on small screens) */}
                     <div className="lg:hidden absolute top-4 left-8 flex items-center gap-2">
-                        <div className="w-8 h-8 bg-[#0a192f] rounded-lg flex items-center justify-center text-white">
+                        <div className="w-8 h-8 bg-brand-black rounded-lg flex items-center justify-center text-white">
                             <span className="font-sans font-bold">S</span>
                         </div>
-                        <span className="font-sans font-bold text-[#0a192f] dark:text-white">SOVIR</span>
+                        <span className="font-sans font-bold text-brand-black">SOVIR</span>
                     </div>
 
                     <div className="w-full max-w-md">
@@ -108,32 +108,32 @@ const ForgotPasswordPage: React.FC = () => {
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.4 }}
-                            className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 border border-gray-100 dark:border-gray-700"
+                            className="bg-white rounded-3xl shadow-xl p-8 border border-brand-surface"
                         >
                             <div className="mb-8 text-center">
-                                <div className="w-16 h-16 bg-[#d6b161]/10 rounded-2xl flex items-center justify-center mx-auto mb-6 text-[#d6b161]">
+                                <div className="w-16 h-16 bg-brand-gold/10 rounded-2xl flex items-center justify-center mx-auto mb-6 text-brand-gold">
                                     <Mail className="w-8 h-8" />
                                 </div>
-                                <h2 className="font-sans text-3xl font-bold text-[#0a192f] dark:text-white mb-3">Forgot Password?</h2>
-                                <p className="text-gray-500 dark:text-gray-400">
+                                <h2 className="font-sans text-3xl font-bold text-brand-black mb-3">Forgot Password?</h2>
+                                <p className="text-brand-olive">
                                     Enter your email address and we'll send you a link to reset your password.
                                 </p>
                             </div>
 
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 <div>
-                                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
+                                    <label htmlFor="email" className="block text-sm font-semibold text-brand-olive-dark mb-1.5">
                                         Email Address
                                     </label>
                                     <div className="relative">
-                                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-olive-light">
                                             <Mail className="w-5 h-5" />
                                         </div>
                                         <input
                                             id="email"
                                             type="email"
                                             placeholder="you@example.com"
-                                            className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pl-10 text-gray-900 placeholder:text-gray-400 transition-all focus:outline-none focus:ring-2 focus:ring-[#d6b161] focus:bg-white dark:focus:bg-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-400"
+                                            className="w-full rounded-xl border border-brand-surface bg-brand-off-white px-4 py-3 pl-10 text-brand-black placeholder:text-brand-olive-light transition-all focus:outline-none focus:ring-2 focus:ring-brand-gold focus:bg-white"
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                             required
@@ -143,7 +143,7 @@ const ForgotPasswordPage: React.FC = () => {
 
                                 <Button
                                     type="submit"
-                                    className="w-full bg-[#d6b161] hover:bg-[#c4a055] text-[#0a192f] py-3.5 rounded-xl font-semibold shadow-lg shadow-amber-900/10 flex items-center justify-center gap-2"
+                                    className="w-full bg-brand-gold hover:bg-brand-gold-hover text-brand-black py-3.5 rounded-xl font-semibold shadow-lg shadow-amber-900/10 flex items-center justify-center gap-2"
                                     disabled={loading}
                                     data-testid="reset-button"
                                 >
@@ -163,7 +163,7 @@ const ForgotPasswordPage: React.FC = () => {
                                 <div className="text-center">
                                     <Link
                                         to="/login"
-                                        className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#d6b161] font-medium transition-colors"
+                                        className="inline-flex items-center gap-2 text-sm text-brand-olive hover:text-brand-gold font-medium transition-colors"
                                     >
                                         <ArrowLeft className="w-4 h-4" />
                                         Back to Login
@@ -173,7 +173,7 @@ const ForgotPasswordPage: React.FC = () => {
 
                         </motion.div>
 
-                        <p className="text-center text-xs text-gray-400 mt-8">
+                        <p className="text-center text-xs text-brand-olive-light mt-8">
                             Protected by reCAPTCHA and subject to the Google Privacy Policy and Terms of Service.
                         </p>
                     </div>

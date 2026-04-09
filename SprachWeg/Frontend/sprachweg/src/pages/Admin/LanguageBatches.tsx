@@ -104,13 +104,13 @@ const activeClassTypeMeta = (trainingType: BatchListItem['trainingType']) =>
     trainingType === 'skill'
         ? {
             label: 'Skill',
-            badgeClassName: 'border-purple-200 bg-purple-100 text-purple-700 dark:border-purple-900/50 dark:bg-purple-900/30 dark:text-purple-300',
-            iconClassName: 'bg-purple-500/10 text-purple-500',
+            badgeClassName: 'border-brand-surface bg-brand-olive/10 text-brand-olive-dark',
+            iconClassName: 'bg-brand-off-white0/10 text-brand-olive',
         }
         : {
             label: 'Language',
-            badgeClassName: 'border-blue-200 bg-blue-100 text-blue-700 dark:border-blue-900/50 dark:bg-blue-900/30 dark:text-blue-300',
-            iconClassName: 'bg-[#d6b161]/10 text-[#d6b161]',
+            badgeClassName: 'border-brand-surface bg-brand-gold/10 text-brand-olive-dark',
+            iconClassName: 'bg-brand-gold/10 text-brand-gold',
         };
 
 const getNormalizedInstitutionName = (value?: string | null) => {
@@ -476,15 +476,15 @@ const LanguageBatches: React.FC = () => {
             <div className="max-w-7xl mx-auto space-y-6">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                        <h1 className="text-3xl font-serif font-bold text-gray-900 dark:text-white">Active Classes</h1>
-                        <p className="mt-1 text-gray-600 dark:text-gray-400">
+                        <h1 className="text-3xl font-serif font-bold text-brand-black">Active Classes</h1>
+                        <p className="mt-1 text-brand-olive-dark">
                             Review active language and skill classes, assign trainers, and manage enrolled students.
                         </p>
                     </div>
                     <button
                         type="button"
                         onClick={() => setShowPromoteModal(true)}
-                        className="inline-flex items-center gap-2 rounded-lg bg-[#d6b161] px-4 py-2 font-bold text-[#0a192f] transition-colors hover:bg-[#c4a055]"
+                        className="inline-flex items-center gap-2 rounded-lg bg-brand-gold px-4 py-2 font-bold text-brand-black transition-colors hover:bg-brand-gold-hover"
                     >
                         <Users className="h-5 w-5" />
                         Promote New Trainer
@@ -494,29 +494,29 @@ const LanguageBatches: React.FC = () => {
                 <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_260px]">
                     <form
                         onSubmit={handleSearchSubmit}
-                        className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-[#112240]"
+                        className="rounded-xl border border-brand-surface bg-white p-4 shadow-sm"
                     >
                         <div className="relative">
-                            <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                            <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-olive-light" />
                             <input
                                 type="text"
                                 placeholder="Search by class name or course..."
                                 value={searchInput}
                                 onChange={(event) => setSearchInput(event.target.value)}
-                                className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pl-10 pr-4 text-gray-900 outline-none transition-all focus:border-[#d6b161] focus:ring-2 focus:ring-[#d6b161] dark:border-gray-700 dark:bg-[#0a192f] dark:text-white"
+                                className="w-full rounded-lg border border-brand-surface bg-brand-off-white py-2 pl-10 pr-4 text-brand-black outline-none transition-all focus:border-brand-red focus:ring-2 focus:ring-brand-gold"
                             />
                         </div>
                     </form>
 
-                    <div className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-[#112240]">
-                        <Filter className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                    <div className="flex items-center gap-2 rounded-xl border border-brand-surface bg-white p-4 shadow-sm">
+                        <Filter className="h-5 w-5 text-brand-olive" />
                         <select
                             value={filterCourse}
                             onChange={(event) => {
                                 setFilterCourse(event.target.value);
                                 setBatchPagination((current) => ({ ...current, currentPage: 1 }));
                             }}
-                            className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 outline-none transition-all focus:ring-2 focus:ring-[#d6b161] dark:border-gray-700 dark:bg-[#0a192f] dark:text-white"
+                            className="w-full rounded-lg border border-brand-surface bg-brand-off-white px-3 py-2 text-brand-black outline-none transition-all focus:ring-2 focus:ring-brand-gold"
                         >
                             {availableCourses.map((course) => (
                                 <option key={course} value={course}>
@@ -527,32 +527,32 @@ const LanguageBatches: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-[#112240]">
+                <div className="rounded-2xl border border-brand-surface bg-white p-4 shadow-sm">
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                        <div className="text-sm text-gray-600 dark:text-gray-400">
-                            Showing <span className="font-semibold text-gray-900 dark:text-white">{batchStart}</span> to{' '}
-                            <span className="font-semibold text-gray-900 dark:text-white">{batchEnd}</span> of{' '}
-                            <span className="font-semibold text-gray-900 dark:text-white">{batchPagination.totalBatches}</span> classes
+                        <div className="text-sm text-brand-olive-dark">
+                            Showing <span className="font-semibold text-brand-black">{batchStart}</span> to{' '}
+                            <span className="font-semibold text-brand-black">{batchEnd}</span> of{' '}
+                            <span className="font-semibold text-brand-black">{batchPagination.totalBatches}</span> classes
                         </div>
                         <div className="flex items-center gap-2">
                             <button
                                 type="button"
                                 onClick={() => setBatchPagination((current) => ({ ...current, currentPage: Math.max(1, current.currentPage - 1) }))}
                                 disabled={!batchPagination.hasPreviousPage}
-                                className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-[#0a192f] dark:text-gray-300 dark:hover:bg-gray-800"
+                                className="inline-flex items-center gap-2 rounded-lg border border-brand-surface bg-brand-off-white px-4 py-2 text-sm font-medium text-brand-olive-dark transition-colors hover:bg-brand-surface disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 <ChevronLeft className="h-4 w-4" />
                                 Previous
                             </button>
-                            <span className="px-2 text-sm text-gray-600 dark:text-gray-400">
-                                Page <span className="font-semibold text-gray-900 dark:text-white">{batchPagination.currentPage}</span> of{' '}
-                                <span className="font-semibold text-gray-900 dark:text-white">{batchPagination.totalPages}</span>
+                            <span className="px-2 text-sm text-brand-olive-dark">
+                                Page <span className="font-semibold text-brand-black">{batchPagination.currentPage}</span> of{' '}
+                                <span className="font-semibold text-brand-black">{batchPagination.totalPages}</span>
                             </span>
                             <button
                                 type="button"
                                 onClick={() => setBatchPagination((current) => ({ ...current, currentPage: Math.min(current.totalPages, current.currentPage + 1) }))}
                                 disabled={!batchPagination.hasNextPage}
-                                className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-[#0a192f] dark:text-gray-300 dark:hover:bg-gray-800"
+                                className="inline-flex items-center gap-2 rounded-lg border border-brand-surface bg-brand-off-white px-4 py-2 text-sm font-medium text-brand-olive-dark transition-colors hover:bg-brand-surface disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 Next
                                 <ChevronRight className="h-4 w-4" />
@@ -563,17 +563,17 @@ const LanguageBatches: React.FC = () => {
 
                 {loading ? (
                     <div className="flex h-64 items-center justify-center">
-                        <Loader2 className="h-10 w-10 animate-spin text-[#d6b161]" />
+                        <Loader2 className="h-10 w-10 animate-spin text-brand-gold" />
                     </div>
                 ) : error ? (
-                    <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-center font-medium text-red-600 dark:border-red-900/40 dark:bg-red-900/10 dark:text-red-400">
+                    <div className="rounded-xl border border-brand-red/20 bg-brand-red/5 p-4 text-center font-medium text-brand-red">
                         {error}
                     </div>
                 ) : batches.length === 0 ? (
-                    <div className="rounded-xl border border-gray-200 bg-white py-16 text-center dark:border-gray-800 dark:bg-[#112240]">
-                        <AlertCircle className="mx-auto mb-4 h-12 w-12 text-gray-300 dark:text-gray-600" />
-                        <h3 className="text-lg font-bold text-gray-900 dark:text-white">No active classes found</h3>
-                        <p className="text-gray-500 dark:text-gray-400">Try changing the course filter or search term.</p>
+                    <div className="rounded-xl border border-brand-surface bg-white py-16 text-center">
+                        <AlertCircle className="mx-auto mb-4 h-12 w-12 text-brand-olive-light" />
+                        <h3 className="text-lg font-bold text-brand-black">No active classes found</h3>
+                        <p className="text-brand-olive">Try changing the course filter or search term.</p>
                     </div>
                 ) : (
                     <div className="space-y-4">
@@ -585,10 +585,10 @@ const LanguageBatches: React.FC = () => {
                             return (
                                 <div
                                     key={batch._id}
-                                    className={`overflow-hidden rounded-xl border bg-white transition-all dark:bg-[#112240] ${
+                                    className={`overflow-hidden rounded-xl border bg-white transition-all ${
                                         isExpanded
-                                            ? 'border-[#d6b161] ring-1 ring-[#d6b161]/20 shadow-md'
-                                            : 'border-gray-200 shadow-sm hover:shadow-md dark:border-gray-800'
+                                            ? 'border-brand-gold ring-1 ring-brand-gold/20 shadow-md'
+                                            : 'border-brand-surface shadow-sm hover:shadow-md'
                                     }`}
                                 >
                                     <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-6">
@@ -601,32 +601,32 @@ const LanguageBatches: React.FC = () => {
                                                 <BookOpen className="h-6 w-6" />
                                             </div>
                                             <div>
-                                                <h2 className="flex flex-wrap items-center gap-2 text-lg font-bold text-gray-900 dark:text-white sm:text-xl">
+                                                <h2 className="flex flex-wrap items-center gap-2 text-lg font-bold text-brand-black sm:text-xl">
                                                     {batch.courseTitle}
                                                     <span className={`rounded-full border px-2 py-0.5 text-xs ${typeMeta.badgeClassName}`}>
                                                         {typeMeta.label}
                                                     </span>
-                                                    <span className="rounded-full border border-blue-200 bg-blue-100 px-2 py-0.5 text-xs text-blue-700 dark:border-blue-900/50 dark:bg-blue-900/30 dark:text-blue-300">
+                                                    <span className="rounded-full border border-brand-surface bg-brand-gold/10 px-2 py-0.5 text-xs text-brand-olive-dark">
                                                         {batch.name}
                                                     </span>
                                                     {institutionScopeLabel && (
-                                                        <span className="inline-flex items-center gap-1 rounded-full border border-[#d6b161]/30 bg-[#d6b161]/10 px-2 py-0.5 text-xs text-[#b38f3f] dark:text-[#f0d79a]">
+                                                        <span className="inline-flex items-center gap-1 rounded-full border border-brand-gold/30 bg-brand-gold/10 px-2 py-0.5 text-xs text-brand-gold-hover">
                                                             <Building2 className="h-3.5 w-3.5" />
                                                             {institutionScopeLabel}
                                                         </span>
                                                     )}
                                                 </h2>
                                                 <div className="mt-1 flex flex-wrap items-center gap-4 text-sm">
-                                                    <p className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+                                                    <p className="flex items-center gap-1.5 text-brand-olive">
                                                         <Users className="h-4 w-4" />
-                                                        <span className="font-medium text-gray-900 dark:text-white">{batch.studentCount}</span> Students
+                                                        <span className="font-medium text-brand-black">{batch.studentCount}</span> Students
                                                     </p>
-                                                    <p className="text-gray-500 dark:text-gray-400">
+                                                    <p className="text-brand-olive">
                                                         <span className="font-medium">Trainer:</span>{' '}
                                                         {batch.trainer ? (
-                                                            <span className="text-gray-900 dark:text-white">{batch.trainer.name}</span>
+                                                            <span className="text-brand-black">{batch.trainer.name}</span>
                                                         ) : (
-                                                            <span className="font-medium text-red-500">Unassigned</span>
+                                                            <span className="font-medium text-brand-red">Unassigned</span>
                                                         )}
                                                     </p>
                                                 </div>
@@ -636,7 +636,7 @@ const LanguageBatches: React.FC = () => {
                                         <div className="flex items-center justify-end gap-3">
                                             <Link
                                                 to={getBatchDetailsPath(batch)}
-                                                className="inline-flex items-center gap-2 rounded-lg border border-[#d6b161]/30 bg-[#d6b161]/10 px-3 py-1.5 text-sm font-medium text-[#d6b161] transition-colors hover:bg-[#d6b161]/20"
+                                                className="inline-flex items-center gap-2 rounded-lg border border-brand-gold/30 bg-brand-gold/10 px-3 py-1.5 text-sm font-medium text-brand-gold transition-colors hover:bg-brand-gold/20"
                                                 title="Visit this class as admin"
                                             >
                                                 <Eye className="h-4 w-4" />
@@ -645,21 +645,21 @@ const LanguageBatches: React.FC = () => {
                                             <button
                                                 type="button"
                                                 onClick={(event) => openAssignModal(batch, event)}
-                                                className="rounded-lg border border-[#d6b161] px-3 py-1.5 text-sm font-medium text-[#d6b161] transition-colors hover:bg-[#d6b161]/10"
+                                                className="rounded-lg border border-brand-gold px-3 py-1.5 text-sm font-medium text-brand-gold transition-colors hover:bg-brand-gold/10"
                                             >
                                                 {batch.trainer ? 'Reassign' : 'Assign Trainer'}
                                             </button>
                                             <button
                                                 type="button"
                                                 onClick={() => handleDeleteBatch(batch._id)}
-                                                className="rounded-lg border border-transparent p-2 text-red-500 transition-colors hover:border-red-200 hover:bg-red-50 dark:hover:border-red-800 dark:hover:bg-red-900/20"
+                                                className="rounded-lg border border-transparent p-2 text-brand-red transition-colors hover:border-brand-red/20 hover:bg-brand-red/5"
                                             >
                                                 <Trash2 className="h-5 w-5" />
                                             </button>
                                             <button
                                                 type="button"
                                                 onClick={() => void toggleBatch(batch)}
-                                                className="text-gray-400"
+                                                className="text-brand-olive-light"
                                             >
                                                 {isExpanded ? <ChevronUp className="h-6 w-6" /> : <ChevronDown className="h-6 w-6" />}
                                             </button>
@@ -667,52 +667,52 @@ const LanguageBatches: React.FC = () => {
                                     </div>
 
                                     {isExpanded && (
-                                        <div className="border-t border-gray-100 dark:border-gray-800">
-                                            <div className="flex flex-col gap-3 border-b border-gray-100 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 dark:border-gray-800">
+                                        <div className="border-t border-brand-surface">
+                                            <div className="flex flex-col gap-3 border-b border-brand-surface px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
                                                 <div>
-                                                    <h3 className="text-base font-bold text-gray-900 dark:text-white">Students in this class</h3>
-                                                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                                                        Showing <span className="font-semibold text-gray-900 dark:text-white">{studentStart}</span> to{' '}
-                                                        <span className="font-semibold text-gray-900 dark:text-white">{studentEnd}</span> of{' '}
-                                                        <span className="font-semibold text-gray-900 dark:text-white">{studentPagination.totalStudents}</span> students
+                                                    <h3 className="text-base font-bold text-brand-black">Students in this class</h3>
+                                                    <p className="text-sm text-brand-olive-dark">
+                                                        Showing <span className="font-semibold text-brand-black">{studentStart}</span> to{' '}
+                                                        <span className="font-semibold text-brand-black">{studentEnd}</span> of{' '}
+                                                        <span className="font-semibold text-brand-black">{studentPagination.totalStudents}</span> students
                                                     </p>
                                                     {institutionScopeLabel && (
-                                                        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                                                            Batch scope: <span className="font-semibold text-gray-900 dark:text-white">{institutionScopeLabel}</span>
+                                                        <p className="mt-1 text-sm text-brand-olive">
+                                                            Batch scope: <span className="font-semibold text-brand-black">{institutionScopeLabel}</span>
                                                         </p>
                                                     )}
                                                 </div>
-                                                <p className="text-sm text-gray-500 dark:text-gray-400">
-                                                    Use <span className="font-semibold text-gray-900 dark:text-white">View Profile</span> for full details and avatar preview.
+                                                <p className="text-sm text-brand-olive">
+                                                    Use <span className="font-semibold text-brand-black">View Profile</span> for full details and avatar preview.
                                                 </p>
                                             </div>
 
                                             {studentsLoading ? (
                                                 <div className="flex items-center justify-center py-16">
-                                                    <Loader2 className="h-8 w-8 animate-spin text-[#d6b161]" />
+                                                    <Loader2 className="h-8 w-8 animate-spin text-brand-gold" />
                                                 </div>
                                             ) : studentsError ? (
-                                                <div className="px-6 py-8 text-center text-red-500">{studentsError}</div>
+                                                <div className="px-6 py-8 text-center text-brand-red">{studentsError}</div>
                                             ) : batchStudents.length === 0 ? (
-                                                <div className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">No students found for this class.</div>
+                                                <div className="px-6 py-12 text-center text-brand-olive">No students found for this class.</div>
                                             ) : (
                                                 <>
                                                     <div className="overflow-x-auto">
-                                                        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
-                                                            <thead className="bg-gray-50 dark:bg-[#0a192f]">
+                                                        <table className="min-w-full divide-y divide-brand-surface">
+                                                            <thead className="bg-brand-off-white">
                                                                 <tr>
-                                                                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Student</th>
-                                                                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Contact</th>
-                                                                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Joined</th>
-                                                                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Actions</th>
+                                                                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-brand-olive">Student</th>
+                                                                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-brand-olive">Contact</th>
+                                                                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-brand-olive">Joined</th>
+                                                                    <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-brand-olive">Actions</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-800 dark:bg-[#112240]">
+                                                            <tbody className="divide-y divide-brand-surface bg-white">
                                                                 {batchStudents.map((student) => (
-                                                                    <tr key={student._id} className="hover:bg-gray-50 dark:hover:bg-[#0a192f]/50">
+                                                                    <tr key={student._id} className="hover:bg-brand-off-white">
                                                                         <td className="px-6 py-4 whitespace-nowrap">
                                                                             <div className="flex items-center gap-3">
-                                                                                <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-[#d6b161]/30 bg-[#d6b161]/20 text-sm font-bold text-[#d6b161]">
+                                                                                <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-brand-gold/30 bg-brand-gold/20 text-sm font-bold text-brand-gold">
                                                                                     {student.avatar ? (
                                                                                         <img src={getAssetUrl(student.avatar)} alt={student.name} className="h-full w-full object-cover" />
                                                                                     ) : (
@@ -720,10 +720,10 @@ const LanguageBatches: React.FC = () => {
                                                                                     )}
                                                                                 </div>
                                                                                 <div>
-                                                                                    <p className="font-semibold text-gray-900 dark:text-white">{student.name}</p>
-                                                                                    <p className="text-xs text-gray-500 dark:text-gray-400">{student.qualification || 'Qualification not provided'}</p>
+                                                                                    <p className="font-semibold text-brand-black">{student.name}</p>
+                                                                                    <p className="text-xs text-brand-olive">{student.qualification || 'Qualification not provided'}</p>
                                                                                     {batch.trainingType === 'language' && (
-                                                                                        <p className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-[#b38f3f] dark:text-[#f0d79a]">
+                                                                                        <p className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-brand-gold-hover">
                                                                                             <Building2 className="h-3.5 w-3.5" />
                                                                                             {getNormalizedInstitutionName(student.institutionName) || 'General Pool'}
                                                                                         </p>
@@ -733,17 +733,17 @@ const LanguageBatches: React.FC = () => {
                                                                         </td>
                                                                         <td className="px-6 py-4 whitespace-nowrap">
                                                                             <div className="space-y-1 text-sm">
-                                                                                <p className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300">
+                                                                                <p className="flex items-center gap-1.5 text-brand-olive-dark">
                                                                                     <Mail className="h-3.5 w-3.5" />
                                                                                     {student.email}
                                                                                 </p>
-                                                                                <p className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+                                                                                <p className="flex items-center gap-1.5 text-brand-olive">
                                                                                     <Phone className="h-3.5 w-3.5" />
                                                                                     {student.phoneNumber || 'Not provided'}
                                                                                 </p>
                                                                             </div>
                                                                         </td>
-                                                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
+                                                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-brand-olive-dark">
                                                                             {student.createdAt ? new Date(student.createdAt).toLocaleDateString() : 'Not available'}
                                                                         </td>
                                                                         <td className="px-6 py-4 whitespace-nowrap text-right">
@@ -751,7 +751,7 @@ const LanguageBatches: React.FC = () => {
                                                                                 <button
                                                                                     type="button"
                                                                                     onClick={() => void handleViewStudent(student)}
-                                                                                    className="inline-flex items-center gap-2 rounded-lg border border-[#d6b161]/30 bg-[#d6b161]/10 px-3 py-2 text-sm font-medium text-[#d6b161] transition-colors hover:bg-[#d6b161]/20"
+                                                                                    className="inline-flex items-center gap-2 rounded-lg border border-brand-gold/30 bg-brand-gold/10 px-3 py-2 text-sm font-medium text-brand-gold transition-colors hover:bg-brand-gold/20"
                                                                                 >
                                                                                     <Eye className="h-4 w-4" />
                                                                                     View Profile
@@ -759,7 +759,7 @@ const LanguageBatches: React.FC = () => {
                                                                                 <button
                                                                                     type="button"
                                                                                     onClick={() => handleRemoveStudent(batch._id, student._id)}
-                                                                                    className="rounded-lg border border-red-200 bg-red-50 p-2 text-red-600 transition-colors hover:bg-red-100 dark:border-red-900/40 dark:bg-red-900/20 dark:text-red-300 dark:hover:bg-red-900/30"
+                                                                                    className="rounded-lg border border-brand-red/20 bg-brand-red/5 p-2 text-brand-red transition-colors hover:bg-brand-red/10"
                                                                                 >
                                                                                     <Trash2 className="h-4 w-4" />
                                                                                 </button>
@@ -771,17 +771,17 @@ const LanguageBatches: React.FC = () => {
                                                         </table>
                                                     </div>
 
-                                                    <div className="flex flex-col gap-4 border-t border-gray-100 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 dark:border-gray-800">
-                                                        <div className="text-sm text-gray-600 dark:text-gray-400">
-                                                            Page <span className="font-semibold text-gray-900 dark:text-white">{studentPagination.currentPage}</span> of{' '}
-                                                            <span className="font-semibold text-gray-900 dark:text-white">{studentPagination.totalPages}</span>
+                                                    <div className="flex flex-col gap-4 border-t border-brand-surface px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+                                                        <div className="text-sm text-brand-olive-dark">
+                                                            Page <span className="font-semibold text-brand-black">{studentPagination.currentPage}</span> of{' '}
+                                                            <span className="font-semibold text-brand-black">{studentPagination.totalPages}</span>
                                                         </div>
                                                         <div className="flex items-center gap-2">
                                                             <button
                                                                 type="button"
                                                                 onClick={() => expandedBatch && void fetchBatchStudents(expandedBatch, studentPagination.currentPage - 1)}
                                                                 disabled={!studentPagination.hasPreviousPage}
-                                                                className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-[#0a192f] dark:text-gray-300 dark:hover:bg-gray-800"
+                                                                className="inline-flex items-center gap-2 rounded-lg border border-brand-surface bg-brand-off-white px-4 py-2 text-sm font-medium text-brand-olive-dark transition-colors hover:bg-brand-surface disabled:cursor-not-allowed disabled:opacity-50"
                                                             >
                                                                 <ChevronLeft className="h-4 w-4" />
                                                                 Previous
@@ -790,7 +790,7 @@ const LanguageBatches: React.FC = () => {
                                                                 type="button"
                                                                 onClick={() => expandedBatch && void fetchBatchStudents(expandedBatch, studentPagination.currentPage + 1)}
                                                                 disabled={!studentPagination.hasNextPage}
-                                                                className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-[#0a192f] dark:text-gray-300 dark:hover:bg-gray-800"
+                                                                className="inline-flex items-center gap-2 rounded-lg border border-brand-surface bg-brand-off-white px-4 py-2 text-sm font-medium text-brand-olive-dark transition-colors hover:bg-brand-surface disabled:cursor-not-allowed disabled:opacity-50"
                                                             >
                                                                 Next
                                                                 <ChevronRight className="h-4 w-4" />
@@ -809,18 +809,18 @@ const LanguageBatches: React.FC = () => {
 
                 {showAssignModal && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                        <div className="w-full max-w-md rounded-2xl border border-gray-100 bg-white p-6 shadow-xl dark:border-gray-700 dark:bg-gray-800">
-                            <h2 className="mb-4 text-xl font-bold dark:text-white">Assign Trainer</h2>
-                            <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                        <div className="w-full max-w-md rounded-2xl border border-brand-surface bg-white p-6 shadow-xl">
+                            <h2 className="mb-4 text-xl font-bold">Assign Trainer</h2>
+                            <p className="mb-4 text-sm text-brand-olive-dark">
                                 Assigning trainer for <strong>{selectedBatch?.courseTitle} - {selectedBatch?.name}</strong>
                             </p>
                             <form onSubmit={handleAssignTrainer} className="space-y-4">
                                 <div>
-                                    <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Select Trainer</label>
+                                    <label className="mb-1 block text-sm font-medium text-brand-olive-dark">Select Trainer</label>
                                     <select
                                         value={selectedTrainer}
                                         onChange={(event) => setSelectedTrainer(event.target.value)}
-                                        className="w-full rounded-lg border border-gray-300 bg-white p-2 outline-none focus:ring-2 focus:ring-[#d6b161] dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                                        className="w-full rounded-lg border border-brand-surface bg-white p-2 outline-none focus:ring-2 focus:ring-brand-gold"
                                         required
                                     >
                                         <option value="">-- Select Trainer --</option>
@@ -831,20 +831,20 @@ const LanguageBatches: React.FC = () => {
                                         ))}
                                     </select>
                                     {trainers.length === 0 && (
-                                        <p className="mt-1 text-xs text-red-500">No trainers found. Promote a user to trainer first.</p>
+                                        <p className="mt-1 text-xs text-brand-red">No trainers found. Promote a user to trainer first.</p>
                                     )}
                                 </div>
                                 <div className="flex gap-2 pt-2">
                                     <button
                                         type="button"
                                         onClick={() => setShowAssignModal(false)}
-                                        className="flex-1 rounded-lg bg-gray-100 py-2.5 font-medium text-gray-800 transition-colors hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                                        className="flex-1 rounded-lg bg-brand-surface py-2.5 font-medium text-brand-black transition-colors hover:bg-brand-surface"
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         type="submit"
-                                        className="flex-1 rounded-lg bg-[#d6b161] py-2.5 font-bold text-[#0a192f] transition-colors hover:bg-[#c4a055]"
+                                        className="flex-1 rounded-lg bg-brand-gold py-2.5 font-bold text-brand-black transition-colors hover:bg-brand-gold-hover"
                                     >
                                         Save Assignment
                                     </button>
@@ -856,20 +856,20 @@ const LanguageBatches: React.FC = () => {
 
                 {showPromoteModal && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                        <div className="w-full max-w-md rounded-2xl border border-gray-100 bg-white p-6 shadow-xl dark:border-gray-700 dark:bg-gray-800">
-                            <h2 className="mb-4 text-xl font-bold dark:text-white">Promote User to Trainer</h2>
-                            <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                        <div className="w-full max-w-md rounded-2xl border border-brand-surface bg-white p-6 shadow-xl">
+                            <h2 className="mb-4 text-xl font-bold">Promote User to Trainer</h2>
+                            <p className="mb-4 text-sm text-brand-olive-dark">
                                 Enter the email of a registered user to grant trainer access.
                             </p>
                             <form onSubmit={handlePromoteTrainer} className="space-y-4">
                                 <div>
-                                    <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">User Email</label>
+                                    <label className="mb-1 block text-sm font-medium text-brand-olive-dark">User Email</label>
                                     <input
                                         type="email"
                                         placeholder="user@example.com"
                                         value={promoteEmail}
                                         onChange={(event) => setPromoteEmail(event.target.value)}
-                                        className="w-full rounded-lg border border-gray-300 bg-white p-2 outline-none focus:ring-2 focus:ring-[#d6b161] dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                                        className="w-full rounded-lg border border-brand-surface bg-white p-2 outline-none focus:ring-2 focus:ring-brand-gold"
                                         required
                                     />
                                 </div>
@@ -877,14 +877,14 @@ const LanguageBatches: React.FC = () => {
                                     <button
                                         type="button"
                                         onClick={() => setShowPromoteModal(false)}
-                                        className="flex-1 rounded-lg bg-gray-100 py-2.5 font-medium text-gray-800 transition-colors hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                                        className="flex-1 rounded-lg bg-brand-surface py-2.5 font-medium text-brand-black transition-colors hover:bg-brand-surface"
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={promoting}
-                                        className="flex-1 rounded-lg bg-[#d6b161] py-2.5 font-bold text-[#0a192f] transition-colors hover:bg-[#c4a055] disabled:opacity-50"
+                                        className="flex-1 rounded-lg bg-brand-gold py-2.5 font-bold text-brand-black transition-colors hover:bg-brand-gold-hover disabled:opacity-50"
                                     >
                                         {promoting ? 'Promoting...' : 'Promote'}
                                     </button>
@@ -908,19 +908,19 @@ const LanguageBatches: React.FC = () => {
                             initial={{ opacity: 0, scale: 0.95, y: 20 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                            className="relative z-10 max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-white shadow-xl dark:bg-[#112240]"
+                            className="relative z-10 max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-white shadow-xl"
                         >
                             <button
                                 type="button"
                                 onClick={closeViewModal}
-                                className="absolute right-4 top-4 rounded-full p-2 text-gray-500 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                                className="absolute right-4 top-4 rounded-full p-2 text-brand-olive transition-colors hover:bg-brand-surface"
                             >
                                 <X className="h-6 w-6" />
                             </button>
 
                             <div className="p-8">
                                 <div className="mb-8 flex flex-col items-center gap-6 text-center sm:flex-row sm:items-start sm:text-left">
-                                    <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-[#d6b161] text-4xl font-bold text-[#0a192f] shadow-lg dark:border-[#0a192f] sm:h-32 sm:w-32 sm:text-5xl">
+                                    <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-brand-gold text-4xl font-bold text-brand-black shadow-lg sm:h-32 sm:w-32 sm:text-5xl">
                                         {selectedStudent.avatar ? (
                                             <img
                                                 src={getAssetUrl(selectedStudent.avatar)}
@@ -934,18 +934,18 @@ const LanguageBatches: React.FC = () => {
                                         )}
                                     </div>
                                     <div className="flex-1 space-y-3">
-                                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{selectedStudent.name}</h2>
+                                        <h2 className="text-3xl font-bold text-brand-black">{selectedStudent.name}</h2>
                                         <div className="flex flex-wrap justify-center gap-3 sm:justify-start">
-                                            <div className="flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-1.5 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400">
+                                            <div className="flex items-center gap-2 rounded-lg bg-brand-gold/5 px-3 py-1.5 text-brand-red">
                                                 <Mail className="h-4 w-4" />
                                                 <span className="text-sm font-medium">{selectedStudent.email}</span>
                                             </div>
-                                            <div className="flex items-center gap-2 rounded-lg bg-green-50 px-3 py-1.5 text-green-600 dark:bg-green-900/20 dark:text-green-400">
+                                            <div className="flex items-center gap-2 rounded-lg bg-brand-olive/5 px-3 py-1.5 text-brand-olive">
                                                 <Phone className="h-4 w-4" />
                                                 <span className="text-sm font-medium">{selectedStudent.phoneNumber || 'Not Provided'}</span>
                                             </div>
                                             {getNormalizedInstitutionName(selectedStudent.institutionName) && (
-                                                <div className="flex items-center gap-2 rounded-lg bg-[#d6b161]/15 px-3 py-1.5 text-[#b38f3f] dark:bg-[#d6b161]/10 dark:text-[#f0d79a]">
+                                                <div className="flex items-center gap-2 rounded-lg bg-brand-gold/15 px-3 py-1.5 text-brand-gold-hover">
                                                     <Building2 className="h-4 w-4" />
                                                     <span className="text-sm font-medium">{selectedStudent.institutionName}</span>
                                                 </div>
@@ -955,101 +955,101 @@ const LanguageBatches: React.FC = () => {
                                 </div>
 
                                 <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                                    <div className="rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-gray-800 dark:bg-[#0a192f]">
+                                    <div className="rounded-xl border border-brand-surface bg-brand-off-white p-4">
                                         <div className="mb-2 flex items-center gap-3">
-                                            <Calendar className="h-5 w-5 text-purple-500" />
-                                            <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Date of Birth</span>
+                                            <Calendar className="h-5 w-5 text-brand-olive" />
+                                            <span className="text-sm font-semibold text-brand-olive">Date of Birth</span>
                                         </div>
-                                        <p className="pl-8 font-bold text-gray-900 dark:text-white">
+                                        <p className="pl-8 font-bold text-brand-black">
                                             {selectedStudent.dateOfBirth ? new Date(selectedStudent.dateOfBirth).toLocaleDateString() : 'Not Provided'}
                                         </p>
                                     </div>
-                                    <div className="rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-gray-800 dark:bg-[#0a192f]">
+                                    <div className="rounded-xl border border-brand-surface bg-brand-off-white p-4">
                                         <div className="mb-2 flex items-center gap-3">
-                                            <GraduationCap className="h-5 w-5 text-orange-500" />
-                                            <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Qualification</span>
+                                            <GraduationCap className="h-5 w-5 text-brand-gold" />
+                                            <span className="text-sm font-semibold text-brand-olive">Qualification</span>
                                         </div>
-                                        <p className="pl-8 font-bold text-gray-900 dark:text-white">{selectedStudent.qualification || 'Not Provided'}</p>
+                                        <p className="pl-8 font-bold text-brand-black">{selectedStudent.qualification || 'Not Provided'}</p>
                                     </div>
                                     {(expandedBatch?.trainingType === 'language' || getNormalizedInstitutionName(selectedStudent.institutionName)) && (
-                                        <div className="rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-gray-800 dark:bg-[#0a192f]">
+                                        <div className="rounded-xl border border-brand-surface bg-brand-off-white p-4">
                                             <div className="mb-2 flex items-center gap-3">
-                                                <Building2 className="h-5 w-5 text-emerald-500" />
-                                                <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Institution Scope</span>
+                                                <Building2 className="h-5 w-5 text-brand-olive" />
+                                                <span className="text-sm font-semibold text-brand-olive">Institution Scope</span>
                                             </div>
-                                            <p className="pl-8 font-bold text-gray-900 dark:text-white">
+                                            <p className="pl-8 font-bold text-brand-black">
                                                 {getNormalizedInstitutionName(selectedStudent.institutionName) || 'General Pool'}
                                             </p>
                                         </div>
                                     )}
-                                    <div className="rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-gray-800 dark:bg-[#0a192f]">
+                                    <div className="rounded-xl border border-brand-surface bg-brand-off-white p-4">
                                         <div className="mb-2 flex items-center gap-3">
-                                            <BookOpen className="h-5 w-5 text-[#d6b161]" />
-                                            <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">German Level</span>
+                                            <BookOpen className="h-5 w-5 text-brand-gold" />
+                                            <span className="text-sm font-semibold text-brand-olive">German Level</span>
                                         </div>
-                                        <p className="pl-8 font-bold text-gray-900 dark:text-white">{selectedStudent.germanLevel || 'Not Provided'}</p>
+                                        <p className="pl-8 font-bold text-brand-black">{selectedStudent.germanLevel || 'Not Provided'}</p>
                                     </div>
-                                    <div className="rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-gray-800 dark:bg-[#0a192f]">
+                                    <div className="rounded-xl border border-brand-surface bg-brand-off-white p-4">
                                         <div className="mb-2 flex items-center gap-3">
-                                            <Calendar className="h-5 w-5 text-[#d6b161]" />
-                                            <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Joined</span>
+                                            <Calendar className="h-5 w-5 text-brand-gold" />
+                                            <span className="text-sm font-semibold text-brand-olive">Joined</span>
                                         </div>
-                                        <p className="pl-8 font-bold text-gray-900 dark:text-white">
+                                        <p className="pl-8 font-bold text-brand-black">
                                             {selectedStudent.createdAt ? new Date(selectedStudent.createdAt).toLocaleDateString() : 'Not Provided'}
                                         </p>
                                     </div>
-                                    <div className="rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-gray-800 dark:bg-[#0a192f] sm:col-span-2">
+                                    <div className="rounded-xl border border-brand-surface bg-brand-off-white p-4 sm:col-span-2">
                                         <div className="mb-3 flex items-center gap-3">
-                                            <UserIcon className="h-5 w-5 text-pink-500" />
-                                            <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Guardian Details</span>
+                                            <UserIcon className="h-5 w-5 text-brand-red" />
+                                            <span className="text-sm font-semibold text-brand-olive">Guardian Details</span>
                                         </div>
                                         <div className="grid grid-cols-1 gap-4 pl-8 sm:grid-cols-2">
                                             <div>
-                                                <p className="mb-1 text-xs text-gray-500">Name</p>
-                                                <p className="font-bold text-gray-900 dark:text-white">{selectedStudent.guardianName || 'Not Provided'}</p>
+                                                <p className="mb-1 text-xs text-brand-olive">Name</p>
+                                                <p className="font-bold text-brand-black">{selectedStudent.guardianName || 'Not Provided'}</p>
                                             </div>
                                             <div>
-                                                <p className="mb-1 text-xs text-gray-500">Phone</p>
-                                                <p className="font-bold text-gray-900 dark:text-white">{selectedStudent.guardianPhone || 'Not Provided'}</p>
+                                                <p className="mb-1 text-xs text-brand-olive">Phone</p>
+                                                <p className="font-bold text-brand-black">{selectedStudent.guardianPhone || 'Not Provided'}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <h3 className="mb-4 flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-white">
-                                        <BookOpen className="h-5 w-5 text-[#d6b161]" />
+                                    <h3 className="mb-4 flex items-center gap-2 text-xl font-bold text-brand-black">
+                                        <BookOpen className="h-5 w-5 text-brand-gold" />
                                         Enrolled Courses
                                     </h3>
 
                                     {studentDetailsLoading ? (
                                         <div className="py-8 text-center">
-                                            <Loader2 className="mx-auto mb-2 h-8 w-8 animate-spin text-[#d6b161]" />
-                                            <p className="text-sm text-gray-500">Loading courses...</p>
+                                            <Loader2 className="mx-auto mb-2 h-8 w-8 animate-spin text-brand-gold" />
+                                            <p className="text-sm text-brand-olive">Loading courses...</p>
                                         </div>
                                     ) : (
                                         <div className="space-y-4">
                                             {languageEnrollments.length > 0 && (
                                                 <div>
-                                                    <h4 className="mb-3 text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Language Trainings</h4>
+                                                    <h4 className="mb-3 text-sm font-semibold uppercase tracking-wider text-brand-olive">Language Trainings</h4>
                                                     <div className="grid gap-3 sm:grid-cols-2">
                                                         {languageEnrollments.map((enrollment) => (
-                                                            <div key={enrollment._id} className="rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-[#112240]">
-                                                                <div className="mb-1 font-bold text-gray-900 dark:text-white">{enrollment.courseTitle}</div>
+                                                            <div key={enrollment._id} className="rounded-lg border border-brand-surface bg-white p-3">
+                                                                <div className="mb-1 font-bold text-brand-black">{enrollment.courseTitle}</div>
                                                                 <div className="flex items-center justify-between text-sm">
-                                                                    <span className="text-gray-600 dark:text-gray-400">{enrollment.name}</span>
+                                                                    <span className="text-brand-olive-dark">{enrollment.name}</span>
                                                                     <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${
                                                                         enrollment.status === 'APPROVED'
-                                                                            ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                                                                            ? 'bg-brand-olive/10 text-brand-olive-dark'
                                                                             : enrollment.status === 'PENDING'
-                                                                                ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
-                                                                                : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                                                                                ? 'bg-brand-gold/10 text-brand-gold'
+                                                                                : 'bg-brand-red/10 text-brand-red'
                                                                     }`}>
                                                                         {enrollment.status}
                                                                     </span>
                                                                 </div>
                                                                 {enrollment.batchId && (
-                                                                    <div className="mt-2 text-xs font-medium text-blue-600 dark:text-blue-400">
+                                                                    <div className="mt-2 text-xs font-medium text-brand-red">
                                                                         Assigned Batch: Class - {enrollment.batchId.name}
                                                                         {getNormalizedInstitutionName(enrollment.batchId.institutionName)
                                                                             ? ` (${enrollment.batchId.institutionName})`
@@ -1064,21 +1064,21 @@ const LanguageBatches: React.FC = () => {
 
                                             {skillEnrollments.length > 0 && (
                                                 <div className={languageEnrollments.length > 0 ? 'mt-6' : ''}>
-                                                    <h4 className="mb-3 text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Skill Trainings</h4>
+                                                    <h4 className="mb-3 text-sm font-semibold uppercase tracking-wider text-brand-olive">Skill Trainings</h4>
                                                     <div className="grid gap-3 sm:grid-cols-2">
                                                         {skillEnrollments.map((enrollment) => (
-                                                            <div key={enrollment._id} className="rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-[#112240]">
-                                                                <div className="mb-1 font-bold text-gray-900 dark:text-white">
+                                                            <div key={enrollment._id} className="rounded-lg border border-brand-surface bg-white p-3">
+                                                                <div className="mb-1 font-bold text-brand-black">
                                                                     {enrollment.skillCourseId?.title || 'Unknown Course'}
                                                                 </div>
                                                                 <div className="flex items-center justify-between text-sm">
-                                                                    <span className="text-gray-600 dark:text-gray-400">Skill Development</span>
+                                                                    <span className="text-brand-olive-dark">Skill Development</span>
                                                                     <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${
                                                                         enrollment.status === 'APPROVED'
-                                                                            ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                                                                            ? 'bg-brand-olive/10 text-brand-olive-dark'
                                                                             : enrollment.status === 'PENDING'
-                                                                                ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
-                                                                                : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                                                                                ? 'bg-brand-gold/10 text-brand-gold'
+                                                                                : 'bg-brand-red/10 text-brand-red'
                                                                     }`}>
                                                                         {enrollment.status}
                                                                     </span>
@@ -1090,8 +1090,8 @@ const LanguageBatches: React.FC = () => {
                                             )}
 
                                             {languageEnrollments.length === 0 && skillEnrollments.length === 0 && (
-                                                <div className="rounded-xl border border-dashed border-gray-200 bg-gray-50 py-6 text-center dark:border-gray-800 dark:bg-[#0a192f]">
-                                                    <p className="text-gray-500 dark:text-gray-400">No course enrollments found.</p>
+                                                <div className="rounded-xl border border-dashed border-brand-surface bg-brand-off-white py-6 text-center">
+                                                    <p className="text-brand-olive">No course enrollments found.</p>
                                                 </div>
                                             )}
                                         </div>
@@ -1105,7 +1105,7 @@ const LanguageBatches: React.FC = () => {
 
             {isAvatarFullScreen && selectedStudent?.avatar && (
                 <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 p-4 backdrop-blur-sm" onClick={() => setIsAvatarFullScreen(false)}>
-                    <button type="button" className="absolute right-4 top-4 p-2 text-white transition-colors hover:text-gray-300" onClick={() => setIsAvatarFullScreen(false)}>
+                    <button type="button" className="absolute right-4 top-4 p-2 text-white transition-colors hover:text-brand-olive-light" onClick={() => setIsAvatarFullScreen(false)}>
                         <X className="h-8 w-8" />
                     </button>
                     <img

@@ -101,13 +101,13 @@ const staggerContainer = {
 // --- Sub-Components ---
 
 const DetailRow: React.FC<{ icon: React.ReactNode; label: string; value: string; highlight?: boolean }> = ({ icon, label, value, highlight }) => (
-    <div className="flex items-start gap-3 py-3 border-b border-gray-100 dark:border-gray-700/50 last:border-b-0">
-        <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-[#d6b161]/10 dark:bg-[#d6b161]/5 flex items-center justify-center text-[#d6b161]">
+    <div className="flex items-start gap-3 py-3 border-b border-brand-surface last:border-b-0">
+        <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-brand-gold/10 flex items-center justify-center text-brand-gold">
             {icon}
         </div>
         <div className="flex-1 min-w-0">
-            <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{label}</p>
-            <p className={`text-sm sm:text-base font-semibold mt-0.5 break-words ${highlight ? 'text-[#d6b161]' : 'text-gray-900 dark:text-white'}`}>
+            <p className="text-xs font-medium text-brand-olive uppercase tracking-wider">{label}</p>
+            <p className={`text-sm sm:text-base font-semibold mt-0.5 break-words ${highlight ? 'text-brand-gold' : 'text-brand-black'}`}>
                 {value}
             </p>
         </div>
@@ -163,22 +163,22 @@ const VerificationPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-[#0a192f] transition-colors duration-300 font-sans">
+        <div className="min-h-screen bg-brand-off-white transition-colors duration-300 font-sans">
             <Header />
 
             {/* Hero Section */}
-            <section className="relative bg-gradient-to-br from-[#0a192f] via-[#112240] to-[#1a365d] pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden">
+            <section className="relative bg-gradient-to-br from-brand-black via-brand-olive-dark to-[#1a365d] pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden">
                 {/* Background Effects */}
                 <div className="absolute inset-0" aria-hidden="true">
                     <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
-                    <div className="absolute -top-[10%] -right-[10%] h-[500px] w-[500px] rounded-full bg-gradient-to-br from-[#d6b161]/15 to-cyan-500/5 blur-[120px]" />
-                    <div className="absolute top-[30%] -left-[10%] h-[400px] w-[400px] rounded-full bg-indigo-500/8 blur-[100px]" />
+                    <div className="absolute -top-[10%] -right-[10%] h-[500px] w-[500px] rounded-full bg-gradient-to-br from-brand-gold/15 to-brand-gold/50/5 blur-[120px]" />
+                    <div className="absolute top-[30%] -left-[10%] h-[400px] w-[400px] rounded-full bg-brand-red/50/8 blur-[100px]" />
                 </div>
 
                 <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <motion.div initial="hidden" animate="visible" variants={staggerContainer}>
                         <motion.div variants={fadeInUp} className="mb-6 flex justify-center">
-                            <span className="inline-flex items-center gap-2 rounded-full border border-[#d6b161]/20 bg-[#d6b161]/10 px-4 py-1.5 text-sm font-semibold text-[#d6b161] backdrop-blur-sm">
+                            <span className="inline-flex items-center gap-2 rounded-full border border-brand-gold/20 bg-brand-gold/10 px-4 py-1.5 text-sm font-semibold text-brand-gold backdrop-blur-sm">
                                 <Shield className="h-4 w-4" />
                                 Secure Verification Portal
                             </span>
@@ -186,12 +186,12 @@ const VerificationPage: React.FC = () => {
 
                         <motion.h1 variants={fadeInUp} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-4">
                             Internship Certificate{' '}
-                            <span className="bg-gradient-to-r from-[#d6b161] to-[#b38f3f] bg-clip-text text-transparent">
+                            <span className="bg-gradient-to-r from-brand-gold to-brand-gold-hover bg-clip-text text-transparent">
                                 Verification
                             </span>
                         </motion.h1>
 
-                        <motion.p variants={fadeInUp} className="mx-auto max-w-2xl text-base sm:text-lg leading-relaxed text-gray-300 mb-10">
+                        <motion.p variants={fadeInUp} className="mx-auto max-w-2xl text-base sm:text-lg leading-relaxed text-brand-olive-light mb-10">
                             Verify the authenticity of internship certificates issued by Sovir Technologies.
                             Enter the Certificate ID or scan the QR code on the certificate.
                         </motion.p>
@@ -202,21 +202,21 @@ const VerificationPage: React.FC = () => {
                                 <div className="flex flex-col sm:flex-row gap-3">
                                     <div className="relative flex-1">
                                         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                                            <Search className="h-5 w-5 text-gray-400" />
+                                            <Search className="h-5 w-5 text-brand-olive-light" />
                                         </div>
                                         <input
                                             type="text"
                                             value={certificateId}
                                             onChange={(e) => setCertificateId(e.target.value)}
                                             placeholder="Enter Certificate ID (e.g., SVR-INT-2026-001)"
-                                            className="w-full rounded-xl border border-white/10 bg-white/5 backdrop-blur-md py-4 pl-12 pr-4 text-white placeholder:text-gray-400 focus:border-[#d6b161] focus:outline-none focus:ring-2 focus:ring-[#d6b161]/30 transition-all text-sm sm:text-base"
+                                            className="w-full rounded-xl border border-white/10 bg-white/5 backdrop-blur-md py-4 pl-12 pr-4 text-white placeholder:text-brand-olive-light focus:border-brand-red focus:outline-none focus:ring-2 focus:ring-brand-gold/30 transition-all text-sm sm:text-base"
                                             id="certificate-id-input"
                                         />
                                     </div>
                                     <button
                                         type="submit"
                                         disabled={isSearching || !certificateId.trim()}
-                                        className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#d6b161] px-8 py-4 font-semibold text-[#0a192f] hover:bg-[#c4a055] focus:outline-none focus:ring-2 focus:ring-[#d6b161] focus:ring-offset-2 focus:ring-offset-[#0a192f] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:shadow-lg hover:shadow-[#d6b161]/25 text-sm sm:text-base"
+                                        className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-gold px-8 py-4 font-semibold text-brand-black hover:bg-brand-gold-hover focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2 focus:ring-offset-brand-black disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:shadow-lg hover:shadow-brand-gold/25 text-sm sm:text-base"
                                         id="verify-button"
                                     >
                                         {isSearching ? (
@@ -237,7 +237,7 @@ const VerificationPage: React.FC = () => {
                                 </div>
 
                                 {/* QR Scan hint */}
-                                <p className="mt-4 text-xs sm:text-sm text-gray-400 flex items-center justify-center gap-1.5">
+                                <p className="mt-4 text-xs sm:text-sm text-brand-olive-light flex items-center justify-center gap-1.5">
                                     <QrCode className="h-4 w-4" />
                                     Or scan the QR code on the certificate to verify instantly
                                 </p>
@@ -260,8 +260,8 @@ const VerificationPage: React.FC = () => {
                                 exit={{ opacity: 0, y: -20 }}
                                 className="text-center py-16"
                             >
-                                <div className="w-16 h-16 border-4 border-[#d6b161] border-t-transparent rounded-full animate-spin mx-auto mb-6" />
-                                <p className="text-gray-600 dark:text-gray-400 text-lg">Verifying certificate...</p>
+                                <div className="w-16 h-16 border-4 border-brand-gold border-t-transparent rounded-full animate-spin mx-auto mb-6" />
+                                <p className="text-brand-olive-dark text-lg">Verifying certificate...</p>
                             </motion.div>
                         )}
 
@@ -278,16 +278,16 @@ const VerificationPage: React.FC = () => {
                                 {/* Status Banner */}
                                 <motion.div
                                     variants={fadeInUp}
-                                    className="rounded-2xl bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800/50 p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-4"
+                                    className="rounded-2xl bg-gradient-to-r from-brand-olive/5 to-brand-olive/5 border border-brand-olive/20 p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-4"
                                 >
-                                    <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                                        <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
+                                    <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-brand-olive/10 flex items-center justify-center">
+                                        <CheckCircle className="w-8 h-8 text-brand-olive" />
                                     </div>
                                     <div className="text-center sm:text-left">
-                                        <h3 className="text-xl sm:text-2xl font-bold text-green-800 dark:text-green-300">
+                                        <h3 className="text-xl sm:text-2xl font-bold text-brand-olive-dark">
                                             ✅ Certificate Verified — Authentic
                                         </h3>
-                                        <p className="text-green-700 dark:text-green-400 text-sm mt-1">
+                                        <p className="text-brand-olive-dark text-sm mt-1">
                                             This internship certificate was officially issued by Sovir Technologies.
                                         </p>
                                     </div>
@@ -297,10 +297,10 @@ const VerificationPage: React.FC = () => {
                                     {/* Student Details Card */}
                                     <motion.div
                                         variants={fadeInUp}
-                                        className="bg-white dark:bg-[#112240] rounded-2xl border border-gray-200 dark:border-gray-700/50 p-6 shadow-lg"
+                                        className="bg-white rounded-2xl border border-brand-surface p-6 shadow-lg"
                                     >
-                                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                            <User className="w-5 h-5 text-[#d6b161]" />
+                                        <h3 className="text-lg font-bold text-brand-black mb-4 flex items-center gap-2">
+                                            <User className="w-5 h-5 text-brand-gold" />
                                             Student Information
                                         </h3>
                                         <div className="space-y-0">
@@ -314,10 +314,10 @@ const VerificationPage: React.FC = () => {
                                     {/* Internship Details Card */}
                                     <motion.div
                                         variants={fadeInUp}
-                                        className="bg-white dark:bg-[#112240] rounded-2xl border border-gray-200 dark:border-gray-700/50 p-6 shadow-lg"
+                                        className="bg-white rounded-2xl border border-brand-surface p-6 shadow-lg"
                                     >
-                                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                            <Briefcase className="w-5 h-5 text-[#d6b161]" />
+                                        <h3 className="text-lg font-bold text-brand-black mb-4 flex items-center gap-2">
+                                            <Briefcase className="w-5 h-5 text-brand-gold" />
                                             Internship Details
                                         </h3>
                                         <div className="space-y-0">
@@ -332,12 +332,12 @@ const VerificationPage: React.FC = () => {
                                 {/* Additional Details Card */}
                                 <motion.div
                                     variants={fadeInUp}
-                                    className="bg-white dark:bg-[#112240] rounded-2xl border border-gray-200 dark:border-gray-700/50 p-6 shadow-lg"
+                                    className="bg-white rounded-2xl border border-brand-surface p-6 shadow-lg"
                                 >
                                     <div className="grid sm:grid-cols-2 gap-6">
                                         <div>
-                                            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                                <Building2 className="w-5 h-5 text-[#d6b161]" />
+                                            <h3 className="text-lg font-bold text-brand-black mb-4 flex items-center gap-2">
+                                                <Building2 className="w-5 h-5 text-brand-gold" />
                                                 Company Details
                                             </h3>
                                             <div className="space-y-0">
@@ -354,15 +354,15 @@ const VerificationPage: React.FC = () => {
                                         </div>
 
                                         <div>
-                                            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                                <GraduationCap className="w-5 h-5 text-[#d6b161]" />
+                                            <h3 className="text-lg font-bold text-brand-black mb-4 flex items-center gap-2">
+                                                <GraduationCap className="w-5 h-5 text-brand-gold" />
                                                 Key Skills Learned
                                             </h3>
                                             <div className="flex flex-wrap gap-2 mt-2">
                                                 {searchResult.skillsLearned.map((skill) => (
                                                     <span
                                                         key={skill}
-                                                        className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-[#d6b161]/10 text-[#d6b161] border border-[#d6b161]/20"
+                                                        className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-brand-gold/10 text-brand-gold border border-brand-gold/20"
                                                     >
                                                         {skill}
                                                     </span>
@@ -378,11 +378,11 @@ const VerificationPage: React.FC = () => {
                                         variants={fadeInUp}
                                         className="flex flex-col sm:flex-row gap-3 justify-center"
                                     >
-                                        <button className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#0a192f] dark:bg-[#d6b161] px-6 py-3.5 font-semibold text-white dark:text-[#0a192f] hover:bg-[#112240] dark:hover:bg-[#c4a055] transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base">
+                                        <button className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-black px-6 py-3.5 font-semibold text-white hover:bg-brand-olive-dark transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base">
                                             <Eye className="w-5 h-5" />
                                             View Certificate
                                         </button>
-                                        <button className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-gray-300 dark:border-gray-600 px-6 py-3.5 font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-all duration-300 text-sm sm:text-base">
+                                        <button className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-brand-surface px-6 py-3.5 font-semibold text-brand-black hover:bg-brand-surface transition-all duration-300 text-sm sm:text-base">
                                             <Download className="w-5 h-5" />
                                             Download Certificate (PDF)
                                         </button>
@@ -401,14 +401,14 @@ const VerificationPage: React.FC = () => {
                                 className="text-center py-12"
                             >
                                 <div className="mx-auto max-w-md">
-                                    <div className="rounded-2xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 p-8">
-                                        <div className="w-16 h-16 mx-auto rounded-2xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center mb-4">
-                                            <XCircle className="w-8 h-8 text-red-600 dark:text-red-400" />
+                                    <div className="rounded-2xl bg-brand-red/5 border border-brand-red/20 p-8">
+                                        <div className="w-16 h-16 mx-auto rounded-2xl bg-brand-red/10 flex items-center justify-center mb-4">
+                                            <XCircle className="w-8 h-8 text-brand-red" />
                                         </div>
-                                        <h3 className="text-xl font-bold text-red-800 dark:text-red-300 mb-2">
+                                        <h3 className="text-xl font-bold text-brand-red mb-2">
                                             ❌ Invalid Certificate ID
                                         </h3>
-                                        <p className="text-red-700 dark:text-red-400 text-sm">
+                                        <p className="text-brand-red text-sm">
                                             No certificate found with this ID. Please double-check the Certificate ID and try again.
                                         </p>
                                     </div>
@@ -426,8 +426,8 @@ const VerificationPage: React.FC = () => {
                             >
                                 {/* How It Works */}
                                 <div className="text-center mb-12">
-                                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">How It Works</h2>
-                                    <p className="text-gray-600 dark:text-gray-400 max-w-xl mx-auto text-sm sm:text-base">
+                                    <h2 className="text-2xl sm:text-3xl font-bold text-brand-black mb-3">How It Works</h2>
+                                    <p className="text-brand-olive-dark max-w-xl mx-auto text-sm sm:text-base">
                                         Verify any internship certificate in three simple steps.
                                     </p>
                                 </div>
@@ -458,16 +458,16 @@ const VerificationPage: React.FC = () => {
                                             initial={{ opacity: 0, y: 20 }}
                                             whileInView={{ opacity: 1, y: 0 }}
                                             viewport={{ once: true }}
-                                            className="relative bg-white dark:bg-[#112240] rounded-2xl border border-gray-200 dark:border-gray-700/50 p-6 text-center shadow-lg hover:shadow-xl transition-shadow duration-300"
+                                            className="relative bg-white rounded-2xl border border-brand-surface p-6 text-center shadow-lg hover:shadow-xl transition-shadow duration-300"
                                         >
-                                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-[#d6b161] rounded-full text-xs font-bold text-[#0a192f]">
+                                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-brand-gold rounded-full text-xs font-bold text-brand-black">
                                                 Step {item.step}
                                             </div>
-                                            <div className="w-14 h-14 mx-auto rounded-2xl bg-[#d6b161]/10 flex items-center justify-center text-[#d6b161] mt-2 mb-4">
+                                            <div className="w-14 h-14 mx-auto rounded-2xl bg-brand-gold/10 flex items-center justify-center text-brand-gold mt-2 mb-4">
                                                 {item.icon}
                                             </div>
-                                            <h3 className="text-base font-bold text-gray-900 dark:text-white mb-2">{item.title}</h3>
-                                            <p className="text-sm text-gray-600 dark:text-gray-400">{item.desc}</p>
+                                            <h3 className="text-base font-bold text-brand-black mb-2">{item.title}</h3>
+                                            <p className="text-sm text-brand-olive-dark">{item.desc}</p>
                                         </motion.div>
                                     ))}
                                 </div>
@@ -478,13 +478,13 @@ const VerificationPage: React.FC = () => {
             </section>
 
             {/* Security Features */}
-            <section className="py-12 sm:py-16 bg-white dark:bg-[#112240]/50">
+            <section className="py-12 sm:py-16 bg-white">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-10">
-                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-brand-black mb-3">
                             Security Features
                         </h2>
-                        <p className="text-gray-600 dark:text-gray-400 max-w-xl mx-auto text-sm sm:text-base">
+                        <p className="text-brand-olive-dark max-w-xl mx-auto text-sm sm:text-base">
                             Every certificate issued by Sovir Technologies is protected with multiple layers of security.
                         </p>
                     </div>
@@ -509,13 +509,13 @@ const VerificationPage: React.FC = () => {
                         ].map((feature) => (
                             <div
                                 key={feature.title}
-                                className="flex flex-col items-center text-center p-6 rounded-2xl bg-gray-50 dark:bg-[#0a192f] border border-gray-200 dark:border-gray-700/50"
+                                className="flex flex-col items-center text-center p-6 rounded-2xl bg-brand-off-white border border-brand-surface"
                             >
-                                <div className="w-12 h-12 rounded-xl bg-[#d6b161]/10 flex items-center justify-center text-[#d6b161] mb-4">
+                                <div className="w-12 h-12 rounded-xl bg-brand-gold/10 flex items-center justify-center text-brand-gold mb-4">
                                     {feature.icon}
                                 </div>
-                                <h3 className="text-base font-bold text-gray-900 dark:text-white mb-1">{feature.title}</h3>
-                                <p className="text-sm text-gray-600 dark:text-gray-400">{feature.desc}</p>
+                                <h3 className="text-base font-bold text-brand-black mb-1">{feature.title}</h3>
+                                <p className="text-sm text-brand-olive-dark">{feature.desc}</p>
                             </div>
                         ))}
                     </div>
@@ -523,21 +523,21 @@ const VerificationPage: React.FC = () => {
             </section>
 
             {/* Company Authentication Section */}
-            <section className="py-12 sm:py-16 bg-gray-50 dark:bg-[#0a192f]">
+            <section className="py-12 sm:py-16 bg-brand-off-white">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="bg-white dark:bg-[#112240] rounded-2xl border border-gray-200 dark:border-gray-700/50 p-6 sm:p-8 shadow-lg">
+                    <div className="bg-white rounded-2xl border border-brand-surface p-6 sm:p-8 shadow-lg">
                         <div className="flex flex-col sm:flex-row items-center gap-6">
-                            <div className="flex-shrink-0 w-20 h-20 rounded-2xl bg-gradient-to-br from-[#0a192f] to-[#112240] dark:from-[#d6b161]/20 dark:to-[#d6b161]/5 flex items-center justify-center border border-gray-200 dark:border-[#d6b161]/30">
-                                <Building2 className="w-10 h-10 text-[#d6b161]" />
+                            <div className="flex-shrink-0 w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-black to-brand-olive-dark flex items-center justify-center border border-brand-surface">
+                                <Building2 className="w-10 h-10 text-brand-gold" />
                             </div>
                             <div className="text-center sm:text-left">
-                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">SoVir Technologies LLP</h3>
-                                <p className="text-sm text-gray-600 dark:text-gray-400">Authorized Signatory: Director, SoVir Technologies LLP</p>
-                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                <h3 className="text-xl font-bold text-brand-black mb-1">SoVir Technologies LLP</h3>
+                                <p className="text-sm text-brand-olive-dark">Authorized Signatory: Director, SoVir Technologies LLP</p>
+                                <p className="text-sm text-brand-olive-dark">
                                     <Mail className="w-3.5 h-3.5 inline mr-1" />
                                     info@sovirtechnologies.in
                                 </p>
-                                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                                <p className="text-sm text-brand-olive-dark mt-1">
                                     <MapPin className="w-3.5 h-3.5 inline mr-1" />
                                     JLB Complex Gopadi, NH 66, Koteshwara, Karnataka 576201
                                 </p>
@@ -548,9 +548,9 @@ const VerificationPage: React.FC = () => {
             </section>
 
             {/* Footer Disclaimer */}
-            <section className="py-6 bg-white dark:bg-[#112240]/50 border-t border-gray-200 dark:border-gray-700/50">
+            <section className="py-6 bg-white border-t border-brand-surface">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 flex items-center justify-center gap-1.5">
+                    <p className="text-xs sm:text-sm text-brand-olive flex items-center justify-center gap-1.5">
                         <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
                         This page verifies internship certificates issued by Sovir Technologies. If you find any discrepancy, please contact our support team.
                     </p>

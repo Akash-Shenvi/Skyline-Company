@@ -26,7 +26,7 @@ const CatZero = () => (
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="18"
-                className="text-[#1a2b4b] dark:text-white"
+                className="text-[#1a2b4b]"
             />
 
             {/* Cat Body Peeking Through */}
@@ -186,18 +186,18 @@ const YarnBall = () => (
         transition={{ duration: 1, ease: "easeOut" }}
     >
         <circle cx="50" cy="50" r="40" fill="#FFD700" opacity="0.2" /> {/* Gold background */}
-        <circle cx="50" cy="50" r="38" fill="none" stroke="#d6b161" strokeWidth="2" />
+        <circle cx="50" cy="50" r="38" fill="none" stroke="#E8A020" strokeWidth="2" />
 
         {/* Yarn threads */}
-        <path d="M20 40 Q50 20 80 40" fill="none" stroke="#d6b161" strokeWidth="2" />
-        <path d="M20 60 Q50 80 80 60" fill="none" stroke="#d6b161" strokeWidth="2" />
-        <path d="M40 20 Q20 50 40 80" fill="none" stroke="#d6b161" strokeWidth="2" />
-        <path d="M60 20 Q80 50 60 80" fill="none" stroke="#d6b161" strokeWidth="2" />
-        <path d="M30 30 L70 70" fill="none" stroke="#d6b161" strokeWidth="2" />
-        <path d="M70 30 L30 70" fill="none" stroke="#d6b161" strokeWidth="2" />
+        <path d="M20 40 Q50 20 80 40" fill="none" stroke="#E8A020" strokeWidth="2" />
+        <path d="M20 60 Q50 80 80 60" fill="none" stroke="#E8A020" strokeWidth="2" />
+        <path d="M40 20 Q20 50 40 80" fill="none" stroke="#E8A020" strokeWidth="2" />
+        <path d="M60 20 Q80 50 60 80" fill="none" stroke="#E8A020" strokeWidth="2" />
+        <path d="M30 30 L70 70" fill="none" stroke="#E8A020" strokeWidth="2" />
+        <path d="M70 30 L30 70" fill="none" stroke="#E8A020" strokeWidth="2" />
 
         {/* Loose thread */}
-        <path d="M85 70 Q95 80 90 90" fill="none" stroke="#d6b161" strokeWidth="2" strokeLinecap="round" />
+        <path d="M85 70 Q95 80 90 90" fill="none" stroke="#E8A020" strokeWidth="2" strokeLinecap="round" />
     </motion.svg>
 );
 
@@ -255,7 +255,7 @@ const PottedPlant = () => (
 
 const NotFound404: React.FC = () => {
     return (
-        <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a192f] transition-colors duration-300 font-sans overflow-x-hidden">
+        <div className="min-h-screen flex flex-col bg-white transition-colors duration-300 font-sans overflow-x-hidden">
             {/* Sticky Header */}
             <Header />
 
@@ -268,7 +268,7 @@ const NotFound404: React.FC = () => {
                 <div className="relative text-center select-none mb-12">
                     {/* The Big 404 text */}
                     <h1
-                        className="font-sans font-bold text-[#1a2b4b] dark:text-white text-[8rem] sm:text-[10rem] md:text-[12rem] lg:text-[16rem] leading-none flex items-center justify-center gap-2"
+                        className="font-sans font-bold text-[#1a2b4b] text-[8rem] sm:text-[10rem] md:text-[12rem] lg:text-[16rem] leading-none flex items-center justify-center gap-2"
                         aria-label="404 Page Not Found"
                     >
                         <span>4</span>
@@ -284,13 +284,13 @@ const NotFound404: React.FC = () => {
                     {/* Subtext and Baseline Graphics */}
                     <div className="relative mt-4">
                         {/* Baseline */}
-                        <div className="absolute bottom-2 left-0 right-0 h-px bg-gray-200 dark:bg-gray-700 w-full max-w-4xl mx-auto rounded-full" />
+                        <div className="absolute bottom-2 left-0 right-0 h-px bg-brand-surface w-full max-w-4xl mx-auto rounded-full" />
 
                         <div className="flex flex-col items-center relative z-10">
-                            <h2 className="text-2xl sm:text-3xl font-sans font-medium text-gray-800 dark:text-gray-200 mb-2">
+                            <h2 className="text-2xl sm:text-3xl font-sans font-medium text-brand-black mb-2">
                                 Oops... Page Not Found
                             </h2>
-                            <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto text-sm sm:text-base leading-relaxed mb-10">
+                            <p className="text-brand-olive max-w-md mx-auto text-sm sm:text-base leading-relaxed mb-10">
                                 It seems our furry friend has been playing with the cables again.
                                 The page you are looking for has wandered off.
                             </p>
@@ -319,7 +319,7 @@ const NotFound404: React.FC = () => {
                             {/* CTA Button */}
                             <Link to="/">
                                 <Button
-                                    className="bg-[#FFB6C1] hover:bg-[#FFC0CB] text-[#1a2b4b] font-bold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ring-offset-2 focus:ring-2 ring-[#FFB6C1] dark:ring-offset-[#0a192f] flex items-center gap-2"
+                                    className="bg-[#FFB6C1] hover:bg-[#FFC0CB] text-[#1a2b4b] font-bold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ring-offset-2 focus:ring-2 ring-[#FFB6C1] flex items-center gap-2"
                                     aria-label="Return to Homepage"
                                 >
                                     <Home className="w-5 h-5" />

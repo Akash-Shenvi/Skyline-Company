@@ -12,22 +12,22 @@ const AdminInternshipCatalog: React.FC = () => {
                     <div>
                         <Link
                             to="/admin-dashboard"
-                            className="inline-flex items-center text-sm text-gray-500 hover:text-[#d6b161] mb-2 transition-colors"
+                            className="inline-flex items-center text-sm text-brand-olive hover:text-brand-gold mb-2 transition-colors"
                         >
                             <ArrowLeft className="w-4 h-4 mr-1" />
                             Back to Dashboard
                         </Link>
-                        <h1 className="text-3xl font-serif font-bold text-gray-900 dark:text-white flex items-center gap-3">
+                        <h1 className="text-3xl font-serif font-bold text-brand-black flex items-center gap-3">
                             Add Internships
                         </h1>
-                        <p className="text-gray-600 dark:text-gray-400 mt-1">
+                        <p className="text-brand-olive-dark mt-1">
                             Create, edit, and manage the internships shown on the careers page.
                         </p>
                     </div>
 
                     <Link
                         to="/admin/internship-applications"
-                        className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-700 transition-colors hover:border-[#d6b161] hover:text-[#b38f3f] dark:border-gray-700 dark:bg-[#112240] dark:text-gray-200"
+                        className="inline-flex items-center justify-center gap-2 rounded-xl border border-brand-surface bg-white px-4 py-3 text-sm font-semibold text-brand-olive-dark transition-colors hover:border-brand-gold hover:text-brand-gold-hover"
                     >
                         <BriefcaseBusiness className="h-4 w-4" />
                         View Internship Requests

@@ -7,8 +7,8 @@ import axios from 'axios';
 // npm packages: framer-motion, lucide-react, react-router-dom
 
 // Tokens
-// --brand-navy: #0a192f
-// --brand-gold: #d6b161
+// --brand-black: #1C1C1A
+// --brand-gold: #E8A020
 // --brand-white: #ffffff
 
 interface BookingFormProps {
@@ -250,30 +250,30 @@ const BookingForm: React.FC<BookingFormProps> = ({ isOpen, onClose, originPath, 
                     animate={{ y: 0, opacity: 1, scale: 1 }}
                     exit={{ y: '100%', opacity: 0, scale: 0.95 }}
                     transition={{ type: 'spring', damping: 25, stiffness: 300, duration: shouldReduceMotion ? 0 : 0.5 }}
-                    className="relative flex h-[90vh] w-full flex-col overflow-hidden bg-white dark:bg-[#0a192f] sm:h-auto sm:max-h-[85vh] sm:rounded-t-2xl md:h-auto md:w-full md:max-w-3xl md:rounded-2xl shadow-2xl"
+                    className="relative flex h-[90vh] w-full flex-col overflow-hidden bg-white sm:h-auto sm:max-h-[85vh] sm:rounded-t-2xl md:h-auto md:w-full md:max-w-3xl md:rounded-2xl shadow-2xl"
                 >
                     {/* Header */}
-                    <div className="flex items-center justify-between border-b border-gray-100 bg-white px-6 py-4 dark:border-gray-800 dark:bg-[#0a192f]">
+                    <div className="flex items-center justify-between border-b border-brand-surface bg-white px-6 py-4">
                         <button
                             onClick={() => handleClose()}
-                            className="group flex items-center gap-1 text-sm font-medium text-gray-500 transition-colors hover:text-[#0a192f] dark:text-gray-400 dark:hover:text-white"
+                            className="group flex items-center gap-1 text-sm font-medium text-brand-olive transition-colors hover:text-brand-black"
                             aria-label="Close"
                         >
                             <ChevronLeft className="h-5 w-5 transition-transform group-hover:-translate-x-0.5" />
                             Back
                         </button>
-                        <h2 id="booking-title" className="text-lg font-bold text-[#0a192f] dark:text-white">
+                        <h2 id="booking-title" className="text-lg font-bold text-brand-black">
                             Book Free Trial
                         </h2>
-                        <div className="flex items-center gap-1 text-xs font-medium text-gray-400">
-                            Step <span className="text-[#d6b161]">{step}</span>/2
+                        <div className="flex items-center gap-1 text-xs font-medium text-brand-olive-light">
+                            Step <span className="text-brand-gold">{step}</span>/2
                         </div>
                     </div>
 
                     {/* Progress Bar */}
-                    <div className="h-1 w-full bg-gray-100 dark:bg-gray-800">
+                    <div className="h-1 w-full bg-brand-surface">
                         <motion.div
-                            className="h-full bg-[#d6b161]"
+                            className="h-full bg-brand-gold"
                             initial={{ width: '0%' }}
                             animate={{ width: step === 1 ? '50%' : '100%' }}
                             transition={{ duration: 0.3 }}
@@ -288,7 +288,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ isOpen, onClose, originPath, 
                             <form onSubmit={handleSubmit} className="mx-auto max-w-2xl space-y-6">
                                 {/* Error Summary */}
                                 {Object.keys(errors).length > 0 && (
-                                    <div className="rounded-lg bg-red-50 p-4 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400 flex gap-2 animate-pulse">
+                                    <div className="rounded-lg bg-brand-red/5 p-4 text-sm text-brand-red flex gap-2 animate-pulse">
                                         <AlertCircle className="h-5 w-5 flex-shrink-0" />
                                         <span>Please correct the errors below.</span>
                                     </div>
@@ -304,8 +304,8 @@ const BookingForm: React.FC<BookingFormProps> = ({ isOpen, onClose, originPath, 
                                             className="space-y-6"
                                         >
                                             <div className="mb-4">
-                                                <h3 className="text-xl font-bold text-[#0a192f] dark:text-white mb-1">Personal Details</h3>
-                                                <p className="text-sm text-gray-500 dark:text-gray-400">Tell us a bit about yourself</p>
+                                                <h3 className="text-xl font-bold text-brand-black mb-1">Personal Details</h3>
+                                                <p className="text-sm text-brand-olive">Tell us a bit about yourself</p>
                                             </div>
 
                                             <div className="grid gap-6 md:grid-cols-2">
@@ -321,12 +321,12 @@ const BookingForm: React.FC<BookingFormProps> = ({ isOpen, onClose, originPath, 
 
                                                 {/* Phone */}
                                                 <div>
-                                                    <label className="mb-1.5 block text-sm font-semibold text-[#0a192f] dark:text-gray-200">
-                                                        Phone <span className="text-red-500">*</span>
+                                                    <label className="mb-1.5 block text-sm font-semibold text-brand-black">
+                                                        Phone <span className="text-brand-red">*</span>
                                                     </label>
-                                                    <div className="flex rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus-within:ring-2 focus-within:ring-[#d6b161]">
+                                                    <div className="flex rounded-lg border border-brand-surface bg-white focus-within:ring-2 focus-within:ring-brand-gold">
                                                         <select
-                                                            className="rounded-l-lg bg-gray-50 px-2 text-sm text-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:outline-none border-r border-gray-200 dark:border-gray-600"
+                                                            className="rounded-l-lg bg-brand-off-white px-2 text-sm text-brand-olive-dark focus:outline-none border-r border-brand-surface"
                                                             value={formData.countryCode}
                                                             onChange={e => handleInputChange('countryCode', e.target.value)}
                                                         >
@@ -338,13 +338,13 @@ const BookingForm: React.FC<BookingFormProps> = ({ isOpen, onClose, originPath, 
                                                         </select>
                                                         <input
                                                             type="tel"
-                                                            className="w-full flex-1 rounded-r-lg bg-transparent px-3 py-2.5 text-gray-900 placeholder:text-gray-400 focus:outline-none dark:text-white"
+                                                            className="w-full flex-1 rounded-r-lg bg-transparent px-3 py-2.5 text-brand-black placeholder:text-brand-olive-light focus:outline-none"
                                                             placeholder="9876543210"
                                                             value={formData.phone}
                                                             onChange={e => handleInputChange('phone', e.target.value)}
                                                         />
                                                     </div>
-                                                    {errors.phone && <span className="mt-1 text-xs text-red-500">{errors.phone}</span>}
+                                                    {errors.phone && <span className="mt-1 text-xs text-brand-red">{errors.phone}</span>}
                                                 </div>
 
                                                 <InputField
@@ -383,7 +383,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ isOpen, onClose, originPath, 
                                                 <button
                                                     type="button"
                                                     onClick={handleNext}
-                                                    className="w-full rounded-lg bg-[#0a192f] py-4 text-base font-bold text-white shadow-lg transition-all hover:bg-[#112240] hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d6b161] focus:ring-offset-2 dark:bg-[#d6b161] dark:text-[#0a192f] dark:hover:bg-[#c4a055]"
+                                                    className="w-full rounded-lg bg-brand-black py-4 text-base font-bold text-white shadow-lg transition-all hover:bg-brand-olive-dark hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2"
                                                 >
                                                     Continue
                                                 </button>
@@ -400,8 +400,8 @@ const BookingForm: React.FC<BookingFormProps> = ({ isOpen, onClose, originPath, 
                                             className="space-y-6"
                                         >
                                             <div className="mb-4">
-                                                <h3 className="text-xl font-bold text-[#0a192f] dark:text-white mb-1">Course Preferences</h3>
-                                                <p className="text-sm text-gray-500 dark:text-gray-400">Select your learning path</p>
+                                                <h3 className="text-xl font-bold text-brand-black mb-1">Course Preferences</h3>
+                                                <p className="text-sm text-brand-olive">Select your learning path</p>
                                             </div>
 
                                             <div className="grid gap-6 md:grid-cols-2">
@@ -462,12 +462,12 @@ const BookingForm: React.FC<BookingFormProps> = ({ isOpen, onClose, originPath, 
 
                                             {/* Comments */}
                                             <div>
-                                                <label className="mb-1.5 block text-sm font-semibold text-[#0a192f] dark:text-gray-200">
+                                                <label className="mb-1.5 block text-sm font-semibold text-brand-black">
                                                     Optional Comments
                                                 </label>
                                                 <textarea
                                                     rows={4}
-                                                    className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#d6b161] dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                                                    className="w-full rounded-lg border border-brand-surface bg-white px-4 py-3 text-sm text-brand-black placeholder:text-brand-olive-light focus:outline-none focus:ring-2 focus:ring-brand-gold"
                                                     placeholder="Any specific goals or questions?"
                                                     value={formData.comments}
                                                     onChange={e => handleInputChange('comments', e.target.value)}
@@ -479,14 +479,14 @@ const BookingForm: React.FC<BookingFormProps> = ({ isOpen, onClose, originPath, 
                                                 <button
                                                     type="submit"
                                                     disabled={isSubmitting}
-                                                    className="w-full rounded-lg bg-[#d6b161] py-4 text-base font-bold text-[#0a192f] shadow-lg transition-all hover:bg-[#c4a055] hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d6b161] focus:ring-offset-2 disabled:opacity-70 dark:focus:ring-offset-[#0a192f]"
+                                                    className="w-full rounded-lg bg-brand-gold py-4 text-base font-bold text-brand-black shadow-lg transition-all hover:bg-brand-gold-hover hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2 disabled:opacity-70"
                                                 >
                                                     {isSubmitting ? 'Processing...' : 'Book Free Trial'}
                                                 </button>
                                                 <button
                                                     type="button"
                                                     onClick={() => setStep(1)}
-                                                    className="w-full text-sm font-semibold text-gray-500 hover:text-[#0a192f] dark:text-gray-400 dark:hover:text-white py-2"
+                                                    className="w-full text-sm font-semibold text-brand-olive hover:text-brand-black py-2"
                                                 >
                                                     Back to Details
                                                 </button>
@@ -515,25 +515,25 @@ interface InputFieldProps extends Omit<React.InputHTMLAttributes<HTMLInputElemen
 
 const InputField: React.FC<InputFieldProps> = ({ label, required, error, icon, className = '', onChange, ...props }) => (
     <div className={className}>
-        <label className="mb-1.5 block text-sm font-semibold text-[#0a192f] dark:text-gray-200">
-            {label} {required && <span className="text-red-500">*</span>}
+        <label className="mb-1.5 block text-sm font-semibold text-brand-black">
+            {label} {required && <span className="text-brand-red">*</span>}
         </label>
         <div className="relative">
             {icon && (
-                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-olive-light pointer-events-none">
                     {icon}
                 </div>
             )}
             <input
                 {...props}
                 onChange={(e) => onChange(e.target.value)}
-                className={`w-full rounded-lg border bg-white px-4 py-2.5 text-gray-900 transition-all placeholder:text-gray-400 focus:outline-none focus:ring-2 dark:bg-gray-800 dark:text-white
+                className={`w-full rounded-lg border bg-white px-4 py-2.5 text-brand-black transition-all placeholder:text-brand-olive-light focus:outline-none focus:ring-2
              ${icon ? 'pl-10' : ''}
-             ${error ? 'border-red-500 focus:ring-red-200' : 'border-gray-200 focus:ring-[#d6b161] dark:border-gray-700'}
+             ${error ? 'border-brand-red focus:ring-brand-red/20' : 'border-brand-surface focus:ring-brand-gold'}
           `}
             />
         </div>
-        {error && <span className="mt-1 text-xs text-red-500">{error}</span>}
+        {error && <span className="mt-1 text-xs text-brand-red">{error}</span>}
     </div>
 );
 
@@ -555,12 +555,12 @@ interface SelectFieldProps {
 
 const SelectField: React.FC<SelectFieldProps> = ({ label, required, error, icon, options, disabled, onChange, value }) => (
     <div>
-        <label className="mb-1.5 block text-sm font-semibold text-[#0a192f] dark:text-gray-200">
-            {label} {required && <span className="text-red-500">*</span>}
+        <label className="mb-1.5 block text-sm font-semibold text-brand-black">
+            {label} {required && <span className="text-brand-red">*</span>}
         </label>
         <div className="relative">
             {icon && (
-                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-olive-light pointer-events-none">
                     {icon}
                 </div>
             )}
@@ -568,18 +568,18 @@ const SelectField: React.FC<SelectFieldProps> = ({ label, required, error, icon,
                 value={value}
                 onChange={e => onChange(e.target.value)}
                 disabled={disabled}
-                className={`w-full appearance-none rounded-lg border bg-white px-4 py-2.5 text-gray-900 transition-all focus:outline-none focus:ring-2 dark:bg-gray-800 dark:text-white disabled:opacity-50 disabled:bg-gray-100 dark:disabled:bg-gray-900
+                className={`w-full appearance-none rounded-lg border bg-white px-4 py-2.5 text-brand-black transition-all focus:outline-none focus:ring-2 disabled:opacity-50 disabled:bg-brand-surface
              ${icon ? 'pl-10' : ''}
-             ${error ? 'border-red-500 focus:ring-red-200' : 'border-gray-200 focus:ring-[#d6b161] dark:border-gray-700'}
+             ${error ? 'border-brand-red focus:ring-brand-red/20' : 'border-brand-surface focus:ring-brand-gold'}
           `}
             >
                 {options.map((opt) => (
                     <option key={opt.value} value={opt.value}>{opt.label}</option>
                 ))}
             </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-brand-olive-light pointer-events-none" />
         </div>
-        {error && <span className="mt-1 text-xs text-red-500">{error}</span>}
+        {error && <span className="mt-1 text-xs text-brand-red">{error}</span>}
     </div>
 );
 
@@ -589,11 +589,11 @@ const SuccessView = () => (
         animate={{ opacity: 1, scale: 1 }}
         className="flex h-full flex-col items-center justify-center text-center"
     >
-        <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400 animate-pulse">
+        <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-brand-olive/10 text-brand-olive animate-pulse">
             <Check className="h-12 w-12" />
         </div>
-        <h3 className="mb-2 text-2xl font-bold text-[#0a192f] dark:text-white">Request Sent!</h3>
-        <p className="max-w-xs text-gray-600 dark:text-gray-300">
+        <h3 className="mb-2 text-2xl font-bold text-brand-black">Request Sent!</h3>
+        <p className="max-w-xs text-brand-olive-dark">
             We'll be in touch shortly to schedule your free trial.
         </p>
 
@@ -602,7 +602,7 @@ const SuccessView = () => (
             {[...Array(6)].map((_, i) => (
                 <motion.div
                     key={i}
-                    className="absolute bg-[#d6b161]"
+                    className="absolute bg-brand-gold"
                     initial={{ x: '50%', y: '50%', opacity: 1, scale: 0 }}
                     animate={{
                         x: `${50 + (Math.random() - 0.5) * 100}%`,

@@ -24,7 +24,7 @@ const HeroBackground: React.FC = () => {
                     opacity: [0.3, 0.5, 0.3]
                 }}
                 transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-[10%] -right-[10%] h-[600px] w-[600px] rounded-full bg-gradient-to-br from-[#d6b161]/20 to-red-500/10 blur-[120px]"
+                className="absolute -top-[10%] -right-[10%] h-[600px] w-[600px] rounded-full bg-gradient-to-br from-brand-gold/20 to-red-500/10 blur-[120px]"
             />
             <motion.div
                 style={{ y: y2 }}
@@ -33,7 +33,7 @@ const HeroBackground: React.FC = () => {
                     opacity: [0.2, 0.4, 0.2]
                 }}
                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute top-[20%] -left-[10%] h-[500px] w-[500px] rounded-full bg-yellow-500/10 blur-[100px]"
+                className="absolute top-[20%] -left-[10%] h-[500px] w-[500px] rounded-full bg-brand-gold/50/10 blur-[100px]"
             />
             <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay"></div>
         </motion.div>
@@ -52,12 +52,12 @@ const fadeInUp = {
 
 const TermsAndConditions: React.FC = () => {
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col font-sans text-gray-800 dark:text-gray-200">
+        <div className="min-h-screen bg-brand-off-white flex flex-col font-sans text-brand-black">
             <Header />
 
             <main className="flex-1">
                 {/* Hero Section */}
-                <section className="relative bg-gradient-to-br from-[#0a192f] via-[#112240] to-[#1a365d] overflow-hidden py-28 sm:py-36 text-center">
+                <section className="relative bg-gradient-to-br from-brand-black via-brand-olive-dark to-[#1a365d] overflow-hidden py-28 sm:py-36 text-center">
                     <HeroBackground />
 
                     <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -68,9 +68,9 @@ const TermsAndConditions: React.FC = () => {
                             variants={fadeInUp}
                         >
                             <h1 className="text-4xl md:text-5xl lg:text-6xl font-sans font-bold text-white mb-6 leading-tight">
-                                Terms and <span className="text-[#d6b161]">Conditions</span>
+                                Terms and <span className="text-brand-gold">Conditions</span>
                             </h1>
-                            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed">
+                            <p className="text-lg md:text-xl text-brand-olive-light max-w-3xl mx-auto mb-10 leading-relaxed">
                                 Please read these terms and conditions carefully before using our website
                             </p>
                         </motion.div>
@@ -84,31 +84,31 @@ const TermsAndConditions: React.FC = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
-                            className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 md:p-8 lg:p-10"
+                            className="bg-white rounded-2xl shadow-sm border border-brand-surface p-6 md:p-8 lg:p-10"
                         >
 
                             {/* Introduction */}
                             <div className="mb-8">
-                                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 text-base">
+                                <p className="text-brand-olive-dark leading-relaxed mb-6 text-base">
                                     Welcome to SoVir Technologies!
                                 </p>
-                                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 text-base">
+                                <p className="text-brand-olive-dark leading-relaxed mb-6 text-base">
                                     These terms and conditions outline the rules and regulations for the use of SoVir Technologies's Website, located at{' '}
-                                    <a href="https://www.sovirtechnologies.in" className="text-[#d6b161] hover:underline font-medium">
+                                    <a href="https://www.sovirtechnologies.in" className="text-brand-gold hover:underline font-medium">
                                         https://www.sovirtechnologies.in
                                     </a>.
                                 </p>
-                                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-8 text-base">
+                                <p className="text-brand-olive-dark leading-relaxed mb-8 text-base">
                                     By accessing this website, we assume you accept these terms and conditions. Do not continue to use SoVir Technologies if you do not agree to take all of the terms and conditions stated on this page.
                                 </p>
                             </div>
 
                             {/* Cookies Section */}
                             <section className="mb-10" id="cookies">
-                                <h2 className="text-2xl sm:text-3xl font-semibold text-[#0a192f] dark:text-white mb-4 pb-3 border-b-2 border-[#d6b161]">
+                                <h2 className="text-2xl sm:text-3xl font-semibold text-brand-black mb-4 pb-3 border-b-2 border-brand-gold">
                                     Cookies
                                 </h2>
-                                <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed text-base">
+                                <div className="space-y-4 text-brand-olive-dark leading-relaxed text-base">
                                     <p>
                                         The website uses cookies to help personalize your online experience. By accessing SoVir Technologies, you agreed to use the required cookies.
                                     </p>
@@ -123,17 +123,17 @@ const TermsAndConditions: React.FC = () => {
 
                             {/* License Section */}
                             <section className="mb-10" id="license">
-                                <h2 className="text-2xl sm:text-3xl font-semibold text-[#0a192f] dark:text-white mb-4 pb-3 border-b-2 border-[#d6b161]">
+                                <h2 className="text-2xl sm:text-3xl font-semibold text-brand-black mb-4 pb-3 border-b-2 border-brand-gold">
                                     License
                                 </h2>
-                                <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed text-base">
+                                <div className="space-y-4 text-brand-olive-dark leading-relaxed text-base">
                                     <p>
                                         Unless otherwise stated, SoVir Technologies and/or its licensors own the intellectual property rights for all material on SoVir Technologies. All intellectual property rights are reserved. You may access this from SoVir Technologies for your own personal use subjected to restrictions set in these terms and conditions.
                                     </p>
 
-                                    <div className="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 p-4 my-4 rounded-r-lg">
-                                        <p className="font-medium text-gray-900 dark:text-white mb-2">You must not:</p>
-                                        <ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 ml-4">
+                                    <div className="bg-brand-red/5 border-l-4 border-brand-red p-4 my-4 rounded-r-lg">
+                                        <p className="font-medium text-brand-black mb-2">You must not:</p>
+                                        <ul className="list-disc list-inside space-y-2 text-brand-olive-dark ml-4">
                                             <li>Copy or republish material from SoVir Technologies</li>
                                             <li>Sell, rent, or sub-license material from SoVir Technologies</li>
                                             <li>Reproduce, duplicate or copy material from SoVir Technologies</li>
@@ -151,9 +151,9 @@ const TermsAndConditions: React.FC = () => {
                                         SoVir Technologies reserves the right to monitor all Comments and remove any Comments that can be considered inappropriate, offensive, or causes breach of these Terms and Conditions.
                                     </p>
 
-                                    <div className="bg-[#d6b161]/10 border-l-4 border-[#d6b161] p-4 my-4 rounded-r-lg">
-                                        <p className="font-medium text-gray-900 dark:text-white mb-2">You warrant and represent that:</p>
-                                        <ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 ml-4">
+                                    <div className="bg-brand-gold/10 border-l-4 border-brand-gold p-4 my-4 rounded-r-lg">
+                                        <p className="font-medium text-brand-black mb-2">You warrant and represent that:</p>
+                                        <ul className="list-disc list-inside space-y-2 text-brand-olive-dark ml-4">
                                             <li>You are entitled to post the Comments on our website and have all necessary licenses and consents to do so;</li>
                                             <li>The Comments do not invade any intellectual property right, including without limitation copyright, patent, or trademark of any third party;</li>
                                             <li>The Comments do not contain any defamatory, libelous, offensive, indecent, or otherwise unlawful material, which is an immediate extension.</li>
@@ -169,10 +169,10 @@ const TermsAndConditions: React.FC = () => {
 
                             {/* Hyperlinking Section */}
                             <section className="mb-10" id="hyperlinking">
-                                <h2 className="text-2xl sm:text-3xl font-semibold text-[#0a192f] dark:text-white mb-4 pb-3 border-b-2 border-[#d6b161]">
+                                <h2 className="text-2xl sm:text-3xl font-semibold text-brand-black mb-4 pb-3 border-b-2 border-brand-gold">
                                     Hyperlinking to our Content
                                 </h2>
-                                <div className="space-y-6 text-gray-700 dark:text-gray-300 leading-relaxed text-base">
+                                <div className="space-y-6 text-brand-olive-dark leading-relaxed text-base">
                                     <p className="font-medium">The following organizations may link to our Website without prior written approval:</p>
                                     <ul className="list-disc list-inside space-y-2 ml-4">
                                         <li>Government agencies;</li>
@@ -224,30 +224,30 @@ const TermsAndConditions: React.FC = () => {
 
                             {/* Content Liability Section */}
                             <section className="mb-10" id="content-liability">
-                                <h2 className="text-2xl sm:text-3xl font-semibold text-[#0a192f] dark:text-white mb-4 pb-3 border-b-2 border-[#d6b161]">
+                                <h2 className="text-2xl sm:text-3xl font-semibold text-brand-black mb-4 pb-3 border-b-2 border-brand-gold">
                                     Content Liability
                                 </h2>
-                                <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
+                                <p className="text-brand-olive-dark leading-relaxed text-base">
                                     We shall not be held responsible for any content that appears on your Website. You agree to protect and defend us against all claims that are raised on your Website. No link(s) should appear on any Website that may be interpreted as libelous, obscene, or criminal, or which infringes, otherwise violates, or advocates the infringement or other violation of, any third party rights.
                                 </p>
                             </section>
 
                             {/* Reservation of Rights Section */}
                             <section className="mb-10" id="reservation-of-rights">
-                                <h2 className="text-2xl sm:text-3xl font-semibold text-[#0a192f] dark:text-white mb-4 pb-3 border-b-2 border-[#d6b161]">
+                                <h2 className="text-2xl sm:text-3xl font-semibold text-brand-black mb-4 pb-3 border-b-2 border-brand-gold">
                                     Reservation of Rights
                                 </h2>
-                                <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base mb-4">
+                                <p className="text-brand-olive-dark leading-relaxed text-base mb-4">
                                     We reserve the right to request that you remove all links or any particular link to our Website. You approve to immediately remove all links to our Website upon request. We also reserve the right to amend these terms and conditions and its linking policy at any time. By continuously linking to our Website, you agree to be bound to and follow these linking terms and conditions.
                                 </p>
                             </section>
 
                             {/* Removal of Links Section */}
                             <section className="mb-10" id="removal-of-links">
-                                <h2 className="text-2xl sm:text-3xl font-semibold text-[#0a192f] dark:text-white mb-4 pb-3 border-b-2 border-[#d6b161]">
+                                <h2 className="text-2xl sm:text-3xl font-semibold text-brand-black mb-4 pb-3 border-b-2 border-brand-gold">
                                     Removal of links from our website
                                 </h2>
-                                <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed text-base">
+                                <div className="space-y-4 text-brand-olive-dark leading-relaxed text-base">
                                     <p>
                                         If you find any link on our Website that is offensive for any reason, you are free to contact and inform us at any moment. We will consider requests to remove links, but we are not obligated to or so or to respond to you directly.
                                     </p>
@@ -259,10 +259,10 @@ const TermsAndConditions: React.FC = () => {
 
                             {/* Disclaimer Section */}
                             <section id="disclaimer">
-                                <h2 className="text-2xl sm:text-3xl font-semibold text-[#0a192f] dark:text-white mb-4 pb-3 border-b-2 border-[#d6b161]">
+                                <h2 className="text-2xl sm:text-3xl font-semibold text-brand-black mb-4 pb-3 border-b-2 border-brand-gold">
                                     Disclaimer
                                 </h2>
-                                <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed text-base">
+                                <div className="space-y-4 text-brand-olive-dark leading-relaxed text-base">
                                     <p>
                                         To the maximum extent permitted by applicable law, we exclude all representations, warranties, and conditions relating to our website and the use of this website. Nothing in this disclaimer will:
                                     </p>
