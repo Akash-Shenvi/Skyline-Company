@@ -45,8 +45,8 @@ const StarRating: React.FC<{ rating: number }> = ({ rating }) => {
 
 
 
-// Skill Course Type (static)
-interface SkillCourseStatic {
+// Language Course Type (static)
+interface LanguageCourseStatic {
     _id: string;
     title: string;
     students: string;
@@ -61,12 +61,12 @@ interface SkillCourseStatic {
     borderColor: string;
 }
 
-// Enhanced Skill Card matching LanguageTraining design
-interface SkillCardProps {
-    course: SkillCourseStatic;
+// Enhanced Language Card matching LanguageTraining design
+interface LanguageCardProps {
+    course: LanguageCourseStatic;
 }
 
-const SkillCard: React.FC<SkillCardProps> = ({ course }) => {
+const LanguageCard: React.FC<LanguageCardProps> = ({ course }) => {
     return (
         <motion.div
             variants={fadeInUp}
@@ -101,7 +101,7 @@ const SkillCard: React.FC<SkillCardProps> = ({ course }) => {
                     </div>
                     <div className="flex items-center gap-1.5">
                         <BookOpen className="w-4 h-4 text-brand-olive" />
-                        <span className="font-medium">{course.courses} modules</span>
+                        <span className="font-medium">{course.courses} courses</span>
                     </div>
                 </div>
 
@@ -147,48 +147,48 @@ const SkillCard: React.FC<SkillCardProps> = ({ course }) => {
 
 const LandingPage: React.FC = () => {
     const [isBookingFormOpen, setIsBookingFormOpen] = useState(false);
-    const skillCourses: SkillCourseStatic[] = [
+    const languageCourses: LanguageCourseStatic[] = [
         {
             _id: '1',
-            title: 'SCADA & HMI Training',
-            students: '1,200+',
-            courses: 12,
-            reviews: '450',
-            levels: ['40 Hours', 'Live/Hybrid'],
-            price: '7200',
-            image: 'https://sovirtechnologies.in/api/uploads/tariningwebsite/landing/scada.png',
-            rating: 4.8,
-            link: '/skill-training/scada',
-            bgColor: 'bg-brand-off-white',
+            title: 'English Training',
+            students: '8,500+',
+            courses: 45,
+            reviews: '2.4k',
+            levels: ['Beginner', 'Intermediate', 'Advanced'],
+            price: '9999',
+            image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            rating: 4.9,
+            link: '/training/english',
+            bgColor: 'bg-brand-gold/5',
             borderColor: 'border-brand-surface'
         },
         {
             _id: '2',
-            title: 'PLC Programming & Industrial Automation',
-            students: '2,500+',
-            courses: 18,
-            reviews: '890',
-            levels: ['56 Hours', 'Live/Hybrid'],
-            price: '9200',
-            image: 'https://sovirtechnologies.in/api/uploads/tariningwebsite/landing/plc.png',
-            rating: 4.9,
-            link: '/skill-training/plc',
-            bgColor: 'bg-brand-off-white',
-            borderColor: 'border-brand-surface'
+            title: 'German Training',
+            students: '6,200+',
+            courses: 38,
+            reviews: '2.4k',
+            levels: ['A1', 'A2', 'B1', 'B2', 'TELC / Goethe'],
+            price: '15999',
+            image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            rating: 4.8,
+            link: '/training/german',
+            bgColor: 'bg-brand-red/5',
+            borderColor: 'border-brand-red/20'
         },
         {
             _id: '3',
-            title: 'Industrial Drives & Motion Control',
-            students: '900+',
-            courses: 8,
-            reviews: '210',
-            levels: ['45 Hours', 'Live/Hybrid'],
-            price: '10200',
-            image: 'https://sovirtechnologies.in/api/uploads/tariningwebsite/landing/industrial.png',
-            rating: 4.7,
-            link: '/skill-training/drives',
-            bgColor: 'bg-brand-off-white',
-            borderColor: 'border-brand-surface'
+            title: 'Japanese Training',
+            students: '4,800+',
+            courses: 32,
+            reviews: '2.4k',
+            levels: ['N5', 'N4', 'N3', 'N2', 'N1'],
+            price: '17999',
+            image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            rating: 4.9,
+            link: '/training/japanese',
+            bgColor: 'bg-brand-red/5',
+            borderColor: 'border-brand-red/20'
         }
     ];
 
@@ -347,25 +347,25 @@ const LandingPage: React.FC = () => {
                 </div>
             </section>
 
-            {/* Skill Training Services Section */}
+            {/* Language Training Section */}
             <section id="main-content" className="py-24 bg-brand-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* Section Header */}
                     <div className="text-center mb-16">
-                        <span className="text-brand-red font-semibold text-sm tracking-widest uppercase">Skill Training</span>
+                        <span className="text-brand-red font-semibold text-sm tracking-widest uppercase">Language Training</span>
                         <h2 className="font-sans text-4xl lg:text-5xl font-bold text-brand-black mt-4 mb-6">
-                            Industry-Ready Technical Training
+                            Master Languages for Global Success
                         </h2>
                         <div className="w-12 h-[3px] bg-brand-red mx-auto mb-6" />
                         <p className="text-lg text-brand-olive-dark max-w-3xl mx-auto">
-                            Practical, hands-on training programs combining theory with real-world applications
+                            Professional language training programs with internationally recognized certifications
                         </p>
                     </div>
 
-                    {/* Training Programs Grid */}
+                    {/* Language Programs Grid */}
                     <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
-                        {skillCourses.map((course) => (
-                            <SkillCard
+                        {languageCourses.map((course) => (
+                            <LanguageCard
                                 key={course._id}
                                 course={course}
                             />
@@ -375,7 +375,7 @@ const LandingPage: React.FC = () => {
                     {/* View All Link */}
                     <div className="text-center mt-12">
                         <Link
-                            to="/skill-training"
+                            to="/language-training"
                             className="bg-brand-red hover:bg-brand-red-hover text-white font-semibold px-8 py-3 rounded inline-flex items-center gap-2 mx-auto focus-visible:ring-2 focus-visible:ring-brand-gold transition-colors"
                         >
                             View All Courses

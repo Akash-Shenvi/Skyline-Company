@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Check, ChevronRight, BookOpen, Clock, Target, Award, Shield, Zap, Star } from 'lucide-react';
+import { Check, ChevronRight, BookOpen, Clock, Target, Award, Shield, Zap, Star, AlertCircle } from 'lucide-react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import EnrollmentModal from '../components/ui/EnrollmentModal';
@@ -145,21 +145,82 @@ const FAQItem: React.FC<{ faq: typeof faqs[0]; isOpen: boolean; onToggle: () => 
 
 // --- Main Page Component ---
 
+// Static fallback data when API is unavailable
+const fallbackEnglishCourse: SkillCourse = {
+  _id: 'english-fallback',
+  title: 'English Training',
+  description: 'Master English with our comprehensive training program. From beginner conversation skills to advanced business communication, our expert instructors guide you every step of the way.',
+  levels: [
+    {
+      name: 'Beginner',
+      duration: '3 Months',
+      price: '₹9,999',
+      features: [
+        'Foundational grammar & vocabulary',
+        'Basic conversation skills',
+        'Listening comprehension',
+        'Reading fundamentals',
+        'Writing basics',
+        'Pronunciation training'
+      ],
+      outcome: 'Achieve basic conversational fluency and reading comprehension for everyday situations.',
+      examPrep: { title: '', details: '' }
+    },
+    {
+      name: 'Intermediate',
+      duration: '4 Months',
+      price: '₹14,999',
+      features: [
+        'Advanced grammar structures',
+        'Business English communication',
+        'Presentation skills',
+        'Academic writing',
+        'Debate & discussion techniques',
+        'Email & professional correspondence'
+      ],
+      outcome: 'Communicate confidently in professional and academic settings with fluent English.',
+      examPrep: { title: 'IELTS / TOEFL Preparation', details: 'Targeted preparation for international English proficiency exams.' }
+    },
+    {
+      name: 'Advanced',
+      duration: '3 Months',
+      price: '₹19,999',
+      features: [
+        'Native-level fluency training',
+        'Advanced business negotiation',
+        'Public speaking mastery',
+        'Research & academic writing',
+        'Cross-cultural communication',
+        'Interview preparation'
+      ],
+      outcome: 'Achieve near-native proficiency suitable for international careers and higher education.',
+      examPrep: { title: 'Cambridge C1/C2 Preparation', details: 'Expert coaching for Cambridge Advanced and Proficiency certifications.' }
+    }
+  ]
+};
+
 const CourseEnglishPage: React.FC = () => {
   const [course, setCourse] = useState<SkillCourse | null>(null);
   const [loading, setLoading] = useState(true);
   const [openFAQ, setOpenFAQ] = useState<string | null>(null);
   const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
   const [selectedLevelName, setSelectedLevelName] = useState("");
+  const [apiError, setApiError] = useState(false);
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         const courses = await languageAPI.getAll();
         const englishCourse = courses.find((c: any) => c.title.includes('English'));
-        if (englishCourse) setCourse(englishCourse);
+        if (englishCourse) {
+          setCourse(englishCourse);
+        } else {
+          setCourse(fallbackEnglishCourse);
+        }
       } catch (error) {
         console.error('Failed to fetch course data', error);
+        setApiError(true);
+        setCourse(fallbackEnglishCourse);
       } finally {
         setLoading(false);
       }
@@ -167,23 +228,10 @@ const CourseEnglishPage: React.FC = () => {
     fetchCourse();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-brand-white">
-        <div className="h-10 w-10 animate-spin rounded-full border-4 border-brand-red border-t-transparent"></div>
-      </div>
-    );
-  }
+  // Use fallback while loading to prevent blank screen
+  const displayCourse = course || fallbackEnglishCourse;
 
-  if (!course) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-brand-white">
-        <p className="text-lg text-brand-olive">Course not found.</p>
-      </div>
-    );
-  }
-
-  const selectedLevelDetails = course.levels?.find((level) => level.name === selectedLevelName);
+  const selectedLevelDetails = displayCourse.levels?.find((level) => level.name === selectedLevelName);
 
   return (
     <div className="relative min-h-screen bg-brand-white text-brand-black">
@@ -191,6 +239,21 @@ const CourseEnglishPage: React.FC = () => {
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-6 focus:left-6 focus:z-50 focus:rounded-lg focus:bg-brand-white focus:px-6 focus:py-3 focus:font-bold focus:text-brand-black focus:shadow-2xl focus:ring-2 focus:ring-brand-gold">
         Skip to content
       </a>
+
+      {loading && (
+        <div className="flex h-64 items-center justify-center pt-20">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-brand-red border-t-transparent"></div>
+        </div>
+      )}
+
+      {apiError && !loading && (
+        <div className="mx-auto max-w-3xl px-4 pt-24 pb-4">
+          <div className="flex items-center gap-3 rounded-xl border border-brand-gold/30 bg-brand-gold/5 p-4 text-sm text-brand-olive-dark">
+            <AlertCircle className="h-5 w-5 flex-shrink-0 text-brand-gold" />
+            <span>Showing cached course information. Live pricing may vary.</span>
+          </div>
+        </div>
+      )}
 
       {/* Hero Section */}
       <section className="relative py-28 sm:py-36 text-center overflow-hidden bg-brand-off-white">
@@ -209,7 +272,7 @@ const CourseEnglishPage: React.FC = () => {
             </motion.h1>
             <div className="w-[60px] h-[3px] bg-brand-red mx-auto mb-6" />
             <motion.p variants={fadeInUp} className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-brand-olive-dark sm:text-xl">
-              {course.description}
+              {displayCourse.description}
             </motion.p>
             <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-4 text-sm font-medium text-brand-olive-dark">
               <div className="flex items-center gap-2 rounded-lg bg-brand-white px-4 py-2 border border-brand-surface">
@@ -234,9 +297,9 @@ const CourseEnglishPage: React.FC = () => {
               <div className="w-12 h-[3px] bg-brand-red mx-auto mt-4 mb-4" />
               <p className="mt-4 text-lg text-brand-olive-dark">Tailored curriculums designed to meet your specific goals.</p>
             </motion.div>
-            {course.levels && course.levels.length > 0 ? (
+            {displayCourse.levels && displayCourse.levels.length > 0 ? (
               <div className="grid gap-8 lg:grid-cols-3">
-                {course.levels.map((level, index) => (
+                {displayCourse.levels.map((level, index) => (
                   <CourseLevelCard key={index} level={level} index={index} onEnroll={() => { setSelectedLevelName(level.name); setIsEnrollModalOpen(true); }} />
                 ))}
               </div>

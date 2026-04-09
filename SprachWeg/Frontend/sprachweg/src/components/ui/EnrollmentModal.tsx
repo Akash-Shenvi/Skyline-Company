@@ -202,7 +202,7 @@ const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                                                 <label className="mb-1.5 block text-sm font-semibold text-brand-black">
                                                     Phone <span className="text-brand-red">*</span>
                                                 </label>
-                                                <div className="flex rounded-lg border border-brand-surface bg-brand-white transition-all focus-within:ring-2 focus-within:ring-brand-gold">
+                                                <div className="flex rounded-lg border-[1.5px] border-brand-olive-light bg-brand-white transition-all focus-within:border-brand-red focus-within:ring-2 focus-within:ring-brand-red/15">
                                                     <select className="rounded-l-lg bg-brand-off-white px-3 text-sm text-brand-olive-dark focus:outline-none" value={formData.countryCode} onChange={e => handleInputChange('countryCode', e.target.value)}>
                                                         <option value="+91">+91 (IN)</option>
                                                         <option value="+1">+1 (US)</option>
@@ -230,7 +230,7 @@ const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                                                     Highest Education <span className="text-brand-red">*</span>
                                                 </label>
                                                 <select
-                                                    className={`w-full appearance-none rounded-lg border bg-brand-white px-4 py-2.5 text-brand-black transition-all focus:outline-none focus:ring-2 focus:ring-brand-gold ${errors.education ? 'border-brand-red focus:ring-brand-red/20' : 'border-brand-surface'}`}
+                                                    className={`w-full appearance-none rounded-lg border-[1.5px] bg-brand-white px-4 py-2.5 text-brand-black transition-all focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/15 ${errors.education ? 'border-brand-red' : 'border-brand-olive-light'}`}
                                                     value={formData.education} onChange={e => handleInputChange('education', e.target.value)}
                                                 >
                                                     <option value="">Select Level</option>
@@ -247,7 +247,7 @@ const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
                                                 {errors.education && <span className="mt-1 text-xs text-brand-red">{errors.education}</span>}
                                                 {formData.education === 'Other' && (
                                                     <div className="mt-2">
-                                                        <input type="text" placeholder="Please specify" className="w-full rounded-lg border border-brand-surface px-4 py-2 text-sm text-brand-black focus:outline-none focus:ring-2 focus:ring-brand-gold" value={formData.educationOther} onChange={e => handleInputChange('educationOther', e.target.value)} />
+                                                        <input type="text" placeholder="Please specify" className="w-full rounded-lg border-[1.5px] border-brand-olive-light px-4 py-2 text-sm text-brand-black focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/15" value={formData.educationOther} onChange={e => handleInputChange('educationOther', e.target.value)} />
                                                         {errors.educationOther && <span className="mt-1 text-xs text-brand-red">{errors.educationOther}</span>}
                                                     </div>
                                                 )}
@@ -313,7 +313,7 @@ const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
 
                                 {/* Actions */}
                                 <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-                                    <button type="button" onClick={handleBack} className="rounded-lg border border-brand-surface px-6 py-3 font-semibold text-brand-olive-dark transition-colors hover:bg-brand-off-white focus:outline-none focus:ring-2 focus:ring-brand-surface">
+                                    <button type="button" onClick={handleBack} className="rounded-lg border border-brand-olive px-6 py-3 font-semibold text-brand-olive transition-colors hover:bg-brand-surface focus:outline-none focus:ring-2 focus:ring-brand-gold">
                                         Cancel
                                     </button>
                                     <button type="submit" disabled={isSubmitting} className="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-red px-8 py-3 font-bold text-white shadow-lg transition-all hover:bg-brand-red-hover hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2 disabled:opacity-70 disabled:cursor-not-allowed">
@@ -345,7 +345,7 @@ const InputField = ({ label, type = 'text', required, error, value, onChange, ic
                 type={type}
                 className={`w-full rounded-lg border bg-brand-white px-4 py-2.5 text-brand-black transition-all placeholder:text-brand-olive-light focus:outline-none focus:ring-2
              ${icon ? 'pl-10' : ''}
-             ${error ? 'border-brand-red focus:ring-brand-red/20' : 'border-brand-surface focus:ring-brand-gold'}`}
+             ${error ? 'border-brand-red focus:ring-brand-red/15' : 'border-brand-olive-light focus:border-brand-red focus:ring-brand-red/15'}`}
                 value={value}
                 onChange={e => onChange(e.target.value)}
             />

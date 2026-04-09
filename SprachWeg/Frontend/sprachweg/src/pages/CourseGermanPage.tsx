@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Check, ChevronRight, Clock, Target, Award, Shield, Globe, Star } from 'lucide-react';
+import { Check, ChevronRight, Clock, Target, Award, Shield, Globe, Star, AlertCircle } from 'lucide-react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import EnrollmentModal from '../components/ui/EnrollmentModal';
@@ -98,34 +98,111 @@ const FAQItem: React.FC<{ faq: typeof faqs[0]; isOpen: boolean; onToggle: () => 
   </div>
 );
 
+// Static fallback data when API is unavailable
+const fallbackGermanCourse: SkillCourse = {
+  _id: 'german-fallback',
+  title: 'German Training',
+  description: 'Master German with our CEFR-aligned curriculum. From basic A1 greetings to professional B2/C1 fluency, our certified instructors prepare you for TELC and Goethe exams.',
+  levels: [
+    {
+      name: 'A1',
+      duration: '3 Months',
+      price: '₹15,999',
+      features: [
+        'German alphabet & pronunciation',
+        'Basic greetings & introductions',
+        'Numbers, dates & time',
+        'Simple sentence construction',
+        'Everyday vocabulary',
+        'Basic reading & listening'
+      ],
+      outcome: 'Understand and use basic German phrases for everyday situations.',
+      examPrep: { title: 'Goethe A1 Preparation', details: 'Preparation for the Goethe-Zertifikat A1: Start Deutsch 1.' }
+    },
+    {
+      name: 'A2',
+      duration: '3 Months',
+      price: '₹17,999',
+      features: [
+        'Expanded vocabulary & grammar',
+        'Past tense & future tense',
+        'Describing experiences',
+        'Shopping & travel dialogues',
+        'Writing short texts',
+        'Listening exercises'
+      ],
+      outcome: 'Communicate in routine tasks requiring simple exchange of information.',
+      examPrep: { title: 'Goethe A2 Preparation', details: 'Targeted prep for Goethe-Zertifikat A2.' }
+    },
+    {
+      name: 'B1',
+      duration: '4 Months',
+      price: '₹22,999',
+      features: [
+        'Complex grammar structures',
+        'Professional communication',
+        'Essay & report writing',
+        'Discussion & debate skills',
+        'Cultural understanding',
+        'Media comprehension'
+      ],
+      outcome: 'Handle most situations likely while travelling and express opinions on familiar topics.',
+      examPrep: { title: 'TELC B1 / Goethe B1', details: 'Complete preparation for TELC B1 and Goethe-Zertifikat B1.' }
+    }
+  ]
+};
+
 const CourseGermanPage: React.FC = () => {
   const [course, setCourse] = useState<SkillCourse | null>(null);
   const [loading, setLoading] = useState(true);
   const [openFAQ, setOpenFAQ] = useState<string | null>(null);
   const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
   const [selectedLevelName, setSelectedLevelName] = useState("");
+  const [apiError, setApiError] = useState(false);
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         const courses = await languageAPI.getAll();
         const germanCourse = courses.find((c: any) => c.title.includes('German'));
-        if (germanCourse) setCourse(germanCourse);
-      } catch (error) { console.error('Failed to fetch course data', error); }
-      finally { setLoading(false); }
+        if (germanCourse) {
+          setCourse(germanCourse);
+        } else {
+          setCourse(fallbackGermanCourse);
+        }
+      } catch (error) {
+        console.error('Failed to fetch course data', error);
+        setApiError(true);
+        setCourse(fallbackGermanCourse);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchCourse();
   }, []);
 
-  if (loading) return (<div className="flex min-h-screen items-center justify-center bg-brand-white"><div className="h-10 w-10 animate-spin rounded-full border-4 border-brand-red border-t-transparent"></div></div>);
-  if (!course) return (<div className="flex min-h-screen items-center justify-center bg-brand-white"><p className="text-lg text-brand-olive">Course not found.</p></div>);
-
-  const selectedLevelDetails = course.levels?.find((level) => level.name === selectedLevelName);
+  const displayCourse = course || fallbackGermanCourse;
+  const selectedLevelDetails = displayCourse.levels?.find((level) => level.name === selectedLevelName);
 
   return (
     <div className="relative min-h-screen bg-brand-white text-brand-black">
       <Header />
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-6 focus:left-6 focus:z-50 focus:rounded-lg focus:bg-brand-white focus:px-6 focus:py-3 focus:font-bold focus:text-brand-black focus:shadow-2xl focus:ring-2 focus:ring-brand-gold">Skip to content</a>
+
+      {loading && (
+        <div className="flex h-64 items-center justify-center pt-20">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-brand-red border-t-transparent"></div>
+        </div>
+      )}
+
+      {apiError && !loading && (
+        <div className="mx-auto max-w-3xl px-4 pt-24 pb-4">
+          <div className="flex items-center gap-3 rounded-xl border border-brand-gold/30 bg-brand-gold/5 p-4 text-sm text-brand-olive-dark">
+            <AlertCircle className="h-5 w-5 flex-shrink-0 text-brand-gold" />
+            <span>Showing cached course information. Live pricing may vary.</span>
+          </div>
+        </div>
+      )}
 
       <section className="relative py-28 sm:py-36 text-center overflow-hidden bg-brand-off-white">
         <HeroBackground />
@@ -138,7 +215,7 @@ const CourseGermanPage: React.FC = () => {
               Master German for <br className="hidden sm:inline" /><span className="text-brand-red">Your Career</span>
             </motion.h1>
             <div className="w-[60px] h-[3px] bg-brand-red mx-auto mb-6" />
-            <motion.p variants={fadeInUp} className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-brand-olive-dark sm:text-xl">{course.description}</motion.p>
+            <motion.p variants={fadeInUp} className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-brand-olive-dark sm:text-xl">{displayCourse.description}</motion.p>
             <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-4 text-sm font-medium text-brand-olive-dark">
               <div className="flex items-center gap-2 rounded-lg bg-brand-white px-4 py-2 border border-brand-surface"><Shield className="h-5 w-5 text-brand-red" /><span>TELC / Goethe Prep</span></div>
               <div className="flex items-center gap-2 rounded-lg bg-brand-white px-4 py-2 border border-brand-surface"><Globe className="h-5 w-5 text-brand-red" /><span>Native Instructors</span></div>
@@ -155,9 +232,9 @@ const CourseGermanPage: React.FC = () => {
               <div className="w-12 h-[3px] bg-brand-red mx-auto mt-4 mb-4" />
               <p className="mt-4 text-lg text-brand-olive-dark">From beginner A1 to expert C2, find the perfect fit.</p>
             </motion.div>
-            {course.levels && course.levels.length > 0 ? (
+            {displayCourse.levels && displayCourse.levels.length > 0 ? (
               <div className="grid gap-8 lg:grid-cols-3">
-                {course.levels.map((level, index) => (<CourseLevelCard key={index} level={level} index={index} onEnroll={() => { setSelectedLevelName(level.name); setIsEnrollModalOpen(true); }} />))}
+                {displayCourse.levels.map((level, index) => (<CourseLevelCard key={index} level={level} index={index} onEnroll={() => { setSelectedLevelName(level.name); setIsEnrollModalOpen(true); }} />))}
               </div>
             ) : (<div className="rounded-2xl border border-dashed border-brand-olive-light p-12 text-center text-brand-olive">No course levels available at the moment.</div>)}
           </div>

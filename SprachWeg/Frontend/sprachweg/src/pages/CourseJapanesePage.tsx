@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Check, ChevronRight, Clock, Target, Award, Shield, Languages, Star } from 'lucide-react';
+import { Check, ChevronRight, Clock, Target, Award, Shield, Languages, Star, AlertCircle } from 'lucide-react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import EnrollmentModal from '../components/ui/EnrollmentModal';
@@ -98,34 +98,111 @@ const FAQItem: React.FC<{ faq: typeof faqs[0]; isOpen: boolean; onToggle: () => 
   </div>
 );
 
+// Static fallback data when API is unavailable
+const fallbackJapaneseCourse: SkillCourse = {
+  _id: 'japanese-fallback',
+  title: 'Japanese Training',
+  description: 'Master Japanese with our JLPT-aligned curriculum. From Hiragana basics to advanced Kanji mastery, our immersive program prepares you for all JLPT levels.',
+  levels: [
+    {
+      name: 'N5',
+      duration: '3 Months',
+      price: '₹17,999',
+      features: [
+        'Hiragana & Katakana mastery',
+        'Basic Kanji (100 characters)',
+        'Simple sentence patterns',
+        'Self-introduction & greetings',
+        'Numbers & counting systems',
+        'Basic listening practice'
+      ],
+      outcome: 'Read and understand basic Japanese, handle simple everyday conversations.',
+      examPrep: { title: 'JLPT N5 Preparation', details: 'Complete preparation for JLPT N5 certification exam.' }
+    },
+    {
+      name: 'N4',
+      duration: '4 Months',
+      price: '₹21,999',
+      features: [
+        'Intermediate Kanji (300 characters)',
+        'Grammar patterns & conjugations',
+        'Reading comprehension',
+        'Conversational Japanese',
+        'Writing practice',
+        'Cultural context'
+      ],
+      outcome: 'Understand basic Japanese in everyday situations and read simple passages.',
+      examPrep: { title: 'JLPT N4 Preparation', details: 'Targeted preparation for JLPT N4 certification.' }
+    },
+    {
+      name: 'N3',
+      duration: '5 Months',
+      price: '₹27,999',
+      features: [
+        'Advanced Kanji (650 characters)',
+        'Complex grammar patterns',
+        'Business Japanese basics',
+        'Newspaper reading',
+        'Presentation skills',
+        'Advanced listening'
+      ],
+      outcome: 'Understand Japanese used in everyday situations to a certain degree.',
+      examPrep: { title: 'JLPT N3 Preparation', details: 'Comprehensive coaching for JLPT N3 exam success.' }
+    }
+  ]
+};
+
 const CourseJapanesePage: React.FC = () => {
   const [course, setCourse] = useState<SkillCourse | null>(null);
   const [loading, setLoading] = useState(true);
   const [openFAQ, setOpenFAQ] = useState<string | null>(null);
   const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
   const [selectedLevelName, setSelectedLevelName] = useState("");
+  const [apiError, setApiError] = useState(false);
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         const courses = await languageAPI.getAll();
         const japaneseCourse = courses.find((c: any) => c.title.includes('Japanese'));
-        if (japaneseCourse) setCourse(japaneseCourse);
-      } catch (error) { console.error('Failed to fetch course data', error); }
-      finally { setLoading(false); }
+        if (japaneseCourse) {
+          setCourse(japaneseCourse);
+        } else {
+          setCourse(fallbackJapaneseCourse);
+        }
+      } catch (error) {
+        console.error('Failed to fetch course data', error);
+        setApiError(true);
+        setCourse(fallbackJapaneseCourse);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchCourse();
   }, []);
 
-  if (loading) return (<div className="flex min-h-screen items-center justify-center bg-brand-white"><div className="h-10 w-10 animate-spin rounded-full border-4 border-brand-red border-t-transparent"></div></div>);
-  if (!course) return (<div className="flex min-h-screen items-center justify-center bg-brand-white"><p className="text-lg text-brand-olive">Course not found.</p></div>);
-
-  const selectedLevelDetails = course.levels?.find((level) => level.name === selectedLevelName);
+  const displayCourse = course || fallbackJapaneseCourse;
+  const selectedLevelDetails = displayCourse.levels?.find((level) => level.name === selectedLevelName);
 
   return (
     <div className="relative min-h-screen bg-brand-white text-brand-black">
       <Header />
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-6 focus:left-6 focus:z-50 focus:rounded-lg focus:bg-brand-white focus:px-6 focus:py-3 focus:font-bold focus:text-brand-black focus:shadow-2xl focus:ring-2 focus:ring-brand-gold">Skip to content</a>
+
+      {loading && (
+        <div className="flex h-64 items-center justify-center pt-20">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-brand-red border-t-transparent"></div>
+        </div>
+      )}
+
+      {apiError && !loading && (
+        <div className="mx-auto max-w-3xl px-4 pt-24 pb-4">
+          <div className="flex items-center gap-3 rounded-xl border border-brand-gold/30 bg-brand-gold/5 p-4 text-sm text-brand-olive-dark">
+            <AlertCircle className="h-5 w-5 flex-shrink-0 text-brand-gold" />
+            <span>Showing cached course information. Live pricing may vary.</span>
+          </div>
+        </div>
+      )}
 
       <section className="relative py-28 sm:py-36 text-center overflow-hidden bg-brand-off-white">
         <HeroBackground />
@@ -138,7 +215,7 @@ const CourseJapanesePage: React.FC = () => {
               Master Japanese for <br className="hidden sm:inline" /><span className="text-brand-red">Your Future</span>
             </motion.h1>
             <div className="w-[60px] h-[3px] bg-brand-red mx-auto mb-6" />
-            <motion.p variants={fadeInUp} className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-brand-olive-dark sm:text-xl">{course.description}</motion.p>
+            <motion.p variants={fadeInUp} className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-brand-olive-dark sm:text-xl">{displayCourse.description}</motion.p>
             <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-4 text-sm font-medium text-brand-olive-dark">
               <div className="flex items-center gap-2 rounded-lg bg-brand-white px-4 py-2 border border-brand-surface"><Shield className="h-5 w-5 text-brand-red" /><span>JLPT N5-N1 Prep</span></div>
               <div className="flex items-center gap-2 rounded-lg bg-brand-white px-4 py-2 border border-brand-surface"><Languages className="h-5 w-5 text-brand-red" /><span>Cultural Immersion</span></div>
@@ -155,9 +232,9 @@ const CourseJapanesePage: React.FC = () => {
               <div className="w-12 h-[3px] bg-brand-red mx-auto mt-4 mb-4" />
               <p className="mt-4 text-lg text-brand-olive-dark">Structured learning paths from beginner to native fluency.</p>
             </motion.div>
-            {course.levels && course.levels.length > 0 ? (
+            {displayCourse.levels && displayCourse.levels.length > 0 ? (
               <div className="grid gap-8 lg:grid-cols-3">
-                {course.levels.map((level, index) => (<CourseLevelCard key={index} level={level} index={index} onEnroll={() => { setSelectedLevelName(level.name); setIsEnrollModalOpen(true); }} />))}
+                {displayCourse.levels.map((level, index) => (<CourseLevelCard key={index} level={level} index={index} onEnroll={() => { setSelectedLevelName(level.name); setIsEnrollModalOpen(true); }} />))}
               </div>
             ) : (<div className="rounded-2xl border border-dashed border-brand-olive-light p-12 text-center text-brand-olive">No course levels available at the moment.</div>)}
           </div>

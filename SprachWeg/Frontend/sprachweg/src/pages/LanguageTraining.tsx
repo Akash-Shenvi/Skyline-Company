@@ -305,7 +305,7 @@ const LanguageCard: React.FC<{
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="flex items-center gap-2 px-5 py-2.5 bg-brand-black text-white rounded-lg font-semibold text-sm hover:bg-brand-olive-dark transition-colors shadow-md hover:shadow-lg"
+                            className="flex items-center gap-2 px-5 py-2.5 bg-brand-red text-white rounded-lg font-semibold text-sm hover:bg-brand-red-hover transition-colors shadow-md hover:shadow-lg"
                         >
                             Explore
                             <ArrowRight className="w-4 h-4" />

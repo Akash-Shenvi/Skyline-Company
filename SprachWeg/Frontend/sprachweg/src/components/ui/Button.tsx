@@ -17,13 +17,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     'focus:outline-none focus:ring-2 focus:ring-offset-2',
                     'disabled:opacity-50 disabled:cursor-not-allowed',
                     {
-                        'bg-gradient-to-r from-brand-gold to-brand-red text-white hover:from-brand-gold hover:to-brand-red focus:ring-brand-gold':
+                        'bg-brand-red text-white hover:bg-brand-red-hover focus:ring-brand-gold':
                             variant === 'primary',
-                        'bg-brand-surface text-brand-black hover:bg-brand-olive-light focus:ring-brand-olive':
+                        'bg-brand-black text-white hover:bg-brand-olive-dark focus:ring-brand-gold':
                             variant === 'secondary',
-                        'border-2 border-brand-gold text-brand-gold hover:bg-brand-gold/5 focus:ring-brand-gold':
+                        'border-2 border-brand-olive text-brand-olive hover:bg-brand-surface focus:ring-brand-gold':
                             variant === 'outline',
-                        'text-brand-olive-dark hover:bg-brand-surface focus:ring-brand-olive':
+                        'text-brand-olive-dark hover:bg-brand-surface focus:ring-brand-gold':
                             variant === 'ghost',
                     },
                     {

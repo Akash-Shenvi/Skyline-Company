@@ -242,7 +242,7 @@ const UnifiedBookingForm: React.FC<UnifiedBookingFormProps> = ({ isOpen, onClose
                                                 <InputField label="Email Address" required type="email" icon={<Mail className="h-4 w-4" />} value={formData.email} onChange={(v: string) => handleInputChange('email', v)} error={errors.email} placeholder="john@example.com" />
                                                 <div>
                                                     <label className="mb-1.5 block text-sm font-semibold text-brand-black">Phone <span className="text-brand-red">*</span></label>
-                                                    <div className="flex rounded-lg border border-brand-surface focus-within:ring-2 focus-within:ring-brand-gold">
+                                                    <div className="flex rounded-lg border-[1.5px] border-brand-olive-light focus-within:border-brand-red focus-within:ring-2 focus-within:ring-brand-red/15">
                                                         <select className="rounded-l-lg bg-brand-off-white px-2 text-sm text-brand-olive-dark border-r border-brand-surface outline-none" value={formData.countryCode} onChange={e => handleInputChange('countryCode', e.target.value)}>
                                                             <option value="+91">+91</option><option value="+1">+1</option><option value="+44">+44</option><option value="+49">+49</option><option value="+81">+81</option>
                                                         </select>
@@ -251,7 +251,7 @@ const UnifiedBookingForm: React.FC<UnifiedBookingFormProps> = ({ isOpen, onClose
                                                     {errors.phone && <span className="mt-1 text-xs text-brand-red">{errors.phone}</span>}
                                                 </div>
                                             </div>
-                                            <button type="button" onClick={handleNext} className="w-full rounded-lg bg-brand-black py-4 font-bold text-white shadow-lg hover:bg-brand-olive-dark">Continue</button>
+                                            <button type="button" onClick={handleNext} className="w-full rounded-lg bg-brand-red py-4 font-bold text-white shadow-lg hover:bg-brand-red-hover">Continue</button>
                                         </motion.div>
                                     )}
 
@@ -266,7 +266,7 @@ const UnifiedBookingForm: React.FC<UnifiedBookingFormProps> = ({ isOpen, onClose
                                                 <InterestCard title="Skill Training" description="PLC, SCADA, Industry 4.0, etc." icon={<Zap className="w-6 h-6" />} selected={formData.interest === 'Skill'} onClick={() => handleInputChange('interest', 'Skill')} />
                                                 <InterestCard title="Both" description="I want to explore everything" icon={<Globe className="w-6 h-6" />} selected={formData.interest === 'Both'} onClick={() => handleInputChange('interest', 'Both')} />
                                             </div>
-                                            <button type="button" onClick={handleNext} className="w-full rounded-lg bg-brand-black py-4 font-bold text-white shadow-lg hover:bg-brand-olive-dark">Continue</button>
+                                            <button type="button" onClick={handleNext} className="w-full rounded-lg bg-brand-red py-4 font-bold text-white shadow-lg hover:bg-brand-red-hover">Continue</button>
                                         </motion.div>
                                     )}
 
@@ -279,7 +279,7 @@ const UnifiedBookingForm: React.FC<UnifiedBookingFormProps> = ({ isOpen, onClose
 
                                             {(formData.interest === 'Language' || formData.interest === 'Both') && (
                                                 <div className="p-4 border border-brand-surface rounded-xl bg-brand-off-white">
-                                                    <h4 className="font-bold text-brand-gold mb-3 flex items-center gap-2"><Languages className="w-4 h-4" /> Language Training</h4>
+                                                    <h4 className="font-bold text-brand-red mb-3 flex items-center gap-2"><Languages className="w-4 h-4" /> Language Training</h4>
 
                                                     <div className="space-y-3">
                                                         <SelectField
@@ -327,7 +327,7 @@ const UnifiedBookingForm: React.FC<UnifiedBookingFormProps> = ({ isOpen, onClose
 
                                             {(formData.interest === 'Skill' || formData.interest === 'Both') && (
                                                 <div className="p-4 border border-brand-surface rounded-xl bg-brand-off-white">
-                                                    <h4 className="font-bold text-brand-gold mb-3 flex items-center gap-2"><Zap className="w-4 h-4" /> Skill Training</h4>
+                                                    <h4 className="font-bold text-brand-red mb-3 flex items-center gap-2"><Zap className="w-4 h-4" /> Skill Training</h4>
                                                     <div className="space-y-2">
                                                         {SKILL_COURSES.map(course => (
                                                             <div key={course} onClick={() => toggleSkillCourse(course)} className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all ${formData.skillCourses.includes(course) ? 'border-brand-gold bg-brand-gold/10' : 'border-brand-surface hover:border-brand-surface'}`}>
@@ -344,10 +344,10 @@ const UnifiedBookingForm: React.FC<UnifiedBookingFormProps> = ({ isOpen, onClose
 
                                             <div>
                                                 <label className="mb-1.5 block text-sm font-semibold text-brand-black">Any Questions?</label>
-                                                <textarea rows={3} className="w-full rounded-lg border border-brand-surface bg-white p-3 text-sm focus:ring-2 focus:ring-brand-gold outline-none" placeholder="Optional..." value={formData.comments} onChange={e => handleInputChange('comments', e.target.value)} />
+                                                <textarea rows={3} className="w-full rounded-lg border-[1.5px] border-brand-olive-light bg-white p-3 text-sm focus:border-brand-red focus:ring-2 focus:ring-brand-red/15 outline-none" placeholder="Optional..." value={formData.comments} onChange={e => handleInputChange('comments', e.target.value)} />
                                             </div>
 
-                                            <button type="submit" disabled={isSubmitting} className="w-full rounded-lg bg-brand-gold py-4 font-bold text-brand-black shadow-lg hover:bg-brand-gold-hover disabled:opacity-70">{isSubmitting ? 'Submitting...' : 'Submit Request'}</button>
+                                            <button type="submit" disabled={isSubmitting} className="w-full rounded-lg bg-brand-red py-4 font-bold text-white shadow-lg hover:bg-brand-red-hover disabled:opacity-70">{isSubmitting ? 'Submitting...' : 'Submit Request'}</button>
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
@@ -380,7 +380,7 @@ const InputField: React.FC<{ label: string; required?: boolean; error?: string; 
         <label className="mb-1.5 block text-sm font-semibold text-brand-black">{label} {required && <span className="text-brand-red">*</span>}</label>
         <div className="relative">
             {icon && <div className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-olive-light pointer-events-none">{icon}</div>}
-            <input {...props} onChange={(e) => onChange(e.target.value)} className={`w-full rounded-lg border bg-white px-4 py-2.5 pl-10 text-brand-black focus:outline-none focus:ring-2 ${error ? 'border-brand-red focus:ring-brand-red/20' : 'border-brand-surface focus:ring-brand-gold'}`} />
+            <input {...props} onChange={(e) => onChange(e.target.value)} className={`w-full rounded-lg border-[1.5px] bg-white px-4 py-2.5 pl-10 text-brand-black focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/15 ${error ? 'border-brand-red' : 'border-brand-olive-light'}`} />
         </div>
         {error && <span className="mt-1 text-xs text-brand-red">{error}</span>}
     </div>
@@ -389,7 +389,7 @@ const InputField: React.FC<{ label: string; required?: boolean; error?: string; 
 const SelectField: React.FC<{ label: string; onChange: (value: string) => void; error?: string; options: { label: string; value: string }[]; value: string }> = ({ label, onChange, error, options, value }) => (
     <div>
         <label className="mb-1.5 block text-sm font-semibold text-brand-black">{label}</label>
-        <select value={value} onChange={e => onChange(e.target.value)} className={`w-full rounded-lg border bg-white px-4 py-2.5 text-brand-black focus:outline-none focus:ring-2 ${error ? 'border-brand-red' : 'border-brand-surface focus:ring-brand-gold'}`}>
+        <select value={value} onChange={e => onChange(e.target.value)} className={`w-full rounded-lg border-[1.5px] bg-white px-4 py-2.5 text-brand-black focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/15 ${error ? 'border-brand-red' : 'border-brand-olive-light'}`}>
             {options.map((o: { label: string; value: string }) => <option key={o.value} value={o.value}>{o.label}</option>)}
         </select>
         {error && <span className="mt-1 text-xs text-brand-red">{error}</span>}

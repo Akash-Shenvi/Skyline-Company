@@ -324,7 +324,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ isOpen, onClose, originPath, 
                                                     <label className="mb-1.5 block text-sm font-semibold text-brand-black">
                                                         Phone <span className="text-brand-red">*</span>
                                                     </label>
-                                                    <div className="flex rounded-lg border border-brand-surface bg-white focus-within:ring-2 focus-within:ring-brand-gold">
+                                                    <div className="flex rounded-lg border-[1.5px] border-brand-olive-light bg-white focus-within:border-brand-red focus-within:ring-2 focus-within:ring-brand-red/15">
                                                         <select
                                                             className="rounded-l-lg bg-brand-off-white px-2 text-sm text-brand-olive-dark focus:outline-none border-r border-brand-surface"
                                                             value={formData.countryCode}
@@ -383,7 +383,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ isOpen, onClose, originPath, 
                                                 <button
                                                     type="button"
                                                     onClick={handleNext}
-                                                    className="w-full rounded-lg bg-brand-black py-4 text-base font-bold text-white shadow-lg transition-all hover:bg-brand-olive-dark hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2"
+                                                    className="w-full rounded-lg bg-brand-red py-4 text-base font-bold text-white shadow-lg transition-all hover:bg-brand-red-hover hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2"
                                                 >
                                                     Continue
                                                 </button>
@@ -467,7 +467,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ isOpen, onClose, originPath, 
                                                 </label>
                                                 <textarea
                                                     rows={4}
-                                                    className="w-full rounded-lg border border-brand-surface bg-white px-4 py-3 text-sm text-brand-black placeholder:text-brand-olive-light focus:outline-none focus:ring-2 focus:ring-brand-gold"
+                                                    className="w-full rounded-lg border-[1.5px] border-brand-olive-light bg-white px-4 py-3 text-sm text-brand-black placeholder:text-brand-olive-light focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-brand-red/15"
                                                     placeholder="Any specific goals or questions?"
                                                     value={formData.comments}
                                                     onChange={e => handleInputChange('comments', e.target.value)}
@@ -479,7 +479,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ isOpen, onClose, originPath, 
                                                 <button
                                                     type="submit"
                                                     disabled={isSubmitting}
-                                                    className="w-full rounded-lg bg-brand-gold py-4 text-base font-bold text-brand-black shadow-lg transition-all hover:bg-brand-gold-hover hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2 disabled:opacity-70"
+                                                    className="w-full rounded-lg bg-brand-red py-4 text-base font-bold text-white shadow-lg transition-all hover:bg-brand-red-hover hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2 disabled:opacity-70"
                                                 >
                                                     {isSubmitting ? 'Processing...' : 'Book Free Trial'}
                                                 </button>
@@ -529,7 +529,7 @@ const InputField: React.FC<InputFieldProps> = ({ label, required, error, icon, c
                 onChange={(e) => onChange(e.target.value)}
                 className={`w-full rounded-lg border bg-white px-4 py-2.5 text-brand-black transition-all placeholder:text-brand-olive-light focus:outline-none focus:ring-2
              ${icon ? 'pl-10' : ''}
-             ${error ? 'border-brand-red focus:ring-brand-red/20' : 'border-brand-surface focus:ring-brand-gold'}
+             ${error ? 'border-brand-red focus:ring-brand-red/15' : 'border-[1.5px] border-brand-olive-light focus:border-brand-red focus:ring-brand-red/15'}
           `}
             />
         </div>
@@ -570,7 +570,7 @@ const SelectField: React.FC<SelectFieldProps> = ({ label, required, error, icon,
                 disabled={disabled}
                 className={`w-full appearance-none rounded-lg border bg-white px-4 py-2.5 text-brand-black transition-all focus:outline-none focus:ring-2 disabled:opacity-50 disabled:bg-brand-surface
              ${icon ? 'pl-10' : ''}
-             ${error ? 'border-brand-red focus:ring-brand-red/20' : 'border-brand-surface focus:ring-brand-gold'}
+             ${error ? 'border-brand-red focus:ring-brand-red/15' : 'border-[1.5px] border-brand-olive-light focus:border-brand-red focus:ring-brand-red/15'}
           `}
             >
                 {options.map((opt) => (
