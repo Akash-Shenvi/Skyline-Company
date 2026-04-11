@@ -40,7 +40,7 @@ import { isLearnerRole } from '../utils/roles';
 const googleService = new GoogleCalendarService();
 const DEFAULT_PAGE_LIMIT = 10;
 const MAX_PAGE_LIMIT = 50;
-const FILE_SERVE_DIR = '/home/sovirtraining/file_serve';
+const FILE_SERVE_DIR = '/home/skyline/file_serve';
 
 type TrainingType = 'language' | 'skill';
 

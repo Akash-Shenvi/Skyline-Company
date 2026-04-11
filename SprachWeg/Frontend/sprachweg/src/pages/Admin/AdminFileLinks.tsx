@@ -3,7 +3,7 @@ import { Link, Copy, Trash2, Upload, File as FileIcon, ChevronLeft, ChevronRight
 import AdminLayout from '../../components/admin/AdminLayout';
 import api from '../../lib/api';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5002';
 
 interface FileLink {
     _id: string;

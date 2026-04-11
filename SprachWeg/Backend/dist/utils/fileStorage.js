@@ -7,7 +7,7 @@ exports.ensureStorageDirectory = exports.getFileServeRoot = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const env_1 = require("../config/env");
-const productionRoot = '/home/sovirtraining/file_serve';
+const productionRoot = '/home/skyline/file_serve';
 const developmentRoot = path_1.default.resolve(process.cwd(), 'uploads');
 const getFileServeRoot = () => (env_1.env.NODE_ENV === 'production' ? productionRoot : developmentRoot);
 exports.getFileServeRoot = getFileServeRoot;

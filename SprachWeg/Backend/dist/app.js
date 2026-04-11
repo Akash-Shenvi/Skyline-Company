@@ -48,7 +48,7 @@ const language_trainer_routes_1 = __importDefault(require("./routes/language.tra
 const dashboard_routes_1 = __importDefault(require("./routes/dashboard.routes"));
 const enrollment_routes_1 = __importDefault(require("./routes/enrollment.routes"));
 // Routes
-app.use('/api/uploads', express_1.default.static('/home/sovirtraining/file_serve')); // Serve uploaded files
+app.use('/api/uploads', express_1.default.static('/home/skyline/file_serve')); // Serve uploaded files
 app.use('/api/items', item_routes_1.default);
 app.use('/api/auth', auth_routes_1.default);
 app.use('/api/skills', skillCourse_routes_1.default);

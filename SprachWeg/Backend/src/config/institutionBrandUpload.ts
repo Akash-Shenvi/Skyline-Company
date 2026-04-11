@@ -2,7 +2,7 @@ import fs from 'fs';
 import multer from 'multer';
 import path from 'path';
 
-const uploadDir = '/home/sovirtraining/file_serve/institutions';
+const uploadDir = '/home/skyline/file_serve/institutions';
 
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });

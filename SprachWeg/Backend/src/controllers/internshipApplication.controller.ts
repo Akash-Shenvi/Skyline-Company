@@ -25,7 +25,7 @@ import {
 } from '../utils/payment.urls';
 import { buildDisplayPaymentPricing, buildPaymentPricingBreakdown } from '../utils/payment.pricing';
 
-const fileServeRoot = '/home/sovirtraining/file_serve';
+const fileServeRoot = '/home/skyline/file_serve';
 const adminDecisionStatuses = ['accepted', 'rejected'] as const;
 const internshipModes = ['remote', 'hybrid', 'onsite'] as const;
 const paymentAttemptStatuses = ['failed', 'cancelled'] as const;

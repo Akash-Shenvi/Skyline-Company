@@ -114,7 +114,7 @@ const updateCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         if (req.file) {
             // Delete old image if it exists
             if (course.image) {
-                const oldImagePath = path_1.default.join('/home/sovirtraining/file_serve', course.image);
+                const oldImagePath = path_1.default.join('/home/skyline/file_serve', course.image);
                 if (fs_1.default.existsSync(oldImagePath)) {
                     fs_1.default.unlinkSync(oldImagePath);
                 }
@@ -139,7 +139,7 @@ const deleteCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
         // Delete image file
         if (course.image) {
-            const imagePath = path_1.default.join('/home/sovirtraining/file_serve', course.image);
+            const imagePath = path_1.default.join('/home/skyline/file_serve', course.image);
             if (fs_1.default.existsSync(imagePath)) {
                 fs_1.default.unlinkSync(imagePath);
             }

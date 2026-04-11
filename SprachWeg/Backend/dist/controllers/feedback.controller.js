@@ -73,7 +73,7 @@ const markFeedbackAsSolved = (req, res) => __awaiter(void 0, void 0, void 0, fun
         // Delete the associated image file if it exists
         if (feedback.imageUrl) {
             const filename = feedback.imageUrl.replace('/materials/', '');
-            const uploadDir = '/home/sovirtraining/file_serve/materials';
+            const uploadDir = '/home/skyline/file_serve/materials';
             const filePath = path_1.default.join(uploadDir, filename);
             try {
                 if (fs_1.default.existsSync(filePath)) {

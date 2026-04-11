@@ -32,7 +32,7 @@ const roles_1 = require("../utils/roles");
 const googleService = new google_calendar_service_1.GoogleCalendarService();
 const DEFAULT_PAGE_LIMIT = 10;
 const MAX_PAGE_LIMIT = 50;
-const FILE_SERVE_DIR = '/home/sovirtraining/file_serve';
+const FILE_SERVE_DIR = '/home/skyline/file_serve';
 const getBatchDisplayLabel = (params) => ([String(params.courseTitle || '').trim(), String(params.batchName || '').trim()].filter(Boolean).join(' - ') || 'your batch');
 const getObjectIdString = (value) => {
     if (!value)

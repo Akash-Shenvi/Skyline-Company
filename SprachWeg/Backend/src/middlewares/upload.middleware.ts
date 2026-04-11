@@ -3,7 +3,7 @@ import path from 'path';
 import fs from 'fs';
 
 // Ensure uploads directory exists
-const uploadDir = '/home/sovirtraining/file_serve/materials';
+const uploadDir = '/home/skyline/file_serve/materials';
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }

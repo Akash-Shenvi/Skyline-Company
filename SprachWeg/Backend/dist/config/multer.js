@@ -8,7 +8,7 @@ const multer_1 = __importDefault(require("multer"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 // Ensure uploads directory exists
-const uploadDir = '/home/sovirtraining/file_serve/courses/';
+const uploadDir = '/home/skyline/file_serve/courses/';
 if (!fs_1.default.existsSync(uploadDir)) {
     fs_1.default.mkdirSync(uploadDir, { recursive: true });
 }

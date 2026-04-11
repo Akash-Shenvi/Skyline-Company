@@ -82,7 +82,7 @@ export const deleteFile = async (req: Request, res: Response) => {
         // The URL is like /api/uploads/admin_files/filename.ext
         const filename = fileLink.fileUrl.split('/').pop();
         if (filename) {
-            const uploadDir = '/home/sovirtraining/file_serve/admin_files';
+            const uploadDir = '/home/skyline/file_serve/admin_files';
             const filePath = path.join(uploadDir, filename);
             if (fs.existsSync(filePath)) {
                 fs.unlinkSync(filePath);

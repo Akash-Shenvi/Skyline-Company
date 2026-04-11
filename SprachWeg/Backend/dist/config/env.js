@@ -5,9 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.env = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config({ path: '/home/sovirtraining/.env' });
+dotenv_1.default.config({ path: '/home/skyline/.env' });
 exports.env = {
-    PORT: process.env.PORT || 5000,
+    PORT: process.env.PORT || 5002,
     MONGO_URI: process.env.MONGO_URI || 'mongodb://localhost:27017/sprachweg',
     NODE_ENV: process.env.NODE_ENV || 'development',
     JWT_SECRET: process.env.JWT_SECRET || 'secret123',

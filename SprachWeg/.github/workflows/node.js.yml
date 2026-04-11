@@ -25,8 +25,8 @@ jobs:
       - name: Restart backend with PM2
         working-directory: ./Backend
         run: |
-          pm2 delete backend-server-training || true
-          pm2 start dist/server.js --name backend-server-training
+          pm2 delete backend-server-skylinetraining || true
+          pm2 start dist/server.js --name backend-server-skylinetraining
           pm2 save
 
       # ---------------- Frontend Build ----------------

@@ -88,7 +88,7 @@ const deleteFile = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         // The URL is like /api/uploads/admin_files/filename.ext
         const filename = fileLink.fileUrl.split('/').pop();
         if (filename) {
-            const uploadDir = '/home/sovirtraining/file_serve/admin_files';
+            const uploadDir = '/home/skyline/file_serve/admin_files';
             const filePath = path_1.default.join(uploadDir, filename);
             if (fs_1.default.existsSync(filePath)) {
                 fs_1.default.unlinkSync(filePath);

@@ -383,7 +383,7 @@ npm run build
 
 | Variable | Description | Default |
 |---|---|---|
-| `PORT` | Server port | `5000` |
+| `PORT` | Server port | `5002` |
 | `MONGO_URI` | MongoDB connection string | `mongodb://localhost:27017/sprachweg` |
 | `NODE_ENV` | Environment mode | `development` |
 | `JWT_SECRET` | Secret key for JWT signing | — |
@@ -398,7 +398,7 @@ npm run build
 
 | Variable | Description | Default |
 |---|---|---|
-| `VITE_API_URL` | Backend API base URL | `http://localhost:5000` |
+| `VITE_API_URL` | Backend API base URL | `http://localhost:5002` |
 | `VITE_GOOGLE_CLIENT_ID` | Google OAuth client ID | — |
 
 </details>

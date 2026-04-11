@@ -16,7 +16,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const skillCourse_model_1 = __importDefault(require("./models/skillCourse.model"));
 const languageCourse_model_1 = __importDefault(require("./models/languageCourse.model"));
-dotenv_1.default.config({ path: '/home/sovirtraining/.env' });
+dotenv_1.default.config({ path: '/home/skyline/.env' });
 const languageCourses = [
     {
         title: 'German Language Training',

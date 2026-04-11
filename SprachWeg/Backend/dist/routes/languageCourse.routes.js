@@ -12,7 +12,7 @@ const router = express_1.default.Router();
 // Multer setup for image upload
 const storage = multer_1.default.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, '/home/sovirtraining/file_serve/');
+        cb(null, '/home/skyline/file_serve/');
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path_1.default.extname(file.originalname));

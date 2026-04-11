@@ -41,7 +41,7 @@ Before you begin, ensure you have the following installed:
 Create a `.env` file in the root of the `Backend` directory. You can use the example below as a template:
 
 ```env
-PORT=5000
+PORT=5002
 MONGO_URI=mongodb://localhost:27017/sprachweg
 NODE_ENV=development
 

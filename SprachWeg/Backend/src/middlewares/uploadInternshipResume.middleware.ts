@@ -2,7 +2,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
-const uploadDir = '/home/sovirtraining/file_serve/internship_resumes';
+const uploadDir = '/home/skyline/file_serve/internship_resumes';
 
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });

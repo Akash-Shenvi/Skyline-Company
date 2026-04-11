@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import SkillCourse from './models/skillCourse.model';
 import LanguageCourse from './models/languageCourse.model';
 
-dotenv.config({ path: '/home/sovirtraining/.env' });
+dotenv.config({ path: '/home/skyline/.env' });
 
 const languageCourses = [
     {

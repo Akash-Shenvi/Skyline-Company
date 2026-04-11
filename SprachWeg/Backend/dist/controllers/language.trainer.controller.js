@@ -223,12 +223,12 @@ const deleteMaterial = (req, res) => __awaiter(void 0, void 0, void 0, function*
         if (material.fileUrl) {
             try {
                 // material.fileUrl is like "/uploads/materials/filename.ext"
-                // We need to map this to "/home/sovirtraining/file_serve/materials/filename.ext"
+                // We need to map this to "/home/skyline/file_serve/materials/filename.ext"
                 // Remove "/uploads" prefix from the URL to get relative path inside file_serve
                 // "/uploads/materials/file.pdf" -> "/materials/file.pdf"
                 const relativePath = material.fileUrl.replace('/uploads', '');
                 // Construct absolute path
-                const filePath = path_1.default.join('/home/sovirtraining/file_serve', relativePath);
+                const filePath = path_1.default.join('/home/skyline/file_serve', relativePath);
                 if (fs_1.default.existsSync(filePath)) {
                     fs_1.default.unlinkSync(filePath);
                 }

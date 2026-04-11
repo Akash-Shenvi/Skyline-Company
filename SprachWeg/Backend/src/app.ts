@@ -54,7 +54,7 @@ import dashboardRoutes from './routes/dashboard.routes';
 import enrollmentRoutes from './routes/enrollment.routes';
 
 // Routes
-app.use('/api/uploads', express.static('/home/sovirtraining/file_serve')); // Serve uploaded files
+app.use('/api/uploads', express.static('/home/skyline/file_serve')); // Serve uploaded files
 app.use('/api/items', itemRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);

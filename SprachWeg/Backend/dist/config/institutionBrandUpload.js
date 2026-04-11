@@ -7,7 +7,7 @@ exports.institutionBrandUpload = void 0;
 const multer_1 = __importDefault(require("multer"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
-const uploadDir = '/home/sovirtraining/file_serve/institutions';
+const uploadDir = '/home/skyline/file_serve/institutions';
 if (!fs_1.default.existsSync(uploadDir)) {
     fs_1.default.mkdirSync(uploadDir, { recursive: true });
 }
