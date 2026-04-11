@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { motion, useReducedMotion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import api from '../lib/api';
 import { dashboardAPI, getAssetUrl } from '../lib/api';
 import {
     BookOpen,
-    Briefcase,
     User,
     Edit,
     Mail,

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import {
     ArrowRight,
@@ -21,7 +20,6 @@ import type { LucideIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
-import { internshipCatalogAPI } from '../lib/api';
 import {
     formatInternshipPrice,
     getInternshipBenefits,

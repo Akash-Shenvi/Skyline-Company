@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, Settings } from 'lucide-react';
 import Button from '../ui/Button';
 import { useAuth } from '../../context/AuthContext';
-import { internshipCatalogAPI } from '../../lib/api';
 import type { InternshipListing } from '../../types/internship';
 import { getDashboardPathForRole } from '../../lib/authRouting';
 import NotificationBell from '../notifications/NotificationBell';
