@@ -1,0 +1,21 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const student_controller_1 = require("../controllers/student.controller");
+const auth_middleware_1 = require("../middlewares/auth.middleware");
+const router = express_1.default.Router();
+router.get('/enrollments/pending', auth_middleware_1.protect, auth_middleware_1.isAdmin, student_controller_1.getPendingAdminEnrollments);
+router.get('/active-classes', auth_middleware_1.protect, auth_middleware_1.isAdmin, student_controller_1.getActiveClasses);
+router.get('/active-classes/:id/students', auth_middleware_1.protect, auth_middleware_1.isAdmin, student_controller_1.getActiveClassStudents);
+router.put('/active-classes/:id/assign-trainer', auth_middleware_1.protect, auth_middleware_1.isAdmin, student_controller_1.assignActiveClassTrainer);
+router.delete('/active-classes/:id/students/:studentId', auth_middleware_1.protect, auth_middleware_1.isAdmin, student_controller_1.removeStudentFromActiveClass);
+router.delete('/active-classes/:id', auth_middleware_1.protect, auth_middleware_1.isAdmin, student_controller_1.deleteActiveClass);
+router.get('/users', auth_middleware_1.protect, auth_middleware_1.isAdmin, student_controller_1.getStudents);
+router.get('/students', auth_middleware_1.protect, auth_middleware_1.isAdmin, student_controller_1.getStudents);
+router.delete('/users/:id', auth_middleware_1.protect, auth_middleware_1.isAdmin, student_controller_1.deleteUser);
+router.get('/users/:id/details', auth_middleware_1.protect, auth_middleware_1.isAdmin, student_controller_1.getStudentDetails);
+router.get('/students/:id/details', auth_middleware_1.protect, auth_middleware_1.isAdmin, student_controller_1.getStudentDetails);
+exports.default = router;

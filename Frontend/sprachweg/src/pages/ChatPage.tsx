@@ -1,0 +1,439 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { useLocation, useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Send, ArrowLeft, MessageCircle, WifiOff } from 'lucide-react';
+import { io, Socket } from 'socket.io-client';
+import Header from '../components/layout/Header';
+import { useAuth } from '../context/AuthContext';
+import { useNotifications } from '../context/NotificationContext';
+import { API_BASE_URL, chatAPI, getAssetUrl } from '../lib/api';
+import { getDashboardPathForRole } from '../lib/authRouting';
+import { isLearnerRole } from '../lib/roles';
+
+// ============================================================================
+// TYPES
+// ============================================================================
+
+interface ChatUser { _id: string; name: string; avatar?: string; }
+
+interface ChatMessage {
+    _id: string;
+    studentId: string;
+    trainerId: string;
+    senderId: ChatUser;
+    content: string;
+    createdAt: string;
+}
+
+interface JoinRoomAck {
+    ok: boolean;
+    message?: string;
+    room?: string;
+}
+
+interface SendMessageAck {
+    ok: boolean;
+    message?: string;
+    chatMessage?: ChatMessage;
+}
+
+// ============================================================================
+// HELPERS
+// ============================================================================
+
+const formatTime = (dateStr: string) => {
+    const d = new Date(dateStr);
+    return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+};
+
+const formatDateDivider = (dateStr: string) => {
+    const d = new Date(dateStr);
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    if (d.toDateString() === today.toDateString()) return 'Today';
+    if (d.toDateString() === yesterday.toDateString()) return 'Yesterday';
+    return d.toLocaleDateString([], { weekday: 'long', month: 'short', day: 'numeric' });
+};
+
+const shouldShowDateDivider = (current: ChatMessage, previous?: ChatMessage) => {
+    if (!previous) return true;
+    return new Date(current.createdAt).toDateString() !== new Date(previous.createdAt).toDateString();
+};
+
+const appendUniqueChatMessage = (currentMessages: ChatMessage[], nextMessage?: ChatMessage | null) => {
+    if (!nextMessage) return currentMessages;
+    return currentMessages.some((message) => message._id === nextMessage._id)
+        ? currentMessages
+        : [...currentMessages, nextMessage];
+};
+
+// ============================================================================
+// AVATAR COMPONENT
+// ============================================================================
+
+const Avatar: React.FC<{ user: { name: string; avatar?: string }; size?: string }> = ({ user, size = 'w-8 h-8' }) => (
+    <div className={`${size} rounded-full overflow-hidden flex-shrink-0 bg-brand-gold/20 border border-brand-gold/30 flex items-center justify-center text-brand-gold font-bold text-sm`}>
+        {user.avatar ? (
+            <img src={getAssetUrl(user.avatar)} alt={user.name} className="w-full h-full object-cover" />
+        ) : (
+            user.name.charAt(0).toUpperCase()
+        )}
+    </div>
+);
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+
+const ChatPage: React.FC = () => {
+    const { studentId } = useParams<{ studentId: string }>();
+    const [searchParams] = useSearchParams();
+    const { user } = useAuth();
+    const { markConversationAsRead, registerOpenConversation } = useNotifications();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const [messages, setMessages] = useState<ChatMessage[]>([]);
+    const [otherPartyName, setOtherPartyName] = useState<string>('');
+    const [trainerId, setTrainerId] = useState<string | null>(null);
+    const [input, setInput] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [connected, setConnected] = useState(false);
+    const [socketError, setSocketError] = useState<string | null>(null);
+
+    const socketRef = useRef<Socket | null>(null);
+    const bottomRef = useRef<HTMLDivElement | null>(null);
+    const inputRef = useRef<HTMLTextAreaElement | null>(null);
+
+    // Support both id and _id from AuthContext
+    const myId = (user as any)?._id || (user as any)?.id;
+    const isStudent = isLearnerRole(user?.role);
+    const requestedTrainerId = searchParams.get('trainerId');
+    const currentPath = `${location.pathname}${location.search}`;
+    const stateFrom = typeof location.state === 'object' && location.state && 'from' in location.state
+        ? String((location.state as { from?: unknown }).from || '').trim()
+        : '';
+    const backTarget = stateFrom && stateFrom !== currentPath
+        ? stateFrom
+        : getDashboardPathForRole(user?.role);
+
+    // ── Load chat history ────────────────────────────────────────────────────
+    useEffect(() => {
+        if (!studentId) return;
+
+        const loadHistory = async () => {
+            try {
+                setLoading(true);
+                setError(null);
+                setSocketError(null);
+                setConnected(false);
+                const response = await chatAPI.getHistory(studentId, requestedTrainerId);
+                setMessages(response.messages || []);
+                setTrainerId(response.trainerId);
+
+                // Determine who the "other party" is
+                if (isStudent) {
+                    setOtherPartyName(response.trainerName || 'Trainer');
+                } else {
+                    setOtherPartyName(response.studentName || 'Student');
+                }
+            } catch (err: any) {
+                setMessages([]);
+                setTrainerId(null);
+                setError(err.response?.data?.message || 'Failed to load chat. Make sure a trainer is assigned.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadHistory();
+    }, [studentId, isStudent, requestedTrainerId]);
+
+    useEffect(() => {
+        if (!studentId || !trainerId) {
+            registerOpenConversation(null);
+            return;
+        }
+
+        registerOpenConversation({ studentId, trainerId });
+
+        return () => {
+            registerOpenConversation(null);
+        };
+    }, [registerOpenConversation, studentId, trainerId]);
+
+    useEffect(() => {
+        if (!studentId || !trainerId) {
+            return;
+        }
+
+        void markConversationAsRead({ studentId, trainerId });
+    }, [markConversationAsRead, studentId, trainerId]);
+
+    useEffect(() => {
+        if (!studentId || !trainerId) {
+            return;
+        }
+
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'visible') {
+                void markConversationAsRead({ studentId, trainerId });
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, [markConversationAsRead, studentId, trainerId]);
+
+    // ── Set up Socket.IO once trainerId is known ─────────────────────────────
+    useEffect(() => {
+        if (!studentId || !myId || !trainerId) return;
+
+        const token = localStorage.getItem('token');
+        if (!token) {
+            setConnected(false);
+            setSocketError('Not authenticated');
+            return;
+        }
+
+        // Use polling-first so it always works through nginx proxies.
+        // It will automatically upgrade to WebSocket if nginx allows it.
+        const socket = io(API_BASE_URL, {
+            auth: { token },
+            path: '/api/socket.io',
+            transports: ['polling', 'websocket'],
+        });
+
+        socketRef.current = socket;
+
+        socket.on('connect', () => {
+            setConnected(false);
+            setSocketError(null);
+            socket.emit('joinRoom', { studentId, trainerId }, (response?: JoinRoomAck) => {
+                if (!response?.ok) {
+                    setConnected(false);
+                    setSocketError(response?.message || 'Failed to join chat room.');
+                    return;
+                }
+
+                setConnected(true);
+                setSocketError(null);
+            });
+        });
+
+        socket.on('disconnect', () => {
+            setConnected(false);
+        });
+
+        socket.on('connect_error', (err) => {
+            console.error('Socket.IO connect error:', err.message);
+            setSocketError(`Connection error: ${err.message}`);
+            setConnected(false);
+        });
+
+        socket.on('newMessage', (msg: ChatMessage) => {
+            setMessages((prev) => appendUniqueChatMessage(prev, msg));
+
+            if (msg.senderId._id !== myId && document.visibilityState === 'visible') {
+                void markConversationAsRead({ studentId, trainerId });
+            }
+        });
+
+        socket.on('error', (err: { message: string }) => {
+            console.error('Socket room error:', err.message);
+            setSocketError(err.message || 'Chat connection error.');
+            if (err.message?.toLowerCase().includes('not authorized')) {
+                setConnected(false);
+            }
+        });
+
+        return () => {
+            socket.disconnect();
+            socketRef.current = null;
+        };
+    }, [markConversationAsRead, myId, studentId, trainerId]);
+
+    // ── Auto-scroll to bottom ────────────────────────────────────────────────
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages]);
+
+    // ── Send message ─────────────────────────────────────────────────────────
+    const handleSend = () => {
+        const trimmedInput = input.trim();
+        if (!trimmedInput || !socketRef.current || !trainerId || !studentId || !connected) return;
+
+        socketRef.current.emit(
+            'sendMessage',
+            {
+                studentId,
+                trainerId,
+                content: trimmedInput,
+            },
+            (response?: SendMessageAck) => {
+                if (!response?.ok) {
+                    setSocketError(response?.message || 'Failed to send message.');
+                    return;
+                }
+
+                setSocketError(null);
+                setMessages((prev) => appendUniqueChatMessage(prev, response.chatMessage));
+                setInput('');
+                inputRef.current?.focus();
+            }
+        );
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSend();
+        }
+    };
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // RENDER
+    // ─────────────────────────────────────────────────────────────────────────
+
+    return (
+        <div className="flex flex-col h-screen bg-brand-off-white">
+            <Header />
+
+            <div className="flex-1 flex flex-col max-w-3xl w-full mx-auto overflow-hidden">
+                {/* Chat Header */}
+                <div className="px-4 py-3 bg-white border-b border-brand-surface flex items-center gap-3 shadow-sm">
+                    <button
+                        onClick={() => navigate(backTarget)}
+                        className="p-2 rounded-full hover:bg-brand-surface text-brand-olive transition-colors"
+                    >
+                        <ArrowLeft className="w-5 h-5" />
+                    </button>
+
+                    <div className="w-10 h-10 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold font-bold text-lg border border-brand-gold/30">
+                        {otherPartyName.charAt(0).toUpperCase() || <MessageCircle className="w-5 h-5" />}
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                        <h2 className="font-bold text-brand-black truncate">
+                            {otherPartyName || (isStudent ? 'Trainer' : 'Student')}
+                        </h2>
+                        <div className="flex items-center gap-1.5">
+                            <div className={`w-2 h-2 rounded-full ${connected ? 'bg-brand-olive/50' : 'bg-brand-olive-light'}`} />
+                            <p className={`text-xs font-medium ${connected ? 'text-brand-olive' : 'text-brand-olive-light'}`}>
+                                {connected ? 'Connected' : (loading ? 'Loading...' : 'Offline')}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Socket error banner */}
+                {socketError && (
+                    <div className="px-4 py-2 bg-brand-red/5 border-b border-brand-red/20 flex items-center gap-2 text-brand-red text-sm">
+                        <WifiOff className="w-4 h-4 flex-shrink-0" />
+                        <span>{socketError}. Real-time updates may not work.</span>
+                    </div>
+                )}
+
+                {/* Messages Area */}
+                <div className="flex-1 overflow-y-auto px-4 py-4 space-y-1">
+                    {loading ? (
+                        <div className="flex items-center justify-center h-full">
+                            <div className="w-8 h-8 border-2 border-brand-gold border-t-transparent rounded-full animate-spin" />
+                        </div>
+                    ) : error ? (
+                        <div className="flex items-center justify-center h-full">
+                            <div className="text-center">
+                                <p className="text-brand-red font-medium">{error}</p>
+                            </div>
+                        </div>
+                    ) : messages.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center h-full text-center gap-3">
+                            <div className="w-16 h-16 rounded-full bg-brand-gold/20 flex items-center justify-center">
+                                <MessageCircle className="w-8 h-8 text-brand-gold" />
+                            </div>
+                            <p className="text-brand-olive font-medium">No messages yet</p>
+                            <p className="text-sm text-brand-olive-light">
+                                {connected ? 'Send a message to start the conversation!' : 'Connecting to chat...'}
+                            </p>
+                        </div>
+                    ) : (
+                        messages.map((msg, idx) => {
+                            const isMine = msg.senderId._id === myId;
+                            const prevMsg = idx > 0 ? messages[idx - 1] : undefined;
+                            const showDivider = shouldShowDateDivider(msg, prevMsg);
+
+                            return (
+                                <React.Fragment key={msg._id || idx}>
+                                    {showDivider && (
+                                        <div className="flex items-center gap-3 my-4">
+                                            <div className="flex-1 h-px bg-brand-surface" />
+                                            <span className="text-xs font-medium text-brand-olive-light px-2">
+                                                {formatDateDivider(msg.createdAt)}
+                                            </span>
+                                            <div className="flex-1 h-px bg-brand-surface" />
+                                        </div>
+                                    )}
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 5 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        className={`flex items-end gap-2 ${isMine ? 'flex-row-reverse' : 'flex-row'}`}
+                                    >
+                                        {!isMine && (
+                                            <Avatar user={msg.senderId} size="w-7 h-7" />
+                                        )}
+                                        <div className={`max-w-[72%] ${isMine ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
+                                            <div className={`px-4 py-2.5 rounded-2xl text-sm leading-relaxed break-words ${
+                                                isMine
+                                                    ? 'bg-brand-gold text-brand-black rounded-tr-sm font-medium'
+                                                    : 'bg-white text-brand-black border border-brand-surface rounded-tl-sm'
+                                            }`}>
+                                                {msg.content}
+                                            </div>
+                                            <span className="text-xs text-brand-olive-light px-1">
+                                                {formatTime(msg.createdAt)}
+                                            </span>
+                                        </div>
+                                    </motion.div>
+                                </React.Fragment>
+                            );
+                        })
+                    )}
+                    <div ref={bottomRef} />
+                </div>
+
+                {/* Input Area */}
+                <div className="px-4 py-3 bg-white border-t border-brand-surface">
+                    <div className="flex items-end gap-3">
+                        <textarea
+                            ref={inputRef}
+                            value={input}
+                            onChange={e => setInput(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                            placeholder={connected ? 'Type a message... (Enter to send)' : 'Connecting...'}
+                            disabled={!connected}
+                            rows={1}
+                            className="flex-1 resize-none px-4 py-2.5 rounded-xl border border-brand-surface bg-brand-off-white text-brand-black placeholder-brand-olive-light focus:outline-none focus:ring-2 focus:ring-brand-gold/50 focus:border-brand-red transition-colors text-sm max-h-32 overflow-y-auto disabled:opacity-50 disabled:cursor-not-allowed"
+                            style={{ minHeight: '42px' }}
+                        />
+                        <button
+                            onClick={handleSend}
+                            disabled={!input.trim() || !connected}
+                            className="p-2.5 rounded-xl bg-brand-gold text-brand-black hover:bg-brand-gold-hover disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex-shrink-0 shadow-sm"
+                        >
+                            <Send className="w-5 h-5" />
+                        </button>
+                    </div>
+                    <p className="text-xs text-brand-olive-light mt-2 text-center">
+                        Messages are automatically deleted after 7 days
+                    </p>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default ChatPage;

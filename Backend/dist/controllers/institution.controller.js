@@ -1,0 +1,617 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteResolvedInstitutionRequest = exports.rejectInstitutionRequest = exports.approveInstitutionRequest = exports.getAdminInstitutionRequests = exports.createInstitutionSubmission = exports.getInstitutionSubmissions = exports.getInstitutionDashboard = void 0;
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const mongoose_1 = __importDefault(require("mongoose"));
+const class_transformer_1 = require("class-transformer");
+const class_validator_1 = require("class-validator");
+const institution_dto_1 = require("../dtos/institution.dto");
+const languageCourse_model_1 = __importDefault(require("../models/languageCourse.model"));
+const institutionEnrollmentRequest_model_1 = __importDefault(require("../models/institutionEnrollmentRequest.model"));
+const user_model_1 = __importDefault(require("../models/user.model"));
+const language_batch_model_1 = __importDefault(require("../models/language.batch.model"));
+const language_enrollment_model_1 = __importDefault(require("../models/language.enrollment.model"));
+const email_service_1 = require("../utils/email.service");
+const notification_service_1 = require("../services/notification.service");
+const languageBatchScope_1 = require("../utils/languageBatchScope");
+const emailService = new email_service_1.EmailService();
+const MAX_INSTITUTION_STUDENTS_PER_REQUEST = 25;
+const STUDENT_WELCOME_EMAIL_BATCH_SIZE = 5;
+const normalizeEmail = (value) => String(value || '').trim().toLowerCase();
+const normalizeText = (value) => String(value || '').trim();
+const getGermanCourse = () => languageCourse_model_1.default.findOne({
+    title: { $regex: 'german', $options: 'i' },
+});
+const sanitizeInstitutionRequest = (request) => ({
+    _id: String(request._id),
+    institutionId: request.institutionId && typeof request.institutionId === 'object'
+        ? {
+            _id: String(request.institutionId._id),
+            name: request.institutionId.name,
+            email: request.institutionId.email,
+            phoneNumber: request.institutionId.phoneNumber,
+            institutionName: request.institutionId.institutionName,
+            institutionLogo: request.institutionId.institutionLogo,
+            institutionTagline: request.institutionId.institutionTagline,
+            contactPersonName: request.institutionId.contactPersonName,
+            city: request.institutionId.city,
+            state: request.institutionId.state,
+            address: request.institutionId.address,
+        }
+        : String(request.institutionId),
+    language: request.language,
+    courseTitle: request.courseTitle,
+    levelName: request.levelName,
+    status: request.status,
+    approvedBatchId: request.approvedBatchId ? String(request.approvedBatchId) : null,
+    adminDecisionAt: request.adminDecisionAt,
+    createdAt: request.createdAt,
+    updatedAt: request.updatedAt,
+    rejectionReason: request.rejectionReason || null,
+    studentCount: Array.isArray(request.students) ? request.students.length : 0,
+    students: Array.isArray(request.students)
+        ? request.students.map((student) => ({
+            name: student.name,
+            email: student.email,
+            createdUserId: student.createdUserId ? String(student.createdUserId) : null,
+        }))
+        : [],
+});
+const validateGermanSelection = (courseTitle, levelName) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const germanCourse = yield getGermanCourse();
+    if (!germanCourse) {
+        return { error: 'German course is not configured in the backend catalog.', germanCourse: null };
+    }
+    if (normalizeText(germanCourse.title) !== normalizeText(courseTitle)) {
+        return { error: 'Selected German course is invalid.', germanCourse: null };
+    }
+    const matchingLevel = (_a = germanCourse.levels) === null || _a === void 0 ? void 0 : _a.find((level) => normalizeText(level.name) === normalizeText(levelName));
+    if (!matchingLevel) {
+        return { error: 'Selected German level is invalid.', germanCourse: null };
+    }
+    return { error: null, germanCourse };
+});
+const findDuplicateEmails = (emails) => {
+    const seen = new Set();
+    const duplicates = new Set();
+    for (const email of emails) {
+        if (seen.has(email)) {
+            duplicates.add(email);
+        }
+        seen.add(email);
+    }
+    return [...duplicates];
+};
+const chunkItems = (items, chunkSize) => {
+    const chunks = [];
+    for (let index = 0; index < items.length; index += chunkSize) {
+        chunks.push(items.slice(index, index + chunkSize));
+    }
+    return chunks;
+};
+const sendInstitutionStudentWelcomeEmailsInBatches = (students) => __awaiter(void 0, void 0, void 0, function* () {
+    const chunks = chunkItems(students, STUDENT_WELCOME_EMAIL_BATCH_SIZE);
+    for (const chunk of chunks) {
+        yield Promise.all(chunk.map((student) => emailService.sendInstitutionStudentWelcomeEmail({
+            to: student.email,
+            studentName: student.name,
+            courseTitle: student.courseTitle,
+            levelName: student.levelName,
+            institutionName: student.institutionName || undefined,
+        })));
+    }
+});
+const isTransactionUnsupportedError = (error) => {
+    const message = String((error === null || error === void 0 ? void 0 : error.message) || '');
+    return message.includes('Transaction numbers are only allowed on a replica set member or mongos');
+};
+const rollbackNonTransactionalApproval = (params) => __awaiter(void 0, void 0, void 0, function* () {
+    if (params.createdEnrollmentIds.length > 0) {
+        yield language_enrollment_model_1.default.deleteMany({
+            _id: { $in: params.createdEnrollmentIds },
+        });
+    }
+    if (params.createdUserIds.length > 0) {
+        yield user_model_1.default.deleteMany({
+            _id: { $in: params.createdUserIds },
+        });
+    }
+    if (params.batchId) {
+        yield language_batch_model_1.default.findByIdAndUpdate(params.batchId, { $set: { students: params.originalBatchStudentIds } });
+    }
+});
+const processInstitutionApproval = (params) => __awaiter(void 0, void 0, void 0, function* () {
+    const { requestId, adminUserId, session } = params;
+    const approvalArtifacts = {
+        createdStudentsForEmail: [],
+        createdStudentUserIds: [],
+    };
+    const requestQuery = institutionEnrollmentRequest_model_1.default.findById(requestId);
+    if (session) {
+        requestQuery.session(session);
+    }
+    const request = yield requestQuery;
+    if (!request || request.status !== 'PENDING') {
+        throw new Error('Invalid institution request');
+    }
+    if (request.students.length > MAX_INSTITUTION_STUDENTS_PER_REQUEST) {
+        throw new Error(`Institution requests are limited to ${MAX_INSTITUTION_STUDENTS_PER_REQUEST} students at a time.`);
+    }
+    const validation = yield validateGermanSelection(request.courseTitle, request.levelName);
+    if (validation.error) {
+        throw new Error(validation.error);
+    }
+    const normalizedEmails = request.students.map((student) => normalizeEmail(student.email));
+    const duplicateEmails = findDuplicateEmails(normalizedEmails);
+    if (duplicateEmails.length > 0) {
+        throw new Error('Duplicate student emails are not allowed in the same request.');
+    }
+    const existingUsersQuery = user_model_1.default.find({
+        email: { $in: normalizedEmails },
+    });
+    if (session) {
+        existingUsersQuery.session(session);
+    }
+    const existingUsers = yield existingUsersQuery;
+    if (existingUsers.length > 0) {
+        throw new Error('One or more student emails are already registered.');
+    }
+    const institutionQuery = user_model_1.default.findById(request.institutionId);
+    if (session) {
+        institutionQuery.session(session);
+    }
+    const institution = yield institutionQuery;
+    if (!institution) {
+        throw new Error('Institution account not found.');
+    }
+    const institutionScope = (0, languageBatchScope_1.getLanguageInstitutionScope)({
+        institutionId: institution._id,
+        institutionName: institution.institutionName || institution.name,
+    });
+    const batch = yield (0, languageBatchScope_1.findOrCreateLanguageBatch)({
+        courseTitle: request.courseTitle,
+        levelName: request.levelName,
+        scope: institutionScope,
+        session,
+    });
+    const originalBatchStudentIds = [...batch.students];
+    const createdUserIds = [];
+    const createdEnrollmentIds = [];
+    try {
+        for (let index = 0; index < request.students.length; index += 1) {
+            const studentEntry = request.students[index];
+            const studentUser = new user_model_1.default({
+                name: normalizeText(studentEntry.name),
+                email: normalizeEmail(studentEntry.email),
+                password: studentEntry.passwordHash,
+                role: 'institution_student',
+                isVerified: true,
+                institutionId: institution._id,
+                institutionName: institution.institutionName || institution.name,
+                institutionLogo: institution.institutionLogo || undefined,
+                institutionTagline: institution.institutionTagline || undefined,
+            });
+            if (session) {
+                yield studentUser.save({ session });
+            }
+            else {
+                yield studentUser.save();
+            }
+            createdUserIds.push(studentUser._id);
+            approvalArtifacts.createdStudentUserIds.push(studentUser._id);
+            const createdEnrollments = yield language_enrollment_model_1.default.create([{
+                    userId: studentUser._id,
+                    courseTitle: request.courseTitle,
+                    name: request.levelName,
+                    institutionId: institutionScope.institutionId,
+                    institutionName: institutionScope.institutionName,
+                    status: 'APPROVED',
+                    batchId: batch._id,
+                }], session ? { session } : undefined);
+            createdEnrollmentIds.push(createdEnrollments[0]._id);
+            if (!batch.students.some((studentId) => studentId.equals(studentUser._id))) {
+                batch.students.push(studentUser._id);
+            }
+            request.students[index].createdUserId = studentUser._id;
+            approvalArtifacts.createdStudentsForEmail.push({
+                name: studentUser.name,
+                email: studentUser.email,
+                courseTitle: request.courseTitle,
+                levelName: request.levelName,
+                institutionName: institutionScope.institutionName,
+            });
+        }
+        (0, languageBatchScope_1.applyLanguageInstitutionScope)(batch, institutionScope);
+        request.status = 'APPROVED';
+        request.adminDecisionBy = adminUserId;
+        request.adminDecisionAt = new Date();
+        request.rejectionReason = null;
+        request.approvedBatchId = batch._id;
+        approvalArtifacts.approvedBatchId = batch._id;
+        approvalArtifacts.approvedCourseTitle = request.courseTitle;
+        approvalArtifacts.approvedLevelName = request.levelName;
+        if (session) {
+            yield batch.save({ session });
+            yield request.save({ session });
+        }
+        else {
+            yield batch.save();
+            yield request.save();
+        }
+        approvalArtifacts.institutionEmailPayload = {
+            email: institution.email,
+            institutionName: institution.institutionName || institution.name,
+            courseTitle: request.courseTitle,
+            levelName: request.levelName,
+            studentCount: request.students.length,
+        };
+        return approvalArtifacts;
+    }
+    catch (error) {
+        if (!session) {
+            yield rollbackNonTransactionalApproval({
+                createdEnrollmentIds,
+                createdUserIds,
+                batchId: batch._id,
+                originalBatchStudentIds,
+            });
+        }
+        throw error;
+    }
+});
+const getInstitutionDashboard = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    try {
+        const institutionId = String(((_a = req.user) === null || _a === void 0 ? void 0 : _a._id) || '');
+        const [institution, germanCourse, submissions] = yield Promise.all([
+            user_model_1.default.findById(institutionId).select('name email role phoneNumber institutionName institutionLogo institutionTagline contactPersonName city state address'),
+            getGermanCourse(),
+            institutionEnrollmentRequest_model_1.default.find({ institutionId })
+                .sort({ createdAt: -1 })
+                .limit(10),
+        ]);
+        if (!institution) {
+            return res.status(404).json({ message: 'Institution account not found' });
+        }
+        return res.status(200).json({
+            institution: {
+                _id: String(institution._id),
+                name: institution.name,
+                email: institution.email,
+                role: institution.role,
+                phoneNumber: institution.phoneNumber,
+                institutionName: institution.institutionName,
+                institutionLogo: institution.institutionLogo,
+                institutionTagline: institution.institutionTagline,
+                contactPersonName: institution.contactPersonName,
+                city: institution.city,
+                state: institution.state,
+                address: institution.address,
+            },
+            language: 'German',
+            course: germanCourse
+                ? {
+                    _id: String(germanCourse._id),
+                    title: germanCourse.title,
+                    levels: germanCourse.levels.map((level) => ({
+                        name: level.name,
+                        duration: level.duration,
+                        price: level.price,
+                        outcome: level.outcome,
+                    })),
+                }
+                : null,
+            submissions: submissions.map((submission) => sanitizeInstitutionRequest(submission.toObject())),
+        });
+    }
+    catch (error) {
+        console.error('Failed to load institution dashboard:', error);
+        return res.status(500).json({ message: 'Failed to load institution dashboard' });
+    }
+});
+exports.getInstitutionDashboard = getInstitutionDashboard;
+const getInstitutionSubmissions = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    try {
+        const institutionId = String(((_a = req.user) === null || _a === void 0 ? void 0 : _a._id) || '');
+        const submissions = yield institutionEnrollmentRequest_model_1.default.find({ institutionId })
+            .sort({ createdAt: -1 });
+        return res.status(200).json({
+            submissions: submissions.map((submission) => sanitizeInstitutionRequest(submission.toObject())),
+        });
+    }
+    catch (error) {
+        console.error('Failed to fetch institution submissions:', error);
+        return res.status(500).json({ message: 'Failed to fetch institution submissions' });
+    }
+});
+exports.getInstitutionSubmissions = getInstitutionSubmissions;
+const createInstitutionSubmission = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const createDto = (0, class_transformer_1.plainToClass)(institution_dto_1.CreateInstitutionSubmissionDto, req.body);
+    const errors = yield (0, class_validator_1.validate)(createDto);
+    if (errors.length > 0)
+        return res.status(400).json({ errors });
+    const institutionId = String(((_a = req.user) === null || _a === void 0 ? void 0 : _a._id) || '');
+    const normalizedCourseTitle = normalizeText(createDto.courseTitle);
+    const normalizedLevelName = normalizeText(createDto.levelName);
+    const normalizedStudents = createDto.students.map((student) => ({
+        name: normalizeText(student.name),
+        email: normalizeEmail(student.email),
+        password: student.password,
+    }));
+    const duplicateEmails = findDuplicateEmails(normalizedStudents.map((student) => student.email));
+    if (duplicateEmails.length > 0) {
+        return res.status(400).json({
+            message: 'Duplicate student emails are not allowed in the same request.',
+            duplicateEmails,
+        });
+    }
+    if (normalizedStudents.length > MAX_INSTITUTION_STUDENTS_PER_REQUEST) {
+        return res.status(400).json({
+            message: `Institution requests are limited to ${MAX_INSTITUTION_STUDENTS_PER_REQUEST} students at a time.`,
+        });
+    }
+    try {
+        const [{ error }, existingUsers] = yield Promise.all([
+            validateGermanSelection(normalizedCourseTitle, normalizedLevelName),
+            user_model_1.default.find({
+                email: { $in: normalizedStudents.map((student) => student.email) },
+            }).select('email'),
+        ]);
+        if (error) {
+            return res.status(400).json({ message: error });
+        }
+        if (existingUsers.length > 0) {
+            return res.status(400).json({
+                message: 'Some student emails are already registered.',
+                existingEmails: existingUsers.map((user) => user.email),
+            });
+        }
+        const students = yield Promise.all(normalizedStudents.map((student) => __awaiter(void 0, void 0, void 0, function* () {
+            return ({
+                name: student.name,
+                email: student.email,
+                passwordHash: yield bcryptjs_1.default.hash(student.password, 10),
+            });
+        })));
+        const submission = yield institutionEnrollmentRequest_model_1.default.create({
+            institutionId,
+            language: 'German',
+            courseTitle: normalizedCourseTitle,
+            levelName: normalizedLevelName,
+            students,
+        });
+        return res.status(201).json({
+            message: 'Institution enrollment request submitted for admin review.',
+            submission: sanitizeInstitutionRequest(submission.toObject()),
+        });
+    }
+    catch (error) {
+        console.error('Failed to create institution submission:', error);
+        return res.status(500).json({ message: 'Failed to create institution submission' });
+    }
+});
+exports.createInstitutionSubmission = createInstitutionSubmission;
+const getAdminInstitutionRequests = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const rawPage = Math.max(1, parseInt(String(req.query.page || ''), 10) || 1);
+        const limit = Math.min(50, Math.max(1, parseInt(String(req.query.limit || ''), 10) || 10));
+        const status = normalizeText(String(req.query.status || ''));
+        const search = normalizeText(String(req.query.search || ''));
+        const searchFilter = {};
+        const filter = {};
+        if (status && status !== 'All') {
+            filter.status = status.toUpperCase();
+        }
+        let matchingInstitutionIds = [];
+        if (search) {
+            const matchingInstitutions = yield user_model_1.default.find({
+                role: 'institution',
+                $or: [
+                    { name: { $regex: search, $options: 'i' } },
+                    { email: { $regex: search, $options: 'i' } },
+                    { institutionName: { $regex: search, $options: 'i' } },
+                    { contactPersonName: { $regex: search, $options: 'i' } },
+                    { phoneNumber: { $regex: search, $options: 'i' } },
+                ],
+            }).select('_id');
+            matchingInstitutionIds = matchingInstitutions.map((institution) => institution._id);
+            searchFilter.$or = [
+                { courseTitle: { $regex: search, $options: 'i' } },
+                { levelName: { $regex: search, $options: 'i' } },
+                { institutionId: { $in: matchingInstitutionIds } },
+                { 'students.name': { $regex: search, $options: 'i' } },
+                { 'students.email': { $regex: search, $options: 'i' } },
+            ];
+        }
+        const queryFilter = Object.assign(Object.assign({}, searchFilter), filter);
+        const [totalFilteredRequests, pendingCount, approvedCount, rejectedCount,] = yield Promise.all([
+            institutionEnrollmentRequest_model_1.default.countDocuments(queryFilter),
+            institutionEnrollmentRequest_model_1.default.countDocuments(Object.assign(Object.assign({}, searchFilter), { status: 'PENDING' })),
+            institutionEnrollmentRequest_model_1.default.countDocuments(Object.assign(Object.assign({}, searchFilter), { status: 'APPROVED' })),
+            institutionEnrollmentRequest_model_1.default.countDocuments(Object.assign(Object.assign({}, searchFilter), { status: 'REJECTED' })),
+        ]);
+        const totalPages = Math.max(1, Math.ceil(totalFilteredRequests / limit));
+        const currentPage = Math.min(rawPage, totalPages);
+        const skip = (currentPage - 1) * limit;
+        const requests = yield institutionEnrollmentRequest_model_1.default.find(queryFilter)
+            .populate('institutionId', 'name email phoneNumber institutionName institutionLogo institutionTagline contactPersonName city state address')
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+        const availableStatuses = ['All', 'PENDING', 'APPROVED', 'REJECTED'];
+        return res.status(200).json({
+            requests: requests.map((request) => sanitizeInstitutionRequest(request.toObject())),
+            availableStatuses,
+            summary: {
+                pending: pendingCount,
+                approved: approvedCount,
+                rejected: rejectedCount,
+                total: pendingCount + approvedCount + rejectedCount,
+            },
+            pagination: {
+                currentPage,
+                totalPages,
+                totalRequests: totalFilteredRequests,
+                limit,
+                hasPreviousPage: currentPage > 1,
+                hasNextPage: currentPage < totalPages,
+            },
+        });
+    }
+    catch (error) {
+        console.error('Failed to fetch institution admin requests:', error);
+        return res.status(500).json({ message: 'Failed to fetch institution admin requests' });
+    }
+});
+exports.getAdminInstitutionRequests = getAdminInstitutionRequests;
+const approveInstitutionRequest = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const requestId = String(req.params.id || '').trim();
+    if (!requestId) {
+        return res.status(400).json({ message: 'Institution request id is required' });
+    }
+    const session = yield mongoose_1.default.startSession();
+    try {
+        let approvalArtifacts = null;
+        try {
+            yield session.withTransaction(() => __awaiter(void 0, void 0, void 0, function* () {
+                var _a;
+                approvalArtifacts = yield processInstitutionApproval({
+                    requestId,
+                    adminUserId: ((_a = req.user) === null || _a === void 0 ? void 0 : _a._id) || null,
+                    session,
+                });
+            }));
+        }
+        catch (error) {
+            if (!isTransactionUnsupportedError(error)) {
+                throw error;
+            }
+            console.warn('MongoDB transactions are unavailable. Falling back to non-transactional institution approval.');
+            approvalArtifacts = yield processInstitutionApproval({
+                requestId,
+                adminUserId: ((_a = req.user) === null || _a === void 0 ? void 0 : _a._id) || null,
+                session: null,
+            });
+        }
+        finally {
+            session.endSession();
+        }
+        if (!approvalArtifacts) {
+            throw new Error('Institution approval could not be completed.');
+        }
+        const decisionEmailPayload = approvalArtifacts.institutionEmailPayload;
+        if (decisionEmailPayload) {
+            yield emailService.sendInstitutionSubmissionDecisionEmail({
+                to: decisionEmailPayload.email,
+                institutionName: decisionEmailPayload.institutionName,
+                status: 'APPROVED',
+                courseTitle: decisionEmailPayload.courseTitle,
+                levelName: decisionEmailPayload.levelName,
+                studentCount: decisionEmailPayload.studentCount,
+            });
+        }
+        yield sendInstitutionStudentWelcomeEmailsInBatches(approvalArtifacts.createdStudentsForEmail);
+        if (approvalArtifacts.createdStudentUserIds.length > 0 && approvalArtifacts.approvedBatchId) {
+            yield (0, notification_service_1.createNotifications)({
+                recipientUserIds: approvalArtifacts.createdStudentUserIds,
+                actorUserId: ((_b = req.user) === null || _b === void 0 ? void 0 : _b._id) || null,
+                kind: 'institution_access_approved',
+                trainingType: 'language',
+                batchId: approvalArtifacts.approvedBatchId,
+                title: 'Batch access approved',
+                body: `Your access for ${approvalArtifacts.approvedCourseTitle || 'German'} - ${approvalArtifacts.approvedLevelName || 'Level'} is ready.`,
+                linkPath: (0, notification_service_1.buildBatchNotificationLink)('language', approvalArtifacts.approvedBatchId),
+                metadata: {
+                    source: 'institution_approval',
+                },
+            });
+        }
+        const approvedRequest = yield institutionEnrollmentRequest_model_1.default.findById(requestId)
+            .populate('institutionId', 'name email phoneNumber institutionName institutionLogo institutionTagline contactPersonName city state address');
+        return res.status(200).json({
+            message: 'Institution request approved successfully.',
+            request: approvedRequest ? sanitizeInstitutionRequest(approvedRequest.toObject()) : null,
+        });
+    }
+    catch (error) {
+        console.error('Failed to approve institution request:', error);
+        return res.status(400).json({ message: error.message || 'Failed to approve institution request' });
+    }
+});
+exports.approveInstitutionRequest = approveInstitutionRequest;
+const rejectInstitutionRequest = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const rejectDto = (0, class_transformer_1.plainToClass)(institution_dto_1.RejectInstitutionSubmissionDto, req.body);
+    const errors = yield (0, class_validator_1.validate)(rejectDto);
+    if (errors.length > 0)
+        return res.status(400).json({ errors });
+    try {
+        const request = yield institutionEnrollmentRequest_model_1.default.findById(req.params.id);
+        if (!request || request.status !== 'PENDING') {
+            return res.status(400).json({ message: 'Invalid institution request' });
+        }
+        request.status = 'REJECTED';
+        request.adminDecisionBy = ((_a = req.user) === null || _a === void 0 ? void 0 : _a._id) || null;
+        request.adminDecisionAt = new Date();
+        request.rejectionReason = ((_b = rejectDto.reason) === null || _b === void 0 ? void 0 : _b.trim()) || null;
+        yield request.save();
+        const institution = yield user_model_1.default.findById(request.institutionId).select('email institutionName name');
+        if (institution) {
+            yield emailService.sendInstitutionSubmissionDecisionEmail({
+                to: institution.email,
+                institutionName: institution.institutionName || institution.name,
+                status: 'REJECTED',
+                courseTitle: request.courseTitle,
+                levelName: request.levelName,
+                studentCount: request.students.length,
+            });
+        }
+        return res.status(200).json({
+            message: 'Institution request rejected successfully.',
+            request: sanitizeInstitutionRequest(request.toObject()),
+        });
+    }
+    catch (error) {
+        console.error('Failed to reject institution request:', error);
+        return res.status(500).json({ message: 'Failed to reject institution request' });
+    }
+});
+exports.rejectInstitutionRequest = rejectInstitutionRequest;
+const deleteResolvedInstitutionRequest = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const requestId = String(req.params.id || '').trim();
+    if (!requestId) {
+        return res.status(400).json({ message: 'Institution request id is required' });
+    }
+    try {
+        const request = yield institutionEnrollmentRequest_model_1.default.findById(requestId);
+        if (!request) {
+            return res.status(404).json({ message: 'Institution request not found' });
+        }
+        if (request.status === 'PENDING') {
+            return res.status(400).json({ message: 'Pending institution requests cannot be deleted' });
+        }
+        yield institutionEnrollmentRequest_model_1.default.deleteOne({ _id: requestId });
+        return res.status(200).json({ message: 'Institution request deleted successfully.' });
+    }
+    catch (error) {
+        console.error('Failed to delete institution request:', error);
+        return res.status(500).json({ message: 'Failed to delete institution request' });
+    }
+});
+exports.deleteResolvedInstitutionRequest = deleteResolvedInstitutionRequest;
