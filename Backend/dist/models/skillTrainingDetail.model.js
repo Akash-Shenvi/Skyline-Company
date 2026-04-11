@@ -38,7 +38,7 @@ const SkillTrainingDetailSchema = new mongoose_1.Schema({
     skillCourseId: { type: mongoose_1.Schema.Types.ObjectId, ref: 'SkillCourse', required: true, unique: true },
     deliveryMode: { type: String, default: 'On-site / Online / Hybrid' },
     classTimings: { type: String, default: 'Customized Schedule' },
-    fees: { type: String, default: '₹28,000' },
+    fees: { type: String, default: 'Rs 28,000' },
     origin: { type: String, default: '' },
 }, { timestamps: true });
 exports.default = mongoose_1.default.model('SkillTrainingDetail', SkillTrainingDetailSchema);

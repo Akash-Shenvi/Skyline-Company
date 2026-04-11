@@ -59,8 +59,8 @@ const SkillCourseSchema = new mongoose_1.Schema({
             examPrep: {
                 title: String,
                 details: String,
-                price: String
-            }
+                price: String,
+            },
         }],
 }, { timestamps: true });
 exports.default = mongoose_1.default.model('SkillCourse', SkillCourseSchema);

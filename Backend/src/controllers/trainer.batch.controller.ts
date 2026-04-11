@@ -307,7 +307,7 @@ const buildSkillMaterials = async (batchId: string) => {
         ClassSession.find({ batchId }).sort({ createdAt: -1 }),
     ]);
 
-    const uploaded = uploadedMaterials.map((material) => ({
+    const uploaded = uploadedMaterials.map((material: any) => ({
         _id: String(material._id),
         title: material.title,
         subtitle: material.subtitle || '',
@@ -319,7 +319,7 @@ const buildSkillMaterials = async (batchId: string) => {
         isSystemMaterial: false,
     }));
 
-    const assignmentBacked = assignments.map((assignment) => ({
+    const assignmentBacked = assignments.map((assignment: any) => ({
         _id: `assignment-${String(assignment._id)}`,
         title: assignment.title,
         subtitle: assignment.maxScore ? `Assignment - ${assignment.maxScore} points` : 'Assignment',

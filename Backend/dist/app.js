@@ -40,24 +40,19 @@ app.use(express_1.default.json({ verify: captureRawBody }));
 app.use(express_1.default.urlencoded({ extended: true, verify: captureRawBody }));
 const item_routes_1 = __importDefault(require("./routes/item.routes"));
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
-const skillCourse_routes_1 = __importDefault(require("./routes/skillCourse.routes"));
 const languageCourse_routes_1 = __importDefault(require("./routes/languageCourse.routes"));
 const language_training_routes_1 = __importDefault(require("./routes/language.training.routes"));
 const language_trainer_routes_1 = __importDefault(require("./routes/language.trainer.routes"));
-// ... (middlewares)
 const dashboard_routes_1 = __importDefault(require("./routes/dashboard.routes"));
 const enrollment_routes_1 = __importDefault(require("./routes/enrollment.routes"));
 // Routes
 app.use('/api/uploads', express_1.default.static('/home/skyline/file_serve')); // Serve uploaded files
 app.use('/api/items', item_routes_1.default);
 app.use('/api/auth', auth_routes_1.default);
-app.use('/api/skills', skillCourse_routes_1.default);
 app.use('/api/dashboard', dashboard_routes_1.default);
 app.use('/api/enrollment', enrollment_routes_1.default);
 app.use('/api/languages', languageCourse_routes_1.default);
 app.use('/api/language-training', language_training_routes_1.default);
-const skillTrainingDetail_routes_1 = __importDefault(require("./routes/skillTrainingDetail.routes"));
-app.use('/api/skill-training-details', skillTrainingDetail_routes_1.default);
 app.use('/api/language-trainer', language_trainer_routes_1.default);
 const contact_routes_1 = __importDefault(require("./routes/contact.routes"));
 app.use('/api/contact', contact_routes_1.default);
@@ -77,10 +72,6 @@ const internshipListing_routes_1 = __importDefault(require("./routes/internshipL
 app.use('/api/internships', internshipListing_routes_1.default);
 const trainingCheckout_routes_1 = __importDefault(require("./routes/trainingCheckout.routes"));
 app.use('/api/training-checkout', trainingCheckout_routes_1.default);
-const webinar_routes_1 = __importDefault(require("./routes/webinar.routes"));
-app.use('/api/webinars', webinar_routes_1.default);
-const webinarRegistration_routes_1 = __importDefault(require("./routes/webinarRegistration.routes"));
-app.use('/api/webinar-registrations', webinarRegistration_routes_1.default);
 const payment_routes_1 = __importDefault(require("./routes/payment.routes"));
 app.use('/api/payments', payment_routes_1.default);
 const institution_routes_1 = __importDefault(require("./routes/institution.routes"));
@@ -89,8 +80,6 @@ const adminInstitution_routes_1 = __importDefault(require("./routes/adminInstitu
 app.use('/api/admin/institutions', adminInstitution_routes_1.default);
 const trainer_batch_routes_1 = __importDefault(require("./routes/trainer.batch.routes"));
 app.use('/api/trainer-batches', trainer_batch_routes_1.default);
-const skill_batch_routes_1 = __importDefault(require("./routes/skill.batch.routes"));
-app.use('/api/skill-batches', skill_batch_routes_1.default);
 const notification_routes_1 = __importDefault(require("./routes/notification.routes"));
 app.use('/api/notifications', notification_routes_1.default);
 const push_routes_1 = __importDefault(require("./routes/push.routes"));

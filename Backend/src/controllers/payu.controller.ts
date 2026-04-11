@@ -193,7 +193,7 @@ export const handlePayUCallback = async (req: Request, res: Response) => {
 
         const redirectUrl = buildFrontendPaymentResultUrl({
             flow: context.flow || inferPaymentFlow(context.transactionId) || 'training',
-            result: outcome.result,
+            result: outcome.result as PaymentResult,
             attemptId: outcome.attempt ? String(outcome.attempt._id) : context.attemptId,
             transactionId: outcome.attempt?.transactionId || context.transactionId,
             referenceCode,

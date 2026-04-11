@@ -78,7 +78,7 @@ const registerInstitution = (req, res) => __awaiter(void 0, void 0, void 0, func
         else {
             user = new user_model_1.default({
                 name: institutionName,
-                institutionName: institutionName,
+                institutionName,
                 institutionLogo,
                 institutionTagline,
                 contactPersonName: registerDto.contactPersonName.trim(),
