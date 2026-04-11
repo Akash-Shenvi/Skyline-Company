@@ -132,15 +132,11 @@ const CareersPage: React.FC = () => {
             try {
                 setLoading(true);
                 setError(null);
-                const response = await internshipCatalogAPI.getAll();
-                setInternships(response.internships || []);
+                // API Call purposefully removed per request to hide internships from frontend
+                setInternships([]);
             } catch (err: unknown) {
                 console.error('Failed to fetch internships:', err);
-                if (axios.isAxiosError(err)) {
-                    setError(err.response?.data?.message || 'Failed to load internships right now.');
-                } else {
-                    setError('Failed to load internships right now.');
-                }
+                setError('Failed to load internships right now.');
             } finally {
                 setLoading(false);
             }

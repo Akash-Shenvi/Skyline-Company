@@ -113,21 +113,6 @@ const HeroBackground: React.FC = () => {
 // Language cards data
 const languageCards = [
     {
-        code: 'GB',
-        title: 'English Training',
-        students: '8,500+',
-        courses: 45,
-        rating: 4.9,
-        reviews: '2.4k',
-        levels: ['Beginner', 'Intermediate', 'Advanced'],
-        categories: ['Business', 'Academic'],
-        price: '₹9,999',
-        bgColor: 'bg-brand-gold/5',
-        borderColor: 'border-brand-surface',
-        route: '/training/english',
-        image: "https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-    },
-    {
         code: 'DE',
         title: 'German Training',
         students: '6,200+',
@@ -141,6 +126,21 @@ const languageCards = [
         borderColor: 'border-brand-red/20',
         route: '/training/german',
         image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    {
+        code: 'GB',
+        title: 'English Training',
+        students: '8,500+',
+        courses: 45,
+        rating: 4.9,
+        reviews: '2.4k',
+        levels: ['Beginner', 'Intermediate', 'Advanced'],
+        categories: ['Business', 'Academic'],
+        price: '₹9,999',
+        bgColor: 'bg-brand-gold/5',
+        borderColor: 'border-brand-surface',
+        route: '/training/english',
+        image: "https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
         code: 'JP',
@@ -390,50 +390,65 @@ const LanguageTraining: React.FC = () => {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative py-28 sm:py-36 text-center overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-brand-off-white to-white" />
+            <section className="relative py-28 sm:py-36 overflow-hidden bg-brand-black text-brand-white border-b-[8px] border-brand-red">
                 <HeroBackground />
 
-                <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-                    <motion.div
-                        initial="hidden"
-                        animate="visible"
-                        variants={staggerContainer}
-                        className="mx-auto max-w-4xl"
-                    >
-                        <motion.div variants={fadeInUp} className="mb-8 flex justify-center">
-                            <span className="inline-flex items-center gap-2 rounded-full border border-brand-gold/20 bg-brand-gold/10 px-4 py-1.5 text-sm font-semibold text-brand-gold backdrop-blur-sm">
-                                <Star className="h-4 w-4 fill-current" />
-                                Global Language Certification
-                            </span>
+                <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                        <motion.div
+                            initial="hidden"
+                            animate="visible"
+                            variants={staggerContainer}
+                            className="max-w-2xl text-left"
+                        >
+                            <motion.div variants={fadeInUp} className="mb-8 flex justify-start">
+                                <span className="inline-flex items-center gap-2 rounded-full border border-brand-gold/20 bg-brand-gold/10 px-4 py-1.5 text-sm font-semibold text-brand-gold backdrop-blur-sm">
+                                    <Star className="h-4 w-4 fill-current" />
+                                    Global Language Certification
+                                </span>
+                            </motion.div>
+
+                            <motion.h1
+                                variants={fadeInUp}
+                                className="font-display mb-6 text-5xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl"
+                            >
+                                Master Languages for <br className="hidden sm:inline" />
+                                <span className="text-brand-red">Global Success</span>
+                            </motion.h1>
+
+                            <motion.p
+                                variants={fadeInUp}
+                                className="mb-10 max-w-2xl text-lg leading-relaxed text-brand-off-white sm:text-xl"
+                            >
+                                Learn German, English, or Japanese with live interactive classes, flexible schedules, and internationally recognized certifications.
+                            </motion.p>
+
+                            <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 text-sm font-medium text-brand-white">
+                                <div className="flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 backdrop-blur-sm border border-white/20 hover:border-brand-gold transition-colors">
+                                    <Shield className="h-5 w-5 text-brand-gold" />
+                                    <span>Official Certification</span>
+                                </div>
+                                <div className="flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 backdrop-blur-sm border border-white/20 hover:border-brand-red transition-colors">
+                                    <Zap className="h-5 w-5 text-brand-red" />
+                                    <span>Fast-track Options</span>
+                                </div>
+                            </motion.div>
                         </motion.div>
 
-                        <motion.h1
-                            variants={fadeInUp}
-                            className="font-display mb-6 text-5xl font-bold tracking-tight text-brand-black sm:text-6xl lg:text-7xl"
+                        <motion.div
+                            initial={{ opacity: 0, x: 30 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className="relative lg:h-[500px] h-[350px] rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-2 border-brand-surface group"
                         >
-                            Master Languages for <br className="hidden sm:inline" />
-                            <span className="bg-gradient-to-r from-brand-gold to-brand-gold-hover bg-clip-text text-transparent">Global Success</span>
-                        </motion.h1>
-
-                        <motion.p
-                            variants={fadeInUp}
-                            className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-brand-olive-dark sm:text-xl"
-                        >
-                            Learn English, German, or Japanese with live interactive classes, flexible schedules, and internationally recognized certifications.
-                        </motion.p>
-
-                        <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-4 text-sm font-medium text-brand-olive">
-                            <div className="flex items-center gap-2 rounded-lg bg-white/50 px-4 py-2">
-                                <Shield className="h-5 w-5 text-brand-olive" />
-                                <span>Official Certification</span>
-                            </div>
-                            <div className="flex items-center gap-2 rounded-lg bg-white/50 px-4 py-2">
-                                <Zap className="h-5 w-5 text-brand-gold" />
-                                <span>Fast-track Options</span>
-                            </div>
+                            <img 
+                                src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                                alt="Students collaboratively learning languages" 
+                                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-brand-black/80 to-transparent"></div>
                         </motion.div>
-                    </motion.div>
+                    </div>
                 </div>
             </section>
 
@@ -478,7 +493,7 @@ const LanguageTraining: React.FC = () => {
                             variants={fadeInUp}
                             className="text-3xl md:text-4xl lg:text-5xl font-sans font-bold text-brand-black mb-4 text-center mx-auto"
                         >
-                            Why Choose SoVir Academy?
+                            Why Choose Skyline Academy?
                         </motion.h2>
                         <motion.p
                             variants={fadeInUp}
@@ -497,14 +512,15 @@ const LanguageTraining: React.FC = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="relative bg-gradient-to-r from-brand-black via-brand-olive-dark to-[#1a365d] py-20 overflow-hidden">
+            <section className="relative bg-brand-black py-20 overflow-hidden border-t-8 border-brand-red">
                 {/* Animated background */}
-                <div className="absolute inset-0">
+                <div className="absolute inset-0 pointer-events-none">
                     <motion.div
                         animate={{ rotate: 360 }}
                         transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
-                        className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-brand-gold/10 to-transparent rounded-full"
+                        className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-brand-red/10 to-transparent rounded-full"
                     />
+                    <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-gold/5 blur-[100px] rounded-full" />
                 </div>
 
                 <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

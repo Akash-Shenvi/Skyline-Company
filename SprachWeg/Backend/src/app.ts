@@ -96,6 +96,12 @@ app.use('/api/training-checkout', trainingCheckoutRoutes);
 import paymentRoutes from './routes/payment.routes';
 app.use('/api/payments', paymentRoutes);
 
+import institutionRoutes from './routes/institution.routes';
+app.use('/api/institutions', institutionRoutes);
+
+import adminInstitutionRoutes from './routes/adminInstitution.routes';
+app.use('/api/admin/institutions', adminInstitutionRoutes);
+
 import trainerBatchRoutes from './routes/trainer.batch.routes';
 app.use('/api/trainer-batches', trainerBatchRoutes);
 

@@ -4,6 +4,9 @@ export const getDashboardPathForRole = (role?: string | null) => {
             return '/admin-dashboard';
         case 'trainer':
             return '/trainer-dashboard';
+        case 'institution':
+            return '/institution-dashboard';
+        case 'institution_student':
         case 'student':
         default:
             return '/student-dashboard';

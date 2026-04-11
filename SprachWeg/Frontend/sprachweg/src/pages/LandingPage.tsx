@@ -150,20 +150,6 @@ const LandingPage: React.FC = () => {
     const languageCourses: LanguageCourseStatic[] = [
         {
             _id: '1',
-            title: 'English Training',
-            students: '8,500+',
-            courses: 45,
-            reviews: '2.4k',
-            levels: ['Beginner', 'Intermediate', 'Advanced'],
-            price: '9999',
-            image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-            rating: 4.9,
-            link: '/training/english',
-            bgColor: 'bg-brand-gold/5',
-            borderColor: 'border-brand-surface'
-        },
-        {
-            _id: '2',
             title: 'German Training',
             students: '6,200+',
             courses: 38,
@@ -175,6 +161,20 @@ const LandingPage: React.FC = () => {
             link: '/training/german',
             bgColor: 'bg-brand-red/5',
             borderColor: 'border-brand-red/20'
+        },
+        {
+            _id: '2',
+            title: 'English Training',
+            students: '8,500+',
+            courses: 45,
+            reviews: '2.4k',
+            levels: ['Beginner', 'Intermediate', 'Advanced'],
+            price: '9999',
+            image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            rating: 4.9,
+            link: '/training/english',
+            bgColor: 'bg-brand-gold/5',
+            borderColor: 'border-brand-surface'
         },
         {
             _id: '3',
@@ -219,32 +219,32 @@ const LandingPage: React.FC = () => {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: [0.0, 0.0, 0.2, 1] }}
-                        className="flex flex-col items-center text-center space-y-6 md:space-y-8 w-full mx-auto"
+                        className="flex flex-col items-center text-center w-full mx-auto"
                     >
-                        <div className="inline-block px-4 py-2 bg-brand-gold/10 backdrop-blur-sm rounded-full border border-brand-gold/20">
+                        <div className="inline-block px-4 py-2 bg-brand-gold/10 backdrop-blur-sm rounded-full border border-brand-gold/20 mb-6">
                             <span className="text-brand-gold font-medium text-sm flex items-center gap-2">
                                 <span className="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span>
                                 New: Summer 2026 Batches Now Open
                             </span>
                         </div>
 
-                        <h1 className="font-sans text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight max-w-5xl mx-auto">
-                            SoVir Skilling & <br className="hidden sm:block" />
+                        <h1 className="font-sans text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight max-w-5xl mx-auto mb-4">
+                            Skyline Skilling & <br className="hidden sm:block" />
                             <span>Training Center</span>
                         </h1>
 
                         {/* Decorative gold line */}
-                        <div className="w-[60px] h-[3px] bg-brand-gold mx-auto" />
+                        <div className="w-[60px] h-[3px] bg-brand-gold mx-auto mb-4" />
 
-                        <p className="text-base md:text-lg lg:text-xl font-medium text-brand-gold max-w-3xl mx-auto">
-                            A Training & Career Services Division of SoVir Technologies LLP
+                        <p className="text-base md:text-lg lg:text-xl font-medium text-brand-gold w-full max-w-4xl mx-auto mb-2">
+                            A Training & Career Services Division of Skyline Technologies LLP
                         </p>
 
-                        <p className="text-sm sm:text-base md:text-lg text-white/75 leading-relaxed max-w-3xl mx-auto">
+                        <p className="text-sm sm:text-base md:text-lg text-white/75 leading-relaxed w-full max-w-5xl mx-auto mb-8">
                             A professional training academy empowering individuals with industry-ready skills and global career opportunities through specialized skill development and abroad placement support.
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center pt-2">
+                        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
                             <Link
                                 to="/language-training"
                                 className="bg-brand-red hover:bg-brand-red-hover text-white font-semibold px-8 py-4 text-base sm:text-lg rounded w-full sm:w-auto inline-flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-brand-gold transition-all duration-300 hover:shadow-lg min-h-[48px]"
@@ -278,42 +278,42 @@ const LandingPage: React.FC = () => {
                         {/* Section heading decorative rule — red on light bg */}
                         <div className="w-12 h-[3px] bg-brand-red mx-auto mb-6" />
                         <p className="text-lg text-brand-olive-dark max-w-3xl mx-auto">
-                            Part of SoVir Technologies LLP's commitment to professional development and global opportunities
+                            Part of Skyline Technologies LLP's commitment to professional development and global opportunities
                         </p>
                     </div>
 
                     <div className="grid lg:grid-cols-2 gap-12 mb-16">
-                        {/* About SoVir Technologies LLP */}
+                        {/* About Language Training */}
                         <div className="bg-brand-white rounded-[2rem] p-10 border border-brand-surface shadow-[0_2px_12px_rgba(110,110,80,0.10)]">
                             <div className="w-14 h-14 rounded-xl bg-brand-gold/10 flex items-center justify-center mb-6">
                                 <Globe className="w-7 h-7 text-brand-red" />
                             </div>
                             <h3 className="font-sans text-2xl font-semibold text-brand-black mb-4">
-                                About SoVir Technologies LLP
+                                Expert Language Training Programs
                             </h3>
                             <p className="text-brand-olive-dark leading-relaxed mb-6">
-                                SoVir Technologies LLP is a professional services organization focused on technology, training, and workforce development. With a strong commitment to quality and innovation, the company supports individuals and industries through specialized skill-building solutions.
+                                Skyline Language Academy specializes in immersive language education, with a strong focus on comprehensive German training. We prepare students, healthcare professionals, and engineers not just for certification exams like TELC and Goethe, but for seamless cultural and professional integration across the DACH region.
                             </p>
                             <div className="flex items-start gap-3 text-sm text-brand-olive-dark">
                                 <CheckCircle className="w-5 h-5 text-brand-red flex-shrink-0 mt-0.5" />
-                                <span>Professional technology and training services</span>
+                                <span>Specialized German curriculum from A1 to C2</span>
                             </div>
                         </div>
 
-                        {/* About SoVir Skilling & Training Center */}
+                        {/* About Global Integration */}
                         <div className="bg-brand-white rounded-[2rem] p-10 border border-brand-surface shadow-[0_2px_12px_rgba(110,110,80,0.10)]">
                             <div className="w-14 h-14 rounded-xl bg-brand-gold/10 flex items-center justify-center mb-6">
                                 <GraduationCap className="w-7 h-7 text-brand-red" />
                             </div>
                             <h3 className="font-sans text-2xl font-semibold text-brand-black mb-4">
-                                About SoVir Skilling & Training Center
+                                Global Career & Visa Guidance
                             </h3>
                             <p className="text-brand-olive-dark leading-relaxed mb-6">
-                                SoVir Skilling & Training Center is the training and education wing of SoVir Technologies LLP. Our academy is built to deliver practical learning, certification-oriented training, and career-focused guidance for students, working professionals, and international aspirants.
+                                Skyline Skilling & Training Center goes beyond teaching you a language. We offer end-to-end guidance for international aspirants—from mastering advanced fluency and securing admission in top-tier European public universities, to navigating structured pathways for Job Seeker and EU Blue Card visas.
                             </p>
                             <div className="flex items-start gap-3 text-sm text-brand-olive-dark">
                                 <CheckCircle className="w-5 h-5 text-brand-red flex-shrink-0 mt-0.5" />
-                                <span>Practical learning and career-focused training</span>
+                                <span>End-to-end support for international placements</span>
                             </div>
                         </div>
                     </div>
@@ -328,7 +328,7 @@ const LandingPage: React.FC = () => {
                                 <h4 className="font-sans text-xl font-semibold text-brand-black">Our Mission</h4>
                             </div>
                             <p className="text-brand-olive-dark leading-relaxed">
-                                To provide high-quality training programs that enhance technical competence and global employability.
+                                To provide high-quality language training programs that break down communication barriers and enhance global employability for every student.
                             </p>
                         </div>
 
@@ -340,7 +340,7 @@ const LandingPage: React.FC = () => {
                                 <h4 className="font-sans text-xl font-semibold text-brand-black">Our Vision</h4>
                             </div>
                             <p className="text-brand-olive-dark leading-relaxed">
-                                To become a global leader in industrial automation training, empowering businesses with smart, efficient, and sustainable solutions.
+                                To become a global leader in language education and international career integration, empowering individuals with fluid communication skills and boundless opportunities abroad.
                             </p>
                         </div>
                     </div>

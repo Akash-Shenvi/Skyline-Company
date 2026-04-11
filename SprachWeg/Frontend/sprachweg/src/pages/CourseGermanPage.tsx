@@ -1,175 +1,172 @@
-import React, { useState, useEffect } from 'react';
-import { motion, useReducedMotion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Check, ChevronRight, Clock, Target, Award, Shield, Globe, Star, AlertCircle } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
+import { Check, Clock, Award, AlertCircle, BookOpen, MessageCircle, FileText, Globe, Target, ChevronRight } from 'lucide-react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import EnrollmentModal from '../components/ui/EnrollmentModal';
 import { languageAPI } from '../lib/api';
 import type { SkillCourse } from '../types/skill';
+import { tCourseDe, tCourseEn } from '../locales/germanCourseTranslations';
 
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30 },
-  visible: (custom: number = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.6, delay: custom * 0.1, ease: [0.22, 1, 0.36, 1] as const } })
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } }
 };
-const staggerContainer = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.2 } } };
-
-const HeroBackground: React.FC = () => {
-  const shouldReduceMotion = useReducedMotion();
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, shouldReduceMotion ? 0 : 150]);
-  const y2 = useTransform(scrollY, [0, 500], [0, shouldReduceMotion ? 0 : -150]);
-  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
-  return (
-    <motion.div style={{ opacity }} className="absolute inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      <motion.div style={{ y: y1 }} animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} className="absolute -top-[10%] -right-[10%] h-[600px] w-[600px] rounded-full bg-brand-gold/20 blur-[120px]" />
-      <motion.div style={{ y: y2 }} animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute top-[20%] -left-[10%] h-[500px] w-[500px] rounded-full bg-brand-red/10 blur-[100px]" />
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay"></div>
-    </motion.div>
-  );
+const staggerContainer: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.1 } }
 };
 
-interface CourseLevelCardProps { level: NonNullable<SkillCourse['levels']>[number]; index: number; onEnroll: () => void; }
-
-const CourseLevelCard: React.FC<CourseLevelCardProps> = ({ level, index, onEnroll }) => {
-  const shouldReduceMotion = useReducedMotion();
-  return (
-    <motion.div variants={fadeInUp} custom={index} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} whileHover={shouldReduceMotion ? {} : { y: -8, transition: { duration: 0.3 } }} className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-brand-surface bg-brand-white shadow-[0_2px_12px_rgba(110,110,80,0.10)] transition-all duration-500 hover:shadow-2xl hover:border-t-brand-gold">
-      <div className="absolute top-0 left-0 h-1 w-full bg-brand-red" />
-      <div className="flex flex-1 flex-col p-8">
-        <div className="mb-6 flex items-start justify-between">
-          <div className="inline-flex items-center gap-2 rounded bg-brand-gold px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-black">
-            <Globe className="h-3.5 w-3.5" />
-            <span>{level.name}</span>
-          </div>
-          <div className="flex items-center gap-1.5 text-sm font-medium text-brand-olive"><Clock className="h-4 w-4" />{level.duration}</div>
-        </div>
-        <div className="mb-8">
-          <div className="flex items-baseline gap-1">
-            <span className="text-4xl font-bold tracking-tight text-brand-black">{level.price}</span>
-            <span className="text-sm font-medium text-brand-olive">/ package</span>
-          </div>
-          <p className="mt-2 text-sm text-brand-olive-dark">Complete {level.name} certification</p>
-        </div>
-        <div className="mb-8 flex-1 space-y-4">
-          <h4 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-brand-olive-light"><Target className="h-4 w-4" />What You'll Learn</h4>
-          <ul className="space-y-3">
-            {level.features.slice(0, 8).map((item: string, idx: number) => (
-              <li key={idx} className="flex items-start gap-3 text-sm text-brand-olive-dark">
-                <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-red" />
-                <span className="leading-relaxed">{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="mb-8 rounded-xl bg-brand-off-white p-4 ring-1 ring-brand-surface">
-          <p className="text-xs font-bold uppercase tracking-wider text-brand-olive">Expected Outcome</p>
-          <p className="mt-1.5 text-sm font-medium leading-relaxed text-brand-black">{level.outcome}</p>
-        </div>
-        {level.examPrep && level.examPrep.title && (
-          <div className="mb-8 rounded-xl border border-dashed border-brand-gold/40 bg-brand-gold/5 p-4">
-            <div className="mb-1 flex items-center gap-2 text-sm font-bold text-brand-black"><Award className="h-4 w-4" />{level.examPrep.title}</div>
-            <p className="text-xs text-brand-olive-dark">{level.examPrep.details}</p>
-          </div>
-        )}
-        <motion.button onClick={onEnroll} whileHover={shouldReduceMotion ? {} : { scale: 1.02 }} whileTap={shouldReduceMotion ? {} : { scale: 0.98 }} className="group relative flex w-full items-center justify-center gap-2 rounded bg-brand-red py-4 text-sm font-bold text-white shadow-lg transition-all hover:bg-brand-red-hover hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2">
-          Enroll Now
-          <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </motion.button>
-      </div>
-    </motion.div>
-  );
-};
-
-const faqs = [
-  { id: '1', question: 'Is this course aligned with CEFR levels?', answer: 'Yes. Our curriculum is aligned with CEFR and prepares you for official exams.' },
-  { id: '2', question: 'Do I need prior knowledge?', answer: 'No. Our beginner levels are designed for complete beginners.' },
-  { id: '3', question: 'What certification will I receive?', answer: 'Upon completion, you receive a certificate aligned with international standards.' }
-];
-
-const FAQItem: React.FC<{ faq: typeof faqs[0]; isOpen: boolean; onToggle: () => void }> = ({ faq, isOpen, onToggle }) => (
-  <div className="overflow-hidden border-b border-brand-surface last:border-0">
-    <button onClick={onToggle} className="flex w-full items-center justify-between py-6 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold" aria-expanded={isOpen}>
-      <span className={`text-lg font-medium transition-colors ${isOpen ? 'text-brand-red' : 'text-brand-black'}`}>{faq.question}</span>
-      <span className={`ml-4 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full transition-all ${isOpen ? 'bg-brand-red text-white rotate-180' : 'bg-brand-surface text-brand-olive'}`}><ChevronRight className="h-5 w-5 rotate-90" /></span>
-    </button>
-    <AnimatePresence>
-      {isOpen && (<motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }}><p className="pb-6 text-base leading-relaxed text-brand-olive-dark">{faq.answer}</p></motion.div>)}
-    </AnimatePresence>
-  </div>
-);
-
-// Static fallback data when API is unavailable
 const fallbackGermanCourse: SkillCourse = {
   _id: 'german-fallback',
   title: 'German Training',
-  description: 'Master German with our CEFR-aligned curriculum. From basic A1 greetings to professional B2/C1 fluency, our certified instructors prepare you for TELC and Goethe exams.',
+  description: 'Master German with our CEFR-aligned curriculum.',
   levels: [
-    {
-      name: 'A1',
-      duration: '3 Months',
-      price: '₹15,999',
-      features: [
-        'German alphabet & pronunciation',
-        'Basic greetings & introductions',
-        'Numbers, dates & time',
-        'Simple sentence construction',
-        'Everyday vocabulary',
-        'Basic reading & listening'
-      ],
-      outcome: 'Understand and use basic German phrases for everyday situations.',
-      examPrep: { title: 'Goethe A1 Preparation', details: 'Preparation for the Goethe-Zertifikat A1: Start Deutsch 1.' }
-    },
-    {
-      name: 'A2',
-      duration: '3 Months',
-      price: '₹17,999',
-      features: [
-        'Expanded vocabulary & grammar',
-        'Past tense & future tense',
-        'Describing experiences',
-        'Shopping & travel dialogues',
-        'Writing short texts',
-        'Listening exercises'
-      ],
-      outcome: 'Communicate in routine tasks requiring simple exchange of information.',
-      examPrep: { title: 'Goethe A2 Preparation', details: 'Targeted prep for Goethe-Zertifikat A2.' }
-    },
-    {
-      name: 'B1',
-      duration: '4 Months',
-      price: '₹22,999',
-      features: [
-        'Complex grammar structures',
-        'Professional communication',
-        'Essay & report writing',
-        'Discussion & debate skills',
-        'Cultural understanding',
-        'Media comprehension'
-      ],
-      outcome: 'Handle most situations likely while travelling and express opinions on familiar topics.',
-      examPrep: { title: 'TELC B1 / Goethe B1', details: 'Complete preparation for TELC B1 and Goethe-Zertifikat B1.' }
-    }
+    { name: 'A1 Beginner', duration: '3 Months', price: '₹15,999', features: ['Foundational grammar', 'Basic vocabulary', 'Everyday expressions', 'Simple conversations'], outcome: 'Achieve basic understanding and can interact in a simple way.', examPrep: { title: 'Goethe-Zertifikat A1', details: 'Preparation for A1 exam.' } },
+    { name: 'A2 Elementary', duration: '3 Months', price: '₹17,999', features: ['Advanced beginner grammar', 'Sentences and frequently used expressions', 'Routine tasks requiring a direct exchange of information'], outcome: 'Understand sentences and express immediate needs.', examPrep: { title: 'Goethe-Zertifikat A2', details: 'Preparation for A2 exam.' } },
+    { name: 'B1 Intermediate', duration: '4 Months', price: '₹22,999', features: ['Understand main points of clear standard input', 'Deal with most situations likely to arise while travelling', 'Produce simple connected text'], outcome: 'Communicate independently and handle daily situations.', examPrep: { title: 'Goethe-Zertifikat B1', details: 'Preparation for B1 exam.' } },
+    { name: 'B2 Upper Intermediate', duration: '5 Months', price: '₹25,999', features: ['Understand the main ideas of complex text', 'Interact with a degree of fluency and spontaneity', 'Produce clear, detailed text'], outcome: 'Communicate with native speakers effectively.', examPrep: { title: 'Goethe-Zertifikat B2', details: 'Preparation for B2 exam.' } },
+    { name: 'C1 Advanced', duration: '5 Months', price: '₹29,999', features: ['Understand a wide range of demanding, longer clauses', 'Express ideas fluently and spontaneously', 'Use language flexibly and effectively'], outcome: 'Achieve advanced proficiency in German.', examPrep: { title: 'Goethe-Zertifikat C1', details: 'Preparation for C1 exam.' } }
   ]
 };
+
+const SECTION_IDS = ['about', 'why-learn', 'levels', 'visa', 'faq'] as const;
+
+interface CourseLevelCardProps {
+  level: NonNullable<SkillCourse['levels']>[number];
+  onEnroll: () => void;
+  lang?: 'de' | 'en';
+}
+
+const CourseLevelCard: React.FC<CourseLevelCardProps> = ({ level, onEnroll, lang = 'de' }) => (
+  <motion.div
+    variants={fadeInUp}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, margin: "-100px" }}
+    className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-brand-surface bg-brand-white shadow-xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-1"
+  >
+    <div className="absolute top-0 left-0 h-1.5 w-full bg-brand-red" />
+    <div className="flex flex-1 flex-col p-8">
+      <div className="mb-6 flex items-start justify-between">
+        <div className="inline-flex items-center gap-2 rounded bg-brand-gold px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-black">
+          <BookOpen className="h-3.5 w-3.5" />
+          <span>{level.name}</span>
+        </div>
+        <div className="flex items-center gap-1.5 text-sm font-medium text-brand-olive">
+          <Clock className="h-4 w-4" />
+          {level.duration}
+        </div>
+      </div>
+
+      <div className="mb-8">
+        <div className="flex items-baseline gap-1">
+          <span className="text-4xl font-bold tracking-tight text-brand-black">{level.price}</span>
+          <span className="text-sm font-medium text-brand-olive">/ {lang === 'de' ? 'Paket' : 'package'}</span>
+        </div>
+        <p className="mt-2 text-sm text-brand-olive-dark">
+          {lang === 'de' ? `Umfassendes ${level.name} Training` : `Comprehensive ${level.name} training`}
+        </p>
+      </div>
+
+      <div className="mb-8 flex-1 space-y-4">
+        <h4 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-brand-olive-light">
+          <Target className="h-4 w-4" />
+          {lang === 'de' ? 'Was Du lernen wirst' : 'What You\'ll Learn'}
+        </h4>
+        <ul className="space-y-3">
+          {level.features.slice(0, 8).map((item: string, idx: number) => (
+            <li key={idx} className="flex items-start gap-3 text-sm text-brand-olive-dark">
+              <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-red" />
+              <span className="leading-relaxed">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="mb-8 rounded-xl bg-brand-off-white p-4 ring-1 ring-brand-surface">
+        <p className="text-xs font-bold uppercase tracking-wider text-brand-olive">
+          {lang === 'de' ? 'Zielsetzung' : 'Target Outcome'}
+        </p>
+        <p className="mt-1.5 text-sm font-medium leading-relaxed text-brand-black">{level.outcome}</p>
+      </div>
+
+      {level.examPrep && level.examPrep.title && (
+        <div className="mb-8 rounded-xl border border-dashed border-brand-gold/40 bg-brand-gold/5 p-4">
+          <div className="mb-1 flex items-center gap-2 text-sm font-bold text-brand-black">
+            <Award className="h-4 w-4" />
+            {level.examPrep.title}
+          </div>
+          <p className="text-xs text-brand-olive-dark">{level.examPrep.details}</p>
+        </div>
+      )}
+
+      <button
+        onClick={onEnroll}
+        className="flex w-full items-center justify-center gap-2 rounded-lg bg-brand-red py-4 text-sm font-bold text-white shadow-lg transition-all hover:bg-brand-red-hover hover:shadow-xl"
+      >
+        {lang === 'de' ? 'Jetzt Anmelden' : 'Enroll Now'}
+        <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+      </button>
+    </div>
+  </motion.div>
+);
 
 const CourseGermanPage: React.FC = () => {
   const [course, setCourse] = useState<SkillCourse | null>(null);
   const [loading, setLoading] = useState(true);
-  const [openFAQ, setOpenFAQ] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState<string>('about');
+  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
   const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
   const [selectedLevelName, setSelectedLevelName] = useState("");
   const [apiError, setApiError] = useState(false);
+
+  const [lang, setLang] = useState<'de' | 'en'>('de');
+  const t = lang === 'de' ? tCourseDe : tCourseEn;
+
+  // Refs for each section
+  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
+
+  const setSectionRef = useCallback((id: string) => (el: HTMLElement | null) => {
+    sectionRefs.current[id] = el;
+  }, []);
+
+  // Intersection Observer to track active section
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        }
+      },
+      { rootMargin: '-30% 0px -60% 0px', threshold: 0 }
+    );
+
+    for (const id of SECTION_IDS) {
+      const el = sectionRefs.current[id];
+      if (el) observer.observe(el);
+    }
+
+    return () => observer.disconnect();
+  }, [loading]);
+
+  const scrollToSection = (id: string) => {
+    const el = sectionRefs.current[id];
+    if (el) {
+      const yOffset = -100;
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         const courses = await languageAPI.getAll();
-        const germanCourse = courses.find((c: any) => c.title.includes('German'));
-        if (germanCourse) {
-          setCourse(germanCourse);
-        } else {
-          setCourse(fallbackGermanCourse);
-        }
+        const germanCourse = courses.find((c: SkillCourse) => c.title.includes('German'));
+        setCourse(germanCourse || fallbackGermanCourse);
       } catch (error) {
         console.error('Failed to fetch course data', error);
         setApiError(true);
@@ -184,91 +181,343 @@ const CourseGermanPage: React.FC = () => {
   const displayCourse = course || fallbackGermanCourse;
   const selectedLevelDetails = displayCourse.levels?.find((level) => level.name === selectedLevelName);
 
+  const navItems = [
+    { id: 'about', label: t.navigation.about },
+    { id: 'why-learn', label: t.navigation.whyLearn },
+    { id: 'levels', label: t.navigation.levels },
+    { id: 'visa', label: t.navigation.visa },
+    { id: 'faq', label: t.navigation.faq }
+  ];
+
   return (
     <div className="relative min-h-screen bg-brand-white text-brand-black">
       <Header />
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-6 focus:left-6 focus:z-50 focus:rounded-lg focus:bg-brand-white focus:px-6 focus:py-3 focus:font-bold focus:text-brand-black focus:shadow-2xl focus:ring-2 focus:ring-brand-gold">Skip to content</a>
 
-      {loading && (
-        <div className="flex h-64 items-center justify-center pt-20">
-          <div className="h-10 w-10 animate-spin rounded-full border-4 border-brand-red border-t-transparent"></div>
-        </div>
-      )}
+      {/* Floating Language Toggle */}
+      <button
+        onClick={() => setLang(lang === 'de' ? 'en' : 'de')}
+        className="fixed bottom-8 right-8 z-50 flex items-center justify-center gap-3 px-6 py-4 bg-brand-gold hover:bg-brand-gold-hover text-brand-black font-bold rounded-full shadow-[0_0_30px_rgba(214,177,97,0.5)] transition-all hover:scale-105 active:scale-95"
+      >
+        <Globe className="w-5 h-5 animate-pulse" />
+        {lang === 'de' ? '🇬🇧 Translate to English' : '🇩🇪 Auf Deutsch lesen'}
+      </button>
 
-      {apiError && !loading && (
-        <div className="mx-auto max-w-3xl px-4 pt-24 pb-4">
-          <div className="flex items-center gap-3 rounded-xl border border-brand-gold/30 bg-brand-gold/5 p-4 text-sm text-brand-olive-dark">
-            <AlertCircle className="h-5 w-5 flex-shrink-0 text-brand-gold" />
-            <span>Showing cached course information. Live pricing may vary.</span>
-          </div>
-        </div>
-      )}
+      {/* Hero Section */}
+      <section className="bg-brand-black text-brand-white pt-32 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden relative border-b-[8px] border-brand-red">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_40%,rgba(232,160,32,0.05),transparent)]" aria-hidden="true" />
+        <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-12 items-center relative z-10">
+          <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="text-left">
+            <div className="text-6xl sm:text-7xl mb-6">{t.hero.emoji}</div>
+            <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-brand-white mb-6 leading-tight">
+              {t.hero.titleBase}<br className="hidden sm:block"/> <span className="text-brand-red">{t.hero.titleHighlight}</span>
+            </h1>
+            <p className="text-lg sm:text-xl text-brand-off-white max-w-2xl mb-12 leading-relaxed">
+              {t.hero.subtitle}
+            </p>
+            <div className="grid grid-cols-2 gap-4">
+              {t.hero.stats.map((stat, idx) => (
+                <motion.div
+                  key={idx} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 + (idx * 0.1) }}
+                  className="bg-brand-surface/10 backdrop-blur-sm p-4 sm:p-5 rounded-xl border-l-4 border-brand-red hover:border-brand-gold transition duration-300"
+                >
+                  <div className="text-2xl sm:text-3xl font-bold text-brand-gold mb-1">{stat.value}</div>
+                  <div className="text-xs sm:text-sm font-semibold text-brand-off-white">{stat.label}</div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
 
-      <section className="relative py-28 sm:py-36 text-center overflow-hidden bg-brand-off-white">
-        <HeroBackground />
-        <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-          <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="mx-auto max-w-4xl">
-            <motion.div variants={fadeInUp} className="mb-8 flex justify-center">
-              <span className="inline-flex items-center gap-2 rounded-full border border-brand-red/20 bg-brand-red/10 px-4 py-1.5 text-sm font-semibold text-brand-red"><Star className="h-4 w-4 fill-current" />CEFR Aligned Curriculum</span>
-            </motion.div>
-            <motion.h1 variants={fadeInUp} className="font-display mb-6 text-5xl font-bold tracking-tight text-brand-black sm:text-6xl lg:text-7xl">
-              Master German for <br className="hidden sm:inline" /><span className="text-brand-red">Your Career</span>
-            </motion.h1>
-            <div className="w-[60px] h-[3px] bg-brand-red mx-auto mb-6" />
-            <motion.p variants={fadeInUp} className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-brand-olive-dark sm:text-xl">{displayCourse.description}</motion.p>
-            <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-4 text-sm font-medium text-brand-olive-dark">
-              <div className="flex items-center gap-2 rounded-lg bg-brand-white px-4 py-2 border border-brand-surface"><Shield className="h-5 w-5 text-brand-red" /><span>TELC / Goethe Prep</span></div>
-              <div className="flex items-center gap-2 rounded-lg bg-brand-white px-4 py-2 border border-brand-surface"><Globe className="h-5 w-5 text-brand-red" /><span>Native Instructors</span></div>
-            </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative lg:h-[600px] h-[400px] rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-2 border-brand-surface group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+              alt="Neuschwanstein Castle"
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-brand-black/80 via-transparent to-transparent"></div>
           </motion.div>
         </div>
       </section>
 
-      <main id="main-content" className="relative z-10">
-        <section className="px-4 py-24 sm:px-6 lg:px-8 bg-brand-white">
-          <div className="mx-auto max-w-7xl">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="mb-16 text-center">
-              <h2 className="text-3xl font-bold tracking-tight text-brand-black sm:text-4xl">Choose Your Level</h2>
-              <div className="w-12 h-[3px] bg-brand-red mx-auto mt-4 mb-4" />
-              <p className="mt-4 text-lg text-brand-olive-dark">From beginner A1 to expert C2, find the perfect fit.</p>
-            </motion.div>
-            {displayCourse.levels && displayCourse.levels.length > 0 ? (
-              <div className="grid gap-8 lg:grid-cols-3">
-                {displayCourse.levels.map((level, index) => (<CourseLevelCard key={index} level={level} index={index} onEnroll={() => { setSelectedLevelName(level.name); setIsEnrollModalOpen(true); }} />))}
-              </div>
-            ) : (<div className="rounded-2xl border border-dashed border-brand-olive-light p-12 text-center text-brand-olive">No course levels available at the moment.</div>)}
-          </div>
-        </section>
+      {/* Sticky Scroll Navigation */}
+      <nav className="bg-brand-white/95 backdrop-blur-md shadow-md sticky top-0 md:top-20 z-30 border-b border-brand-surface">
+        <div className="max-w-6xl mx-auto flex overflow-x-auto scrollbar-hide">
+          {navItems.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => scrollToSection(tab.id)}
+              className={`flex-1 min-w-max py-4 px-6 text-center font-bold text-sm whitespace-nowrap transition-all border-b-4 ${
+                activeSection === tab.id
+                  ? 'border-brand-red text-brand-red bg-brand-off-white'
+                  : 'border-transparent text-brand-olive hover:text-brand-red hover:bg-brand-off-white/50'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </nav>
 
-        <section className="bg-brand-surface px-4 py-24 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12 text-center">
-              <h2 className="text-3xl font-bold tracking-tight text-brand-black sm:text-4xl">Frequently Asked Questions</h2>
-              <div className="w-12 h-[3px] bg-brand-red mx-auto mt-4" />
-            </motion.div>
-            <div className="rounded-2xl bg-brand-white p-6 shadow-[0_2px_12px_rgba(110,110,80,0.10)] sm:p-10">
-              {faqs.map((faq) => (<FAQItem key={faq.id} faq={faq} isOpen={openFAQ === faq.id} onToggle={() => setOpenFAQ(openFAQ === faq.id ? null : faq.id)} />))}
+      {/* Loading */}
+      {loading && (
+        <div className="flex h-32 items-center justify-center">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-brand-red border-t-transparent"></div>
+        </div>
+      )}
+      {apiError && !loading && (
+        <div className="max-w-6xl mx-auto px-4 pt-8">
+          <div className="flex items-center gap-3 rounded-lg border border-brand-gold/30 bg-brand-gold/10 p-4 text-sm text-brand-black">
+            <AlertCircle className="h-5 w-5 text-brand-gold" />
+            <span>Showing cached course information. System couldn't reach the live server.</span>
+          </div>
+        </div>
+      )}
+
+      {!loading && (
+        <main>
+          {/* ═══════════════════════════════════════════════════
+              Section 1: About Germany
+             ═══════════════════════════════════════════════════ */}
+          <section
+            id="about"
+            ref={setSectionRef('about')}
+            className="py-20 px-4 sm:px-6 lg:px-8 bg-brand-off-white"
+          >
+            <div className="max-w-6xl mx-auto">
+              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="space-y-14">
+                <motion.div variants={fadeInUp} className="text-center">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-brand-black mb-4">{t.about.title}</h2>
+                  <div className="w-16 h-1 bg-brand-red mx-auto rounded"></div>
+                </motion.div>
+
+                <motion.div
+                  variants={fadeInUp}
+                  className="w-full h-[300px] md:h-[450px] rounded-2xl overflow-hidden relative shadow-lg group mx-auto"
+                >
+                  <img src="https://images.unsplash.com/photo-1599946347371-68eb71b16afc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Berlin Cityscape" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-black/60 to-transparent"></div>
+                  <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-brand-white">
+                    <div className="text-2xl md:text-3xl font-bold">{t.about.berlinLabel}</div>
+                    <div className="text-sm md:text-base text-brand-off-white font-medium">{t.about.berlinDesc}</div>
+                  </div>
+                </motion.div>
+
+                <motion.div variants={fadeInUp} className="grid md:grid-cols-3 gap-8">
+                  {t.about.cards.map((card, idx) => (
+                    <motion.div key={idx} variants={fadeInUp} className="bg-brand-white p-8 rounded-xl shadow-[0_2px_12px_rgba(110,110,80,0.10)] border-t-4 border-brand-red hover:border-brand-gold transition-all duration-300 hover:-translate-y-1">
+                      <h3 className="text-xl font-bold text-brand-black mb-4">{card.title}</h3>
+                      <p className="text-sm text-brand-olive-dark mb-4">{card.text}</p>
+                      <span className="px-3 py-1 bg-brand-surface rounded-md text-xs font-bold text-brand-black">{card.highlight}</span>
+                    </motion.div>
+                  ))}
+                </motion.div>
+
+                <motion.div variants={fadeInUp} className="max-w-3xl mx-auto border-l-4 border-brand-gold pl-8 py-4 space-y-10 relative">
+                  {t.about.heritage.timeline.map((item, idx) => (
+                    <div key={idx} className="relative">
+                      <div className="absolute -left-[45px] top-1 w-5 h-5 bg-brand-red border-4 border-brand-white rounded-full shadow"></div>
+                      <h4 className="text-xl font-bold text-brand-black mb-2">{item.title}</h4>
+                      <p className="text-brand-olive-dark">{item.desc}</p>
+                    </div>
+                  ))}
+                </motion.div>
+              </motion.div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section className="px-4 py-24 sm:px-6 lg:px-8 bg-brand-white">
-          <div className="mx-auto max-w-5xl">
-            <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="relative overflow-hidden rounded-3xl bg-brand-red px-6 py-16 text-center text-white shadow-2xl sm:px-12 sm:py-20">
-              <div className="relative z-10">
-                <Globe className="mx-auto mb-6 h-12 w-12 text-white" />
-                <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">Start Speaking German Today</h2>
-                <p className="mx-auto mb-10 max-w-2xl text-lg text-white/80">Open doors to new career opportunities in German-speaking countries.</p>
-              </div>
-              <div className="absolute top-0 right-0 -mt-10 -mr-10 h-64 w-64 rounded-full bg-brand-gold/10 blur-3xl"></div>
-              <div className="absolute bottom-0 left-0 -mb-10 -ml-10 h-64 w-64 rounded-full bg-brand-black/10 blur-3xl"></div>
+          {/* Divider */}
+          <div className="h-1 bg-gradient-to-r from-transparent via-brand-red to-transparent"></div>
+
+          {/* ═══════════════════════════════════════════════════
+              Section 2: Why Learn German
+             ═══════════════════════════════════════════════════ */}
+          <section
+            id="why-learn"
+            ref={setSectionRef('why-learn')}
+            className="py-20 px-4 sm:px-6 lg:px-8 bg-brand-white"
+          >
+            <div className="max-w-6xl mx-auto">
+              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="space-y-12">
+                <motion.div variants={fadeInUp} className="text-center">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-brand-black mb-4">{t.whyLearn.title}</h2>
+                  <div className="w-16 h-1 bg-brand-red mx-auto rounded"></div>
+                </motion.div>
+
+                <motion.div className="grid md:grid-cols-2 gap-6">
+                  {t.whyLearn.list.map((item) => (
+                    <motion.div variants={fadeInUp} key={item.id} className="flex bg-brand-white p-6 rounded-xl shadow-sm border-l-4 border-brand-gold shadow-[0_2px_12px_rgba(110,110,80,0.10)] hover:border-brand-red hover:-translate-y-1 transition-all duration-300">
+                      <div className="text-4xl font-extrabold text-brand-surface mr-6">{item.id.toString().padStart(2, '0')}</div>
+                      <div>
+                        <h4 className="text-lg font-bold text-brand-black mb-1">{item.title}</h4>
+                        <p className="text-sm text-brand-olive-dark">{item.text}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </motion.div>
+            </div>
+          </section>
+
+          {/* Divider */}
+          <div className="h-1 bg-gradient-to-r from-transparent via-brand-gold to-transparent"></div>
+
+          {/* ═══════════════════════════════════════════════════
+              Section 3: Course Levels
+             ═══════════════════════════════════════════════════ */}
+          <section
+            id="levels"
+            ref={setSectionRef('levels')}
+            className="py-20 px-4 sm:px-6 lg:px-8 bg-brand-off-white"
+          >
+            <div className="max-w-6xl mx-auto">
+              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="space-y-12">
+                <motion.div variants={fadeInUp} className="text-center">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-brand-black mb-4">{t.levels.title}</h2>
+                  <div className="w-16 h-1 bg-brand-red mx-auto rounded"></div>
+                </motion.div>
+
+                <motion.div className="grid lg:grid-cols-3 gap-6">
+                  {displayCourse.levels && displayCourse.levels.length > 0 ? (
+                    displayCourse.levels.map((level, index) => (
+                      <CourseLevelCard
+                        key={index}
+                        level={level}
+                        onEnroll={() => { setSelectedLevelName(level.name); setIsEnrollModalOpen(true); }}
+                        lang={lang}
+                      />
+                    ))
+                  ) : (
+                    <div className="rounded-2xl border border-dashed border-brand-olive-light p-12 text-center text-brand-olive col-span-3">No course levels available at the moment.</div>
+                  )}
+                </motion.div>
+
+                <motion.div variants={fadeInUp} className="grid md:grid-cols-3 gap-6 pt-4">
+                  <div className="p-6 bg-brand-white rounded-xl shadow-[0_2px_12px_rgba(110,110,80,0.10)] border-t-4 border-brand-gold hover:-translate-y-1 transition-all duration-300">
+                    <BookOpen className="w-8 h-8 text-brand-gold mb-4" />
+                    <h3 className="font-bold text-brand-black mb-2">{lang === 'de' ? 'Lesen & Schreiben' : 'Reading & Writing'}</h3>
+                    <p className="text-sm text-brand-olive-dark">{lang === 'de' ? 'Beherrsche Grammatik und Wortschatz, um Kommunikation problemlos zu bewältigen.' : 'Master grammar and vocabulary to handle communication smoothly.'}</p>
+                  </div>
+                  <div className="p-6 bg-brand-white rounded-xl shadow-[0_2px_12px_rgba(110,110,80,0.10)] border-t-4 border-brand-gold hover:-translate-y-1 transition-all duration-300">
+                    <MessageCircle className="w-8 h-8 text-brand-gold mb-4" />
+                    <h3 className="font-bold text-brand-black mb-2">{lang === 'de' ? 'Sprechen & Hören' : 'Speaking & Listening'}</h3>
+                    <p className="text-sm text-brand-olive-dark">{lang === 'de' ? 'Umfangreiche Konversationspraxis mit Fokus auf korrekte Aussprache.' : 'Extensive conversational practice focusing on correct pronunciation.'}</p>
+                  </div>
+                  <div className="p-6 bg-brand-white rounded-xl shadow-[0_2px_12px_rgba(110,110,80,0.10)] border-t-4 border-brand-gold hover:-translate-y-1 transition-all duration-300">
+                    <FileText className="w-8 h-8 text-brand-gold mb-4" />
+                    <h3 className="font-bold text-brand-black mb-2">{lang === 'de' ? 'Prüfungsvorbereitung' : 'Exam Prep'}</h3>
+                    <p className="text-sm text-brand-olive-dark">{lang === 'de' ? 'Gezieltes Training für offizielle Zertifizierungen.' : 'Targeted training for official certification.'}</p>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </div>
+          </section>
+
+          {/* Divider */}
+          <div className="h-1 bg-gradient-to-r from-transparent via-brand-red to-transparent"></div>
+
+          {/* ═══════════════════════════════════════════════════
+              Section 4: Visa & Immigration
+             ═══════════════════════════════════════════════════ */}
+          <section
+            id="visa"
+            ref={setSectionRef('visa')}
+            className="py-20 px-4 sm:px-6 lg:px-8 bg-brand-white"
+          >
+            <div className="max-w-6xl mx-auto">
+              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="space-y-12">
+                <motion.div variants={fadeInUp} className="text-center">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-brand-black mb-4">{t.visa.title}</h2>
+                  <div className="w-16 h-1 bg-brand-red mx-auto rounded"></div>
+                </motion.div>
+
+                <motion.div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {t.visa.types.map((visa, idx) => (
+                    <motion.div key={idx} variants={fadeInUp} className="bg-brand-white p-6 rounded-xl shadow-[0_2px_12px_rgba(110,110,80,0.10)] border-t-4 border-brand-black hover:border-brand-red hover:-translate-y-1 transition-all duration-300">
+                      <div className="text-3xl mb-3">{visa.icon}</div>
+                      <h3 className="font-bold text-xl text-brand-black mb-2">{visa.title}</h3>
+                      <p className="text-brand-olive-dark text-sm mb-4">{visa.desc}</p>
+                      <span className="inline-block px-3 py-1 bg-brand-gold text-brand-black font-bold text-xs rounded-full">{visa.req}</span>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </motion.div>
+            </div>
+          </section>
+
+          {/* Divider */}
+          <div className="h-1 bg-gradient-to-r from-transparent via-brand-gold to-transparent"></div>
+
+          {/* ═══════════════════════════════════════════════════
+              Section 5: FAQ
+             ═══════════════════════════════════════════════════ */}
+          <section
+            id="faq"
+            ref={setSectionRef('faq')}
+            className="py-20 px-4 sm:px-6 lg:px-8 bg-brand-off-white"
+          >
+            <div className="max-w-3xl mx-auto">
+              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="space-y-12">
+                <motion.div variants={fadeInUp} className="text-center">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-brand-black mb-4">{t.faq.title}</h2>
+                  <div className="w-16 h-1 bg-brand-red mx-auto rounded"></div>
+                </motion.div>
+
+                <motion.div variants={fadeInUp} className="space-y-4">
+                  {t.faq.questions.map((faq, idx) => (
+                    <div key={idx} className="bg-brand-white rounded-xl shadow-sm border border-brand-surface overflow-hidden">
+                      <button
+                        onClick={() => setOpenFAQ(openFAQ === idx ? null : idx)}
+                        className="w-full px-6 py-5 flex items-center justify-between font-bold text-brand-black focus:outline-none hover:bg-brand-off-white transition-colors"
+                      >
+                        <span className="text-left text-lg">{faq.question}</span>
+                        <span className={`text-brand-red text-2xl font-bold ml-4 transition-transform duration-200 ${openFAQ === idx ? 'rotate-45' : ''}`}>+</span>
+                      </button>
+                      <AnimatePresence>
+                        {openFAQ === idx && (
+                          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden">
+                            <div className="px-6 pb-5 text-brand-olive-dark pt-2 leading-relaxed">{faq.answer}</div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))}
+                </motion.div>
+              </motion.div>
+            </div>
+          </section>
+
+          {/* Final CTA */}
+          <section className="bg-brand-black py-20 px-4 text-center">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+              <h2 className="text-3xl sm:text-4xl font-bold text-brand-gold mb-6">
+                {lang === 'de' ? 'Bereit, deine Reise zu beginnen?' : 'Ready to Start Your Journey?'}
+              </h2>
+              <p className="text-brand-off-white max-w-2xl mx-auto mb-10 text-lg">
+                {lang === 'de' ? 'Melden Sie sich noch heute für den Sprachkurs an!' : 'Enroll in the Skyline German Course today!'}
+              </p>
+              <button
+                onClick={() => { scrollToSection('levels'); }}
+                className="inline-block px-10 py-4 bg-brand-red hover:bg-brand-red-hover text-brand-white font-bold text-lg rounded transition-colors shadow-xl"
+              >
+                {lang === 'de' ? 'Jetzt Teilnahme sichern' : 'Join Skyline German Course'}
+              </button>
             </motion.div>
-          </div>
-        </section>
-      </main>
+          </section>
+        </main>
+      )}
 
       <Footer />
-      <EnrollmentModal isOpen={isEnrollModalOpen} onClose={() => setIsEnrollModalOpen(false)} origin="german" originPath="/training/german" selectedLevel={selectedLevelName} paymentAmount={selectedLevelDetails?.price} />
+
+      <EnrollmentModal
+        isOpen={isEnrollModalOpen}
+        onClose={() => setIsEnrollModalOpen(false)}
+        origin="german"
+        originPath="/training/german"
+        selectedLevel={selectedLevelName}
+        paymentAmount={selectedLevelDetails?.price}
+      />
     </div>
   );
 };

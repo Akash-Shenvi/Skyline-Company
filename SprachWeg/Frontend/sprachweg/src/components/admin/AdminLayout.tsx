@@ -16,8 +16,6 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
     const menuItems = [
         { path: '/admin-dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-        { path: '/admin/internship-applications', icon: Briefcase, label: 'Internship Requests' },
-        { path: '/admin/internships', icon: Plus, label: 'Add Internships' },
         { path: '/admin/webinars', icon: BookOpen, label: 'Webinars' },
         { path: '/admin/webinar-registrations', icon: Users, label: 'Webinar Registrations' },
         { path: '/admin/users', icon: Users, label: 'Users' },
@@ -52,7 +50,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                                 <h1 className="font-serif font-bold text-lg text-brand-black">
                                     Admin Panel
                                 </h1>
-                                <p className="text-xs text-brand-olive">SoVir Academy</p>
+                                <p className="text-xs text-brand-olive">Skyline Academy</p>
                             </div>
                         </Link>
                     </div>

@@ -49,13 +49,12 @@ const Header: React.FC = () => {
     useEffect(() => {
         const fetchInternships = async () => {
             try {
-                const response = await internshipCatalogAPI.getAll();
-                setInternships(response.internships || []);
+                // API call purposefully disabled per user request to hide internships
+                setInternships([]);
             } catch (error) {
                 console.error('Failed to load header internships:', error);
             }
         };
-
         fetchInternships();
     }, []);
 
@@ -111,15 +110,6 @@ const Header: React.FC = () => {
                                 <div className="p-6">
                                     <h3 className="text-xs font-bold uppercase tracking-wider text-brand-gold mb-4">Languages</h3>
                                     <div className="space-y-3">
-                                        <Link to="/training/english" className="flex items-start gap-3 p-2 rounded-lg hover:bg-brand-olive-dark transition-colors group/item">
-                                            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-brand-gold/10 flex items-center justify-center text-brand-gold">
-                                                <span className="text-lg">🇬🇧</span>
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <p className="text-sm font-semibold text-brand-white group-hover/item:text-brand-gold">English</p>
-                                                <p className="text-xs text-white/60">Business & academic English</p>
-                                            </div>
-                                        </Link>
                                         <Link to="/training/german" className="flex items-start gap-3 p-2 rounded-lg hover:bg-brand-olive-dark transition-colors group/item">
                                             <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-brand-gold/10 flex items-center justify-center text-brand-gold">
                                                 <span className="text-lg">🇩🇪</span>
@@ -127,6 +117,15 @@ const Header: React.FC = () => {
                                             <div className="flex-1 min-w-0">
                                                 <p className="text-sm font-semibold text-brand-white group-hover/item:text-brand-gold">German</p>
                                                 <p className="text-xs text-white/60">A1 to C1 proficiency levels</p>
+                                            </div>
+                                        </Link>
+                                        <Link to="/training/english" className="flex items-start gap-3 p-2 rounded-lg hover:bg-brand-olive-dark transition-colors group/item">
+                                            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-brand-gold/10 flex items-center justify-center text-brand-gold">
+                                                <span className="text-lg">🇬🇧</span>
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-sm font-semibold text-brand-white group-hover/item:text-brand-gold">English</p>
+                                                <p className="text-xs text-white/60">Business & academic English</p>
                                             </div>
                                         </Link>
                                         <Link to="/training/japanese" className="flex items-start gap-3 p-2 rounded-lg hover:bg-brand-olive-dark transition-colors group/item">
@@ -364,8 +363,8 @@ const Header: React.FC = () => {
                             {openDropdown === 'language' && (
                                 <div className="bg-brand-olive-dark/30 rounded pl-4 pr-2 py-2 space-y-1">
                                     <h4 className="text-xs font-bold uppercase text-brand-gold mb-2">Languages</h4>
-                                    <Link to="/training/english" className="block text-white/75 py-1 text-xs" onClick={() => setIsMenuOpen(false)}>🇬🇧 English</Link>
                                     <Link to="/training/german" className="block text-white/75 py-1 text-xs" onClick={() => setIsMenuOpen(false)}>🇩🇪 German</Link>
+                                    <Link to="/training/english" className="block text-white/75 py-1 text-xs" onClick={() => setIsMenuOpen(false)}>🇬🇧 English</Link>
                                     <Link to="/training/japanese" className="block text-white/75 py-1 text-xs" onClick={() => setIsMenuOpen(false)}>🇯🇵 Japanese</Link>
                                 </div>
                             )}

@@ -39,7 +39,10 @@ api.interceptors.response.use(
         if (error.response?.status === 401) {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
-            window.location.href = '/login';
+            const nextAuthPath = window.location.pathname.startsWith('/institution')
+                ? '/institution/login'
+                : '/login';
+            window.location.href = nextAuthPath;
         }
         return Promise.reject(error);
     }
@@ -308,6 +311,61 @@ export const internshipCatalogAPI = {
     },
     async delete(id: string) {
         const response = await api.delete(`/internships/admin/${id}`);
+        return response.data;
+    },
+};
+
+export const institutionAPI = {
+    async getDashboard() {
+        const response = await api.get('/institutions/dashboard');
+        return response.data;
+    },
+    async getSubmissions() {
+        const response = await api.get('/institutions/submissions');
+        return response.data;
+    },
+    async createSubmission(data: {
+        language: 'German';
+        courseTitle: string;
+        levelName: string;
+        students: Array<{ name: string; email: string; password: string }>;
+    }) {
+        const response = await api.post('/institutions/submissions', data);
+        return response.data;
+    },
+    async getAdminRequests(params?: { page?: number; limit?: number; status?: string; search?: string }) {
+        const searchParams = new URLSearchParams();
+
+        if (params?.page) {
+            searchParams.set('page', String(params.page));
+        }
+
+        if (params?.limit) {
+            searchParams.set('limit', String(params.limit));
+        }
+
+        if (params?.status) {
+            searchParams.set('status', params.status);
+        }
+
+        if (params?.search) {
+            searchParams.set('search', params.search);
+        }
+
+        const queryString = searchParams.toString();
+        const response = await api.get(`/admin/institutions/requests${queryString ? `?${queryString}` : ''}`);
+        return response.data;
+    },
+    async approveRequest(id: string) {
+        const response = await api.post(`/admin/institutions/requests/${id}/approve`);
+        return response.data;
+    },
+    async rejectRequest(id: string, reason?: string) {
+        const response = await api.post(`/admin/institutions/requests/${id}/reject`, reason ? { reason } : {});
+        return response.data;
+    },
+    async deleteRequest(id: string) {
+        const response = await api.delete(`/admin/institutions/requests/${id}`);
         return response.data;
     },
 };

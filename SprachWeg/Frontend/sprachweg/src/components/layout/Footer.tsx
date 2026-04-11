@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
         <footer className="bg-brand-black border-t-[3px] border-brand-red text-white pt-16 pb-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Main Grid - 4 Columns with Company Info spanning 2 */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 mb-16">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-8 lg:gap-10 mb-16">
                     {/* Column 1-2: Company Info (spans 2 columns on large screens) */}
                     <div className="space-y-6 lg:col-span-2">
                         <div className="flex items-center gap-3">
@@ -75,6 +75,16 @@ const Footer: React.FC = () => {
                         <ul className="space-y-3 text-sm text-white/75">
                             <li><Link to="/privacy-policy" className="hover:text-brand-gold transition-colors block">Privacy Policy</Link></li>
                             <li><Link to="/terms-and-conditions" className="hover:text-brand-gold transition-colors block">Terms & Condition</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* Column 6: Portals */}
+                    <div>
+                        <h3 className="font-bold text-brand-gold mb-6 text-base">Portals</h3>
+                        <ul className="space-y-3 text-sm text-white/75">
+                            <li><Link to="/login" className="hover:text-brand-gold transition-colors block">Student Portal</Link></li>
+                            <li><Link to="/institution-login" className="hover:text-brand-gold transition-colors block">Institution Portal</Link></li>
+                            <li><Link to="/login" className="hover:text-brand-gold transition-colors block">Trainer Portal</Link></li>
                         </ul>
                     </div>
                 </div>

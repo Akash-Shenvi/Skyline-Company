@@ -40,12 +40,17 @@ import ManageTrainers from './pages/Admin/ManageTrainers';
 import FeedbackPage from './pages/FeedbackPage';
 import AdminFeedback from './pages/Admin/AdminFeedback';
 import AdminFileLinks from './pages/Admin/AdminFileLinks';
+import AdminInstitutionRequests from './pages/Admin/AdminInstitutionRequests';
 import ManageStudents from './pages/Admin/ManageStudents';
 import ChatPage from './pages/ChatPage';
 import VerificationPage from './pages/VerificationPage';
 import CareersPage from './pages/CareersPage';
+import InstitutionDashboard from './pages/InstitutionDashboard';
+import InstitutionLoginPage from './pages/InstitutionLoginPage';
+import InstitutionRegisterPage from './pages/InstitutionRegisterPage';
 import PaymentResultPage from './pages/PaymentResultPage';
 import { getDashboardPathForRole } from './lib/authRouting';
+import { isInstitutionStudentRole } from './lib/roles';
 
 
 
@@ -124,10 +129,26 @@ const TrainerRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     return <>{children}</>;
 };
 
+const InstitutionRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const { user, loading } = useAuth();
+    const location = useLocation();
+
+    if (loading) return <div>Loading...</div>;
+
+    if (!user || user.role !== 'institution') {
+        const redirectTo = `${location.pathname}${location.search}${location.hash}`;
+        return <Navigate to={`/institution/login?redirect=${encodeURIComponent(redirectTo)}`} replace />;
+    }
+
+    return <>{children}</>;
+};
+
 const AppContent = () => {
     const { user } = useAuth();
 
     const isProfileIncomplete = user
+        && user.role !== 'institution'
+        && !isInstitutionStudentRole(user.role)
         && user.isProfileComplete === false;
 
     return (
@@ -176,6 +197,22 @@ const AppContent = () => {
                     }
                 />
                 <Route
+                    path="/institution/login"
+                    element={
+                        <PublicRoute>
+                            <InstitutionLoginPage />
+                        </PublicRoute>
+                    }
+                />
+                <Route
+                    path="/institution/register"
+                    element={
+                        <PublicRoute>
+                            <InstitutionRegisterPage />
+                        </PublicRoute>
+                    }
+                />
+                <Route
                     path="/forgot-password"
                     element={
                         <PublicRoute>
@@ -207,6 +244,14 @@ const AppContent = () => {
                         <TrainerRoute>
                             <TrainerDashboard />
                         </TrainerRoute>
+                    }
+                />
+                <Route
+                    path="/institution-dashboard"
+                    element={
+                        <InstitutionRoute>
+                            <InstitutionDashboard />
+                        </InstitutionRoute>
                     }
                 />
 
@@ -330,6 +375,14 @@ const AppContent = () => {
                     element={
                         <AdminRoute>
                             <AdminFileLinks />
+                        </AdminRoute>
+                    }
+                />
+                <Route
+                    path="/admin/institutions"
+                    element={
+                        <AdminRoute>
+                            <AdminInstitutionRequests />
                         </AdminRoute>
                     }
                 />
