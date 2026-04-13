@@ -404,6 +404,23 @@ const AdminDashboard: React.FC = () => {
                             animate="visible"
                             className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
                         >
+                            {/*
+                            Webinar admin shortcuts are intentionally disabled for now.
+                            <QuickAccessCard
+                                to="/admin/webinars"
+                                icon={<BookOpen className="h-5 w-5 text-brand-gold" />}
+                                title="Manage Webinars"
+                                description="Create and manage webinar sessions"
+                                accent="#C8232B"
+                            />
+                            <QuickAccessCard
+                                to="/admin/webinar-registrations"
+                                icon={<Users className="h-5 w-5 text-brand-gold" />}
+                                title="Webinar Registrations"
+                                description="Review webinar registrations and approvals"
+                                accent="#22c55e"
+                            />
+                            */}
                             <QuickAccessCard
                                 to="/admin/messages"
                                 icon={<Mail className="h-5 w-5 text-brand-gold" />}
