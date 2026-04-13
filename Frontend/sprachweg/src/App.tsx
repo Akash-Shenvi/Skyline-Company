@@ -257,6 +257,7 @@ const AppContent = () => {
 
                 {/* Admin Routes */}
                 <Route path="/auth/google/callback" element={<GoogleCallback />} />
+                {/* Webinar admin routes are intentionally disabled for now. */}
                 <Route
                     path="/admin-dashboard"
                     element={

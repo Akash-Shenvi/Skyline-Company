@@ -83,7 +83,7 @@ const Footer: React.FC = () => {
                         <h3 className="font-bold text-brand-gold mb-6 text-base">Portals</h3>
                         <ul className="space-y-3 text-sm text-white/75">
                             <li><Link to="/login" className="hover:text-brand-gold transition-colors block">Student Portal</Link></li>
-                            <li><Link to="/institution-login" className="hover:text-brand-gold transition-colors block">Institution Portal</Link></li>
+                            <li><Link to="/institution/login" className="hover:text-brand-gold transition-colors block">Institution Portal</Link></li>
                             <li><Link to="/login" className="hover:text-brand-gold transition-colors block">Trainer Portal</Link></li>
                         </ul>
                     </div>
@@ -157,7 +157,7 @@ const Footer: React.FC = () => {
 
                 {/* Copyright & Links */}
                 <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/45">
-                    <p>&copy; 2025 SoVir Skilling & Training Center. All rights reserved.</p>
+                    <p>&copy; 2026 Skyline Skilling & Training Center. All rights reserved.</p>
                     <div className="flex flex-wrap gap-4 justify-center">
                         <Link to="/privacy-policy" className="hover:text-brand-gold transition-colors">Privacy Policy</Link>
                         <Link to="/terms-and-conditions" className="hover:text-brand-gold transition-colors">Terms of Service</Link>
