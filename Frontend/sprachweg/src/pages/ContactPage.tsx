@@ -339,8 +339,8 @@ const ContactPage: React.FC = () => {
 
     // Data
     const contactEmails: ContactEmail[] = [
-        { type: 'Training', email: 'training@skylinetechnologies.in' },
-        { type: 'Queries', email: 'info@skylinetechnologies.in' }
+        { type: 'Training', email: 'careers@skylinetraining.in' },
+        // { type: 'Queries', email: 'info@skylinetechnologies.in' }
     ];
 
     const officeAddress = "JLB Complex Gopadi, NH 66, Koteshwara Proper, Kundapura, Karnataka 576201";
@@ -454,7 +454,7 @@ const ContactPage: React.FC = () => {
                                         </IconWrapper>
                                         <div>
                                             <h3 className="font-semibold text-sm sm:text-base md:text-lg mb-1 sm:mb-2 text-white">Let's Talk</h3>
-                                            <p className="text-brand-olive-light text-xs sm:text-sm md:text-base leading-snug">+91 8851771838 / +91 8840957097</p>
+                                            <p className="text-brand-olive-light text-xs sm:text-sm md:text-base leading-snug">+91 8851771838</p>
                                         </div>
                                     </motion.div>
                                 </motion.div>
