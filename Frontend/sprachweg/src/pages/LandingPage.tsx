@@ -228,19 +228,18 @@ const LandingPage: React.FC = () => {
                             </span>
                         </div>
 
-                        <h1 className="font-sans text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight max-w-5xl mx-auto mb-4">
-                            Skyline Skilling & <br className="hidden sm:block" />
-                            <span>Training Center</span>
+                        <h1 className="font-sans text-[5.5vw] sm:text-4xl md:text-5xl lg:text-6xl xl:text-[5rem] font-bold text-white leading-tight tracking-tight w-full mx-auto mb-6 whitespace-nowrap">
+                            Skyline Skilling & Training Center
                         </h1>
 
                         {/* Decorative gold line */}
-                        <div className="w-[60px] h-[3px] bg-brand-gold mx-auto mb-4" />
+                        <div className="w-[80px] h-[3px] bg-brand-gold mx-auto mb-6" />
 
-                        <p className="text-base md:text-lg lg:text-xl font-medium text-brand-gold w-full max-w-4xl mx-auto mb-2">
+                        <p className="text-base md:text-xl lg:text-2xl font-medium text-brand-gold w-full max-w-5xl mx-auto mb-4">
                             Career services by skyline skilling & training center
                         </p>
 
-                        <p className="text-sm sm:text-base md:text-lg text-white/75 leading-relaxed w-full max-w-5xl mx-auto mb-8">
+                        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed w-full max-w-6xl xl:max-w-7xl mx-auto mb-10 px-4 sm:px-6">
                             A professional training academy empowering individuals with industry-ready skills and global career opportunities through specialized skill development and abroad placement support.
                         </p>
 
