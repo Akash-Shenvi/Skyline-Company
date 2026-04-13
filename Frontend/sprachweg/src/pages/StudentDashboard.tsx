@@ -22,7 +22,9 @@ import Button from '../components/ui/Button';
 import ProfileCompletionModal from '../components/auth/ProfileCompletionModal';
 import LearnerQuickActions from '../components/layout/LearnerQuickActions';
 import { getDashboardPathForRole } from '../lib/authRouting';
-import { formatRoleLabel } from '../lib/roles';
+import { formatRoleLabel, isInstitutionStudentRole } from '../lib/roles';
+import Header from '../components/layout/Header';
+import Footer from '../components/layout/Footer';
 
 // ============================================================================
 // TYPE DEFINITIONS
@@ -396,195 +398,203 @@ const StudentDashboard: React.FC = () => {
         if (user) { fetchDashboardData(); }
     }, [user]);
 
+    const showHeaderFooter = user && !isInstitutionStudentRole(user.role);
+
     return (
-        <div className="min-h-screen bg-brand-off-white">
-            <LearnerQuickActions homeTo={getDashboardPathForRole(user?.role)} showFeedbackLink />
+        <div className="flex min-h-screen flex-col bg-brand-off-white">
+            {showHeaderFooter && <Header />}
 
-            <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-brand-black focus:px-4 focus:py-2 focus:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold">
-                Skip to content
-            </a>
+            <div className={`flex-1 ${showHeaderFooter ? 'pt-20' : ''}`}>
+                <LearnerQuickActions homeTo={getDashboardPathForRole(user?.role)} showFeedbackLink />
 
-            {/* Hero */}
-            <section className="relative overflow-hidden bg-gradient-to-br from-brand-black via-brand-olive-dark to-[#1a365d] py-24 text-center sm:py-32">
-                <HeroBackground />
-                <div className="relative z-10 mx-auto max-w-3xl px-4">
-                    <motion.div initial="hidden" animate="visible" variants={fadeInUp}>
-                        <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-gold/30 bg-brand-gold/10 px-4 py-1.5">
-                            <Layers className="h-3.5 w-3.5 text-brand-gold" />
-                            <span className="text-xs font-semibold uppercase tracking-widest text-brand-gold">Student Portal</span>
-                        </div>
-                        <h1 className="mb-3 text-4xl font-bold font-sans text-white md:text-5xl">Student Dashboard</h1>
-                        <p className="text-lg text-brand-olive-light">Welcome back, <span className="font-semibold text-brand-gold">{user?.name}</span>!</p>
-                    </motion.div>
-                </div>
-            </section>
+                <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-brand-black focus:px-4 focus:py-2 focus:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold">
+                    Skip to content
+                </a>
 
-            <main id="main-content" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-                <div className="grid gap-8 lg:grid-cols-12">
-
-                    {/* ── Profile Sidebar ── */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="lg:col-span-4"
-                    >
-                        <div className="rounded-2xl border border-brand-surface bg-white shadow-sm overflow-hidden sticky top-6">
-                            {/* Profile Header */}
-                            <div className="relative bg-gradient-to-br from-brand-black to-brand-olive-dark px-6 pt-8 pb-10">
-                                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay" />
-                                <div className="relative flex flex-col items-center text-center">
-                                    <div className="h-24 w-24 rounded-full border-4 border-brand-gold/40 overflow-hidden bg-brand-gold/10 flex items-center justify-center text-brand-gold font-bold text-3xl mb-4 shadow-lg">
-                                        {user?.avatar
-                                            ? <img src={getAssetUrl(user.avatar)} alt={user.name} className="w-full h-full object-cover" />
-                                            : user?.name?.charAt(0).toUpperCase() || 'U'
-                                        }
-                                    </div>
-                                    <h3 className="text-lg font-bold text-white">{user?.name}</h3>
-                                    <span className="mt-1 inline-block rounded-full bg-brand-gold/20 px-3 py-0.5 text-xs font-bold uppercase tracking-wider text-brand-gold">
-                                        {formatRoleLabel(user?.role)}
-                                    </span>
-                                </div>
+                {/* Hero */}
+                <section className="relative overflow-hidden bg-gradient-to-br from-brand-black via-brand-olive-dark to-[#1a365d] py-24 text-center sm:py-32">
+                    <HeroBackground />
+                    <div className="relative z-10 mx-auto max-w-3xl px-4">
+                        <motion.div initial="hidden" animate="visible" variants={fadeInUp}>
+                            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-gold/30 bg-brand-gold/10 px-4 py-1.5">
+                                <Layers className="h-3.5 w-3.5 text-brand-gold" />
+                                <span className="text-xs font-semibold uppercase tracking-widest text-brand-gold">Student Portal</span>
                             </div>
-
-                            {/* Action Buttons */}
-                            <div className="flex border-b border-brand-surface divide-x divide-brand-surface">
-                                <Button
-                                    onClick={() => setIsProfileModalOpen(true)}
-                                    className="flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-semibold text-brand-olive-dark hover:text-brand-gold hover:bg-brand-off-white transition-colors"
-                                    title="Edit Profile"
-                                >
-                                    <Edit className="h-4 w-4" />
-                                    Edit Profile
-                                </Button>
-                                <button
-                                    onClick={() => { logout(); navigate('/login'); }}
-                                    className="flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-semibold text-brand-red hover:bg-brand-red/5 transition-colors"
-                                    title="Logout"
-                                >
-                                    <LogOut className="h-4 w-4" />
-                                    Logout
-                                </button>
-                            </div>
-
-                            {/* Profile Fields */}
-                            <div className="p-5 space-y-2">
-                                <ProfileField icon={<User className="h-4 w-4" />} label="Full Name" value={user?.name} />
-                                <ProfileField icon={<Mail className="h-4 w-4" />} label="Email Address" value={user?.email} />
-                                <ProfileField icon={<Phone className="h-4 w-4" />} label="Phone" value={user?.phoneNumber} />
-
-                                <ProfileField icon={<CalendarDays className="h-4 w-4" />} label="Date of Birth" value={user?.dateOfBirth ? new Date(user.dateOfBirth).toLocaleDateString() : null} />
-                                <ProfileField icon={<GraduationCap className="h-4 w-4" />} label="Qualification" value={user?.qualification} />
-
-                                {(user?.guardianName || user?.guardianPhone) && (
-                                    <div className="pt-2">
-                                        <p className="text-xs font-bold uppercase tracking-widest text-brand-olive-light mb-2 px-1">Guardian Info</p>
-                                        <div className="grid grid-cols-2 gap-2">
-                                            <div className="rounded-xl bg-brand-off-white/80 p-3">
-                                                <p className="text-xs text-brand-olive-light mb-0.5">Name</p>
-                                                <p className="text-sm font-semibold text-brand-black">{user?.guardianName || '—'}</p>
-                                            </div>
-                                            <div className="rounded-xl bg-brand-off-white/80 p-3">
-                                                <p className="text-xs text-brand-olive-light mb-0.5">Phone</p>
-                                                <p className="text-sm font-semibold text-brand-black">{user?.guardianPhone || '—'}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </motion.div>
-
-                    {/* ── Main Content ── */}
-                    <div className="lg:col-span-8 space-y-10">
-
-                        {/* Enrolled Courses */}
-                        <motion.section
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.15, duration: 0.5 }}
-                        >
-                            <SectionHeader
-                                icon={<BookOpen className="h-4 w-4 text-brand-gold" />}
-                                title="Enrolled Courses"
-                                count={!coursesLoading ? courses.length + skillCourses.length : undefined}
-                            />
-                            {coursesLoading ? (
-                                <div className="grid gap-5 sm:grid-cols-1 lg:grid-cols-2">
-                                    {Array.from({ length: 2 }).map((_, i) => <SkeletonCourseCard key={i} />)}
-                                </div>
-                            ) : courses.length > 0 || skillCourses.length > 0 ? (
-                                <div className="space-y-8">
-                                    {courses.length > 0 && (
-                                        <div>
-                                            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-brand-olive-light">
-                                                Language Courses
-                                            </p>
-                                            <motion.div
-                                                variants={containerVariants}
-                                                initial="hidden"
-                                                animate="visible"
-                                                className="grid gap-5 sm:grid-cols-1 lg:grid-cols-2"
-                                            >
-                                                {courses.map((course) => (
-                                                    <CourseCard key={course._id} course={course} />
-                                                ))}
-                                            </motion.div>
-                                        </div>
-                                    )}
-
-                                    {skillCourses.length > 0 && (
-                                        <div>
-                                            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-brand-olive-light">
-                                                Skill Courses
-                                            </p>
-                                            <motion.div
-                                                variants={containerVariants}
-                                                initial="hidden"
-                                                animate="visible"
-                                                className="grid gap-5 sm:grid-cols-1 lg:grid-cols-2"
-                                            >
-                                                {skillCourses.map((course) => (
-                                                    <SkillCourseCard key={course.id} course={course} />
-                                                ))}
-                                            </motion.div>
-                                        </div>
-                                    )}
-                                </div>
-                            ) : (
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.98 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    className="rounded-2xl border-2 border-dashed border-brand-surface bg-white px-6 py-12 text-center"
-                                >
-                                    <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-brand-surface">
-                                        <BookOpen className="h-6 w-6 text-brand-gold" />
-                                    </div>
-                                    <h3 className="text-lg font-bold text-brand-black">No courses enrolled yet</h3>
-                                    <p className="mx-auto mt-2 max-w-md text-sm text-brand-olive">
-                                        Start learning by enrolling in a language course or a skill course.
-                                    </p>
-                                    <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-                                        <Button
-                                            onClick={() => navigate('/language-training')}
-                                            className="rounded-xl bg-brand-black px-5 py-3 text-white hover:bg-brand-olive-dark"
-                                        >
-                                            Enroll to Language Courses
-                                        </Button>
-                                        <Button
-                                            variant="outline"
-                                            onClick={() => navigate('/skill-training')}
-                                            className="rounded-xl border-brand-gold px-5 py-3 text-brand-gold hover:bg-brand-gold/10"
-                                        >
-                                            Enroll to Skill Courses
-                                        </Button>
-                                    </div>
-                                </motion.div>
-                            )}
-                        </motion.section>
+                            <h1 className="mb-3 text-4xl font-bold font-sans text-white md:text-5xl">Student Dashboard</h1>
+                            <p className="text-lg text-brand-olive-light">Welcome back, <span className="font-semibold text-brand-gold">{user?.name}</span>!</p>
+                        </motion.div>
                     </div>
-                </div>
-            </main>
+                </section>
+
+                <main id="main-content" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+                    <div className="grid gap-8 lg:grid-cols-12">
+
+                        {/* ── Profile Sidebar ── */}
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5 }}
+                            className="lg:col-span-4"
+                        >
+                            <div className={`rounded-2xl border border-brand-surface bg-white shadow-sm overflow-hidden sticky ${showHeaderFooter ? 'top-26 lg:top-28' : 'top-6'}`}>
+                                {/* Profile Header */}
+                                <div className="relative bg-gradient-to-br from-brand-black to-brand-olive-dark px-6 pt-8 pb-10">
+                                    <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay" />
+                                    <div className="relative flex flex-col items-center text-center">
+                                        <div className="h-24 w-24 rounded-full border-4 border-brand-gold/40 overflow-hidden bg-brand-gold/10 flex items-center justify-center text-brand-gold font-bold text-3xl mb-4 shadow-lg">
+                                            {user?.avatar
+                                                ? <img src={getAssetUrl(user.avatar)} alt={user.name} className="w-full h-full object-cover" />
+                                                : user?.name?.charAt(0).toUpperCase() || 'U'
+                                            }
+                                        </div>
+                                        <h3 className="text-lg font-bold text-white">{user?.name}</h3>
+                                        <span className="mt-1 inline-block rounded-full bg-brand-gold/20 px-3 py-0.5 text-xs font-bold uppercase tracking-wider text-brand-gold">
+                                            {formatRoleLabel(user?.role)}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* Action Buttons */}
+                                <div className="flex border-b border-brand-surface divide-x divide-brand-surface">
+                                    <Button
+                                        onClick={() => setIsProfileModalOpen(true)}
+                                        className="flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-semibold text-brand-olive-dark hover:text-brand-gold hover:bg-brand-off-white transition-colors"
+                                        title="Edit Profile"
+                                    >
+                                        <Edit className="h-4 w-4" />
+                                        Edit Profile
+                                    </Button>
+                                    <button
+                                        onClick={() => { logout(); navigate('/login'); }}
+                                        className="flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-semibold text-brand-red hover:bg-brand-red/5 transition-colors"
+                                        title="Logout"
+                                    >
+                                        <LogOut className="h-4 w-4" />
+                                        Logout
+                                    </button>
+                                </div>
+
+                                {/* Profile Fields */}
+                                <div className="p-5 space-y-2">
+                                    <ProfileField icon={<User className="h-4 w-4" />} label="Full Name" value={user?.name} />
+                                    <ProfileField icon={<Mail className="h-4 w-4" />} label="Email Address" value={user?.email} />
+                                    <ProfileField icon={<Phone className="h-4 w-4" />} label="Phone" value={user?.phoneNumber} />
+
+                                    <ProfileField icon={<CalendarDays className="h-4 w-4" />} label="Date of Birth" value={user?.dateOfBirth ? new Date(user.dateOfBirth).toLocaleDateString() : null} />
+                                    <ProfileField icon={<GraduationCap className="h-4 w-4" />} label="Qualification" value={user?.qualification} />
+
+                                    {(user?.guardianName || user?.guardianPhone) && (
+                                        <div className="pt-2">
+                                            <p className="text-xs font-bold uppercase tracking-widest text-brand-olive-light mb-2 px-1">Guardian Info</p>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                <div className="rounded-xl bg-brand-off-white/80 p-3">
+                                                    <p className="text-xs text-brand-olive-light mb-0.5">Name</p>
+                                                    <p className="text-sm font-semibold text-brand-black">{user?.guardianName || '—'}</p>
+                                                </div>
+                                                <div className="rounded-xl bg-brand-off-white/80 p-3">
+                                                    <p className="text-xs text-brand-olive-light mb-0.5">Phone</p>
+                                                    <p className="text-sm font-semibold text-brand-black">{user?.guardianPhone || '—'}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        {/* ── Main Content ── */}
+                        <div className="lg:col-span-8 space-y-10">
+
+                            {/* Enrolled Courses */}
+                            <motion.section
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.15, duration: 0.5 }}
+                            >
+                                <SectionHeader
+                                    icon={<BookOpen className="h-4 w-4 text-brand-gold" />}
+                                    title="Enrolled Courses"
+                                    count={!coursesLoading ? courses.length + skillCourses.length : undefined}
+                                />
+                                {coursesLoading ? (
+                                    <div className="grid gap-5 sm:grid-cols-1 lg:grid-cols-2">
+                                        {Array.from({ length: 2 }).map((_, i) => <SkeletonCourseCard key={i} />)}
+                                    </div>
+                                ) : courses.length > 0 || skillCourses.length > 0 ? (
+                                    <div className="space-y-8">
+                                        {courses.length > 0 && (
+                                            <div>
+                                                <p className="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-brand-olive-light">
+                                                    Language Courses
+                                                </p>
+                                                <motion.div
+                                                    variants={containerVariants}
+                                                    initial="hidden"
+                                                    animate="visible"
+                                                    className="grid gap-5 sm:grid-cols-1 lg:grid-cols-2"
+                                                >
+                                                    {courses.map((course) => (
+                                                        <CourseCard key={course._id} course={course} />
+                                                    ))}
+                                                </motion.div>
+                                            </div>
+                                        )}
+
+                                        {skillCourses.length > 0 && (
+                                            <div>
+                                                <p className="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-brand-olive-light">
+                                                    Skill Courses
+                                                </p>
+                                                <motion.div
+                                                    variants={containerVariants}
+                                                    initial="hidden"
+                                                    animate="visible"
+                                                    className="grid gap-5 sm:grid-cols-1 lg:grid-cols-2"
+                                                >
+                                                    {skillCourses.map((course) => (
+                                                        <SkillCourseCard key={course.id} course={course} />
+                                                    ))}
+                                                </motion.div>
+                                            </div>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.98 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        className="rounded-2xl border-2 border-dashed border-brand-surface bg-white px-6 py-12 text-center"
+                                    >
+                                        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-brand-surface">
+                                            <BookOpen className="h-6 w-6 text-brand-gold" />
+                                        </div>
+                                        <h3 className="text-lg font-bold text-brand-black">No courses enrolled yet</h3>
+                                        <p className="mx-auto mt-2 max-w-md text-sm text-brand-olive">
+                                            Start learning by enrolling in a language course or a skill course.
+                                        </p>
+                                        <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+                                            <Button
+                                                onClick={() => navigate('/language-training')}
+                                                className="rounded-xl bg-brand-black px-5 py-3 text-white hover:bg-brand-olive-dark"
+                                            >
+                                                Enroll to Language Courses
+                                            </Button>
+                                            <Button
+                                                variant="outline"
+                                                onClick={() => navigate('/skill-training')}
+                                                className="rounded-xl border-brand-gold px-5 py-3 text-brand-gold hover:bg-brand-gold/10"
+                                            >
+                                                Enroll to Skill Courses
+                                            </Button>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </motion.section>
+                        </div>
+                    </div>
+                </main>
+            </div>
+
+            {showHeaderFooter && <Footer />}
 
             <ProfileCompletionModal isOpen={isProfileModalOpen} onClose={() => setIsProfileModalOpen(false)} />
         </div>
