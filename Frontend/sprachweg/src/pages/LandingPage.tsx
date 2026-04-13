@@ -237,7 +237,7 @@ const LandingPage: React.FC = () => {
                         <div className="w-[60px] h-[3px] bg-brand-gold mx-auto mb-4" />
 
                         <p className="text-base md:text-lg lg:text-xl font-medium text-brand-gold w-full max-w-4xl mx-auto mb-2">
-                            A Training & Career Services Division of Skyline Technologies LLP
+                            Career services by skyline skilling & training center
                         </p>
 
                         <p className="text-sm sm:text-base md:text-lg text-white/75 leading-relaxed w-full max-w-5xl mx-auto mb-8">
