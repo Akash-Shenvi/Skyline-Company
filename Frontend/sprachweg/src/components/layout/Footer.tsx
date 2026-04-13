@@ -20,20 +20,20 @@ const Footer: React.FC = () => {
                                 className="h-24 sm:h-28 lg:h-32 w-auto object-contain"
                             />
                             <div>
-                                <span className="text-xs tracking-wider text-white/60">A Division of Skyline Technologies LLP</span>
+                                <span className="text-xs tracking-wider text-white/60">A Division of SoVir Technologies LLP</span>
                             </div>
                         </div>
                         <p className="text-white/75 text-sm leading-relaxed max-w-md">
                             Your gateway to advanced industry skills and international career opportunities. Join thousands of successful learners worldwide.
                         </p>
                         <div className="space-y-3 pt-2">
-                            <a href="mailto:training@skylinetechnologies.in" className="flex items-center gap-3 text-white/75 hover:text-brand-gold transition-colors">
+                            <a href="mailto: careers@skylinetraining.in" className="flex items-center gap-3 text-white/75 hover:text-brand-gold transition-colors">
                                 <Mail className="w-4 h-4 flex-shrink-0" />
-                                <span className="text-sm">training@skylinetechnologies.in</span>
+                                <span className="text-sm"> careers@skylinetraining.in</span>
                             </a>
-                            <a href="tel:+91 9990718176" className="flex items-center gap-3 text-white/75 hover:text-brand-gold transition-colors">
+                            <a href="tel:+91 8851771838" className="flex items-center gap-3 text-white/75 hover:text-brand-gold transition-colors">
                                 <Phone className="w-4 h-4 flex-shrink-0" />
-                                <span className="text-sm">+91 9990718176</span>
+                                <span className="text-sm">+91 8851771838</span>
                             </a>
                             <div className="flex items-start gap-3 text-white/75">
                                 <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
