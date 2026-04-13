@@ -101,51 +101,51 @@ const InstitutionRegisterPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white dark:bg-[#0a192f]">
+        <div className="min-h-screen bg-brand-off-white">
             <Header />
             <main className="px-4 pt-28 pb-16 sm:px-6 lg:px-8">
                 <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.95fr_1.05fr]">
-                    <section className="rounded-[2rem] bg-gradient-to-br from-[#0a192f] via-[#112240] to-[#1a2e54] p-8 text-white shadow-2xl sm:p-10">
-                        <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-[#f0d79a]">
+                    <section className="rounded-[2rem] bg-brand-black p-8 text-brand-white shadow-2xl sm:p-10">
+                        <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-brand-gold">
                             <Building2 className="h-4 w-4" />
                             New Institution Registration
                         </div>
                         <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">
                             Create a dedicated institution account.
                         </h1>
-                        <p className="mt-5 max-w-2xl text-base leading-7 text-blue-100">
+                        <p className="mt-5 max-w-2xl text-base leading-7 text-brand-off-white">
                             Register once, verify your email, then submit German course requests for your students
                             through a separate institution-only dashboard.
                         </p>
                         <div className="mt-10 space-y-4">
                             <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                                <p className="text-sm font-semibold text-[#f0d79a]">Basic contact profile</p>
-                                <p className="mt-2 text-sm text-blue-100">Institution name, contact person, phone, address, city, and state.</p>
+                                <p className="text-sm font-semibold text-brand-gold">Basic contact profile</p>
+                                <p className="mt-2 text-sm text-brand-off-white">Institution name, contact person, phone, address, city, and state.</p>
                             </div>
                             <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                                <p className="text-sm font-semibold text-[#f0d79a]">Brand identity</p>
-                                <p className="mt-2 text-sm text-blue-100">Upload your logo and add a tagline so students see your institution branding in their learning portal.</p>
+                                <p className="text-sm font-semibold text-brand-gold">Brand identity</p>
+                                <p className="mt-2 text-sm text-brand-off-white">Upload your logo and add a tagline so students see your institution branding in their learning portal.</p>
                             </div>
                             <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                                <p className="text-sm font-semibold text-[#f0d79a]">OTP verification</p>
-                                <p className="mt-2 text-sm text-blue-100">Your institution account becomes active after email verification.</p>
+                                <p className="text-sm font-semibold text-brand-gold">OTP verification</p>
+                                <p className="mt-2 text-sm text-brand-off-white">Your institution account becomes active after email verification.</p>
                             </div>
                             <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                                <p className="text-sm font-semibold text-[#f0d79a]">Bulk student requests</p>
-                                <p className="mt-2 text-sm text-blue-100">Submit one German level per request and let admin approve the entire batch.</p>
+                                <p className="text-sm font-semibold text-brand-gold">Bulk student requests</p>
+                                <p className="mt-2 text-sm text-brand-off-white">Submit one German level per request and let admin approve the entire batch.</p>
                             </div>
                         </div>
                     </section>
 
-                    <section className="rounded-[2rem] border border-gray-200 bg-white p-8 shadow-xl dark:border-gray-800 dark:bg-[#112240] sm:p-10">
+                    <section className="rounded-[2rem] border border-brand-surface bg-brand-white  sm:p-10">
                         <div className="mb-8">
-                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#d6b161]">
+                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-brand-gold">
                                 {step === 'register' ? 'Institution Register' : 'Verify Email'}
                             </p>
-                            <h2 className="mt-3 text-3xl font-bold text-[#0a192f] dark:text-white">
+                            <h2 className="mt-3 text-3xl font-bold text-brand-black">
                                 {step === 'register' ? 'Create your institution portal account' : 'Enter the verification code'}
                             </h2>
-                            <p className="mt-3 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                            <p className="mt-3 text-sm leading-6 text-brand-olive-dark">
                                 {step === 'register'
                                     ? 'Use the institution contact details that should receive approval updates and dashboard access.'
                                     : `We sent a 6-digit OTP to ${formData.email}.`}
@@ -153,13 +153,13 @@ const InstitutionRegisterPage: React.FC = () => {
                         </div>
 
                         {error ? (
-                            <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 dark:border-red-900/40 dark:bg-red-900/20 dark:text-red-300">
+                            <div className="mb-6 rounded-2xl border border-brand-red/30 bg-brand-red/10-brand-red">
                                 {error}
                             </div>
                         ) : null}
 
                         {message ? (
-                            <div className="mb-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 dark:border-emerald-900/40 dark:bg-emerald-900/20 dark:text-emerald-300">
+                            <div className="mb-6 rounded-2xl border border-emerald-200 bg-emerald-50-emerald-700">
                                 {message}
                             </div>
                         ) : null}
@@ -168,9 +168,9 @@ const InstitutionRegisterPage: React.FC = () => {
                             <form onSubmit={handleRegister} className="space-y-5">
                                 <div className="grid gap-5 sm:grid-cols-2">
                                     <label className="block">
-                                        <span className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-200">Institution Name</span>
+                                        <span className="mb-2 block text-sm font-semibold text-brand-black">Institution Name</span>
                                         <div className="relative">
-                                            <Building2 className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                                            <Building2 className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-olive-light" />
                                             <input
                                                 type="text"
                                                 value={formData.institutionName}
@@ -183,9 +183,9 @@ const InstitutionRegisterPage: React.FC = () => {
                                     </label>
 
                                     <label className="block">
-                                        <span className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-200">Contact Person</span>
+                                        <span className="mb-2 block text-sm font-semibold text-brand-black">Contact Person</span>
                                         <div className="relative">
-                                            <User2 className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                                            <User2 className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-olive-light" />
                                             <input
                                                 type="text"
                                                 value={formData.contactPersonName}
@@ -200,9 +200,9 @@ const InstitutionRegisterPage: React.FC = () => {
 
                                 <div className="grid gap-5 sm:grid-cols-2">
                                     <label className="block">
-                                        <span className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-200">Institution Email</span>
+                                        <span className="mb-2 block text-sm font-semibold text-brand-black">Institution Email</span>
                                         <div className="relative">
-                                            <Mail className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                                            <Mail className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-olive-light" />
                                             <input
                                                 type="email"
                                                 value={formData.email}
@@ -215,9 +215,9 @@ const InstitutionRegisterPage: React.FC = () => {
                                     </label>
 
                                     <label className="block">
-                                        <span className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-200">Phone Number</span>
+                                        <span className="mb-2 block text-sm font-semibold text-brand-black">Phone Number</span>
                                         <div className="relative">
-                                            <Phone className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                                            <Phone className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-olive-light" />
                                             <input
                                                 type="tel"
                                                 value={formData.phoneNumber}
@@ -232,9 +232,9 @@ const InstitutionRegisterPage: React.FC = () => {
 
                                 <div className="grid gap-5 sm:grid-cols-2">
                                     <label className="block">
-                                        <span className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-200">City</span>
+                                        <span className="mb-2 block text-sm font-semibold text-brand-black">City</span>
                                         <div className="relative">
-                                            <MapPin className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                                            <MapPin className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-olive-light" />
                                             <input
                                                 type="text"
                                                 value={formData.city}
@@ -247,7 +247,7 @@ const InstitutionRegisterPage: React.FC = () => {
                                     </label>
 
                                     <label className="block">
-                                        <span className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-200">State</span>
+                                        <span className="mb-2 block text-sm font-semibold text-brand-black">State</span>
                                         <input
                                             type="text"
                                             value={formData.state}
@@ -260,7 +260,7 @@ const InstitutionRegisterPage: React.FC = () => {
                                 </div>
 
                                 <label className="block">
-                                    <span className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-200">Address</span>
+                                    <span className="mb-2 block text-sm font-semibold text-brand-black">Address</span>
                                     <textarea
                                         value={formData.address}
                                         onChange={(event) => setFormData((current) => ({ ...current, address: event.target.value }))}
@@ -272,7 +272,7 @@ const InstitutionRegisterPage: React.FC = () => {
                                 </label>
 
                                 <label className="block">
-                                    <span className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-200">Institution Tagline</span>
+                                    <span className="mb-2 block text-sm font-semibold text-brand-black">Institution Tagline</span>
                                     <input
                                         type="text"
                                         value={formData.tagline}
@@ -284,9 +284,9 @@ const InstitutionRegisterPage: React.FC = () => {
                                 </label>
 
                                 <label className="block">
-                                    <span className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-200">Institution Logo</span>
+                                    <span className="mb-2 block text-sm font-semibold text-brand-black">Institution Logo</span>
                                     <div className="relative">
-                                        <ImagePlus className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                                        <ImagePlus className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-brand-olive-light" />
                                         <input
                                             type="file"
                                             accept="image/*"
@@ -295,13 +295,13 @@ const InstitutionRegisterPage: React.FC = () => {
                                             required
                                         />
                                     </div>
-                                    <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                                    <p className="mt-2 text-xs text-gray-500 dark:text-brand-olive-light">
                                         PNG, JPG, or any image format up to 5 MB.
                                     </p>
                                 </label>
 
                                 <label className="block">
-                                    <span className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-200">Password</span>
+                                    <span className="mb-2 block text-sm font-semibold text-brand-black">Password</span>
                                     <input
                                         type="password"
                                         value={formData.password}
@@ -315,7 +315,7 @@ const InstitutionRegisterPage: React.FC = () => {
 
                                 <Button
                                     type="submit"
-                                    className="w-full rounded-2xl bg-[#d6b161] py-3 text-base font-semibold text-[#0a192f] hover:bg-[#c4a055]"
+                                    className="w-full rounded-2xl bg-brand-red py-3 text-base font-semibold text-brand-white hover:bg-brand-red-hover transition-colors"
                                     disabled={loading}
                                 >
                                     {loading ? 'Creating Account...' : 'Create Institution Account'}
@@ -324,7 +324,7 @@ const InstitutionRegisterPage: React.FC = () => {
                         ) : (
                             <form onSubmit={handleVerify} className="space-y-5">
                                 <label className="block">
-                                    <span className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-200">Verification Code</span>
+                                    <span className="mb-2 block text-sm font-semibold text-brand-black">Verification Code</span>
                                     <input
                                         type="text"
                                         value={formData.otp}
@@ -338,7 +338,7 @@ const InstitutionRegisterPage: React.FC = () => {
 
                                 <Button
                                     type="submit"
-                                    className="w-full rounded-2xl bg-[#d6b161] py-3 text-base font-semibold text-[#0a192f] hover:bg-[#c4a055]"
+                                    className="w-full rounded-2xl bg-brand-red py-3 text-base font-semibold text-brand-white hover:bg-brand-red-hover transition-colors"
                                     disabled={loading}
                                 >
                                     {loading ? 'Verifying...' : 'Verify and Continue'}
@@ -347,7 +347,7 @@ const InstitutionRegisterPage: React.FC = () => {
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    className="w-full rounded-2xl border-[#d6b161] py-3 text-base font-semibold text-[#d6b161]"
+                                    className="w-full rounded-2xl border-brand-gold py-3 text-base font-semibold text-brand-gold"
                                     onClick={handleResendOtp}
                                     disabled={loading}
                                 >
@@ -356,9 +356,9 @@ const InstitutionRegisterPage: React.FC = () => {
                             </form>
                         )}
 
-                        <div className="mt-8 rounded-2xl bg-[#f8f5ec] px-4 py-4 text-sm text-[#5f5333] dark:bg-[#0a192f] dark:text-[#f0d79a]">
+                        <div className="mt-8 rounded-2xl border border-brand-surface bg-brand-gold/5 px-5 py-4 text-sm font-medium text-brand-black shadow-sm">
                             Already registered?{' '}
-                            <Link to="/institution/login" className="font-semibold text-[#0a192f] underline dark:text-white">
+                            <Link to="/institution/login" className="font-bold text-brand-red underline hover:text-brand-red-hover transition-colors">
                                 Sign in to the institution portal
                             </Link>
                         </div>
