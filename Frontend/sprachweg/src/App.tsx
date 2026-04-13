@@ -387,6 +387,25 @@ const AppContent = () => {
                         </AdminRoute>
                     }
                 />
+                {/*
+                Webinar admin routes are intentionally disabled for now.
+                <Route
+                    path="/admin/webinars"
+                    element={
+                        <AdminRoute>
+                            <AdminWebinars />
+                        </AdminRoute>
+                    }
+                />
+                <Route
+                    path="/admin/webinar-registrations"
+                    element={
+                        <AdminRoute>
+                            <AdminWebinarRegistrations />
+                        </AdminRoute>
+                    }
+                />
+                */}
 
                 <Route
                     path="/chat/:studentId"

@@ -16,6 +16,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
     const menuItems = [
         { path: '/admin-dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+        // Webinar admin links are intentionally disabled for now.
         // { path: '/admin/webinars', icon: BookOpen, label: 'Webinars' },
         // { path: '/admin/webinar-registrations', icon: Users, label: 'Webinar Registrations' },
         { path: '/admin/users', icon: Users, label: 'Users' },
