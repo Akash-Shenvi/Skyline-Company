@@ -70,9 +70,9 @@ const Header: React.FC = () => {
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-1 flex-shrink-0">
                         <img
-                            src="/skyline-logo.svg"
+                            src="/skyline-logo.jpeg"
                             alt="Skyline logo"
-                            className="h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32 w-auto object-contain transition-all duration-300 mt-2"
+                            className="h-12 md:h-14 lg:h-16 w-auto object-contain transition-all duration-300"
                         />
                         <span className="font-serif font-bold text-base lg:text-lg text-brand-white"></span>
                     </Link>
