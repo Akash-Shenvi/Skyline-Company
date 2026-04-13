@@ -15,7 +15,7 @@ const allowedOrigins = Array.from(
     new Set(
         [
             env.FRONTEND_BASE_URL,
-            'https://training.sovirtechnologies.in',
+            'https://training.skylinetechnologies.in',
         ]
             .map((value) => {
                 try {

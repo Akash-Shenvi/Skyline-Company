@@ -339,8 +339,8 @@ const ContactPage: React.FC = () => {
 
     // Data
     const contactEmails: ContactEmail[] = [
-        { type: 'Training', email: 'training@sovirtechnologies.in' },
-        { type: 'Queries', email: 'info@sovirtechnologies.in' }
+        { type: 'Training', email: 'training@skylinetechnologies.in' },
+        { type: 'Queries', email: 'info@skylinetechnologies.in' }
     ];
 
     const officeAddress = "JLB Complex Gopadi, NH 66, Koteshwara Proper, Kundapura, Karnataka 576201";
@@ -674,7 +674,7 @@ const ContactPage: React.FC = () => {
                             <div className="aspect-video bg-gradient-to-br from-brand-black/10 to-brand-gold/10 relative">
                                 <LazyIframe
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3882.4876887447756!2d74.71387367507528!3d13.278956687193878!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbca54a0bdd5e0b%3A0x7b6f8b1a0bdd5e0c!2sKoteshwara%2C%20Karnataka%20576222!5e0!3m2!1sen!2sin!4v1640000000000!5m2!1sen!2sin"
-                                    title="Sovir Technologies Head Office"
+                                    title="Skyline Technologies Head Office"
                                     className="min-h-[200px] sm:min-h-[250px] md:min-h-[300px]"
                                 />
                             </div>
@@ -699,7 +699,7 @@ const ContactPage: React.FC = () => {
                                     <div>
                                         <h4 className="font-semibold text-brand-black mb-0.5 sm:mb-1 text-xs sm:text-sm md:text-base">Contacts</h4>
                                         <p className="text-brand-olive-dark text-xs sm:text-sm md:text-base">+91 8851771838 / +91 8840957097</p>
-                                        <p className="text-brand-olive-dark text-xs sm:text-sm md:text-base">info@sovirtechnologies.in</p>
+                                        <p className="text-brand-olive-dark text-xs sm:text-sm md:text-base">info@skylinetechnologies.in</p>
                                     </div>
                                 </div>
                             </div>
@@ -715,7 +715,7 @@ const ContactPage: React.FC = () => {
                             <div className="aspect-video bg-gradient-to-br from-brand-black/10 to-brand-gold/10 relative">
                                 <LazyIframe
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.578307963847!2d77.38166!3d28.566670!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce5a43173357b%3A0x37ffce30c87cc03d!2sSector%2090%2C%20Noida%2C%20Uttar%20Pradesh%20201305!5e0!3m2!1sen!2sin!4v1640000000000!5m2!1sen!2sin"
-                                    title="Sovir Technologies Branch Office"
+                                    title="Skyline Technologies Branch Office"
                                     className="min-h-[200px] sm:min-h-[250px] md:min-h-[300px]"
                                 />
                             </div>
@@ -740,7 +740,7 @@ const ContactPage: React.FC = () => {
                                     <div>
                                         <h4 className="font-semibold text-brand-black mb-0.5 sm:mb-1 text-xs sm:text-sm md:text-base">Contacts</h4>
                                         <p className="text-brand-olive-dark text-xs sm:text-sm md:text-base">+91 8851771838 / +91 8840957097</p>
-                                        <p className="text-brand-olive-dark text-xs sm:text-sm md:text-base">info@sovirtechnologies.in</p>
+                                        <p className="text-brand-olive-dark text-xs sm:text-sm md:text-base">info@skylinetechnologies.in</p>
                                     </div>
                                 </div>
                             </div>

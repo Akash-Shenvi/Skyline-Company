@@ -133,7 +133,7 @@ const RegisterPage: React.FC = () => {
                     </div>
 
                     <div className="text-sm text-white/75/60">
-                        SoVir Technologies LLP © {new Date().getFullYear()}
+                        Skyline Technologies LLP © {new Date().getFullYear()}
                     </div>
                 </div>
 
@@ -145,7 +145,7 @@ const RegisterPage: React.FC = () => {
                             <div className="w-8 h-8 bg-brand-black rounded-lg flex items-center justify-center text-white">
                                 <span className="font-sans font-bold">S</span>
                             </div>
-                            <span className="font-sans font-bold text-brand-black">SOVIR</span>
+                            <span className="font-sans font-bold text-brand-black">SKYLINE</span>
                         </div>
                         {/* Tab Switcher */}
                         <div className="bg-white p-1.5 rounded-xl flex mb-8 shadow-sm border border-brand-surface w-full max-w-sm mx-auto">

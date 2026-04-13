@@ -89,7 +89,7 @@ const ForgotPasswordPage: React.FC = () => {
                     </div>
 
                     <div className="text-sm text-white/75/60">
-                        SoVir Technologies LLP © {new Date().getFullYear()}
+                        Skyline Technologies LLP © {new Date().getFullYear()}
                     </div>
                 </div>
 
@@ -100,7 +100,7 @@ const ForgotPasswordPage: React.FC = () => {
                         <div className="w-8 h-8 bg-brand-black rounded-lg flex items-center justify-center text-white">
                             <span className="font-sans font-bold">S</span>
                         </div>
-                        <span className="font-sans font-bold text-brand-black">SOVIR</span>
+                        <span className="font-sans font-bold text-brand-black">SKYLINE</span>
                     </div>
 
                     <div className="w-full max-w-md">

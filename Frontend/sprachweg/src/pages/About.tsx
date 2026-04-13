@@ -231,7 +231,7 @@ const AboutPage: React.FC = () => {
                                 variants={fadeInUp}
                                 className="text-4xl md:text-5xl lg:text-6xl font-sans font-bold text-white mb-6 leading-tight"
                             >
-                                About SoVir Skilling & <br />
+                                About Skyline Skilling & <br />
                                 <span className="text-brand-gold relative">
                                     Training Center
                                     <motion.span
@@ -268,12 +268,12 @@ const AboutPage: React.FC = () => {
                                 <div className="text-center mb-6">
                                     <span className="text-brand-gold font-bold tracking-wide uppercase text-sm">Who We Are</span>
                                 </div>
-                                <SectionHeading id="who-we-are">SoVir Skilling &
+                                <SectionHeading id="who-we-are">Skyline Skilling &
                                     Training Center</SectionHeading>
                                 <div className="space-y-4 text-brand-olive-dark leading-relaxed text-base max-w-[65ch]">
                                     <p>
-                                        SoVir Skilling &
-                                        Training Center , a professional training division of SoVir Technologies LLP, is committed to developing industry-ready professionals through foreign language training, automation technologies, and career-focused skill development.
+                                        Skyline Skilling &
+                                        Training Center , a professional training division of Skyline Technologies LLP, is committed to developing industry-ready professionals through foreign language training, automation technologies, and career-focused skill development.
                                     </p>
                                     <p>
                                         We combine education, technology, and real-world industry practices to prepare learners for global employment, industrial roles, and future-ready careers.
@@ -281,7 +281,7 @@ const AboutPage: React.FC = () => {
                                 </div>
 
                                 <div className="mt-8 pt-4 border-t border-brand-surface">
-                                    <p className="font-semibold text-brand-black mb-4 text-base">Backed by SoVir Technologies LLP, we deliver training that is:</p>
+                                    <p className="font-semibold text-brand-black mb-4 text-base">Backed by Skyline Technologies LLP, we deliver training that is:</p>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         {['Industry-aligned', 'Practically oriented', 'Certification focused', 'Career & placement driven'].map((item, i) => (
                                             <div key={i} className="flex items-center gap-2">
@@ -501,7 +501,7 @@ const AboutPage: React.FC = () => {
                                 icon={<Icons.Users />}
                             >
                                 <p className="mb-4 text-base leading-relaxed">
-                                    At SoVir Skilling &
+                                    At Skyline Skilling &
                                     Training Center, training is career-oriented, not just academic.
                                 </p>
                                 <h4 className="font-semibold text-brand-black mb-3 text-base">Our support includes:</h4>
@@ -523,11 +523,11 @@ const AboutPage: React.FC = () => {
                 <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8" aria-labelledby="why-choose">
                     <div className="mx-auto max-w-7xl">
                         <div className="text-center mb-12 sm:mb-16">
-                            <SectionHeading id="why-choose" align="center">Why Choose SoVir Skilling & Training Center?</SectionHeading>
+                            <SectionHeading id="why-choose" align="center">Why Choose Skyline Skilling & Training Center?</SectionHeading>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
                             {[
-                                'Industry-backed training by SoVir Technologies LLP',
+                                'Industry-backed training by Skyline Technologies LLP',
                                 'Certified & experienced trainers',
                                 'Practical, hands-on learning approach',
                                 'International exam & industry alignment',
@@ -588,11 +588,11 @@ const AboutPage: React.FC = () => {
 
                         <div className="mt-12 sm:mt-16 pt-8 border-t border-white/10 text-center">
                             <p className="text-sm font-semibold tracking-wide text-brand-gold uppercase mb-3">
-                                Powered by SoVir Technologies LLP
+                                Powered by Skyline Technologies LLP
                             </p>
                             <p className="text-brand-olive-light max-w-[65ch] mx-auto text-base leading-relaxed">
-                                SoVir Skilling &
-                                Training Center operates under SoVir Technologies LLP, a service-based company delivering technology solutions, automation services, digital platforms, and professional training. This strong industry foundation ensures our training remains relevant, credible, and future-ready.
+                                Skyline Skilling &
+                                Training Center operates under Skyline Technologies LLP, a service-based company delivering technology solutions, automation services, digital platforms, and professional training. This strong industry foundation ensures our training remains relevant, credible, and future-ready.
                             </p>
                         </div>
                     </div>
@@ -610,7 +610,7 @@ const AboutPage: React.FC = () => {
                             Start Your Skill Journey With Us
                         </h2>
                         <p className="text-lg sm:text-xl text-brand-olive-dark mb-10 leading-relaxed">
-                            Whether your goal is international language certification, industrial automation expertise, or career advancement, SoVir Skilling &
+                            Whether your goal is international language certification, industrial automation expertise, or career advancement, Skyline Skilling &
                             Training Center is your trusted partner for growth and success.
                         </p>
 

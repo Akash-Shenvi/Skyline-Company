@@ -40,8 +40,8 @@ interface CertificateData {
 
 // --- Mock Database ---
 const certificateDatabase: Record<string, CertificateData> = {
-    'SVR-INT-2026-001': {
-        certificateId: 'SVR-INT-2026-001',
+    'SKY-INT-2026-001': {
+        certificateId: 'SKY-INT-2026-001',
         studentName: 'Rahul Sharma',
         email: 'rahul.sharma@email.com',
         role: 'Electrical Engineering Intern',
@@ -54,8 +54,8 @@ const certificateDatabase: Record<string, CertificateData> = {
         issueDate: '05 Mar 2026',
         skillsLearned: ['PLC Programming', 'SCADA Systems', 'Industrial Automation', 'HMI Design']
     },
-    'SVR-INT-2026-002': {
-        certificateId: 'SVR-INT-2026-002',
+    'SKY-INT-2026-002': {
+        certificateId: 'SKY-INT-2026-002',
         studentName: 'Priya Nair',
         email: 'priya.nair@email.com',
         role: 'Software Developer Intern',
@@ -68,8 +68,8 @@ const certificateDatabase: Record<string, CertificateData> = {
         issueDate: '—',
         skillsLearned: ['React.js', 'Node.js', 'MongoDB', 'REST APIs']
     },
-    'SVR-INT-2026-003': {
-        certificateId: 'SVR-INT-2026-003',
+    'SKY-INT-2026-003': {
+        certificateId: 'SKY-INT-2026-003',
         studentName: 'Aarav Kulkarni',
         email: 'aarav.k@email.com',
         role: 'Industrial Automation Intern',
@@ -192,7 +192,7 @@ const VerificationPage: React.FC = () => {
                         </motion.h1>
 
                         <motion.p variants={fadeInUp} className="mx-auto max-w-2xl text-base sm:text-lg leading-relaxed text-brand-olive-light mb-10">
-                            Verify the authenticity of internship certificates issued by Sovir Technologies.
+                            Verify the authenticity of internship certificates issued by Skyline Technologies.
                             Enter the Certificate ID or scan the QR code on the certificate.
                         </motion.p>
 
@@ -208,7 +208,7 @@ const VerificationPage: React.FC = () => {
                                             type="text"
                                             value={certificateId}
                                             onChange={(e) => setCertificateId(e.target.value)}
-                                            placeholder="Enter Certificate ID (e.g., SVR-INT-2026-001)"
+                                            placeholder="Enter Certificate ID (e.g., SKY-INT-2026-001)"
                                             className="w-full rounded-xl border border-white/10 bg-white/5 backdrop-blur-md py-4 pl-12 pr-4 text-white placeholder:text-brand-olive-light focus:border-brand-red focus:outline-none focus:ring-2 focus:ring-brand-gold/30 transition-all text-sm sm:text-base"
                                             id="certificate-id-input"
                                         />
@@ -288,7 +288,7 @@ const VerificationPage: React.FC = () => {
                                             ✅ Certificate Verified — Authentic
                                         </h3>
                                         <p className="text-brand-olive-dark text-sm mt-1">
-                                            This internship certificate was officially issued by Sovir Technologies.
+                                            This internship certificate was officially issued by Skyline Technologies.
                                         </p>
                                     </div>
                                 </motion.div>
@@ -341,7 +341,7 @@ const VerificationPage: React.FC = () => {
                                                 Company Details
                                             </h3>
                                             <div className="space-y-0">
-                                                <DetailRow icon={<Building2 className="w-4 h-4" />} label="Company" value="SoVir Technologies LLP" />
+                                                <DetailRow icon={<Building2 className="w-4 h-4" />} label="Company" value="Skyline Technologies LLP" />
                                                 <DetailRow icon={<User className="w-4 h-4" />} label="Supervisor" value={searchResult.supervisor} />
                                                 <DetailRow icon={<Calendar className="w-4 h-4" />} label="Issue Date" value={searchResult.issueDate} />
                                                 <DetailRow
@@ -485,7 +485,7 @@ const VerificationPage: React.FC = () => {
                             Security Features
                         </h2>
                         <p className="text-brand-olive-dark max-w-xl mx-auto text-sm sm:text-base">
-                            Every certificate issued by Sovir Technologies is protected with multiple layers of security.
+                            Every certificate issued by Skyline Technologies is protected with multiple layers of security.
                         </p>
                     </div>
 
@@ -531,11 +531,11 @@ const VerificationPage: React.FC = () => {
                                 <Building2 className="w-10 h-10 text-brand-gold" />
                             </div>
                             <div className="text-center sm:text-left">
-                                <h3 className="text-xl font-bold text-brand-black mb-1">SoVir Technologies LLP</h3>
-                                <p className="text-sm text-brand-olive-dark">Authorized Signatory: Director, SoVir Technologies LLP</p>
+                                <h3 className="text-xl font-bold text-brand-black mb-1">Skyline Technologies LLP</h3>
+                                <p className="text-sm text-brand-olive-dark">Authorized Signatory: Director, Skyline Technologies LLP</p>
                                 <p className="text-sm text-brand-olive-dark">
                                     <Mail className="w-3.5 h-3.5 inline mr-1" />
-                                    info@sovirtechnologies.in
+                                    info@skylinetechnologies.in
                                 </p>
                                 <p className="text-sm text-brand-olive-dark mt-1">
                                     <MapPin className="w-3.5 h-3.5 inline mr-1" />
@@ -552,7 +552,7 @@ const VerificationPage: React.FC = () => {
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <p className="text-xs sm:text-sm text-brand-olive flex items-center justify-center gap-1.5">
                         <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
-                        This page verifies internship certificates issued by Sovir Technologies. If you find any discrepancy, please contact our support team.
+                        This page verifies internship certificates issued by Skyline Technologies. If you find any discrepancy, please contact our support team.
                     </p>
                 </div>
             </section>

@@ -14,7 +14,7 @@ const captureRawBody = (req, _res, buf) => {
 };
 const allowedOrigins = Array.from(new Set([
     env_1.env.FRONTEND_BASE_URL,
-    'https://training.sovirtechnologies.in',
+    'https://training.skylinetechnologies.in',
 ]
     .map((value) => {
     try {

@@ -120,7 +120,7 @@ const LoginPage: React.FC = () => {
                     </div>
 
                     <div className="text-sm text-white/75/60">
-                        SoVir Technologies LLP © {new Date().getFullYear()}
+                        Skyline Technologies LLP © {new Date().getFullYear()}
                     </div>
                 </div>
 

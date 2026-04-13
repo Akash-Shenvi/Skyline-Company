@@ -15,21 +15,21 @@ const Footer: React.FC = () => {
                     <div className="space-y-6 lg:col-span-2">
                         <div className="flex items-center gap-3">
                             <img
-                                src="/sovir-logo.png"
-                                alt="SoVir Logo"
-                                className="h-24 sm:h-28 lg:h-32 w-auto object-contain brightness-0 invert"
+                                src="/skyline-logo.svg"
+                                alt="Skyline logo"
+                                className="h-24 sm:h-28 lg:h-32 w-auto object-contain"
                             />
                             <div>
-                                <span className="text-xs tracking-wider text-white/60">A Division of SoVir Technologies LLP</span>
+                                <span className="text-xs tracking-wider text-white/60">A Division of Skyline Technologies LLP</span>
                             </div>
                         </div>
                         <p className="text-white/75 text-sm leading-relaxed max-w-md">
                             Your gateway to advanced industry skills and international career opportunities. Join thousands of successful learners worldwide.
                         </p>
                         <div className="space-y-3 pt-2">
-                            <a href="mailto:training@sovirtechnologies.in " className="flex items-center gap-3 text-white/75 hover:text-brand-gold transition-colors">
+                            <a href="mailto:training@skylinetechnologies.in" className="flex items-center gap-3 text-white/75 hover:text-brand-gold transition-colors">
                                 <Mail className="w-4 h-4 flex-shrink-0" />
-                                <span className="text-sm">training@sovirtechnologies.in</span>
+                                <span className="text-sm">training@skylinetechnologies.in</span>
                             </a>
                             <a href="tel:+91 9990718176" className="flex items-center gap-3 text-white/75 hover:text-brand-gold transition-colors">
                                 <Phone className="w-4 h-4 flex-shrink-0" />
@@ -63,7 +63,7 @@ const Footer: React.FC = () => {
                         <ul className="space-y-3 text-sm text-white/75">
                             <li><Link to="/about" className="hover:text-brand-gold transition-colors block">About Us</Link></li>
                             <li><Link to="#" className="hover:text-brand-gold transition-colors block">Our Team</Link></li>
-                            <li><Link to="/careers" className="hover:text-brand-gold transition-colors block">Careers at SoVir</Link></li>
+                            <li><Link to="/careers" className="hover:text-brand-gold transition-colors block">Careers at Skyline</Link></li>
                             <li><Link to="#" className="hover:text-brand-gold transition-colors block">Press & Media</Link></li>
                             <li><Link to="/contact" className="hover:text-brand-gold transition-colors block">Contact</Link></li>
                         </ul>
@@ -124,7 +124,7 @@ const Footer: React.FC = () => {
                                     <Facebook className="w-5 h-5" />
                                 </a>
                                 <a
-                                    href="https://www.instagram.com/sovir_technologies?igsh=YnprbWtpNWkwYXNn"
+                                    href="https://www.instagram.com/skyline_technologies"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-brand-olive-light hover:bg-brand-gold hover:text-brand-black transition-all"
@@ -133,7 +133,7 @@ const Footer: React.FC = () => {
                                     <Instagram className="w-5 h-5" />
                                 </a>
                                 <a
-                                    href="https://www.linkedin.com/company/sovir-technology/"
+                                    href="https://www.linkedin.com/company/skyline-technology/"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-brand-olive-light hover:bg-brand-gold hover:text-brand-black transition-all"
@@ -142,7 +142,7 @@ const Footer: React.FC = () => {
                                     <Linkedin className="w-5 h-5" />
                                 </a>
                                 <a
-                                    href="https://youtube.com/@sovirtechnologies?si=8ux1V9Y5SyhWmQy1"
+                                    href="https://youtube.com/@skylinetechnologies"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-brand-olive-light hover:bg-brand-gold hover:text-brand-black transition-all"

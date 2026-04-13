@@ -27,7 +27,7 @@ const socket_1 = require("./socket");
 const chat_access_1 = require("./utils/chat-access");
 const socketAllowedOrigins = Array.from(new Set([
     env_1.env.FRONTEND_BASE_URL,
-    'https://training.sovirtechnologies.in',
+    'https://training.skylinetechnologies.in',
 ]
     .map((value) => {
     try {

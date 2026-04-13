@@ -14,8 +14,8 @@ self.addEventListener('push', (event) => {
 
         await self.registration.showNotification(payload.title || 'SprachWeg', {
             body: payload.body || '',
-            icon: '/sovir-logo.png',
-            badge: '/sovir-logo.png',
+            icon: '/skyline-logo.svg',
+            badge: '/skyline-logo.svg',
             tag: payload.notificationId ? `notification-${payload.notificationId}` : undefined,
             data: {
                 notificationId: payload.notificationId || null,

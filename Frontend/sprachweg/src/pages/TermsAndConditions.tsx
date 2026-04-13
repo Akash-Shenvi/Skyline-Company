@@ -90,16 +90,16 @@ const TermsAndConditions: React.FC = () => {
                             {/* Introduction */}
                             <div className="mb-8">
                                 <p className="text-brand-olive-dark leading-relaxed mb-6 text-base">
-                                    Welcome to SoVir Technologies!
+                                    Welcome to Skyline Technologies!
                                 </p>
                                 <p className="text-brand-olive-dark leading-relaxed mb-6 text-base">
-                                    These terms and conditions outline the rules and regulations for the use of SoVir Technologies's Website, located at{' '}
-                                    <a href="https://www.sovirtechnologies.in" className="text-brand-gold hover:underline font-medium">
-                                        https://www.sovirtechnologies.in
+                                    These terms and conditions outline the rules and regulations for the use of Skyline Technologies' Website, located at{' '}
+                                    <a href="https://www.skylinetechnologies.in" className="text-brand-gold hover:underline font-medium">
+                                        https://www.skylinetechnologies.in
                                     </a>.
                                 </p>
                                 <p className="text-brand-olive-dark leading-relaxed mb-8 text-base">
-                                    By accessing this website, we assume you accept these terms and conditions. Do not continue to use SoVir Technologies if you do not agree to take all of the terms and conditions stated on this page.
+                                    By accessing this website, we assume you accept these terms and conditions. Do not continue to use Skyline Technologies if you do not agree to take all of the terms and conditions stated on this page.
                                 </p>
                             </div>
 
@@ -110,7 +110,7 @@ const TermsAndConditions: React.FC = () => {
                                 </h2>
                                 <div className="space-y-4 text-brand-olive-dark leading-relaxed text-base">
                                     <p>
-                                        The website uses cookies to help personalize your online experience. By accessing SoVir Technologies, you agreed to use the required cookies.
+                                        The website uses cookies to help personalize your online experience. By accessing Skyline Technologies, you agreed to use the required cookies.
                                     </p>
                                     <p>
                                         A cookie is a text file that is placed on your hard disk by a web page server. Cookies cannot be used to run programs or deliver viruses to your computer. Cookies are uniquely assigned to you and can only be read by a web server in the domain that issued the cookie to you.
@@ -128,27 +128,27 @@ const TermsAndConditions: React.FC = () => {
                                 </h2>
                                 <div className="space-y-4 text-brand-olive-dark leading-relaxed text-base">
                                     <p>
-                                        Unless otherwise stated, SoVir Technologies and/or its licensors own the intellectual property rights for all material on SoVir Technologies. All intellectual property rights are reserved. You may access this from SoVir Technologies for your own personal use subjected to restrictions set in these terms and conditions.
+                                        Unless otherwise stated, Skyline Technologies and/or its licensors own the intellectual property rights for all material on Skyline Technologies. All intellectual property rights are reserved. You may access this from Skyline Technologies for your own personal use subjected to restrictions set in these terms and conditions.
                                     </p>
 
                                     <div className="bg-brand-red/5 border-l-4 border-brand-red p-4 my-4 rounded-r-lg">
                                         <p className="font-medium text-brand-black mb-2">You must not:</p>
                                         <ul className="list-disc list-inside space-y-2 text-brand-olive-dark ml-4">
-                                            <li>Copy or republish material from SoVir Technologies</li>
-                                            <li>Sell, rent, or sub-license material from SoVir Technologies</li>
-                                            <li>Reproduce, duplicate or copy material from SoVir Technologies</li>
-                                            <li>Redistribute content from SoVir Technologies</li>
+                                            <li>Copy or republish material from Skyline Technologies</li>
+                                            <li>Sell, rent, or sub-license material from Skyline Technologies</li>
+                                            <li>Reproduce, duplicate or copy material from Skyline Technologies</li>
+                                            <li>Redistribute content from Skyline Technologies</li>
                                         </ul>
                                     </div>
 
                                     <p>This Agreement shall begin on the date hereof.</p>
 
                                     <p>
-                                        Parts of this website offer users an opportunity to post and exchange opinions and information in certain areas of the website. SoVir Technologies does not filter, edit, publish or review Comments before their presence on the website. Comments do not reflect the views and opinions of SoVir Technologies, its agents, and/or affiliates. Comments reflect the views and opinions of the person who posts their views and opinions. To the extent permitted by applicable laws, SoVir Technologies shall not be liable for the Comments or any liability, damages, or expenses caused and/or suffered as a result of any use of and/or posting of and/or appearance of the Comments on this website.
+                                        Parts of this website offer users an opportunity to post and exchange opinions and information in certain areas of the website. Skyline Technologies does not filter, edit, publish or review Comments before their presence on the website. Comments do not reflect the views and opinions of Skyline Technologies, its agents, and/or affiliates. Comments reflect the views and opinions of the person who posts their views and opinions. To the extent permitted by applicable laws, Skyline Technologies shall not be liable for the Comments or any liability, damages, or expenses caused and/or suffered as a result of any use of and/or posting of and/or appearance of the Comments on this website.
                                     </p>
 
                                     <p>
-                                        SoVir Technologies reserves the right to monitor all Comments and remove any Comments that can be considered inappropriate, offensive, or causes breach of these Terms and Conditions.
+                                        Skyline Technologies reserves the right to monitor all Comments and remove any Comments that can be considered inappropriate, offensive, or causes breach of these Terms and Conditions.
                                     </p>
 
                                     <div className="bg-brand-gold/10 border-l-4 border-brand-gold p-4 my-4 rounded-r-lg">
@@ -162,7 +162,7 @@ const TermsAndConditions: React.FC = () => {
                                     </div>
 
                                     <p>
-                                        You hereby grant SoVir Technologies a non-exclusive license to use, reproduce, edit and authorize others to use, reproduce and edit any of your Comments in any and all forms, formats, or media.
+                                        You hereby grant Skyline Technologies a non-exclusive license to use, reproduce, edit and authorize others to use, reproduce and edit any of your Comments in any and all forms, formats, or media.
                                     </p>
                                 </div>
                             </section>
@@ -198,7 +198,7 @@ const TermsAndConditions: React.FC = () => {
                                     </ul>
 
                                     <p>
-                                        We will approve link requests from these organizations if we decide that: (a) the link would not make us look unfavorably to ourselves or to our accredited businesses; (b) the organization does not have any negative records with us; (c) the benefit to us from the visibility of the hyperlink compensates the absence of SoVir Technologies; and (d) the link is in the context of general resource information.
+                                        We will approve link requests from these organizations if we decide that: (a) the link would not make us look unfavorably to ourselves or to our accredited businesses; (b) the organization does not have any negative records with us; (c) the benefit to us from the visibility of the hyperlink compensates the absence of Skyline Technologies; and (d) the link is in the context of general resource information.
                                     </p>
 
                                     <p>
@@ -206,7 +206,7 @@ const TermsAndConditions: React.FC = () => {
                                     </p>
 
                                     <p>
-                                        If you are one of the organizations listed in paragraph 2 above and are interested in linking to our website, you must inform us by sending an e-mail to SoVir Technologies. Please include your name, your organization name, contact information as well as the URL of your site, a list of any URLs from which you intend to link to our Website, and a list of the URLs on our site to which you would like to link. Wait 2-3 weeks for a response.
+                                        If you are one of the organizations listed in paragraph 2 above and are interested in linking to our website, you must inform us by sending an e-mail to Skyline Technologies. Please include your name, your organization name, contact information as well as the URL of your site, a list of any URLs from which you intend to link to our Website, and a list of the URLs on our site to which you would like to link. Wait 2-3 weeks for a response.
                                     </p>
 
                                     <p className="font-medium">Approved organizations may hyperlink to our Website as follows:</p>
@@ -217,7 +217,7 @@ const TermsAndConditions: React.FC = () => {
                                     </ul>
 
                                     <p>
-                                        No use of SoVir Technologies's logo or other artwork will be allowed for linking absent a trademark license agreement.
+                                        No use of Skyline Technologies' logo or other artwork will be allowed for linking absent a trademark license agreement.
                                     </p>
                                 </div>
                             </section>

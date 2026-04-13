@@ -90,10 +90,10 @@ const PrivacyPolicy: React.FC = () => {
                             {/* Introduction */}
                             <div className="mb-8">
                                 <p className="text-brand-olive-dark leading-relaxed mb-6 text-base">
-                                    SoVir Technologies website is owned by SoVir Technologies, which is a data controller of your personal data.
+                                    Skyline Technologies website is owned by Skyline Technologies, which is a data controller of your personal data.
                                 </p>
                                 <p className="text-brand-olive-dark leading-relaxed mb-6 text-base">
-                                    We have adopted this Privacy Policy, which determines how we are processing the information collected by SoVir Technologies, which also provides the reasons why we must collect certain personal data about you. Therefore, you must read this Privacy Policy before using SoVir Technologies website.
+                                    We have adopted this Privacy Policy, which determines how we are processing the information collected by Skyline Technologies, which also provides the reasons why we must collect certain personal data about you. Therefore, you must read this Privacy Policy before using Skyline Technologies website.
                                 </p>
                                 <p className="text-brand-olive-dark leading-relaxed mb-8 text-base">
                                     We take care of your personal data and undertake to guarantee its confidentiality and security.
@@ -107,7 +107,7 @@ const PrivacyPolicy: React.FC = () => {
                                 </h2>
                                 <div className="space-y-4 text-brand-olive-dark leading-relaxed text-base">
                                     <p>
-                                        When you visit the SoVir Technologies, we automatically collect certain information about your device, including information about your web browser, IP address, time zone, and some of the installed cookies on your device. Additionally, as you browse the Site, we collect information about the individual web pages or products you view, what websites or search terms referred you to the Site, and how you interact with the Site. We refer to this automatically-collected information as "Device Information." Moreover, we might collect the personal data you provide to us (including but not limited to Name, Surname, Address, payment information, etc.) during registration to be able to fulfill the agreement.
+                                        When you visit Skyline Technologies, we automatically collect certain information about your device, including information about your web browser, IP address, time zone, and some of the installed cookies on your device. Additionally, as you browse the Site, we collect information about the individual web pages or products you view, what websites or search terms referred you to the Site, and how you interact with the Site. We refer to this automatically-collected information as "Device Information." Moreover, we might collect the personal data you provide to us (including but not limited to Name, Surname, Address, payment information, etc.) during registration to be able to fulfill the agreement.
                                     </p>
                                 </div>
                             </section>
@@ -122,7 +122,7 @@ const PrivacyPolicy: React.FC = () => {
                                         Our top priority is customer data security, and, as such, we may process only minimal user data, only as much as it is absolutely necessary to maintain the website. Information collected automatically is used only to identify potential cases of abuse and establish statistical information regarding website usage. This statistical information is not otherwise aggregated in such a way that it would identify any particular user of the system.
                                     </p>
                                     <p>
-                                        You can visit the website without telling us who you are or revealing any information, by which someone could identify you as a specific, identifiable individual. If, however, you wish to use some of the website's features, or you wish to receive our newsletter or provide other details by filling a form, you may provide personal data to us, such as your email, first name, last name, city of residence, organization, telephone number. You can choose not to provide us with your personal data, but then you may not be able to take advantage of some of the website's features. For example, you won't be able to receive our Newsletter or contact us directly from the website. Users who are uncertain about what information is mandatory are welcome to contact us via sovirtechnologies@gmail.com.
+                                        You can visit the website without telling us who you are or revealing any information, by which someone could identify you as a specific, identifiable individual. If, however, you wish to use some of the website's features, or you wish to receive our newsletter or provide other details by filling a form, you may provide personal data to us, such as your email, first name, last name, city of residence, organization, telephone number. You can choose not to provide us with your personal data, but then you may not be able to take advantage of some of the website's features. For example, you won't be able to receive our Newsletter or contact us directly from the website. Users who are uncertain about what information is mandatory are welcome to contact us via info@skylinetechnologies.in.
                                     </p>
                                 </div>
                             </section>
@@ -200,7 +200,7 @@ const PrivacyPolicy: React.FC = () => {
                                 </h2>
                                 <div className="space-y-4 text-brand-olive-dark leading-relaxed text-base">
                                     <p>
-                                        If you would like to contact us to understand more about this Policy or wish to contact us concerning any matter relating to individual rights and your Personal Information, you may send an email to <a href="mailto:sovirtechnologies@gmail.com" className="text-brand-gold hover:underline font-medium">sovirtechnologies@gmail.com</a>.
+                                        If you would like to contact us to understand more about this Policy or wish to contact us concerning any matter relating to individual rights and your Personal Information, you may send an email to <a href="mailto:info@skylinetechnologies.in" className="text-brand-gold hover:underline font-medium">info@skylinetechnologies.in</a>.
                                     </p>
                                 </div>
                             </section>

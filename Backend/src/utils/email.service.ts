@@ -220,7 +220,7 @@ export class EmailService {
         <body>
             <div class="container">
                 <div class="header">
-                    <h1>SoVir Skilling & Training Center<br>Training & Skilling Program</h1>
+                    <h1>Skyline Skilling & Training Center<br>Training & Skilling Program</h1>
                 </div>
                 <div class="content">
                     <div class="welcome-text">Dear ${options.name},</div>
@@ -231,13 +231,13 @@ export class EmailService {
                         ${actionButton}
                         <p style="margin-top: 32px; border-top: 1px solid #eee; padding-top: 20px;">
                             Warm regards,<br>
-                            <strong>SoVir Skilling & Training Center Team</strong>
+                            <strong>Skyline Skilling & Training Center Team</strong>
                         </p>
                     </div>
                 </div>
                 <div class="footer">
-                    &copy; ${new Date().getFullYear()} SoVir Skilling & Training Center. All rights reserved.<br>
-                    <a href="https://sovirtechnologies.in" style="color: #666; text-decoration: none;">www.sovirtechnologies.in</a>
+                    &copy; ${new Date().getFullYear()} Skyline Skilling & Training Center. All rights reserved.<br>
+                    <a href="https://www.skylinetechnologies.in" style="color: #666; text-decoration: none;">www.skylinetechnologies.in</a>
                 </div>
             </div>
         </body>
@@ -319,13 +319,13 @@ export class EmailService {
         <body>
             <div class="container">
                 <div class="header">
-                    <h1>SoVir Skilling & Training Center</h1>
+                    <h1>Skyline Skilling & Training Center</h1>
                 </div>
                 <div class="content">
                     <div class="welcome-text">Dear ${name},</div>
                     
                     <div class="message-body">
-                        <p>Welcome to the <strong>SoVir Skilling & Training Center</strong>.</p>
+                        <p>Welcome to the <strong>Skyline Skilling & Training Center</strong>.</p>
                         
                         <p>We are delighted to have you with us. As requested, here is your One-Time Password (OTP) for <strong>${purpose}</strong>.</p>
                         
@@ -335,16 +335,16 @@ export class EmailService {
                         
                         <p>All further information, updates, and important announcements will be shared through your registered login email ID. Kindly check your email regularly to stay informed.</p>
 
-                        <p style="margin-top: 30px;">Once again, thank you for choosing SoVir Skilling & Training Center as your skilling partner.</p>
+                        <p style="margin-top: 30px;">Once again, thank you for choosing Skyline Skilling & Training Center as your skilling partner.</p>
                         
                         <p style="margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px;">
                             Warm regards,<br>
-                            <strong>SoVir Skilling & Training Center Team</strong>
+                            <strong>Skyline Skilling & Training Center Team</strong>
                         </p>
                     </div>
                 </div>
                 <div class="footer">
-                    &copy; ${new Date().getFullYear()} SoVir Skilling & Training Center. All rights reserved.<br>
+                    &copy; ${new Date().getFullYear()} Skyline Skilling & Training Center. All rights reserved.<br>
                     <a href="${frontendBaseUrl}" style="color: #666; text-decoration: none;">${frontendHostLabel}</a>
                 </div>
             </div>
@@ -357,10 +357,10 @@ export class EmailService {
         const htmlContent = this.getOtpTemplate(name, otp, purpose);
 
         const mailOptions = {
-            from: `"SoVir Skilling & Training Center" <${env.EMAIL_USER}>`,
+            from: `"Skyline Skilling & Training Center" <${env.EMAIL_USER}>`,
             to,
-            subject: `${purpose} OTP - SoVir Skilling & Training Center`,
-            text: `Dear ${name},\n\nYour OTP for ${purpose} is: ${otp}. It is valid for 3 minutes.\n\nWarm regards,\nSoVir Skilling & Training Center Team`,
+            subject: `${purpose} OTP - Skyline Skilling & Training Center`,
+            text: `Dear ${name},\n\nYour OTP for ${purpose} is: ${otp}. It is valid for 3 minutes.\n\nWarm regards,\nSkyline Skilling & Training Center Team`,
             html: htmlContent,
         };
 
@@ -449,13 +449,13 @@ export class EmailService {
             });
 
             const mailOptions = {
-                from: `" SoVir Skilling & Training Center" <${env.EMAIL_USER}>`,
+                from: `"Skyline Skilling & Training Center" <${env.EMAIL_USER}>`,
                 to,
                 subject,
                 html,
                 text: isApproved
-                    ? `Dear ${name},\n\nYour enrollment${normalizedInstitutionName ? ` under ${normalizedInstitutionName}` : ''} for ${courseTitle} has been approved and your payment is confirmed.\n${normalizedInstitutionName ? `Institution: ${normalizedInstitutionName}\n` : ''}Status: Approved\nPayment Status: ${paymentDetails?.paymentStatus || 'Paid'}\nAmount: ${formatCurrencyAmount(paymentDetails?.amount, paymentDetails?.currency || 'INR')}\nPayment Method: ${paymentDetails?.paymentMethod || 'Not available'}\nTransaction ID: ${paymentDetails?.transactionId || 'Not available'}\nPayment ID: ${paymentDetails?.paymentId || 'Not available'}\nBank Reference Number: ${paymentDetails?.bankReferenceNumber || 'Not available'}\nPaid At: ${formatDateTime(paymentDetails?.paidAt)}\n\nStudent Dashboard: ${studentDashboardLink}\n\nWarm regards,\nSoVir Skilling & Training Center Team`
-                    : `Dear ${name},\n\nWe have received your enrollment request and payment for ${courseTitle} successfully.\nStatus: Pending Approval\nPayment Status: ${paymentDetails?.paymentStatus || 'Paid'}\nAmount: ${formatCurrencyAmount(paymentDetails?.amount, paymentDetails?.currency || 'INR')}\nPayment Method: ${paymentDetails?.paymentMethod || 'Not available'}\nTransaction ID: ${paymentDetails?.transactionId || 'Not available'}\nPayment ID: ${paymentDetails?.paymentId || 'Not available'}\nBank Reference Number: ${paymentDetails?.bankReferenceNumber || 'Not available'}\nPaid At: ${formatDateTime(paymentDetails?.paidAt)}\n\nOur admissions team will contact you with the next updates.\nStudent Dashboard: ${studentDashboardLink}\n\nWarm regards,\nSoVir Skilling & Training Center Team`,
+                    ? `Dear ${name},\n\nYour enrollment${normalizedInstitutionName ? ` under ${normalizedInstitutionName}` : ''} for ${courseTitle} has been approved and your payment is confirmed.\n${normalizedInstitutionName ? `Institution: ${normalizedInstitutionName}\n` : ''}Status: Approved\nPayment Status: ${paymentDetails?.paymentStatus || 'Paid'}\nAmount: ${formatCurrencyAmount(paymentDetails?.amount, paymentDetails?.currency || 'INR')}\nPayment Method: ${paymentDetails?.paymentMethod || 'Not available'}\nTransaction ID: ${paymentDetails?.transactionId || 'Not available'}\nPayment ID: ${paymentDetails?.paymentId || 'Not available'}\nBank Reference Number: ${paymentDetails?.bankReferenceNumber || 'Not available'}\nPaid At: ${formatDateTime(paymentDetails?.paidAt)}\n\nStudent Dashboard: ${studentDashboardLink}\n\nWarm regards,\nSkyline Skilling & Training Center Team`
+                    : `Dear ${name},\n\nWe have received your enrollment request and payment for ${courseTitle} successfully.\nStatus: Pending Approval\nPayment Status: ${paymentDetails?.paymentStatus || 'Paid'}\nAmount: ${formatCurrencyAmount(paymentDetails?.amount, paymentDetails?.currency || 'INR')}\nPayment Method: ${paymentDetails?.paymentMethod || 'Not available'}\nTransaction ID: ${paymentDetails?.transactionId || 'Not available'}\nPayment ID: ${paymentDetails?.paymentId || 'Not available'}\nBank Reference Number: ${paymentDetails?.bankReferenceNumber || 'Not available'}\nPaid At: ${formatDateTime(paymentDetails?.paidAt)}\n\nOur admissions team will contact you with the next updates.\nStudent Dashboard: ${studentDashboardLink}\n\nWarm regards,\nSkyline Skilling & Training Center Team`,
             };
 
             try {
@@ -551,13 +551,13 @@ export class EmailService {
         <body>
             <div class="container">
                 <div class="header">
-                    <h1>SoVir Skilling & Training Center</h1>
+                    <h1>Skyline Skilling & Training Center</h1>
                 </div>
                 <div class="content">
                     <div class="welcome-text">Dear ${name},</div>
                     
                     <div class="message-body">
-                        <p>Welcome to the <span class="highlight">SoVir Skilling & Training Center</span>.</p>
+                        <p>Welcome to the <span class="highlight">Skyline Skilling & Training Center</span>.</p>
                         ${institutionApprovalNotice}
                         
                         <p>We are delighted to have you with us. Our program is designed and delivered by industry-specific professional trainers, ensuring practical knowledge and real-world skill development.</p>
@@ -566,17 +566,17 @@ export class EmailService {
                         
                         ${actionButton}
 
-                        <p style="margin-top: 30px;">Once again, thank you for choosing  SoVir Skilling & Training Center as your skilling partner. We wish you a successful and enriching learning journey with us.</p>
+                        <p style="margin-top: 30px;">Once again, thank you for choosing Skyline Skilling & Training Center as your skilling partner. We wish you a successful and enriching learning journey with us.</p>
                         
                         <p style="margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px;">
                             Warm regards,<br>
-                            <strong>SoVir Skilling & Training Center Team</strong>
+                            <strong>Skyline Skilling & Training Center Team</strong>
                         </p>
                     </div>
                 </div>
                 <div class="footer">
-                    &copy; ${new Date().getFullYear()} SoVir Skilling & Training Center. All rights reserved.<br>
-                    <a href="https://sovirtechnologies.in" style="color: #666; text-decoration: none;">www.sovirtechnologies.in</a>
+                    &copy; ${new Date().getFullYear()} Skyline Skilling & Training Center. All rights reserved.<br>
+                    <a href="https://www.skylinetechnologies.in" style="color: #666; text-decoration: none;">www.skylinetechnologies.in</a>
                 </div>
             </div>
         </body>
@@ -584,11 +584,11 @@ export class EmailService {
         `;
 
         const mailOptions = {
-            from: `"SoVir Skilling & Training Center" <${env.EMAIL_USER}>`,
+            from: `"Skyline Skilling & Training Center" <${env.EMAIL_USER}>`,
             to,
             subject,
             html: htmlContent,
-            text: `Dear ${name},\n\nWelcome to SoVir Skilling & Training Center.\n${isApproved && normalizedInstitutionName ? `\nYour enrollment has been approved under ${normalizedInstitutionName}.\n` : '\n'}\nWe are delighted to have you with us. Our program is designed and delivered by industry-specific professional trainers, ensuring practical knowledge and real-world skill development.\n\nAll further information, updates, and important announcements will be shared through your registered login email ID. Kindly check your email regularly to stay informed.\n\nOnce again, thank you for choosing SoVir Skilling & Training Center as your skilling partner. We wish you a successful and enriching learning journey with us.\n\nWarm regards,\nSoVir Skilling & Training Center Team`
+            text: `Dear ${name},\n\nWelcome to Skyline Skilling & Training Center.\n${isApproved && normalizedInstitutionName ? `\nYour enrollment has been approved under ${normalizedInstitutionName}.\n` : '\n'}\nWe are delighted to have you with us. Our program is designed and delivered by industry-specific professional trainers, ensuring practical knowledge and real-world skill development.\n\nAll further information, updates, and important announcements will be shared through your registered login email ID. Kindly check your email regularly to stay informed.\n\nOnce again, thank you for choosing Skyline Skilling & Training Center as your skilling partner. We wish you a successful and enriching learning journey with us.\n\nWarm regards,\nSkyline Skilling & Training Center Team`
         };
 
         try {
@@ -642,11 +642,11 @@ export class EmailService {
 
         try {
             await this.transporter.sendMail({
-                from: `"SoVir Skilling & Training Center" <${env.EMAIL_USER}>`,
+                from: `"Skyline Skilling & Training Center" <${env.EMAIL_USER}>`,
                 to: params.to,
                 subject,
                 html,
-                text: `Dear ${params.institutionName},\n\nYour institution request for ${params.courseTitle} - ${params.levelName} has been ${isApproved ? 'approved' : 'rejected'}.\nStudents in request: ${params.studentCount}\n\nInstitution Portal: ${institutionDashboardLink}\n\nWarm regards,\nSoVir Skilling & Training Center Team`,
+                text: `Dear ${params.institutionName},\n\nYour institution request for ${params.courseTitle} - ${params.levelName} has been ${isApproved ? 'approved' : 'rejected'}.\nStudents in request: ${params.studentCount}\n\nInstitution Portal: ${institutionDashboardLink}\n\nWarm regards,\nSkyline Skilling & Training Center Team`,
             });
             return true;
         } catch (error) {
@@ -689,11 +689,11 @@ export class EmailService {
 
         try {
             await this.transporter.sendMail({
-                from: `"SoVir Skilling & Training Center" <${env.EMAIL_USER}>`,
+                from: `"Skyline Skilling & Training Center" <${env.EMAIL_USER}>`,
                 to: params.to,
                 subject: `Student Account Activated - ${params.courseTitle} ${params.levelName}${normalizedInstitutionName ? ` - ${normalizedInstitutionName}` : ''}`,
                 html,
-                text: `Dear ${params.studentName},\n\nYour student account has been created and enrolled in ${params.courseTitle} - ${params.levelName}.${normalizedInstitutionName ? `\nInstitution: ${normalizedInstitutionName}.` : ''}\nYour institution has the password for this account. Please contact them if you need your login credentials.\n\nStudent Dashboard: ${studentDashboardLink}\n\nWarm regards,\nSoVir Skilling & Training Center Team`,
+                text: `Dear ${params.studentName},\n\nYour student account has been created and enrolled in ${params.courseTitle} - ${params.levelName}.${normalizedInstitutionName ? `\nInstitution: ${normalizedInstitutionName}.` : ''}\nYour institution has the password for this account. Please contact them if you need your login credentials.\n\nStudent Dashboard: ${studentDashboardLink}\n\nWarm regards,\nSkyline Skilling & Training Center Team`,
             });
             return true;
         } catch (error) {
@@ -759,11 +759,11 @@ export class EmailService {
         });
 
         const mailOptions = {
-            from: `"SoVir Skilling & Training Center" <${env.EMAIL_USER}>`,
+            from: `"Skyline Skilling & Training Center" <${env.EMAIL_USER}>`,
             to: params.to,
             subject,
             html,
-            text: `Dear ${params.name},\n\nWe were unable to complete the payment step for ${displayCourseTitle}.\nProgram Type: ${trainingTypeLabel}\nAmount: ${amountLabel}\nStatus: ${isCancelled ? 'Not Completed' : 'Payment Failed'}\nGateway Status: ${params.paymentStatus || 'Not available'}\nPayment Method: ${params.paymentMethod || 'Not available'}\nReason: ${params.failureReason || 'Payment could not be completed.'}\n\nNo enrollment request was submitted. Please try again from the course page.\nStudent Dashboard: ${studentDashboardLink}\nRetry Link: ${retryUrl}\n\nWarm regards,\nSoVir Skilling & Training Center Team`,
+            text: `Dear ${params.name},\n\nWe were unable to complete the payment step for ${displayCourseTitle}.\nProgram Type: ${trainingTypeLabel}\nAmount: ${amountLabel}\nStatus: ${isCancelled ? 'Not Completed' : 'Payment Failed'}\nGateway Status: ${params.paymentStatus || 'Not available'}\nPayment Method: ${params.paymentMethod || 'Not available'}\nReason: ${params.failureReason || 'Payment could not be completed.'}\n\nNo enrollment request was submitted. Please try again from the course page.\nStudent Dashboard: ${studentDashboardLink}\nRetry Link: ${retryUrl}\n\nWarm regards,\nSkyline Skilling & Training Center Team`,
         };
 
         try {
@@ -776,7 +776,7 @@ export class EmailService {
     }
 
     public async forwardContactMessage(data: { name: string; email: string; subject: string; message: string }): Promise<void> {
-        const to = "sovirtechnologies@gmail.com";
+        const to = env.EMAIL_USER || "info@skylinetechnologies.in";
         const subject = `New Contact Form Submission: ${data.subject}`;
 
         const htmlContent = `
@@ -826,7 +826,7 @@ export class EmailService {
     }
 
     public async sendContactAutoReply(to: string): Promise<void> {
-        const subject = "Thank you for contacting SoVir Skilling & Training Center";
+        const subject = "Thank you for contacting Skyline Skilling & Training Center";
         const htmlContent = `
         <!DOCTYPE html>
         <html>
@@ -841,17 +841,17 @@ export class EmailService {
             <div class="container">
                 <p>Dear Sir/Madam,</p>
 
-                <p>Greetings from SoVir Skilling & Training Center.</p>
+                <p>Greetings from Skyline Skilling & Training Center.</p>
 
                 <p>Thank you for reaching out to us. We appreciate your interest in our organization. Our team of experts will review your details and get in touch with you shortly to discuss your requirements.</p>
 
                 <p>You may share your profile with us for any service requirements, collaboration opportunities, or strategic partnerships. We look forward to exploring potential avenues of mutual growth and cooperation.</p>
 
-                <p>Thank you for connecting with SoVir Skilling & Training Center.</p>
+                <p>Thank you for connecting with Skyline Skilling & Training Center.</p>
 
                 <div class="footer">
                     <p>Yours sincerely,<br>
-                    <strong>SoVir Skilling & Training Center</strong></p>
+                    <strong>Skyline Skilling & Training Center</strong></p>
                 </div>
             </div>
         </body>
@@ -859,7 +859,7 @@ export class EmailService {
         `;
 
         const mailOptions = {
-            from: `"SoVir Skilling & Training Center" <${env.EMAIL_USER}>`,
+            from: `"Skyline Skilling & Training Center" <${env.EMAIL_USER}>`,
             to,
             subject,
             html: htmlContent,
@@ -872,7 +872,7 @@ export class EmailService {
         }
     }
     public async sendTrialEmail(to: string, name: string): Promise<void> {
-        const subject = "Welcome to SoVir Skilling & Training Center Training & Skilling Program";
+        const subject = "Welcome to Skyline Skilling & Training Center Training & Skilling Program";
         const htmlContent = `
         <!DOCTYPE html>
         <html>
@@ -938,29 +938,29 @@ export class EmailService {
         <body>
             <div class="container">
                 <div class="header">
-                    <h1>SoVir Skilling & Training Center<br>Training & Skilling Program</h1>
+                    <h1>Skyline Skilling & Training Center<br>Training & Skilling Program</h1>
                 </div>
                 <div class="content">
                     <div class="welcome-text">Dear ${name},</div>
                     
                     <div class="message-body">
-                        <p>Welcome to the <span class="highlight">SoVir Skilling & Training Center</span>.</p>
+                        <p>Welcome to the <span class="highlight">Skyline Skilling & Training Center</span>.</p>
                         
                         <p>We are delighted to have you with us. Our program is designed and delivered by industry-specific professional trainers, ensuring practical knowledge and real-world skill development.</p>
                         
                         <p>All further information, updates, and important announcements will be shared through your registered login email ID. Kindly check your email regularly to stay informed.</p>
                         
-                        <p style="margin-top: 30px;">Once again, thank you for choosing SoVir Skilling & Training Center as your skilling partner. We wish you a successful and enriching learning journey with us.</p>
+                        <p style="margin-top: 30px;">Once again, thank you for choosing Skyline Skilling & Training Center as your skilling partner. We wish you a successful and enriching learning journey with us.</p>
                         
                         <p style="margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px;">
                             Warm regards,<br>
-                            <strong>SoVir Skilling & Training Center Team</strong>
+                            <strong>Skyline Skilling & Training Center Team</strong>
                         </p>
                     </div>
                 </div>
                 <div class="footer">
-                    &copy; ${new Date().getFullYear()} SoVir Skilling & Training Center. All rights reserved.<br>
-                    <a href="https://sovirtechnologies.in" style="color: #666; text-decoration: none;">www.sovirtechnologies.in</a>
+                    &copy; ${new Date().getFullYear()} Skyline Skilling & Training Center. All rights reserved.<br>
+                    <a href="https://www.skylinetechnologies.in" style="color: #666; text-decoration: none;">www.skylinetechnologies.in</a>
                 </div>
             </div>
         </body>
@@ -968,11 +968,11 @@ export class EmailService {
         `;
 
         const mailOptions = {
-            from: `"SoVir Skilling & Training Center" <${env.EMAIL_USER}>`,
+            from: `"Skyline Skilling & Training Center" <${env.EMAIL_USER}>`,
             to,
             subject,
             html: htmlContent,
-            text: `Dear ${name},\n\nWelcome to SoVir Skilling & Training Center.\n\nWe are delighted to have you with us. Our program is designed and delivered by industry-specific professional trainers, ensuring practical knowledge and real-world skill development.\n\nAll further information, updates, and important announcements will be shared through your registered login email ID. Kindly check your email regularly to stay informed.\n\nOnce again, thank you for choosing SoVir Skilling & Training Center as your skilling partner. We wish you a successful and enriching learning journey with us.\n\nWarm regards,\nSoVir Skilling & Training Center Team`
+            text: `Dear ${name},\n\nWelcome to Skyline Skilling & Training Center.\n\nWe are delighted to have you with us. Our program is designed and delivered by industry-specific professional trainers, ensuring practical knowledge and real-world skill development.\n\nAll further information, updates, and important announcements will be shared through your registered login email ID. Kindly check your email regularly to stay informed.\n\nOnce again, thank you for choosing Skyline Skilling & Training Center as your skilling partner. We wish you a successful and enriching learning journey with us.\n\nWarm regards,\nSkyline Skilling & Training Center Team`
         };
 
         try {
@@ -1022,7 +1022,7 @@ export class EmailService {
             : [];
         const html = this.getProgramEmailTemplate({
             name,
-            title: 'Thank you for applying for an internship with SoVir Skilling & Training Center.',
+            title: 'Thank you for applying for an internship with Skyline Skilling & Training Center.',
             paragraphs: [
                 `We have successfully received your application for the <strong>${internshipTitle}</strong> internship opportunity.`,
                 ...(hasPaymentDetails
@@ -1045,11 +1045,11 @@ export class EmailService {
         });
 
         const mailOptions = {
-            from: `"SoVir Skilling & Training Center" <${env.EMAIL_USER}>`,
+            from: `"Skyline Skilling & Training Center" <${env.EMAIL_USER}>`,
             to,
             subject,
             html,
-            text: `Dear ${name},\n\nThank you for applying for the ${internshipTitle} internship at SoVir Skilling & Training Center.\n\nWe have received your application successfully.\nMode: ${formattedMode}\nReference ID: ${referenceCode}\nStatus: Application Received${hasPaymentDetails ? `\nPayment Status: ${paymentDetails?.paymentStatus || 'Paid'}\nAmount: ${formatCurrencyAmount(paymentDetails?.amount, paymentDetails?.currency || 'INR')}\nPayment Method: ${paymentDetails?.paymentMethod || 'Not available'}\nTransaction ID: ${paymentDetails?.transactionId || 'Not available'}\nPayment ID: ${paymentDetails?.paymentId || 'Not available'}\nBank Reference Number: ${paymentDetails?.bankReferenceNumber || 'Not available'}\nPaid At: ${formatDateTime(paymentDetails?.paidAt)}` : ''}\n\nOur team will review your profile and update you through your registered email.\n\nWarm regards,\nSoVir Skilling & Training Center Team`,
+            text: `Dear ${name},\n\nThank you for applying for the ${internshipTitle} internship at Skyline Skilling & Training Center.\n\nWe have received your application successfully.\nMode: ${formattedMode}\nReference ID: ${referenceCode}\nStatus: Application Received${hasPaymentDetails ? `\nPayment Status: ${paymentDetails?.paymentStatus || 'Paid'}\nAmount: ${formatCurrencyAmount(paymentDetails?.amount, paymentDetails?.currency || 'INR')}\nPayment Method: ${paymentDetails?.paymentMethod || 'Not available'}\nTransaction ID: ${paymentDetails?.transactionId || 'Not available'}\nPayment ID: ${paymentDetails?.paymentId || 'Not available'}\nBank Reference Number: ${paymentDetails?.bankReferenceNumber || 'Not available'}\nPaid At: ${formatDateTime(paymentDetails?.paidAt)}` : ''}\n\nOur team will review your profile and update you through your registered email.\n\nWarm regards,\nSkyline Skilling & Training Center Team`,
         };
 
         try {
@@ -1082,10 +1082,10 @@ export class EmailService {
                 ? [
                     `We are pleased to inform you that your application for the <strong>${internshipTitle}</strong> internship has been accepted.`,
                     'Our team will share the next instructions and onboarding details with you through your registered email. Please keep checking your inbox regularly.',
-                    'We look forward to having you as part of the SoVir Skilling & Training Center learning and skilling journey.',
+                    'We look forward to having you as part of the Skyline Skilling & Training Center learning and skilling journey.',
                 ]
                 : [
-                    `Thank you for applying for the <strong>${internshipTitle}</strong> internship at SoVir Skilling & Training Center.`,
+                    `Thank you for applying for the <strong>${internshipTitle}</strong> internship at Skyline Skilling & Training Center.`,
                     'After careful review, we are unable to move forward with your application for this opportunity at this time.',
                     'We appreciate your interest in our programs and encourage you to apply again for future opportunities that match your profile.',
                 ],
@@ -1102,13 +1102,13 @@ export class EmailService {
         });
 
         const mailOptions = {
-            from: `"SoVir Skilling & Training Center" <${env.EMAIL_USER}>`,
+            from: `"Skyline Skilling & Training Center" <${env.EMAIL_USER}>`,
             to,
             subject,
             html,
             text: isAccepted
-                ? `Dear ${name},\n\nCongratulations. Your application for the ${internshipTitle} internship has been accepted.\nMode: ${formattedMode}\nReference ID: ${referenceCode}\n\nOur team will share the next steps with you soon.\n\nWarm regards,\nSoVir Skilling & Training Center Team`
-                : `Dear ${name},\n\nThank you for applying for the ${internshipTitle} internship at SoVir Skilling & Training Center.\nMode: ${formattedMode}\nReference ID: ${referenceCode}\n\nAfter review, we are unable to move forward with your application for this opportunity at this time.\n\nWe appreciate your interest and encourage you to apply again in the future.\n\nWarm regards,\nSoVir Skilling & Training Center Team`,
+                ? `Dear ${name},\n\nCongratulations. Your application for the ${internshipTitle} internship has been accepted.\nMode: ${formattedMode}\nReference ID: ${referenceCode}\n\nOur team will share the next steps with you soon.\n\nWarm regards,\nSkyline Skilling & Training Center Team`
+                : `Dear ${name},\n\nThank you for applying for the ${internshipTitle} internship at Skyline Skilling & Training Center.\nMode: ${formattedMode}\nReference ID: ${referenceCode}\n\nAfter review, we are unable to move forward with your application for this opportunity at this time.\n\nWe appreciate your interest and encourage you to apply again in the future.\n\nWarm regards,\nSkyline Skilling & Training Center Team`,
         };
 
         try {
@@ -1166,11 +1166,11 @@ export class EmailService {
         });
 
         const mailOptions = {
-            from: `"SoVir Skilling & Training Center" <${env.EMAIL_USER}>`,
+            from: `"Skyline Skilling & Training Center" <${env.EMAIL_USER}>`,
             to: params.to,
             subject,
             html,
-            text: `Dear ${params.name},\n\nWe were unable to complete the payment step for the ${params.internshipTitle} internship.\nMode: ${formattedMode}\nAmount: ${amountLabel}\nStatus: ${isCancelled ? 'Not Completed' : 'Payment Failed'}\nGateway Status: ${params.paymentStatus || 'Not available'}\nPayment Method: ${params.paymentMethod || 'Not available'}\nReason: ${params.failureReason || 'Payment could not be completed.'}\n\nNo internship application was submitted. Please return to the internship page and try again.\n\nStudent Dashboard: ${studentDashboardLink}\nCareers Page: ${careersPageLink}\n\nWarm regards,\nSoVir Skilling & Training Center Team`,
+            text: `Dear ${params.name},\n\nWe were unable to complete the payment step for the ${params.internshipTitle} internship.\nMode: ${formattedMode}\nAmount: ${amountLabel}\nStatus: ${isCancelled ? 'Not Completed' : 'Payment Failed'}\nGateway Status: ${params.paymentStatus || 'Not available'}\nPayment Method: ${params.paymentMethod || 'Not available'}\nReason: ${params.failureReason || 'Payment could not be completed.'}\n\nNo internship application was submitted. Please return to the internship page and try again.\n\nStudent Dashboard: ${studentDashboardLink}\nCareers Page: ${careersPageLink}\n\nWarm regards,\nSkyline Skilling & Training Center Team`,
         };
 
         try {

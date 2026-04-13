@@ -91,7 +91,7 @@ export interface CourseData {
 
 export const englishCourseData: CourseData = {
   slug: 'english',
-  metaTitle: 'Business & Academic English Course | SoVir Academy',
+  metaTitle: 'Business & Academic English Course | Skyline Academy',
   metaDescription:
     'Master Business and Academic English with live classes, personalized feedback, and globally recognized certification.',
   hero: {
@@ -249,7 +249,7 @@ export const englishCourseData: CourseData = {
 
 export const germanCourseData: CourseData = {
   slug: 'german',
-  metaTitle: 'German for Study & Work in Germany | SoVir Academy',
+  metaTitle: 'German for Study & Work in Germany | Skyline Academy',
   metaDescription:
     'Prepare for life, study, and work in Germany with structured A1–B2 German courses and TELC / Goethe support.',
   hero: {
@@ -351,7 +351,7 @@ export const germanCourseData: CourseData = {
 
 export const japaneseCourseData: CourseData = {
   slug: 'japanese',
-  metaTitle: 'JLPT-focused Japanese Course | SoVir Academy',
+  metaTitle: 'JLPT-focused Japanese Course | Skyline Academy',
   metaDescription:
     'Pass JLPT N5–N2 with a structured curriculum, kanji practice, and live conversation labs.',
   hero: {

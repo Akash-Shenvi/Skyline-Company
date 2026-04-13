@@ -154,7 +154,7 @@ function formatBytes(bytes: number): string {
 }
 
 function generateRef(): string {
-  return 'SOV-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+  return 'SKY-' + Math.random().toString(36).substr(2, 8).toUpperCase();
 }
 
 function getStatusText(status: ApplicationStatus): string {
@@ -706,7 +706,7 @@ const InternshipApplicationPage: React.FC = () => {
             <h1 className="mb-2 text-2xl font-bold tracking-tight text-brand-black">Application Submitted!</h1>
             <p className="mx-auto max-w-xs text-sm leading-relaxed text-brand-olive-dark">
               Thank you, <strong className="text-brand-black">{form.firstName}</strong>.
-              Your application has been received. SoVir's team will reach out within 3–5 business days.
+              Your application has been received. Skyline's team will reach out within 3–5 business days.
             </p>
             <div className="mt-4 inline-flex items-center justify-center rounded-full border border-brand-gold/30 bg-brand-gold/10 px-4 py-2 text-xs font-semibold text-brand-gold-hover">
               Applying for: {internshipTitle} · {formatInternshipMode(form.internshipMode)}
@@ -766,7 +766,7 @@ const InternshipApplicationPage: React.FC = () => {
           {/* Badge */}
           <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/10 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-gold">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-gold" />
-            SoVir Technologies
+            Skyline Technologies
           </div>
 
           <h1 className="text-[22px] sm:text-[26px] md:text-[30px] font-bold tracking-[-0.03em] leading-tight text-brand-black">
@@ -1259,7 +1259,7 @@ const InternshipApplicationPage: React.FC = () => {
                 </button>
                 <p className="mt-4 text-center text-xs text-brand-olive-light">
                   By submitting, you confirm all information is accurate and agree to{' '}
-                  <a href="#" className="text-brand-gold-hover no-underline hover:underline">SoVir's privacy policy</a>.
+                  <a href="#" className="text-brand-gold-hover no-underline hover:underline">Skyline's privacy policy</a>.
                 </p>
               </div>
             </section>
