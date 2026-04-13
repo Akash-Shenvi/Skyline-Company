@@ -5,6 +5,7 @@ import api from '../lib/api';
 import { dashboardAPI, getAssetUrl } from '../lib/api';
 import {
     BookOpen,
+    Building2,
     User,
     Edit,
     Mail,
@@ -398,14 +399,16 @@ const StudentDashboard: React.FC = () => {
         if (user) { fetchDashboardData(); }
     }, [user]);
 
-    const showHeaderFooter = user && !isInstitutionStudentRole(user.role);
+    const showHeaderFooter = Boolean(user && !isInstitutionStudentRole(user.role));
+    const institutionBrandingVisible = isInstitutionStudentRole(user?.role)
+        && Boolean(user?.institutionName || user?.institutionLogo || user?.institutionTagline);
 
     return (
         <div className="flex min-h-screen flex-col bg-brand-off-white">
             {showHeaderFooter && <Header />}
 
             <div className={`flex-1 ${showHeaderFooter ? 'pt-20' : ''}`}>
-                <LearnerQuickActions homeTo={getDashboardPathForRole(user?.role)} showFeedbackLink />
+                <LearnerQuickActions homeTo={getDashboardPathForRole(user?.role)} showFeedbackLink isGeneralPool={showHeaderFooter} />
 
                 <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-brand-black focus:px-4 focus:py-2 focus:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold">
                     Skip to content
@@ -416,6 +419,34 @@ const StudentDashboard: React.FC = () => {
                     <HeroBackground />
                     <div className="relative z-10 mx-auto max-w-3xl px-4">
                         <motion.div initial="hidden" animate="visible" variants={fadeInUp}>
+                            {institutionBrandingVisible && (
+                                <div className="mx-auto mb-6 flex max-w-2xl items-center justify-center">
+                                    <div className="flex w-full max-w-xl items-center gap-4 rounded-3xl border border-white/15 bg-white/10 px-5 py-4 text-left shadow-2xl backdrop-blur-md">
+                                        <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-white/95 shadow-lg">
+                                            {user?.institutionLogo ? (
+                                                <img
+                                                    src={getAssetUrl(user.institutionLogo)}
+                                                    alt={user.institutionName || 'Institution logo'}
+                                                    className="h-full w-full object-cover"
+                                                />
+                                            ) : (
+                                                <Building2 className="h-8 w-8 text-brand-gold" />
+                                            )}
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brand-gold/90">
+                                                Institution Partner
+                                            </p>
+                                            <h2 className="mt-1 truncate text-2xl font-bold text-white">
+                                                {user?.institutionName || 'Institution student'}
+                                            </h2>
+                                            <p className="mt-1 text-sm leading-6 text-blue-100">
+                                                {user?.institutionTagline || 'You are learning through your institution dashboard.'}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-gold/30 bg-brand-gold/10 px-4 py-1.5">
                                 <Layers className="h-3.5 w-3.5 text-brand-gold" />
                                 <span className="text-xs font-semibold uppercase tracking-widest text-brand-gold">Student Portal</span>
@@ -451,6 +482,11 @@ const StudentDashboard: React.FC = () => {
                                         <span className="mt-1 inline-block rounded-full bg-brand-gold/20 px-3 py-0.5 text-xs font-bold uppercase tracking-wider text-brand-gold">
                                             {formatRoleLabel(user?.role)}
                                         </span>
+                                        {institutionBrandingVisible && user?.institutionName && (
+                                            <p className="mt-3 text-sm font-medium text-blue-100">
+                                                {user.institutionName}
+                                            </p>
+                                        )}
                                     </div>
                                 </div>
 
