@@ -13,10 +13,11 @@ import {
     AlertCircle,
     CheckCircle2,
     RefreshCw,
+    Eye,
+    EyeOff,
 } from 'lucide-react';
 import { Header } from '../components/layout';
 import Footer from '../components/layout/Footer';
-import Button from '../components/ui/Button';
 import { useAuth } from '../context/AuthContext';
 import { getDashboardPathForRole } from '../lib/authRouting';
 import {
@@ -47,6 +48,7 @@ const InstitutionRegisterPage: React.FC = () => {
         otp: '',
     });
     const [logoFile, setLogoFile] = useState<File | null>(null);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleRegister = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -458,17 +460,24 @@ const InstitutionRegisterPage: React.FC = () => {
                                         <div className="relative">
                                             <Lock className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-olive-light" />
                                             <input
-                                                type="password"
+                                                type={showPassword ? 'text' : 'password'}
                                                 value={formData.password}
                                                 onChange={(e) =>
                                                     setFormData((c) => ({ ...c, password: e.target.value }))
                                                 }
-                                                className={institutionFieldWithIconClassName}
+                                                className={`${institutionFieldWithIconClassName} pr-12`}
                                                 placeholder="Minimum 6 characters"
                                                 autoComplete="new-password"
                                                 minLength={6}
                                                 required
                                             />
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowPassword(!showPassword)}
+                                                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-brand-olive-light transition-colors hover:text-brand-black"
+                                            >
+                                                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                            </button>
                                         </div>
                                     </div>
 

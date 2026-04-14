@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Building2, Lock, Mail, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Building2, Lock, Mail, ArrowRight, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import { Header } from '../components/layout';
 import Footer from '../components/layout/Footer';
-import Button from '../components/ui/Button';
 import { useAuth } from '../context/AuthContext';
 import { getDashboardPathForRole } from '../lib/authRouting';
 import { institutionFieldWithIconClassName } from '../lib/formStyles';
@@ -15,6 +14,7 @@ const InstitutionLoginPage: React.FC = () => {
     const location = useLocation();
     const { institutionLogin } = useAuth();
     const [formData, setFormData] = useState({ email: '', password: '' });
+    const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -163,16 +163,23 @@ const InstitutionLoginPage: React.FC = () => {
                                     <div className="relative">
                                         <Lock className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-olive-light" />
                                         <input
-                                            type="password"
+                                            type={showPassword ? 'text' : 'password'}
                                             value={formData.password}
                                             onChange={(e) =>
                                                 setFormData((c) => ({ ...c, password: e.target.value }))
                                             }
-                                            className={institutionFieldWithIconClassName}
+                                            className={`${institutionFieldWithIconClassName} pr-12`}
                                             placeholder="Enter institution password"
                                             autoComplete="current-password"
                                             required
                                         />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-brand-olive-light transition-colors hover:text-brand-black"
+                                        >
+                                            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                        </button>
                                     </div>
                                 </div>
 

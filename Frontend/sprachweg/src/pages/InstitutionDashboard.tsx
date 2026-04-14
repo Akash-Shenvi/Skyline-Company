@@ -14,10 +14,11 @@ import {
     Users,
     ClipboardList,
     AlertCircle,
+    Eye,
+    EyeOff,
 } from 'lucide-react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
-import Button from '../components/ui/Button';
 import { useAuth } from '../context/AuthContext';
 import { institutionAPI } from '../lib/api';
 import { institutionFieldClassName } from '../lib/formStyles';
@@ -116,6 +117,7 @@ const InstitutionDashboard: React.FC = () => {
     const [selectedLevelName, setSelectedLevelName] = useState('');
     const [studentRows, setStudentRows] = useState<StudentRow[]>([createStudentRow(1)]);
     const [nextRowId, setNextRowId] = useState(2);
+    const [showPasswords, setShowPasswords] = useState<Record<number, boolean>>({});
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState('');
@@ -503,16 +505,25 @@ const InstitutionDashboard: React.FC = () => {
                                                         autoComplete="email"
                                                         required
                                                     />
-                                                    <input
-                                                        type="password"
-                                                        value={row.password}
-                                                        onChange={(e) => updateStudentRow(row.id, 'password', e.target.value)}
-                                                        className={institutionFieldClassName}
-                                                        placeholder="Set login password"
-                                                        autoComplete="new-password"
-                                                        minLength={6}
-                                                        required
-                                                    />
+                                                    <div className="relative">
+                                                        <input
+                                                            type={showPasswords[row.id] ? 'text' : 'password'}
+                                                            value={row.password}
+                                                            onChange={(e) => updateStudentRow(row.id, 'password', e.target.value)}
+                                                            className={`${institutionFieldClassName} pr-10`}
+                                                            placeholder="Set login password"
+                                                            autoComplete="new-password"
+                                                            minLength={6}
+                                                            required
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setShowPasswords(prev => ({ ...prev, [row.id]: !prev[row.id] }))}
+                                                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-brand-olive-light transition-colors hover:text-brand-black"
+                                                        >
+                                                            {showPasswords[row.id] ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         ))}
