@@ -28,6 +28,8 @@ type ApprovalArtifacts = {
         courseTitle: string;
         levelName: string;
         institutionName: string | null;
+        institutionLogo: string | null;
+        institutionTagline: string | null;
     }>;
     createdStudentUserIds: mongoose.Types.ObjectId[];
     approvedBatchId?: mongoose.Types.ObjectId | null;
@@ -144,6 +146,8 @@ const sendInstitutionStudentWelcomeEmailsInBatches = async (
                 courseTitle: student.courseTitle,
                 levelName: student.levelName,
                 institutionName: student.institutionName || undefined,
+                institutionLogo: student.institutionLogo || undefined,
+                institutionTagline: student.institutionTagline || undefined,
             }))
         );
     }
@@ -301,6 +305,8 @@ const processInstitutionApproval = async (params: {
                 courseTitle: request.courseTitle,
                 levelName: request.levelName,
                 institutionName: institutionScope.institutionName,
+                institutionLogo: institution.institutionLogo || null,
+                institutionTagline: institution.institutionTagline || null,
             });
         }
 

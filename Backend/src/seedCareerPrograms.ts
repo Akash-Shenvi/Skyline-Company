@@ -162,6 +162,158 @@ const careerPrograms = [
         isActive: true,
         sortOrder: 1,
     },
+    {
+        title: 'German Ausbildung Program - Multiple Career Pathways',
+        slug: 'german-ausbildung-program',
+        shortDescription: 'Start a paid vocational training pathway in Germany with language support, employer placement, visa assistance, and relocation guidance across technical, healthcare, hospitality, IT, and commercial fields.',
+        overview: 'Start your international career in Germany through the Ausbildung vocational training program, a structured earn-while-you-learn pathway with industry exposure, recognized certification, and end-to-end support from language preparation to placement and relocation. Available pathways include technical and engineering roles, healthcare, hospitality, IT, office careers, and commercial fields.',
+        country: 'Germany',
+        eligibleProfiles: [
+            '12th Pass (Any Stream)',
+            'Age 18 - 30',
+            'Basic Interest in Chosen Field',
+            'Willingness to Learn German',
+        ],
+        whyChoose: [
+            'Earn while you learn through paid vocational training.',
+            'No heavy tuition fees like traditional degree pathways.',
+            'High demand across multiple sectors in Germany.',
+            'Opportunity to settle and build a long-term career.',
+            'Globally recognized certification after completion.',
+        ],
+        salary: {
+            adaptation: {
+                min: 800,
+                max: 1500,
+                currency: 'EUR',
+                periodLabel: 'per month during Ausbildung training',
+                hasPlus: false,
+            },
+            fullRecognition: {
+                min: 2500,
+                max: 3500,
+                currency: 'EUR',
+                periodLabel: 'per month after Ausbildung completion',
+                hasPlus: true,
+            },
+            additionalBenefits: [
+                '1st year stipend: EUR 800 - EUR 1,200 per month.',
+                '2nd year stipend: EUR 1,000 - EUR 1,300 per month.',
+                '3rd year stipend: EUR 1,200 - EUR 1,500 per month.',
+                'Practical and theoretical training with monthly stipend support.',
+            ],
+        },
+        processSteps: [
+            {
+                title: 'Counseling & Profile Evaluation',
+                points: [
+                    'Career guidance based on interest and eligibility.',
+                    'Selection of the most suitable Ausbildung field.',
+                ],
+                order: 1,
+            },
+            {
+                title: 'German Language Training (A1 - B2)',
+                points: [
+                    'Structured training with certified trainers.',
+                    'Focus on reading, writing, listening, and speaking.',
+                    'Regular mock tests and assessments.',
+                ],
+                order: 2,
+            },
+            {
+                title: 'B1 / B2 Certification',
+                points: [
+                    'Appear for Goethe or TELC exams.',
+                    'Required for Ausbildung applications in Germany.',
+                ],
+                order: 3,
+            },
+            {
+                title: 'Interview Preparation & Applications',
+                points: [
+                    'German CV creation.',
+                    'Interview preparation and training.',
+                    'Applications to German companies.',
+                ],
+                order: 4,
+            },
+            {
+                title: 'Employer Interviews & Offer Letter',
+                points: [
+                    'Direct interviews with employers.',
+                    'Receive the Ausbildung contract or offer letter.',
+                ],
+                order: 5,
+            },
+            {
+                title: 'Documentation & Visa Process',
+                points: [
+                    'Complete document preparation support.',
+                    'Visa filing and embassy guidance.',
+                ],
+                order: 6,
+            },
+            {
+                title: 'Travel & Relocation',
+                points: [
+                    'Flight assistance.',
+                    'Accommodation guidance.',
+                    'Pre-departure briefing.',
+                ],
+                order: 7,
+            },
+            {
+                title: 'Start Ausbildung in Germany',
+                points: [
+                    'Join the work and study program.',
+                    'Receive monthly stipend during training.',
+                    'Complete practical and theoretical learning modules.',
+                ],
+                order: 8,
+            },
+        ],
+        timelines: [
+            {
+                title: 'Pathway 1: From Scratch (No German Language)',
+                intro: 'For candidates starting without prior German language preparation.',
+                phases: [
+                    { label: 'Language Training (A1 - B2)', durationLabel: '6 - 8 months' },
+                    { label: 'Certification & Applications', durationLabel: '1 - 2 months' },
+                    { label: 'Interviews & Offer Letter', durationLabel: '1 - 2 months' },
+                    { label: 'Visa Processing', durationLabel: '2 - 3 months' },
+                ],
+                totalDurationLabel: '10 - 14 months',
+                note: 'This pathway covers full language preparation before employer placement.',
+                order: 1,
+            },
+            {
+                title: 'Pathway 2: Fast-Track for Candidates With B1 / B2 Certification',
+                intro: 'For candidates who already hold valid German certification.',
+                phases: [
+                    { label: 'Profile Evaluation & Applications', durationLabel: '2 - 4 weeks' },
+                    { label: 'Interviews & Offer Letter', durationLabel: '1 - 2 months' },
+                    { label: 'Documentation & Visa', durationLabel: '2 - 3 months' },
+                ],
+                totalDurationLabel: '5 - 8 months',
+                note: 'Candidates with B1 or B2 certification can move faster into interviews and placement.',
+                order: 2,
+            },
+        ],
+        documentsRequired: [
+            'Updated Resume / CV',
+            'Valid Passport',
+            '10th & 12th Certificates',
+            'German Language Certificate (if available)',
+            'Birth Certificate',
+            'Police Clearance Certificate',
+            'Medical Fitness Certificate',
+        ],
+        ctaDescription: 'Connect with our counselors today to explore the best Ausbildung program for your profile. Applications on this page are coming soon; counselor guidance is available now.',
+        tags: ['Germany', 'Ausbildung', 'Vocational Training', 'Paid Training', 'Career Abroad'],
+        isActive: true,
+        sortOrder: 2,
+    },
 ];
 
 const seedCareerPrograms = async () => {
