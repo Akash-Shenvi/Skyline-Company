@@ -419,40 +419,41 @@ const StudentDashboard: React.FC = () => {
                     <HeroBackground />
                     <div className="relative z-10 mx-auto max-w-3xl px-4">
                         <motion.div initial="hidden" animate="visible" variants={fadeInUp}>
-                            {institutionBrandingVisible && (
-                                <div className="mx-auto mb-6 flex max-w-2xl items-center justify-center">
-                                    <div className="flex w-full max-w-xl items-center gap-4 rounded-3xl border border-white/15 bg-white/10 px-5 py-4 text-left shadow-2xl backdrop-blur-md">
-                                        <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-white/95 shadow-lg">
-                                            {user?.institutionLogo ? (
-                                                <img
-                                                    src={getAssetUrl(user.institutionLogo)}
-                                                    alt={user.institutionName || 'Institution logo'}
-                                                    className="h-full w-full object-cover"
-                                                />
-                                            ) : (
-                                                <Building2 className="h-8 w-8 text-brand-gold" />
-                                            )}
-                                        </div>
-                                        <div className="min-w-0 flex-1">
-                                            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-brand-gold/90">
-                                                Institution Partner
-                                            </p>
-                                            <h2 className="mt-1 truncate text-2xl font-bold text-white">
-                                                {user?.institutionName || 'Institution student'}
-                                            </h2>
-                                            <p className="mt-1 text-sm leading-6 text-blue-100">
-                                                {user?.institutionTagline || 'You are learning through your institution dashboard.'}
-                                            </p>
-                                        </div>
+                            {institutionBrandingVisible ? (
+                                <div className="mx-auto flex flex-col items-center justify-center">
+                                    <div className="mb-6 flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full border-[3px] border-brand-gold/30 bg-white shadow-2xl">
+                                        {user?.institutionLogo ? (
+                                            <img
+                                                src={getAssetUrl(user.institutionLogo)}
+                                                alt={user.institutionName || 'Institution logo'}
+                                                className="h-full w-full object-cover"
+                                            />
+                                        ) : (
+                                            <Building2 className="h-10 w-10 text-brand-gold" />
+                                        )}
                                     </div>
+                                    <h1 className="mb-3 text-4xl font-bold font-sans text-white md:text-5xl">
+                                        {user?.institutionName}
+                                    </h1>
+                                    <p className="text-lg text-blue-100">
+                                        {user?.institutionTagline ? (
+                                            <>
+                                                {user.institutionTagline} <span className="mx-2 text-brand-gold/50">•</span>
+                                            </>
+                                        ) : null}
+                                        Welcome back, <span className="font-semibold text-brand-gold">{user?.name}</span>!
+                                    </p>
                                 </div>
+                            ) : (
+                                <>
+                                    <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-gold/30 bg-brand-gold/10 px-4 py-1.5">
+                                        <Layers className="h-3.5 w-3.5 text-brand-gold" />
+                                        <span className="text-xs font-semibold uppercase tracking-widest text-brand-gold">Student Portal</span>
+                                    </div>
+                                    <h1 className="mb-3 text-4xl font-bold font-sans text-white md:text-5xl">Student Dashboard</h1>
+                                    <p className="text-lg text-brand-olive-light">Welcome back, <span className="font-semibold text-brand-gold">{user?.name}</span>!</p>
+                                </>
                             )}
-                            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-gold/30 bg-brand-gold/10 px-4 py-1.5">
-                                <Layers className="h-3.5 w-3.5 text-brand-gold" />
-                                <span className="text-xs font-semibold uppercase tracking-widest text-brand-gold">Student Portal</span>
-                            </div>
-                            <h1 className="mb-3 text-4xl font-bold font-sans text-white md:text-5xl">Student Dashboard</h1>
-                            <p className="text-lg text-brand-olive-light">Welcome back, <span className="font-semibold text-brand-gold">{user?.name}</span>!</p>
                         </motion.div>
                     </div>
                 </section>
@@ -605,7 +606,7 @@ const StudentDashboard: React.FC = () => {
                                         </div>
                                         <h3 className="text-lg font-bold text-brand-black">No courses enrolled yet</h3>
                                         <p className="mx-auto mt-2 max-w-md text-sm text-brand-olive">
-                                            Start learning by enrolling in a language course or a skill course.
+                                            Start learning by enrolling in a language course.
                                         </p>
                                         <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
                                             <Button
@@ -613,13 +614,6 @@ const StudentDashboard: React.FC = () => {
                                                 className="rounded-xl bg-brand-black px-5 py-3 text-white hover:bg-brand-olive-dark"
                                             >
                                                 Enroll to Language Courses
-                                            </Button>
-                                            <Button
-                                                variant="outline"
-                                                onClick={() => navigate('/skill-training')}
-                                                className="rounded-xl border-brand-gold px-5 py-3 text-brand-gold hover:bg-brand-gold/10"
-                                            >
-                                                Enroll to Skill Courses
                                             </Button>
                                         </div>
                                     </motion.div>
