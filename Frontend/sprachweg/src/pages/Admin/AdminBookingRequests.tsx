@@ -4,7 +4,6 @@ import {
     Mail,
     Trash2,
     Search,
-    Filter,
     Loader2,
     Calendar,
     ArrowLeft
@@ -23,11 +22,9 @@ interface TrialRequest {
     email: string;
     phone: string;
     countryCode: string;
-    interest: string;
-    language?: string;
-    course?: string;
-    prepLevel?: string;
-    skillCourses?: string[];
+    interest: 'Language';
+    language: string;
+    course: string;
     comments?: string;
     createdAt: string;
 }
@@ -40,7 +37,6 @@ const AdminBookingRequests: React.FC = () => {
     const [requests, setRequests] = useState<TrialRequest[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
-    const [filter, setFilter] = useState<'all' | 'language' | 'skill'>('all');
     const [expandedRequests, setExpandedRequests] = useState<Set<string>>(new Set());
     const [processingId, setProcessingId] = useState<string | null>(null);
 
@@ -87,13 +83,14 @@ const AdminBookingRequests: React.FC = () => {
     };
 
     const filteredRequests = requests.filter(req => {
-        const matchesSearch =
-            req.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            req.email.toLowerCase().includes(searchTerm.toLowerCase());
+        const normalizedSearchTerm = searchTerm.toLowerCase();
+        const requestLanguage = String(req.language ?? '').toLowerCase();
+        const requestCourse = String(req.course ?? '').toLowerCase();
 
-        if (filter === 'language') return matchesSearch && req.interest === 'Language';
-        if (filter === 'skill') return matchesSearch && req.interest === 'Skill';
-        return matchesSearch;
+        return req.fullName.toLowerCase().includes(normalizedSearchTerm)
+            || req.email.toLowerCase().includes(normalizedSearchTerm)
+            || requestLanguage.includes(normalizedSearchTerm)
+            || requestCourse.includes(normalizedSearchTerm);
     });
 
     const formatDate = (dateString: string) => {
@@ -123,43 +120,22 @@ const AdminBookingRequests: React.FC = () => {
                             )}
                         </h1>
                         <p className="text-brand-olive-dark mt-1">
-                            Manage new booking requests for language and skill training.
+                            Manage new booking requests for language training.
                         </p>
                     </div>
                 </div>
 
                 {/* Filters */}
-                <div className="bg-white p-4 rounded-xl border border-brand-surface shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
+                <div className="bg-white p-4 rounded-xl border border-brand-surface shadow-sm">
                     <div className="relative flex-1 w-full md:max-w-md">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-brand-olive-light w-5 h-5" />
                         <input
                             type="text"
-                            placeholder="Search by name or email..."
+                            placeholder="Search by name, email, language, or level..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="w-full pl-10 pr-4 py-2 rounded-lg border border-brand-surface bg-brand-off-white text-brand-black focus:ring-2 focus:ring-brand-gold outline-none"
                         />
-                    </div>
-                    <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto">
-                        <Filter className="text-brand-olive w-5 h-5 shrink-0" />
-                        <button
-                            onClick={() => setFilter('all')}
-                            className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${filter === 'all' ? 'bg-brand-gold text-brand-black' : 'bg-brand-surface text-brand-olive-dark hover:bg-brand-surface'}`}
-                        >
-                            All Requests
-                        </button>
-                        <button
-                            onClick={() => setFilter('language')}
-                            className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${filter === 'language' ? 'bg-brand-gold text-brand-black' : 'bg-brand-surface text-brand-olive-dark hover:bg-brand-surface'}`}
-                        >
-                            Language
-                        </button>
-                        <button
-                            onClick={() => setFilter('skill')}
-                            className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${filter === 'skill' ? 'bg-brand-gold text-brand-black' : 'bg-brand-surface text-brand-olive-dark hover:bg-brand-surface'}`}
-                        >
-                            Skill Training
-                        </button>
                     </div>
                 </div>
 
@@ -188,8 +164,8 @@ const AdminBookingRequests: React.FC = () => {
                                                 <h3 className="text-lg font-bold text-brand-black">
                                                     {req.fullName}
                                                 </h3>
-                                                <span className={`px-2 py-0.5 rounded text-xs border font-medium ${req.interest === 'Language' ? 'bg-brand-gold/10 text-brand-olive-dark border-brand-surface' : req.interest === 'Skill' ? 'bg-brand-olive/10 text-brand-olive-dark border-brand-surface' : 'bg-brand-gold/10 text-brand-gold border-brand-gold/20'}`}>
-                                                    {req.interest}
+                                                <span className="px-2 py-0.5 rounded text-xs border font-medium bg-brand-gold/10 text-brand-olive-dark border-brand-surface">
+                                                    Language Training
                                                 </span>
                                             </div>
 
@@ -212,44 +188,19 @@ const AdminBookingRequests: React.FC = () => {
                                                     animate={{ opacity: 1, height: 'auto' }}
                                                     className="mt-4 pt-4 border-t border-brand-surface space-y-3"
                                                 >
-                                                    {/* Language Training Details */}
-                                                    {(req.interest === 'Language' || req.interest === 'Both') && req.language && (
-                                                        <div className="p-4 rounded-lg bg-brand-gold/5 border border-brand-surface">
-                                                            <h4 className="text-sm font-bold text-brand-black mb-2">Language Training Choice</h4>
-                                                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-                                                                <div>
-                                                                    <span className="font-semibold text-brand-olive-dark block text-xs uppercase mb-1">Language</span>
-                                                                    <span className="text-brand-black capitalize">{req.language}</span>
-                                                                </div>
-                                                                {req.course && (
-                                                                    <div>
-                                                                        <span className="font-semibold text-brand-olive-dark block text-xs uppercase mb-1">Course</span>
-                                                                        <span className="text-brand-black">{req.course}</span>
-                                                                    </div>
-                                                                )}
-                                                                {req.prepLevel && (
-                                                                    <div>
-                                                                        <span className="font-semibold text-brand-olive-dark block text-xs uppercase mb-1">Level</span>
-                                                                        <span className="text-brand-black">{req.prepLevel}</span>
-                                                                    </div>
-                                                                )}
+                                                    <div className="p-4 rounded-lg bg-brand-gold/5 border border-brand-surface">
+                                                        <h4 className="text-sm font-bold text-brand-black mb-2">Language Trial Choice</h4>
+                                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                                                            <div>
+                                                                <span className="font-semibold text-brand-olive-dark block text-xs uppercase mb-1">Language</span>
+                                                                <span className="text-brand-black">{req.language || 'Not specified'}</span>
+                                                            </div>
+                                                            <div>
+                                                                <span className="font-semibold text-brand-olive-dark block text-xs uppercase mb-1">Selected Level</span>
+                                                                <span className="text-brand-black">{req.course || 'Not specified'}</span>
                                                             </div>
                                                         </div>
-                                                    )}
-
-                                                    {/* Skill Training Details */}
-                                                    {(req.interest === 'Skill' || req.interest === 'Both') && req.skillCourses && req.skillCourses.length > 0 && (
-                                                        <div className="p-4 rounded-lg bg-brand-off-white border border-brand-olive/10">
-                                                            <h4 className="text-sm font-bold text-brand-olive-dark mb-2">Selected Skill Courses</h4>
-                                                            <div className="flex flex-wrap gap-2">
-                                                                {req.skillCourses.map((course, idx) => (
-                                                                    <span key={idx} className="px-3 py-1 text-sm bg-brand-olive/10 text-brand-olive-dark rounded-full border border-brand-surface">
-                                                                        {course}
-                                                                    </span>
-                                                                ))}
-                                                            </div>
-                                                        </div>
-                                                    )}
+                                                    </div>
 
                                                     {/* Comments */}
                                                     {req.comments && (
