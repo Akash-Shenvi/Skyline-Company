@@ -94,8 +94,8 @@ const TermsAndConditions: React.FC = () => {
                                 </p>
                                 <p className="text-brand-olive-dark leading-relaxed mb-6 text-base">
                                     These terms and conditions outline the rules and regulations for the use of Skyline Technologies' Website, located at{' '}
-                                    <a href="https://www.skylinetechnologies.in" className="text-brand-gold hover:underline font-medium">
-                                        https://www.skylinetechnologies.in
+                                    <a href="https://skylinetraining.in" className="text-brand-gold hover:underline font-medium">
+                                        https://skylinetraining.in
                                     </a>.
                                 </p>
                                 <p className="text-brand-olive-dark leading-relaxed mb-8 text-base">
