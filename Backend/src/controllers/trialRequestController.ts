@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import TrialRequest from '../models/trialRequest.model';
 import LanguageCourse from '../models/languageCourse.model';
+import { EmailService } from '../utils/email.service';
+
+const emailService = new EmailService();
 
 const normalizeText = (value: unknown) =>
     String(value ?? '')
@@ -91,6 +94,15 @@ export const createTrialRequest = async (req: Request, res: Response) => {
         });
 
         await newRequest.save();
+
+        // Send confirmation email (fire-and-forget so it doesn't delay the response)
+        emailService.sendTrialBookingConfirmation({
+            to: normalizedEmail,
+            fullName: normalizedFullName,
+            language: getLanguageDisplayName(selectedLanguageCourse.title),
+            level: selectedLevel.name,
+            phone: `${normalizedCountryCode} ${normalizedPhone}`,
+        }).catch((err) => console.error('Trial confirmation email failed:', err));
 
         res.status(201).json({ message: 'Trial request submitted successfully', data: newRequest });
     } catch (error: any) {

@@ -1372,4 +1372,47 @@ export class EmailService {
         }
     }
 
+    public async sendTrialBookingConfirmation(params: {
+        to: string;
+        fullName: string;
+        language: string;
+        level: string;
+        phone: string;
+    }): Promise<void> {
+        const subject = `Free Consultation Booking Confirmed – ${params.language} (${params.level})`;
+
+        const html = this.getProgramEmailTemplate({
+            name: params.fullName,
+            title: 'Your Free Consultation Has Been Booked!',
+            paragraphs: [
+                `Thank you for your interest in our <strong>${params.language}</strong> training program. We have received your request for a free consultation for the <strong>${params.level}</strong> level.`,
+                'One of our academic counselors will reach out to you shortly on the phone number you provided to schedule a convenient time for your session.',
+                'In the meantime, feel free to explore our language training programs on our website.',
+            ],
+            infoRows: [
+                { label: 'Language', value: params.language },
+                { label: 'Level', value: params.level },
+                { label: 'Phone', value: params.phone },
+            ],
+            actionButton: {
+                label: 'Explore Language Courses',
+                href: languageTrainingLink,
+            },
+        });
+
+        const mailOptions = {
+            from: `"Skyline Skilling & Training Center" <${env.EMAIL_USER}>`,
+            to: params.to,
+            subject,
+            html,
+            text: `Dear ${params.fullName},\n\nThank you for your interest in our ${params.language} training program. We have received your request for a free consultation for the ${params.level} level.\n\nOne of our academic counselors will reach out to you shortly on the phone number you provided to schedule a convenient time for your session.\n\nLanguage: ${params.language}\nLevel: ${params.level}\nPhone: ${params.phone}\n\nExplore our courses: ${languageTrainingLink}\n\nWarm regards,\nSkyline Skilling & Training Center Team`,
+        };
+
+        try {
+            await this.transporter.sendMail(mailOptions);
+        } catch (error) {
+            console.error('Error sending trial booking confirmation email:', error);
+        }
+    }
+
 }
