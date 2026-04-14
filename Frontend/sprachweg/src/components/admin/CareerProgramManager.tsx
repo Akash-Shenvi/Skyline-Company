@@ -423,29 +423,37 @@ const CareerProgramManager: React.FC = () => {
                             <textarea rows={3} value={form.shortDescription} onChange={(event) => setForm((currentForm) => ({ ...currentForm, shortDescription: event.target.value }))} className={`${inputClassName} md:col-span-2 resize-y`} placeholder="Short description" />
                             <textarea rows={5} value={form.overview} onChange={(event) => setForm((currentForm) => ({ ...currentForm, overview: event.target.value }))} className={`${inputClassName} md:col-span-2 resize-y`} placeholder="Overview" />
                             <textarea rows={3} value={form.ctaDescription} onChange={(event) => setForm((currentForm) => ({ ...currentForm, ctaDescription: event.target.value }))} className={`${inputClassName} md:col-span-2 resize-y`} placeholder="Disabled apply helper text" />
-                            <div className="md:col-span-2 grid gap-6 md:grid-cols-2">
-                                <ImageUpload
-                                    label="Hero Image"
-                                    inputId="career-hero-image"
-                                    helperText="Upload the large detail page background image"
-                                    value={form.heroImageFile || (form.heroImage ? getAssetUrl(form.heroImage) : undefined)}
-                                    onChange={(file) => setForm((currentForm) => ({
-                                        ...currentForm,
-                                        heroImageFile: file,
-                                        heroImage: file ? currentForm.heroImage : '',
-                                    }))}
-                                />
-                                <ImageUpload
-                                    label="Card Image"
-                                    inputId="career-card-image"
-                                    helperText="Upload the listing card banner image"
-                                    value={form.cardImageFile || (form.cardImage ? getAssetUrl(form.cardImage) : undefined)}
-                                    onChange={(file) => setForm((currentForm) => ({
-                                        ...currentForm,
-                                        cardImageFile: file,
-                                        cardImage: file ? currentForm.cardImage : '',
-                                    }))}
-                                />
+                            <div className="md:col-span-2 rounded-2xl border border-brand-surface bg-brand-off-white/70 p-5">
+                                <div className="mb-5">
+                                    <p className="text-sm font-bold uppercase tracking-[0.16em] text-brand-gold-hover">Program Images</p>
+                                    <p className="mt-1 text-sm text-brand-olive-dark">
+                                        Upload the images used on the career listing cards and the detail page hero banner.
+                                    </p>
+                                </div>
+                                <div className="grid gap-6 md:grid-cols-2">
+                                    <ImageUpload
+                                        label="Hero Image"
+                                        inputId="career-hero-image"
+                                        helperText="Upload the large detail page background image"
+                                        value={form.heroImageFile || (form.heroImage ? getAssetUrl(form.heroImage) : undefined)}
+                                        onChange={(file) => setForm((currentForm) => ({
+                                            ...currentForm,
+                                            heroImageFile: file,
+                                            heroImage: file ? currentForm.heroImage : '',
+                                        }))}
+                                    />
+                                    <ImageUpload
+                                        label="Card Image"
+                                        inputId="career-card-image"
+                                        helperText="Upload the listing card banner image"
+                                        value={form.cardImageFile || (form.cardImage ? getAssetUrl(form.cardImage) : undefined)}
+                                        onChange={(file) => setForm((currentForm) => ({
+                                            ...currentForm,
+                                            cardImageFile: file,
+                                            cardImage: file ? currentForm.cardImage : '',
+                                        }))}
+                                    />
+                                </div>
                             </div>
                             <label className="md:col-span-2 flex items-center gap-3 rounded-xl border border-brand-surface bg-brand-off-white px-4 py-3 text-sm font-medium text-brand-olive-dark">
                                 <input type="checkbox" checked={form.isActive} onChange={(event) => setForm((currentForm) => ({ ...currentForm, isActive: event.target.checked }))} className="h-4 w-4 rounded border-brand-surface text-brand-gold focus:ring-brand-gold" />
