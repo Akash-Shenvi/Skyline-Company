@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
-import BookingForm from '../components/ui/BookingForm';
+import UnifiedBookingForm from '../components/ui/UnifiedBookingForm';
 import { languageAPI } from '../lib/api';
 import { formatTrainingPrice, getCourseStartingPrice } from '../lib/trainingPricing';
 
@@ -561,7 +561,7 @@ const LanguageTraining: React.FC = () => {
                 </div>
             </section>
 
-            <BookingForm isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
+            <UnifiedBookingForm isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
             <Footer />
         </div>
     );

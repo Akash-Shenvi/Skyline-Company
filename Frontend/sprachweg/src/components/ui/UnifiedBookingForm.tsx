@@ -53,6 +53,7 @@ const UnifiedBookingForm: React.FC<UnifiedBookingFormProps> = ({ isOpen, onClose
     const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('We\'ll be in touch shortly to schedule your free trial.');
     const [languageCourses, setLanguageCourses] = useState<LanguageCourseOption[]>([]);
     const [isLoadingCourses, setIsLoadingCourses] = useState(false);
     const [courseLoadError, setCourseLoadError] = useState('');
@@ -143,7 +144,7 @@ const UnifiedBookingForm: React.FC<UnifiedBookingFormProps> = ({ isOpen, onClose
         setIsSubmitting(true);
 
         try {
-            await api.post('/trials', {
+            const response = await api.post('/trials', {
                 fullName: formData.fullName.trim(),
                 countryCode: formData.countryCode,
                 phone: formData.phone.trim(),
@@ -155,6 +156,11 @@ const UnifiedBookingForm: React.FC<UnifiedBookingFormProps> = ({ isOpen, onClose
                 comments: formData.comments.trim(),
             });
 
+            setSuccessMessage(
+                response.data?.emailSent === false
+                    ? 'We received your request and our team will contact you shortly. The confirmation email could not be sent right now.'
+                    : 'We\'ll be in touch shortly to schedule your free trial. A confirmation email is on its way.'
+            );
             setShowSuccess(true);
             setTimeout(() => handleClose(), 2500);
         } catch (error: any) {
@@ -172,6 +178,7 @@ const UnifiedBookingForm: React.FC<UnifiedBookingFormProps> = ({ isOpen, onClose
             setFormData(initialFormData);
             setErrors({});
             setShowSuccess(false);
+            setSuccessMessage('We\'ll be in touch shortly to schedule your free trial.');
             setCourseLoadError('');
         }, 300);
     };
@@ -223,7 +230,7 @@ const UnifiedBookingForm: React.FC<UnifiedBookingFormProps> = ({ isOpen, onClose
 
                     <div className="flex-1 overflow-y-auto p-6 md:p-8">
                         {showSuccess ? (
-                            <SuccessView />
+                            <SuccessView message={successMessage} />
                         ) : (
                             <form onSubmit={handleSubmit} className="mx-auto max-w-2xl space-y-6">
                                 {Object.values(errors).some(Boolean) && (
@@ -352,11 +359,11 @@ const SelectField: React.FC<{ label: string; onChange: (value: string) => void; 
     </div>
 );
 
-const SuccessView = () => (
+const SuccessView: React.FC<{ message: string }> = ({ message }) => (
     <div className="flex h-full flex-col items-center justify-center text-center">
         <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-brand-olive/10 text-brand-olive animate-pulse"><Check className="h-12 w-12" /></div>
         <h3 className="mb-2 text-2xl font-bold text-brand-black">Request Sent!</h3>
-        <p className="max-w-xs text-brand-olive-dark">We&apos;ll be in touch shortly to schedule your free trial.</p>
+        <p className="max-w-xs text-brand-olive-dark">{message}</p>
     </div>
 );
 

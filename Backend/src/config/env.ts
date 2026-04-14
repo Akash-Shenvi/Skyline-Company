@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '/home/skyline/.env' });
+dotenv.config();
 
 export const env = {
     PORT: process.env.PORT || 5002,

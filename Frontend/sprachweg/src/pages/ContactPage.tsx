@@ -6,6 +6,7 @@ import { MessageCircle } from 'lucide-react';
 
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
+import { API_BASE_URL } from '../lib/api';
 
 // --- Premium Animation Variants ---
 const fadeInUp = {
@@ -323,8 +324,7 @@ const ContactPage: React.FC = () => {
         setSubmitting(true);
 
         try {
-            const API_URL = import.meta.env.VITE_API_BASE_URL ;
-            await axios.post(`${API_URL}/api/contact`, form);
+            await axios.post(`${API_BASE_URL}/api/contact`, form);
             setSubmitted(true);
             setForm({ name: "", email: "", subject: "", message: "" });
         } catch (error: any) {

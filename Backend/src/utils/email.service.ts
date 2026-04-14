@@ -1378,7 +1378,7 @@ export class EmailService {
         language: string;
         level: string;
         phone: string;
-    }): Promise<void> {
+    }): Promise<boolean> {
         const subject = `Free Consultation Booking Confirmed – ${params.language} (${params.level})`;
 
         const html = this.getProgramEmailTemplate({
@@ -1400,18 +1400,22 @@ export class EmailService {
             },
         });
 
+        const emailSubject = `Free Consultation Booking Confirmed - ${params.language} (${params.level})`;
+
         const mailOptions = {
             from: `"Skyline Skilling & Training Center" <${env.EMAIL_USER}>`,
             to: params.to,
-            subject,
+            subject: emailSubject,
             html,
             text: `Dear ${params.fullName},\n\nThank you for your interest in our ${params.language} training program. We have received your request for a free consultation for the ${params.level} level.\n\nOne of our academic counselors will reach out to you shortly on the phone number you provided to schedule a convenient time for your session.\n\nLanguage: ${params.language}\nLevel: ${params.level}\nPhone: ${params.phone}\n\nExplore our courses: ${languageTrainingLink}\n\nWarm regards,\nSkyline Skilling & Training Center Team`,
         };
 
         try {
             await this.transporter.sendMail(mailOptions);
+            return true;
         } catch (error) {
-            console.error('Error sending trial booking confirmation email:', error);
+            console.error(`Error sending trial booking confirmation email to ${params.to}:`, error);
+            return false;
         }
     }
 

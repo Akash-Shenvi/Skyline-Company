@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.env = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config({ path: '/home/skyline/.env' });
+dotenv_1.default.config();
 exports.env = {
     PORT: process.env.PORT || 5002,
     MONGO_URI: process.env.MONGO_URI || 'mongodb://localhost:27017/sprachweg',

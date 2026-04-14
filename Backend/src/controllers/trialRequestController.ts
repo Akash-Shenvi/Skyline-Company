@@ -95,16 +95,21 @@ export const createTrialRequest = async (req: Request, res: Response) => {
 
         await newRequest.save();
 
-        // Send confirmation email (fire-and-forget so it doesn't delay the response)
-        emailService.sendTrialBookingConfirmation({
+        const emailSent = await emailService.sendTrialBookingConfirmation({
             to: normalizedEmail,
             fullName: normalizedFullName,
             language: getLanguageDisplayName(selectedLanguageCourse.title),
             level: selectedLevel.name,
             phone: `${normalizedCountryCode} ${normalizedPhone}`,
-        }).catch((err) => console.error('Trial confirmation email failed:', err));
+        });
 
-        res.status(201).json({ message: 'Trial request submitted successfully', data: newRequest });
+        res.status(201).json({
+            message: emailSent
+                ? 'Trial request submitted successfully'
+                : 'Trial request submitted successfully, but the confirmation email could not be sent right now.',
+            emailSent,
+            data: newRequest,
+        });
     } catch (error: any) {
         console.error('Error creating trial request:', error);
         res.status(500).json({ message: 'Failed to submit trial request', error: error.message });

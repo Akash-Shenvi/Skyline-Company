@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteTrialRequest = exports.getTrialRequests = exports.createTrialRequest = void 0;
 const trialRequest_model_1 = __importDefault(require("../models/trialRequest.model"));
 const languageCourse_model_1 = __importDefault(require("../models/languageCourse.model"));
+const email_service_1 = require("../utils/email.service");
+const emailService = new email_service_1.EmailService();
 const normalizeText = (value) => String(value !== null && value !== void 0 ? value : '')
     .trim()
     .toLowerCase()
@@ -78,7 +80,20 @@ const createTrialRequest = (req, res) => __awaiter(void 0, void 0, void 0, funct
             comments: normalizedComments || undefined,
         });
         yield newRequest.save();
-        res.status(201).json({ message: 'Trial request submitted successfully', data: newRequest });
+        const emailSent = yield emailService.sendTrialBookingConfirmation({
+            to: normalizedEmail,
+            fullName: normalizedFullName,
+            language: getLanguageDisplayName(selectedLanguageCourse.title),
+            level: selectedLevel.name,
+            phone: `${normalizedCountryCode} ${normalizedPhone}`,
+        });
+        res.status(201).json({
+            message: emailSent
+                ? 'Trial request submitted successfully'
+                : 'Trial request submitted successfully, but the confirmation email could not be sent right now.',
+            emailSent,
+            data: newRequest,
+        });
     }
     catch (error) {
         console.error('Error creating trial request:', error);
