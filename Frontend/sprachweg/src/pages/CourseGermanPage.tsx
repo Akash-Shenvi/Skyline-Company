@@ -296,7 +296,7 @@ const CourseGermanPage: React.FC = () => {
                   variants={fadeInUp}
                   className="w-full h-[300px] md:h-[450px] rounded-2xl overflow-hidden relative shadow-lg group mx-auto"
                 >
-                  <img src="https://images.unsplash.com/photo-1599946347371-68eb71b16afc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Berlin Cityscape" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <img src="https://skylinetraining.in/api/uploads/static_files/berlin.avif" alt="Berlin Cityscape" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-black/60 to-transparent"></div>
                   <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-brand-white">
                     <div className="text-2xl md:text-3xl font-bold">{t.about.berlinLabel}</div>

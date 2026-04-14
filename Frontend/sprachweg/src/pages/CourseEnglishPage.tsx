@@ -206,7 +206,7 @@ const CourseEnglishPage: React.FC = () => {
             className="relative lg:h-[600px] h-[400px] rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-2 border-brand-surface group"
           >
             <img
-              src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+              src="https://skylinetraining.in/api/uploads/static_files/englishhomecard.avif"
               alt="Students learning English"
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
             />

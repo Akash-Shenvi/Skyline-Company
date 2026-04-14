@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { InternshipPayload } from '../types/internship';
+import type { CareerProgramPayload } from '../types/careerProgram';
 
 export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5002';
 
@@ -228,89 +228,29 @@ export const trainingCheckoutAPI = {
     },
 };
 
-export const internshipApplicationAPI = {
-    async createCheckout(data: FormData) {
-        const response = await api.post('/internship-applications', data, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
-        return response.data;
-    },
-    async getMine() {
-        const response = await api.get('/internship-applications/me');
-        return response.data;
-    },
-    async getMyEnrolled() {
-        const response = await api.get('/internship-applications/me/enrolled');
-        return response.data;
-    },
-    async getAllAdmin() {
-        const response = await api.get('/internship-applications/admin');
-        return response.data;
-    },
-    async getAllPaymentAttemptsAdmin(params?: { page?: number; limit?: number; issuesOnly?: boolean; status?: string }) {
-        const searchParams = new URLSearchParams();
-
-        if (params?.page) {
-            searchParams.set('page', String(params.page));
-        }
-
-        if (params?.limit) {
-            searchParams.set('limit', String(params.limit));
-        }
-
-        if (params?.issuesOnly) {
-            searchParams.set('issuesOnly', 'true');
-        }
-
-        if (params?.status) {
-            searchParams.set('status', params.status);
-        }
-
-        const queryString = searchParams.toString();
-        const response = await api.get(
-            `/internship-applications/admin/payment-attempts${queryString ? `?${queryString}` : ''}`
-        );
-        return response.data;
-    },
-    async deletePaymentAttemptAdmin(paymentAttemptId: string) {
-        const response = await api.delete(`/internship-applications/admin/payment-attempts/${paymentAttemptId}`);
-        return response.data;
-    },
-    async updateStatus(applicationId: string, status: 'accepted' | 'rejected') {
-        const response = await api.patch(`/internship-applications/admin/${applicationId}/status`, { status });
-        return response.data;
-    },
-    async deleteRejected(applicationId: string) {
-        const response = await api.delete(`/internship-applications/admin/${applicationId}`);
-        return response.data;
-    },
-};
-
-export const internshipCatalogAPI = {
+export const careerProgramsAPI = {
     async getAll() {
-        const response = await api.get('/internships');
+        const response = await api.get('/careers');
         return response.data;
     },
     async getBySlug(slug: string) {
-        const response = await api.get(`/internships/${slug}`);
+        const response = await api.get(`/careers/${slug}`);
         return response.data;
     },
     async getAllAdmin() {
-        const response = await api.get('/internships/admin');
+        const response = await api.get('/careers/admin');
         return response.data;
     },
-    async create(data: InternshipPayload) {
-        const response = await api.post('/internships/admin', data);
+    async create(data: CareerProgramPayload) {
+        const response = await api.post('/careers/admin', data);
         return response.data;
     },
-    async update(id: string, data: InternshipPayload) {
-        const response = await api.put(`/internships/admin/${id}`, data);
+    async update(id: string, data: CareerProgramPayload) {
+        const response = await api.put(`/careers/admin/${id}`, data);
         return response.data;
     },
     async delete(id: string) {
-        const response = await api.delete(`/internships/admin/${id}`);
+        const response = await api.delete(`/careers/admin/${id}`);
         return response.data;
     },
 };

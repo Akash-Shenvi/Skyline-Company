@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handlePayUWebhook = exports.handlePayUCallback = exports.launchPayUCheckout = void 0;
-const internshipApplication_controller_1 = require("./internshipApplication.controller");
 const trainingCheckout_controller_1 = require("./trainingCheckout.controller");
 const webinarRegistration_controller_1 = require("./webinarRegistration.controller");
 const payu_1 = require("../utils/payu");
@@ -43,15 +42,6 @@ const dispatchPayUFlow = (context, source) => __awaiter(void 0, void 0, void 0, 
             transactionId: context.transactionId,
             payload: context.payload,
             resultHint: context.resultHint,
-        });
-    }
-    if (context.flow === 'internship') {
-        return (0, internshipApplication_controller_1.processInternshipPayUPayment)({
-            attemptId: context.attemptId,
-            transactionId: context.transactionId,
-            payload: context.payload,
-            resultHint: context.resultHint,
-            source,
         });
     }
     if (context.flow === 'webinar') {
@@ -129,9 +119,7 @@ const launchPayUCheckout = (req, res) => __awaiter(void 0, void 0, void 0, funct
     try {
         const checkoutParams = flow === 'training'
             ? yield (0, trainingCheckout_controller_1.buildTrainingPayUCheckoutLaunch)(attemptId, req)
-            : flow === 'internship'
-                ? yield (0, internshipApplication_controller_1.buildInternshipPayUCheckoutLaunch)(attemptId, req)
-                : yield (0, webinarRegistration_controller_1.buildWebinarPayUCheckoutLaunch)(attemptId, req);
+            : yield (0, webinarRegistration_controller_1.buildWebinarPayUCheckoutLaunch)(attemptId, req);
         const checkoutForm = (0, payu_1.buildPayUHostedCheckoutForm)(checkoutParams);
         return res
             .status(200)

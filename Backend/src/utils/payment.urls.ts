@@ -1,7 +1,7 @@
 import type { Request } from 'express';
 import { env } from '../config/env';
 
-export type PaymentFlow = 'training' | 'internship' | 'webinar';
+export type PaymentFlow = 'training' | 'webinar';
 export type PaymentResult = 'success' | 'failure' | 'cancel' | 'pending';
 
 const trimToNull = (value: unknown) => {
@@ -81,16 +81,12 @@ export const buildFrontendPaymentResultUrl = (params: {
 export const inferPaymentFlow = (value: unknown): PaymentFlow | null => {
     const normalizedValue = String(value ?? '').trim().toLowerCase();
 
-    if (normalizedValue === 'training' || normalizedValue === 'internship' || normalizedValue === 'webinar') {
+    if (normalizedValue === 'training' || normalizedValue === 'webinar') {
         return normalizedValue;
     }
 
     if (normalizedValue.startsWith('training_')) {
         return 'training';
-    }
-
-    if (normalizedValue.startsWith('internship_')) {
-        return 'internship';
     }
 
     if (normalizedValue.startsWith('webinar_')) {

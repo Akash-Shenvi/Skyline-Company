@@ -24,8 +24,6 @@ const attendance_model_1 = __importDefault(require("../models/attendance.model")
 const assignment_model_1 = __importDefault(require("../models/assignment.model"));
 const submission_model_1 = __importDefault(require("../models/submission.model"));
 const chat_message_model_1 = __importDefault(require("../models/chat.message.model"));
-const internshipApplication_model_1 = __importDefault(require("../models/internshipApplication.model"));
-const internshipPaymentAttempt_model_1 = __importDefault(require("../models/internshipPaymentAttempt.model"));
 const webinar_model_1 = __importDefault(require("../models/webinar.model"));
 const webinarRegistration_model_1 = __importDefault(require("../models/webinarRegistration.model"));
 const webinarPaymentAttempt_model_1 = __importDefault(require("../models/webinarPaymentAttempt.model"));
@@ -663,8 +661,6 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             language_enrollment_model_1.default.deleteMany({ userId }),
             enrollment_model_1.default.deleteMany({ studentId: userId }),
             trainingPaymentAttempt_model_1.default.deleteMany({ userId }),
-            internshipApplication_model_1.default.deleteMany({ userId }),
-            internshipPaymentAttempt_model_1.default.deleteMany({ userId }),
             webinarRegistration_model_1.default.deleteMany({ userId }),
             webinarPaymentAttempt_model_1.default.deleteMany({ userId }),
             submission_model_1.default.deleteMany({ studentId: userId }),

@@ -55,14 +55,11 @@ const buildFrontendPaymentResultUrl = (params) => {
 exports.buildFrontendPaymentResultUrl = buildFrontendPaymentResultUrl;
 const inferPaymentFlow = (value) => {
     const normalizedValue = String(value !== null && value !== void 0 ? value : '').trim().toLowerCase();
-    if (normalizedValue === 'training' || normalizedValue === 'internship' || normalizedValue === 'webinar') {
+    if (normalizedValue === 'training' || normalizedValue === 'webinar') {
         return normalizedValue;
     }
     if (normalizedValue.startsWith('training_')) {
         return 'training';
-    }
-    if (normalizedValue.startsWith('internship_')) {
-        return 'internship';
     }
     if (normalizedValue.startsWith('webinar_')) {
         return 'webinar';

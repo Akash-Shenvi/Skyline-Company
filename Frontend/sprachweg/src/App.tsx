@@ -25,7 +25,6 @@ import LanguageTraining from './pages/LanguageTraining';
 import CourseEnglishPage from './pages/CourseEnglishPage';
 import CourseGermanPage from './pages/CourseGermanPage';
 import CourseJapanesePage from './pages/CourseJapanesePage';
-import InternshipApplicationPage from './pages/InternshipApplicationPage';
 import NotFound404 from './pages/NotFound404';
 import AboutPage from './pages/About';
 import GoogleCallback from './pages/GoogleCallback';
@@ -34,8 +33,7 @@ import TermsAndConditions from './pages/TermsAndConditions';
 import ContactPage from './pages/ContactPage';
 import AdminContactMessages from './pages/Admin/AdminContactMessages';
 import AdminBookingRequests from './pages/Admin/AdminBookingRequests';
-import AdminInternshipApplications from './pages/Admin/AdminInternshipApplications';
-import AdminInternshipCatalog from './pages/Admin/AdminInternshipCatalog';
+import AdminCareerPrograms from './pages/Admin/AdminCareerPrograms';
 import ManageTrainers from './pages/Admin/ManageTrainers';
 import FeedbackPage from './pages/FeedbackPage';
 import AdminFeedback from './pages/Admin/AdminFeedback';
@@ -45,6 +43,7 @@ import ManageStudents from './pages/Admin/ManageStudents';
 import ChatPage from './pages/ChatPage';
 import VerificationPage from './pages/VerificationPage';
 import CareersPage from './pages/CareersPage';
+import CareerProgramDetailPage from './pages/CareerProgramDetailPage';
 import InstitutionDashboard from './pages/InstitutionDashboard';
 import InstitutionLoginPage from './pages/InstitutionLoginPage';
 import InstitutionRegisterPage from './pages/InstitutionRegisterPage';
@@ -169,16 +168,8 @@ const AppContent = () => {
                 <Route path="/feedback" element={<FeedbackPage />} />
                 <Route path="/verify" element={<VerificationPage />} />
                 <Route path="/careers" element={<CareersPage />} />
+                <Route path="/careers/:slug" element={<CareerProgramDetailPage />} />
                 <Route path="/payment-result" element={<PaymentResultPage />} />
-
-                <Route
-                    path="/internship-application"
-                    element={
-                        <ProtectedRoute>
-                            <InternshipApplicationPage />
-                        </ProtectedRoute>
-                    }
-                />
 
                 <Route
                     path="/login"
@@ -331,10 +322,10 @@ const AppContent = () => {
                     }
                 />
                 <Route
-                    path="/admin/internship-applications"
+                    path="/admin/careers"
                     element={
                         <AdminRoute>
-                            <AdminInternshipApplications />
+                            <AdminCareerPrograms />
                         </AdminRoute>
                     }
                 />
@@ -342,7 +333,7 @@ const AppContent = () => {
                     path="/admin/internships"
                     element={
                         <AdminRoute>
-                            <AdminInternshipCatalog />
+                            <Navigate to="/admin/careers" replace />
                         </AdminRoute>
                     }
                 />

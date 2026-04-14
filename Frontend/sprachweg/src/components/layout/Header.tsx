@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, Settings } from 'lucide-react';
 import Button from '../ui/Button';
 import { useAuth } from '../../context/AuthContext';
-import type { InternshipListing } from '../../types/internship';
+import { careerProgramsAPI } from '../../lib/api';
+import type { CareerProgram } from '../../types/careerProgram';
 import { getDashboardPathForRole } from '../../lib/authRouting';
 import NotificationBell from '../notifications/NotificationBell';
 import PushNotificationToggle from '../notifications/PushNotificationToggle';
@@ -14,7 +15,7 @@ const Header: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-    const [internships, setInternships] = useState<InternshipListing[]>([]);
+    const [careerPrograms, setCareerPrograms] = useState<CareerProgram[]>([]);
 
     const { user } = useAuth();
     const location = useLocation();
@@ -46,15 +47,23 @@ const Header: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        const fetchInternships = async () => {
+        let isMounted = true;
+
+        const fetchCareerPrograms = async () => {
             try {
-                // API call purposefully disabled per user request to hide internships
-                setInternships([]);
+                const response = await careerProgramsAPI.getAll();
+                if (!isMounted) return;
+                setCareerPrograms(response.programs || []);
             } catch (error) {
-                console.error('Failed to load header internships:', error);
+                console.error('Failed to load header career programs:', error);
             }
         };
-        fetchInternships();
+
+        fetchCareerPrograms();
+
+        return () => {
+            isMounted = false;
+        };
     }, []);
 
     useEffect(() => {
@@ -163,15 +172,21 @@ const Header: React.FC = () => {
                             <div className={`absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[300px] max-w-[90vw] bg-brand-black border border-brand-olive-dark rounded-lg shadow-2xl transition-all duration-200 z-50 ${openDropdown === 'career-desktop' ? 'opacity-100 visible' : 'opacity-0 invisible group-hover:opacity-100 group-hover:visible'}`}>
                                 <div className="p-6">
 
-                                    {/* INTERNSHIP Column */}
+                                    {/* CAREER PROGRAMS Column */}
                                     <div>
-                                        <h3 className="text-xs font-bold uppercase tracking-wider text-brand-gold mb-4">Internship</h3>
+                                        <h3 className="text-xs font-bold uppercase tracking-wider text-brand-gold mb-4">Career Programs</h3>
                                         <div className="space-y-1">
-                                            {internships.map((internship) => (
-                                                <Link key={internship._id} to="/careers" className="block text-sm text-white/75 hover:text-brand-gold py-1 transition-colors">
-                                                    {internship.title}
+                                            {careerPrograms.length === 0 ? (
+                                                <Link to="/careers" className="block text-sm text-white/75 hover:text-brand-gold py-1 transition-colors">
+                                                    Browse all programs
                                                 </Link>
-                                            ))}
+                                            ) : (
+                                                careerPrograms.map((program) => (
+                                                    <Link key={program._id} to={`/careers/${program.slug}`} className="block text-sm text-white/75 hover:text-brand-gold py-1 transition-colors">
+                                                        {program.title}
+                                                    </Link>
+                                                ))
+                                            )}
                                         </div>
                                     </div>
 
@@ -385,14 +400,20 @@ const Header: React.FC = () => {
                             </div>
                             {openDropdown === 'career' && (
                                 <div className="bg-brand-olive-dark/30 rounded pl-4 pr-2 py-2 space-y-3">
-                                    {/* INTERNSHIP Section */}
+                                    {/* CAREER PROGRAMS Section */}
                                     <div className="space-y-1">
-                                        <h4 className="text-xs font-bold uppercase text-brand-gold mb-2">Internship</h4>
-                                        {internships.map((internship) => (
-                                            <Link key={internship._id} to="/careers" className="block text-white/75 py-1 text-xs" onClick={() => setIsMenuOpen(false)}>
-                                                {internship.title}
+                                        <h4 className="text-xs font-bold uppercase text-brand-gold mb-2">Career Programs</h4>
+                                        {careerPrograms.length === 0 ? (
+                                            <Link to="/careers" className="block text-white/75 py-1 text-xs" onClick={() => setIsMenuOpen(false)}>
+                                                Browse all programs
                                             </Link>
-                                        ))}
+                                        ) : (
+                                            careerPrograms.map((program) => (
+                                                <Link key={program._id} to={`/careers/${program.slug}`} className="block text-white/75 py-1 text-xs" onClick={() => setIsMenuOpen(false)}>
+                                                    {program.title}
+                                                </Link>
+                                            ))
+                                        )}
                                     </div>
 
                                     {/* CAREER ABROAD Section — commented out for future use

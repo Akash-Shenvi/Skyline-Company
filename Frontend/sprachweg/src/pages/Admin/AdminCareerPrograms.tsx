@@ -2,9 +2,9 @@ import React from 'react';
 import { ArrowLeft, BriefcaseBusiness } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AdminLayout from '../../components/admin/AdminLayout';
-import InternshipCatalogManager from '../../components/admin/InternshipCatalogManager';
+import CareerProgramManager from '../../components/admin/CareerProgramManager';
 
-const AdminInternshipCatalog: React.FC = () => {
+const AdminCareerPrograms: React.FC = () => {
     return (
         <AdminLayout>
             <div className="max-w-7xl mx-auto space-y-6">
@@ -18,26 +18,26 @@ const AdminInternshipCatalog: React.FC = () => {
                             Back to Dashboard
                         </Link>
                         <h1 className="text-3xl font-serif font-bold text-brand-black flex items-center gap-3">
-                            Add Internships
+                            Career Programs
                         </h1>
                         <p className="text-brand-olive-dark mt-1">
-                            Create, edit, and manage the internships shown on the careers page.
+                            Create, edit, and manage the career programs shown on the public careers pages.
                         </p>
                     </div>
 
                     <Link
-                        to="/admin/internship-applications"
+                        to="/careers"
                         className="inline-flex items-center justify-center gap-2 rounded-xl border border-brand-surface bg-white px-4 py-3 text-sm font-semibold text-brand-olive-dark transition-colors hover:border-brand-gold hover:text-brand-gold-hover"
                     >
                         <BriefcaseBusiness className="h-4 w-4" />
-                        View Internship Requests
+                        View Public Careers
                     </Link>
                 </div>
 
-                <InternshipCatalogManager />
+                <CareerProgramManager />
             </div>
         </AdminLayout>
     );
 };
 
-export default AdminInternshipCatalog;
+export default AdminCareerPrograms;

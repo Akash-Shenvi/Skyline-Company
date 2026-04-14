@@ -14,7 +14,7 @@ const email = 'test@example.com';
 const phone = '9999999999';
 const surl = 'http://localhost:5002/api/payments/payu/callback?result=success';
 const furl = 'http://localhost:5002/api/payments/payu/callback?result=failure';
-const udf1 = 'internship';
+const udf1 = 'training';
 const udf2 = 'test_ref';
 const udf3 = '';
 const udf4 = '';

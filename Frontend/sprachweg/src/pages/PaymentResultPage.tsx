@@ -4,18 +4,16 @@ import { AlertTriangle, ArrowLeft, CheckCircle2, LayoutDashboard, LoaderCircle, 
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 
-type PaymentFlow = 'training' | 'internship' | 'webinar';
+type PaymentFlow = 'training' | 'webinar';
 type PaymentResult = 'success' | 'failure' | 'cancel' | 'pending';
 
 const flowLabels: Record<PaymentFlow, string> = {
     training: 'Training',
-    internship: 'Internship',
     webinar: 'Webinar',
 };
 
 const fallbackPathByFlow: Record<PaymentFlow, string> = {
     training: '/language-training',
-    internship: '/careers',
     webinar: '/webinars',
 };
 

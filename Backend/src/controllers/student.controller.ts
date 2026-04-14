@@ -10,8 +10,6 @@ import Attendance from '../models/attendance.model';
 import Assignment from '../models/assignment.model';
 import Submission from '../models/submission.model';
 import ChatMessage from '../models/chat.message.model';
-import InternshipApplication from '../models/internshipApplication.model';
-import InternshipPaymentAttempt from '../models/internshipPaymentAttempt.model';
 import Webinar from '../models/webinar.model';
 import WebinarRegistration from '../models/webinarRegistration.model';
 import WebinarPaymentAttempt from '../models/webinarPaymentAttempt.model';
@@ -743,8 +741,6 @@ export const deleteUser = async (req: Request, res: Response) => {
             Enrollment.deleteMany({ userId }),
             SkillEnrollment.deleteMany({ studentId: userId }),
             TrainingPaymentAttempt.deleteMany({ userId }),
-            InternshipApplication.deleteMany({ userId }),
-            InternshipPaymentAttempt.deleteMany({ userId }),
             WebinarRegistration.deleteMany({ userId }),
             WebinarPaymentAttempt.deleteMany({ userId }),
             Submission.deleteMany({ studentId: userId }),

@@ -12,7 +12,7 @@ export type PayUHostedCheckoutParams = {
     lastName?: string;
     email: string;
     phone: string;
-    flow: 'training' | 'internship' | 'webinar';
+    flow: 'training' | 'webinar';
     userDefinedFields?: Record<string, string>;
     successAction: string;
     failureAction: string;

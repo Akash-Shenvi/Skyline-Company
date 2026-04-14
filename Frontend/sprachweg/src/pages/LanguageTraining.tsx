@@ -125,7 +125,7 @@ const languageCards = [
         bgColor: 'bg-brand-red/5',
         borderColor: 'border-brand-red/20',
         route: '/training/german',
-        image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+        image: "https://skylinetraining.in/api/uploads/static_files/germanhomecard.avif"
     },
     {
         code: 'GB',
@@ -140,7 +140,7 @@ const languageCards = [
         bgColor: 'bg-brand-gold/5',
         borderColor: 'border-brand-surface',
         route: '/training/english',
-        image: "https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+        image: "https://skylinetraining.in/api/uploads/static_files/englishhomecard.avif"
     },
     {
         code: 'JP',
@@ -155,7 +155,7 @@ const languageCards = [
         bgColor: 'bg-brand-red/5',
         borderColor: 'border-brand-red/20',
         route: '/training/japanese',
-        image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+        image: "https://skylinetraining.in/api/uploads/static_files/japnesehomecard.avif"
     }
 ];
 
@@ -442,7 +442,7 @@ const LanguageTraining: React.FC = () => {
                             className="relative lg:h-[500px] h-[350px] rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-2 border-brand-surface group"
                         >
                             <img 
-                                src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                                src="https://skylinetraining.in/api/uploads/static_files/languagetrainingpage.avif" 
                                 alt="Students collaboratively learning languages" 
                                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
                             />

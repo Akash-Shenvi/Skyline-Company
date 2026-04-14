@@ -84,11 +84,8 @@ app.use('/api/admin', studentRoutes);
 import chatRoutes from './routes/chat.routes';
 app.use('/api/chat', chatRoutes);
 
-import internshipApplicationRoutes from './routes/internshipApplication.routes';
-app.use('/api/internship-applications', internshipApplicationRoutes);
-
-import internshipListingRoutes from './routes/internshipListing.routes';
-app.use('/api/internships', internshipListingRoutes);
+import careerProgramRoutes from './routes/careerProgram.routes';
+app.use('/api/careers', careerProgramRoutes);
 
 import trainingCheckoutRoutes from './routes/trainingCheckout.routes';
 app.use('/api/training-checkout', trainingCheckoutRoutes);

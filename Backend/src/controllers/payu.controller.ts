@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { buildInternshipPayUCheckoutLaunch, processInternshipPayUPayment } from './internshipApplication.controller';
 import { buildTrainingPayUCheckoutLaunch, processTrainingPayUPayment } from './trainingCheckout.controller';
 import { buildWebinarPayUCheckoutLaunch, processWebinarPayUPayment } from './webinarRegistration.controller';
 import { buildPayUHostedCheckoutForm, extractPayUPayloadValue, verifyPayUResponseHash } from '../utils/payu';
@@ -52,16 +51,6 @@ const dispatchPayUFlow = async (context: PayUContext, source: 'callback' | 'webh
             transactionId: context.transactionId,
             payload: context.payload,
             resultHint: context.resultHint,
-        });
-    }
-
-    if (context.flow === 'internship') {
-        return processInternshipPayUPayment({
-            attemptId: context.attemptId,
-            transactionId: context.transactionId,
-            payload: context.payload,
-            resultHint: context.resultHint,
-            source,
         });
     }
 
@@ -155,9 +144,7 @@ export const launchPayUCheckout = async (req: Request, res: Response) => {
     try {
         const checkoutParams = flow === 'training'
             ? await buildTrainingPayUCheckoutLaunch(attemptId, req)
-            : flow === 'internship'
-                ? await buildInternshipPayUCheckoutLaunch(attemptId, req)
-                : await buildWebinarPayUCheckoutLaunch(attemptId, req);
+            : await buildWebinarPayUCheckoutLaunch(attemptId, req);
 
         const checkoutForm = buildPayUHostedCheckoutForm(checkoutParams);
 

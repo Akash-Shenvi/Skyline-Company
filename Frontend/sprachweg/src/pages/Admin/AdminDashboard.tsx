@@ -37,9 +37,9 @@ interface Batch {
     students: any[];
 }
 
-interface InternshipApplicationSummary {
+interface CareerProgramSummary {
     _id: string;
-    status: string;
+    isActive: boolean;
 }
 
 // ============================================================================
@@ -255,7 +255,7 @@ const AdminDashboard: React.FC = () => {
         activeTrainers: 0,
         activeClasses: 0,
         totalStudents: 0,
-        pendingInternshipRequests: 0,
+        activeCareerPrograms: 0,
     });
 
     useEffect(() => {
@@ -266,21 +266,19 @@ const AdminDashboard: React.FC = () => {
 
     const fetchData = async () => {
         try {
-            const [batchesRes, trainersRes, internshipApplicationsRes] = await Promise.all([
+            const [batchesRes, trainersRes, careersRes] = await Promise.all([
                 api.get('/language-training/admin/batches'),
                 api.get('/language-training/admin/trainers'),
-                api.get('/internship-applications/admin'),
+                api.get('/careers/admin'),
             ]);
             const fetchedBatches: Batch[] = batchesRes.data;
             const fetchedTrainers: Trainer[] = trainersRes.data;
-            const fetchedInternshipApplications: InternshipApplicationSummary[] = internshipApplicationsRes.data.applications || [];
+            const fetchedCareerPrograms: CareerProgramSummary[] = careersRes.data.programs || [];
             setBatches(fetchedBatches);
             setTrainers(fetchedTrainers);
             const totalStudents = fetchedBatches.reduce((acc, batch) => acc + (batch.students?.length || 0), 0);
-            const pendingInternshipRequests = fetchedInternshipApplications.filter(
-                (application) => !['accepted', 'rejected'].includes(application.status)
-            ).length;
-            setStats({ activeTrainers: fetchedTrainers.length, activeClasses: fetchedBatches.length, totalStudents, pendingInternshipRequests });
+            const activeCareerPrograms = fetchedCareerPrograms.filter((program) => program.isActive).length;
+            setStats({ activeTrainers: fetchedTrainers.length, activeClasses: fetchedBatches.length, totalStudents, activeCareerPrograms });
             setLoading(false);
         } catch (error) {
             console.error("Failed to fetch admin data", error);
@@ -349,9 +347,9 @@ const AdminDashboard: React.FC = () => {
                         />
                         <StatCard
                             icon={<Briefcase className="h-5 w-5 text-brand-gold" />}
-                            label="Internship Requests"
-                            value={loading ? "—" : stats.pendingInternshipRequests}
-                            subtext="Pending admin review"
+                            label="Active Careers"
+                            value={loading ? "—" : stats.activeCareerPrograms}
+                            subtext="Live public programs"
                             accent="#f59e0b"
                             loading={loading}
                         />
@@ -359,31 +357,24 @@ const AdminDashboard: React.FC = () => {
 
                     <SectionDivider />
 
-                    {/* ── Internship Dashboard ── */}
+                    {/* ── Careers Dashboard ── */}
                     <section>
                         <SectionHeader
                             icon={<Briefcase className="h-4 w-4 text-brand-gold" />}
-                            title="Internship Dashboard"
-                            subtitle="Review requests or publish new internship listings."
+                            title="Careers Dashboard"
+                            subtitle="Publish and manage structured career programs."
                         />
                         <motion.div
                             variants={containerVariants}
                             initial="hidden"
                             animate="visible"
-                            className="grid gap-4 md:grid-cols-2"
+                            className="grid gap-4 md:grid-cols-1"
                         >
                             <QuickAccessCard
-                                to="/admin/internship-applications"
-                                icon={<Briefcase className="h-5 w-5 text-brand-gold" />}
-                                title="Internship Hub Requests"
-                                description={loading ? 'Loading requests…' : `${stats.pendingInternshipRequests} pending applications awaiting review`}
-                                accent="#C8232B"
-                            />
-                            <QuickAccessCard
-                                to="/admin/internships"
+                                to="/admin/careers"
                                 icon={<Plus className="h-5 w-5 text-brand-olive" />}
-                                title="Add Internships"
-                                description="Create and manage live internship listings for students"
+                                title="Manage Careers"
+                                description={loading ? 'Loading programs…' : `${stats.activeCareerPrograms} active career programs published`}
                                 accent="#22c55e"
                             />
                         </motion.div>
