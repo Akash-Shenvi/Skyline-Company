@@ -454,7 +454,7 @@ const ContactPage: React.FC = () => {
                                         </IconWrapper>
                                         <div>
                                             <h3 className="font-semibold text-sm sm:text-base md:text-lg mb-1 sm:mb-2 text-white">Let's Talk</h3>
-                                            <p className="text-brand-olive-light text-xs sm:text-sm md:text-base leading-snug">+91 8851771838</p>
+                                            <p className="text-brand-olive-light text-xs sm:text-sm md:text-base leading-snug">+91 8105775015 / 9353731755</p>
                                         </div>
                                     </motion.div>
                                 </motion.div>
@@ -494,7 +494,7 @@ const ContactPage: React.FC = () => {
                                     className="flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4 mt-6 sm:mt-10 md:mt-12"
                                 >
                                     <a
-                                        href="https://wa.me/918851771838"
+                                        href="https://wa.me/919353731755"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex items-center justify-center gap-2 px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 bg-brand-olive rounded-lg sm:rounded-xl text-white font-semibold text-xs sm:text-sm md:text-base hover:bg-brand-olive-dark transition-all duration-300 group shadow-lg hover:shadow-xl min-h-[44px]"
@@ -503,7 +503,7 @@ const ContactPage: React.FC = () => {
                                         <span>WhatsApp</span>
                                     </a>
                                     <a
-                                        href="tel:+918851771838"
+                                        href="tel:+919353731755"
                                         className="flex items-center justify-center gap-2 px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 bg-brand-gold rounded-lg sm:rounded-xl text-brand-black font-semibold text-xs sm:text-sm md:text-base hover:bg-brand-gold-hover transition-all duration-300 group shadow-lg hover:shadow-xl min-h-[44px]"
                                     >
                                         {ICONS.call}
@@ -698,8 +698,8 @@ const ContactPage: React.FC = () => {
                                     </div>
                                     <div>
                                         <h4 className="font-semibold text-brand-black mb-0.5 sm:mb-1 text-xs sm:text-sm md:text-base">Contacts</h4>
-                                        <p className="text-brand-olive-dark text-xs sm:text-sm md:text-base">+91 8851771838 / +91 8840957097</p>
-                                        <p className="text-brand-olive-dark text-xs sm:text-sm md:text-base">info@skylinetechnologies.in</p>
+                                        <p className="text-brand-olive-dark text-xs sm:text-sm md:text-base">+91 8105775015 / +91 9353731755</p>
+                                        <p className="text-brand-olive-dark text-xs sm:text-sm md:text-base">careers@skylinetraining.in</p>
                                     </div>
                                 </div>
                             </div>
@@ -739,8 +739,8 @@ const ContactPage: React.FC = () => {
                                     </div>
                                     <div>
                                         <h4 className="font-semibold text-brand-black mb-0.5 sm:mb-1 text-xs sm:text-sm md:text-base">Contacts</h4>
-                                        <p className="text-brand-olive-dark text-xs sm:text-sm md:text-base">+91 8851771838 / +91 8840957097</p>
-                                        <p className="text-brand-olive-dark text-xs sm:text-sm md:text-base">info@skylinetechnologies.in</p>
+                                        <p className="text-brand-olive-dark text-xs sm:text-sm md:text-base">+91 8105775015 / +91 9353731755</p>
+                                        <p className="text-brand-olive-dark text-xs sm:text-sm md:text-base">careers@skylinetraining.in</p>
                                     </div>
                                 </div>
                             </div>

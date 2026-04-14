@@ -139,18 +139,18 @@ const InstitutionRegisterPage: React.FC = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-[#F7F6F2]">
+        <div className="flex min-h-screen flex-col bg-[#F7F6F2]">
             <Header />
 
-            <main className="px-4 pt-24 pb-20 sm:px-6 lg:px-8">
-                <div className="mx-auto max-w-6xl">
-                    <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10">
+            <main className="flex-1 px-4 pt-24 pb-16 sm:px-6 lg:px-8">
+                <div className="mx-auto w-full max-w-6xl">
+                    <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-10">
 
                         {/* ── LEFT: Marketing panel ──────────────────────────────── */}
-                        <section className="relative overflow-hidden rounded-2xl bg-brand-black p-7 text-white shadow-xl sm:rounded-3xl sm:p-10 lg:self-start lg:sticky lg:top-28">
+                        <section className="relative overflow-hidden rounded-2xl bg-brand-black p-6 text-white shadow-xl sm:rounded-3xl sm:p-8 lg:sticky lg:top-28 lg:self-start lg:p-10">
                             {/* Decorative rings */}
-                            <span className="pointer-events-none absolute -left-20 -top-20 h-72 w-72 rounded-full border border-white/4" />
-                            <span className="pointer-events-none absolute -right-10 -bottom-10 h-48 w-48 rounded-full border border-white/4" />
+                            <span className="pointer-events-none absolute -left-20 -top-20 h-72 w-72 rounded-full border border-white/[0.04]" />
+                            <span className="pointer-events-none absolute -right-10 -bottom-10 h-48 w-48 rounded-full border border-white/[0.04]" />
 
                             <div className="relative">
                                 <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold tracking-wider text-brand-gold">
@@ -173,7 +173,7 @@ const InstitutionRegisterPage: React.FC = () => {
                                     {features.map((feat, i) => (
                                         <div
                                             key={feat.title}
-                                            className="flex items-start gap-3.5 rounded-xl border border-white/8 bg-white/5 p-4 transition-all duration-200 hover:border-white/15 hover:bg-white/8"
+                                            className="flex items-start gap-3.5 rounded-xl border border-white/[0.08] bg-white/[0.04] p-4 transition-all duration-200 hover:border-white/[0.15] hover:bg-white/[0.08]"
                                         >
                                             <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-gold/20 text-[10px] font-black text-brand-gold">
                                                 {i + 1}
@@ -219,12 +219,12 @@ const InstitutionRegisterPage: React.FC = () => {
                         </section>
 
                         {/* ── RIGHT: Form card ───────────────────────────────────── */}
-                        <section className="rounded-2xl border border-white bg-white p-6 shadow-sm sm:rounded-3xl sm:p-9">
+                        <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm sm:rounded-3xl sm:p-8 lg:p-9">
                             {/* Header */}
                             <p className="text-[10px] font-bold uppercase tracking-widest text-brand-gold">
                                 {step === 'register' ? 'Institution Register' : 'Verify Email'}
                             </p>
-                            <h2 className="mt-2 text-2xl font-bold text-brand-black sm:text-3xl">
+                            <h2 className="mt-2 text-xl font-bold text-brand-black sm:text-2xl lg:text-3xl">
                                 {step === 'register'
                                     ? 'Create your institution account'
                                     : 'Enter verification code'}

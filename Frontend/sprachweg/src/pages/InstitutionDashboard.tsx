@@ -243,25 +243,25 @@ const InstitutionDashboard: React.FC = () => {
     // ── Render ──
 
     return (
-        <div className="min-h-screen bg-[#F7F6F2]">
+        <div className="flex min-h-screen flex-col bg-[#F7F6F2]">
             <Header />
 
-            <main className="px-4 pt-24 pb-20 sm:px-6 lg:px-8">
-                <div className="mx-auto max-w-7xl space-y-6 lg:space-y-8">
+            <main className="flex-1 px-4 pt-24 pb-16 sm:px-6 lg:px-8">
+                <div className="mx-auto w-full max-w-7xl space-y-6">
 
                     {/* ── Hero Banner ─────────────────────────────────────────────── */}
-                    <section className="relative overflow-hidden rounded-2xl bg-brand-black px-6 py-8 text-white shadow-xl sm:rounded-3xl sm:px-10 sm:py-10 lg:py-12">
+                    <section className="relative overflow-hidden rounded-2xl bg-brand-black px-5 py-7 text-white shadow-xl sm:rounded-3xl sm:px-8 sm:py-9 lg:px-10 lg:py-10">
                         {/* decorative rings */}
-                        <span className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full border border-white/5" />
-                        <span className="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full border border-white/5" />
+                        <span className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full border border-white/[0.05]" />
+                        <span className="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full border border-white/[0.05]" />
 
-                        <div className="relative flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+                        <div className="relative flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
                             <div className="min-w-0 flex-1">
                                 <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold tracking-wider text-brand-gold">
                                     <Building2 className="h-3.5 w-3.5" />
                                     Institution Dashboard
                                 </span>
-                                <h1 className="mt-4 text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
+                                <h1 className="mt-4 text-xl font-bold tracking-tight sm:text-2xl lg:text-3xl xl:text-4xl">
                                     Submit German course requests{' '}
                                     <span className="text-brand-gold">for your students.</span>
                                 </h1>
@@ -274,7 +274,7 @@ const InstitutionDashboard: React.FC = () => {
                             <button
                                 type="button"
                                 onClick={handleLogout}
-                                className="inline-flex shrink-0 items-center gap-2 self-start rounded-xl border border-white/15 bg-white/8 px-4 py-2.5 text-sm font-semibold text-white/80 transition-all duration-200 hover:border-white/25 hover:bg-white/15 hover:text-white active:scale-95"
+                                className="inline-flex shrink-0 items-center gap-2 self-start rounded-xl border border-white/15 bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-white/80 transition-all duration-200 hover:border-white/25 hover:bg-white/[0.12] hover:text-white active:scale-95"
                             >
                                 <LogOut className="h-4 w-4" />
                                 Logout
@@ -299,26 +299,26 @@ const InstitutionDashboard: React.FC = () => {
 
                     {/* ── Loading ─────────────────────────────────────────────────── */}
                     {loading ? (
-                        <div className="flex min-h-[280px] items-center justify-center rounded-2xl border border-white bg-white shadow-sm">
+                        <div className="flex min-h-[280px] items-center justify-center rounded-2xl border border-gray-100 bg-white shadow-sm">
                             <div className="flex flex-col items-center gap-4">
                                 <div className="h-10 w-10 animate-spin rounded-full border-[3px] border-brand-gold border-t-transparent" />
                                 <p className="text-sm font-medium text-brand-olive">Loading dashboard…</p>
                             </div>
                         </div>
                     ) : dashboardData ? (
-                        <div className="grid gap-6 xl:grid-cols-[380px_1fr] xl:gap-8">
+                        <div className="grid gap-6 xl:grid-cols-[minmax(320px,380px)_1fr] xl:items-start xl:gap-8">
 
                             {/* ── LEFT COLUMN ───────────────────────────────────────── */}
                             <div className="space-y-6">
 
                                 {/* Institution Profile card */}
-                                <div className="rounded-2xl border border-white bg-white p-6 shadow-sm transition-shadow duration-200 hover:shadow-md sm:p-7">
+                                <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-md sm:p-6">
                                     <div className="flex items-start justify-between gap-3">
                                         <div className="min-w-0 flex-1">
                                             <p className="text-[10px] font-bold uppercase tracking-widest text-brand-gold">
                                                 Institution Profile
                                             </p>
-                                            <h2 className="mt-2 truncate text-xl font-bold text-brand-black sm:text-2xl">
+                                            <h2 className="mt-2 truncate text-lg font-bold text-brand-black sm:text-xl">
                                                 {dashboardData.institution.institutionName ||
                                                     dashboardData.institution.name}
                                             </h2>
@@ -373,7 +373,7 @@ const InstitutionDashboard: React.FC = () => {
                                 </div>
 
                                 {/* Request Settings card */}
-                                <div className="rounded-2xl border border-white bg-white p-6 shadow-sm transition-shadow duration-200 hover:shadow-md sm:p-7">
+                                <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-md sm:p-6">
                                     <p className="text-[10px] font-bold uppercase tracking-widest text-brand-gold">
                                         Request Settings
                                     </p>
@@ -425,14 +425,14 @@ const InstitutionDashboard: React.FC = () => {
                             <div className="space-y-6">
 
                                 {/* New Submission card */}
-                                <div className="rounded-2xl border border-white bg-white shadow-sm transition-shadow duration-200 hover:shadow-md">
+                                <div className="rounded-2xl border border-gray-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md">
                                     {/* Card header */}
-                                    <div className="flex flex-col gap-3 border-b border-gray-100 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-7">
+                                    <div className="flex flex-col gap-3 border-b border-gray-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-5">
                                         <div>
                                             <p className="text-[10px] font-bold uppercase tracking-widest text-brand-gold">
                                                 New Submission
                                             </p>
-                                            <h2 className="mt-1.5 text-lg font-bold text-brand-black sm:text-xl">
+                                            <h2 className="mt-1.5 text-base font-bold text-brand-black sm:text-lg lg:text-xl">
                                                 Add students for one German level
                                             </h2>
                                         </div>
@@ -440,7 +440,7 @@ const InstitutionDashboard: React.FC = () => {
                                             type="button"
                                             onClick={addStudentRow}
                                             disabled={studentRows.length >= MAX_STUDENTS_PER_REQUEST}
-                                            className="inline-flex shrink-0 items-center gap-2 self-start rounded-xl border border-brand-gold/40 bg-brand-gold/8 px-4 py-2 text-sm font-semibold text-brand-gold transition-all duration-200 hover:border-brand-gold/60 hover:bg-brand-gold/15 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
+                                            className="inline-flex shrink-0 items-center gap-2 self-start rounded-xl border border-brand-gold/40 bg-brand-gold/[0.06] px-4 py-2 text-sm font-semibold text-brand-gold transition-all duration-200 hover:border-brand-gold/60 hover:bg-brand-gold/15 disabled:cursor-not-allowed disabled:opacity-50 sm:self-auto"
                                         >
                                             <Plus className="h-4 w-4" />
                                             {studentRows.length >= MAX_STUDENTS_PER_REQUEST
@@ -450,7 +450,7 @@ const InstitutionDashboard: React.FC = () => {
                                     </div>
 
                                     {/* Quota info banner */}
-                                    <div className="mx-6 mt-4 flex items-center gap-2.5 rounded-xl border border-brand-gold/20 bg-brand-gold/8 px-4 py-2.5 text-sm text-brand-olive-dark sm:mx-7">
+                                    <div className="mx-5 mt-4 flex items-center gap-2.5 rounded-xl border border-brand-gold/20 bg-brand-gold/[0.06] px-4 py-2.5 text-sm text-brand-olive-dark sm:mx-6">
                                         <ClipboardList className="h-4 w-4 shrink-0 text-brand-gold" />
                                         <span>
                                             Up to <strong className="text-brand-black">{MAX_STUDENTS_PER_REQUEST}</strong>{' '}
@@ -460,11 +460,11 @@ const InstitutionDashboard: React.FC = () => {
                                     </div>
 
                                     {/* Form */}
-                                    <form onSubmit={handleSubmit} className="space-y-4 px-6 pb-6 pt-4 sm:px-7 sm:pb-7">
+                                    <form onSubmit={handleSubmit} className="space-y-4 px-5 pb-5 pt-4 sm:px-6 sm:pb-6">
                                         {studentRows.map((row, index) => (
                                             <div
                                                 key={row.id}
-                                                className="group rounded-xl border border-gray-150 bg-[#FAFAF8] p-4 transition-all duration-200 hover:border-brand-gold/30 hover:shadow-sm"
+                                                className="group rounded-xl border border-gray-100 bg-[#FAFAF8] p-3.5 transition-all duration-200 hover:border-brand-gold/30 hover:shadow-sm sm:p-4"
                                             >
                                                 <div className="mb-3 flex items-center justify-between">
                                                     <div className="flex items-center gap-2">
@@ -540,14 +540,14 @@ const InstitutionDashboard: React.FC = () => {
                                 </div>
 
                                 {/* Submission History card */}
-                                <div className="rounded-2xl border border-white bg-white shadow-sm transition-shadow duration-200 hover:shadow-md">
+                                <div className="rounded-2xl border border-gray-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md">
                                     {/* Card header */}
-                                    <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5 sm:px-7">
+                                    <div className="flex items-center justify-between border-b border-gray-100 px-5 py-4 sm:px-6 sm:py-5">
                                         <div>
                                             <p className="text-[10px] font-bold uppercase tracking-widest text-brand-gold">
                                                 Submission History
                                             </p>
-                                            <h2 className="mt-1.5 text-lg font-bold text-brand-black sm:text-xl">
+                                            <h2 className="mt-1.5 text-base font-bold text-brand-black sm:text-lg lg:text-xl">
                                                 Track request status
                                             </h2>
                                         </div>
@@ -557,7 +557,7 @@ const InstitutionDashboard: React.FC = () => {
                                         </span>
                                     </div>
 
-                                    <div className="space-y-3 px-6 py-5 sm:px-7">
+                                    <div className="space-y-3 px-5 py-4 sm:px-6 sm:py-5">
                                         {dashboardData.submissions.length === 0 ? (
                                             <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-gray-200 py-10 text-center">
                                                 <ClipboardList className="h-8 w-8 text-gray-300" />
