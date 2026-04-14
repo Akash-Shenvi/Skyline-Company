@@ -275,6 +275,7 @@ const CareerProgramManager: React.FC = () => {
     const [saving, setSaving] = useState(false);
     const [formError, setFormError] = useState<string | null>(null);
     const [deletingProgramId, setDeletingProgramId] = useState<string | null>(null);
+    const [isFormVisible, setIsFormVisible] = useState(false);
 
     const fetchPrograms = async () => {
         try {
@@ -352,6 +353,7 @@ const CareerProgramManager: React.FC = () => {
                 return nextPrograms.sort((left, right) => (left.sortOrder ?? 0) - (right.sortOrder ?? 0));
             });
             resetForm();
+            setIsFormVisible(false);
         } catch (err: any) {
             console.error('Failed to save career program:', err);
             setFormError(err.response?.data?.message || 'Failed to save career program.');
@@ -406,14 +408,29 @@ const CareerProgramManager: React.FC = () => {
                         Publish career pathways and control what appears on the public careers pages.
                     </p>
                 </div>
-                <button type="button" onClick={fetchPrograms} className={secondaryButtonClassName}>
-                    <RefreshCcw className="h-4 w-4" />
-                    Refresh List
-                </button>
+                <div className="flex items-center gap-3">
+                    <button type="button" onClick={fetchPrograms} className={secondaryButtonClassName}>
+                        <RefreshCcw className="h-4 w-4" />
+                        Refresh List
+                    </button>
+                    {!isFormVisible && (
+                        <button type="button" onClick={() => { resetForm(); setIsFormVisible(true); }} className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-black px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-olive-dark">
+                            <CirclePlus className="h-4 w-4" />
+                            Create Program
+                        </button>
+                    )}
+                </div>
             </div>
 
-            <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+            {isFormVisible ? (
                 <div className={cardClassName}>
+                    <div className="mb-6 flex items-center justify-between border-b border-brand-surface pb-6">
+                        <h3 className="text-xl font-bold text-brand-black">{editingProgramId ? 'Edit Career Program' : 'Create New Career Program'}</h3>
+                        <button type="button" onClick={() => { resetForm(); setIsFormVisible(false); }} className={secondaryButtonClassName}>
+                            <X className="h-4 w-4" />
+                            Cancel
+                        </button>
+                    </div>
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid gap-4 md:grid-cols-2">
                             <input value={form.title} onChange={(event) => setForm((currentForm) => ({ ...currentForm, title: event.target.value }))} className={inputClassName} placeholder="Program title" />
@@ -539,20 +556,18 @@ const CareerProgramManager: React.FC = () => {
                                 {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : editingProgramId ? <Save className="h-4 w-4" /> : <CirclePlus className="h-4 w-4" />}
                                 {editingProgramId ? 'Update Career Program' : 'Create Career Program'}
                             </button>
-                            <button type="button" onClick={resetForm} className={secondaryButtonClassName}>Reset Form</button>
                         </div>
                     </form>
                 </div>
-
-                <div className={cardClassName}>
-                    <h3 className="text-xl font-bold text-brand-black">Catalog Preview</h3>
-                    <div className="mt-6 space-y-4">
+            ) : (
+                <div className="space-y-6">
+                    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                         {loading ? (
-                            <div className="flex justify-center py-16"><Loader2 className="h-8 w-8 animate-spin text-brand-gold" /></div>
+                            <div className="flex justify-center py-16 md:col-span-2 xl:col-span-3"><Loader2 className="h-8 w-8 animate-spin text-brand-gold" /></div>
                         ) : error ? (
-                            <div className="rounded-xl border border-brand-red/20 bg-brand-red/5 px-4 py-3 text-sm text-brand-red">{error}</div>
+                            <div className="rounded-xl border border-brand-red/20 bg-brand-red/5 px-4 py-3 text-sm text-brand-red md:col-span-2 xl:col-span-3">{error}</div>
                         ) : programs.length === 0 ? (
-                            <div className="rounded-xl border border-dashed border-brand-surface px-4 py-10 text-center text-sm text-brand-olive">No career programs yet.</div>
+                            <div className="rounded-xl border border-dashed border-brand-surface px-4 py-10 text-center text-sm text-brand-olive md:col-span-2 xl:col-span-3">No career programs yet.</div>
                         ) : (
                             programs.map((program) => (
                                 <article key={program._id} className="rounded-2xl border border-brand-surface bg-brand-off-white p-5">
@@ -576,7 +591,7 @@ const CareerProgramManager: React.FC = () => {
                                         {program.tags.map((tag) => <span key={tag} className="rounded-full border border-brand-gold/25 bg-brand-gold/10 px-3 py-1 text-[#8b6f2c]">{tag}</span>)}
                                     </div>
                                     <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                                        <button type="button" onClick={() => { setEditingProgramId(program._id); setForm(fromProgram(program)); setFormError(null); }} className={secondaryButtonClassName}><Pencil className="h-4 w-4" />Edit</button>
+                                        <button type="button" onClick={() => { setEditingProgramId(program._id); setForm(fromProgram(program)); setFormError(null); setIsFormVisible(true); }} className={secondaryButtonClassName}><Pencil className="h-4 w-4" />Edit</button>
                                         <button type="button" onClick={() => handleDelete(program)} disabled={deletingProgramId === program._id} className="inline-flex items-center justify-center gap-2 rounded-xl border border-brand-red/20 bg-brand-red/5 px-4 py-2.5 text-sm font-semibold text-brand-red transition-colors hover:bg-brand-red/10 disabled:opacity-60">{deletingProgramId === program._id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}Delete</button>
                                     </div>
                                 </article>
@@ -584,7 +599,7 @@ const CareerProgramManager: React.FC = () => {
                         )}
                     </div>
                 </div>
-            </div>
+            )}
         </section>
     );
 };
