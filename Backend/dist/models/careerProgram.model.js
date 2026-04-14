@@ -69,6 +69,8 @@ const CareerProcessStepSchema = new mongoose_1.Schema({
 const CareerProgramSchema = new mongoose_1.Schema({
     title: { type: String, required: true, trim: true },
     slug: { type: String, required: true, trim: true, lowercase: true, unique: true },
+    heroImage: { type: String, trim: true },
+    cardImage: { type: String, trim: true },
     shortDescription: { type: String, required: true, trim: true },
     overview: { type: String, required: true, trim: true },
     country: { type: String, required: true, trim: true },

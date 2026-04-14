@@ -31,6 +31,8 @@ export interface ICareerTimeline {
 export interface ICareerProgram extends Document {
     title: string;
     slug: string;
+    heroImage?: string;
+    cardImage?: string;
     shortDescription: string;
     overview: string;
     country: string;
@@ -91,6 +93,8 @@ const CareerProcessStepSchema = new Schema<ICareerProcessStep>({
 const CareerProgramSchema = new Schema<ICareerProgram>({
     title: { type: String, required: true, trim: true },
     slug: { type: String, required: true, trim: true, lowercase: true, unique: true },
+    heroImage: { type: String, trim: true },
+    cardImage: { type: String, trim: true },
     shortDescription: { type: String, required: true, trim: true },
     overview: { type: String, required: true, trim: true },
     country: { type: String, required: true, trim: true },

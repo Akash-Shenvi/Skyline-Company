@@ -1,5 +1,4 @@
 import axios from 'axios';
-import type { CareerProgramPayload } from '../types/careerProgram';
 
 export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5002';
 
@@ -241,12 +240,20 @@ export const careerProgramsAPI = {
         const response = await api.get('/careers/admin');
         return response.data;
     },
-    async create(data: CareerProgramPayload) {
-        const response = await api.post('/careers/admin', data);
+    async create(data: FormData) {
+        const response = await api.post('/careers/admin', data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         return response.data;
     },
-    async update(id: string, data: CareerProgramPayload) {
-        const response = await api.put(`/careers/admin/${id}`, data);
+    async update(id: string, data: FormData) {
+        const response = await api.put(`/careers/admin/${id}`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         return response.data;
     },
     async delete(id: string) {

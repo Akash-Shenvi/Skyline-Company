@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BriefcaseBusiness, CirclePlus, Loader2, Pencil, RefreshCcw, Save, Trash2, X } from 'lucide-react';
-import { careerProgramsAPI } from '../../lib/api';
+import ImageUpload from './ImageUpload';
+import { careerProgramsAPI, getAssetUrl } from '../../lib/api';
 import { formatCareerSalaryRange, type CareerProgram, type CareerProgramPayload } from '../../types/careerProgram';
 
 interface SalaryRangeFormState {
@@ -29,6 +30,10 @@ interface TimelineFormState {
 interface CareerProgramFormState {
     title: string;
     slug: string;
+    heroImage: string;
+    heroImageFile: File | null;
+    cardImage: string;
+    cardImageFile: File | null;
     shortDescription: string;
     overview: string;
     country: string;
@@ -59,6 +64,10 @@ const createTimeline = (order: number): TimelineFormState => ({ title: '', intro
 const defaultForm = (): CareerProgramFormState => ({
     title: '',
     slug: '',
+    heroImage: '',
+    heroImageFile: null,
+    cardImage: '',
+    cardImageFile: null,
     shortDescription: '',
     overview: '',
     country: 'Germany',
@@ -101,6 +110,10 @@ const serializePhaseLines = (program: CareerProgram) =>
 const fromProgram = (program: CareerProgram): CareerProgramFormState => ({
     title: program.title,
     slug: program.slug,
+    heroImage: program.heroImage || '',
+    heroImageFile: null,
+    cardImage: program.cardImage || '',
+    cardImageFile: null,
     shortDescription: program.shortDescription,
     overview: program.overview,
     country: program.country,
@@ -190,6 +203,8 @@ const StringListEditor: React.FC<{
 const toPayload = (form: CareerProgramFormState): CareerProgramPayload => ({
     title: form.title.trim(),
     slug: form.slug.trim(),
+    heroImage: form.heroImage.trim() || undefined,
+    cardImage: form.cardImage.trim() || undefined,
     shortDescription: form.shortDescription.trim(),
     overview: form.overview.trim(),
     country: form.country.trim(),
@@ -235,6 +250,21 @@ const toPayload = (form: CareerProgramFormState): CareerProgramPayload => ({
     isActive: form.isActive,
     sortOrder: parseOrder(form.sortOrder, 0),
 });
+
+const buildCareerProgramFormData = (payload: CareerProgramPayload, form: CareerProgramFormState) => {
+    const submissionData = new FormData();
+    submissionData.append('payload', JSON.stringify(payload));
+
+    if (form.heroImageFile) {
+        submissionData.append('heroImage', form.heroImageFile);
+    }
+
+    if (form.cardImageFile) {
+        submissionData.append('cardImage', form.cardImageFile);
+    }
+
+    return submissionData;
+};
 
 const CareerProgramManager: React.FC = () => {
     const [programs, setPrograms] = useState<CareerProgram[]>([]);
@@ -309,9 +339,10 @@ const CareerProgramManager: React.FC = () => {
         try {
             setSaving(true);
             const payload = toPayload(form);
+            const submissionData = buildCareerProgramFormData(payload, form);
             const response = editingProgramId
-                ? await careerProgramsAPI.update(editingProgramId, payload)
-                : await careerProgramsAPI.create(payload);
+                ? await careerProgramsAPI.update(editingProgramId, submissionData)
+                : await careerProgramsAPI.create(submissionData);
 
             const savedProgram = response.program as CareerProgram;
             setPrograms((currentPrograms) => {
@@ -392,6 +423,30 @@ const CareerProgramManager: React.FC = () => {
                             <textarea rows={3} value={form.shortDescription} onChange={(event) => setForm((currentForm) => ({ ...currentForm, shortDescription: event.target.value }))} className={`${inputClassName} md:col-span-2 resize-y`} placeholder="Short description" />
                             <textarea rows={5} value={form.overview} onChange={(event) => setForm((currentForm) => ({ ...currentForm, overview: event.target.value }))} className={`${inputClassName} md:col-span-2 resize-y`} placeholder="Overview" />
                             <textarea rows={3} value={form.ctaDescription} onChange={(event) => setForm((currentForm) => ({ ...currentForm, ctaDescription: event.target.value }))} className={`${inputClassName} md:col-span-2 resize-y`} placeholder="Disabled apply helper text" />
+                            <div className="md:col-span-2 grid gap-6 md:grid-cols-2">
+                                <ImageUpload
+                                    label="Hero Image"
+                                    inputId="career-hero-image"
+                                    helperText="Upload the large detail page background image"
+                                    value={form.heroImageFile || (form.heroImage ? getAssetUrl(form.heroImage) : undefined)}
+                                    onChange={(file) => setForm((currentForm) => ({
+                                        ...currentForm,
+                                        heroImageFile: file,
+                                        heroImage: file ? currentForm.heroImage : '',
+                                    }))}
+                                />
+                                <ImageUpload
+                                    label="Card Image"
+                                    inputId="career-card-image"
+                                    helperText="Upload the listing card banner image"
+                                    value={form.cardImageFile || (form.cardImage ? getAssetUrl(form.cardImage) : undefined)}
+                                    onChange={(file) => setForm((currentForm) => ({
+                                        ...currentForm,
+                                        cardImageFile: file,
+                                        cardImage: file ? currentForm.cardImage : '',
+                                    }))}
+                                />
+                            </div>
                             <label className="md:col-span-2 flex items-center gap-3 rounded-xl border border-brand-surface bg-brand-off-white px-4 py-3 text-sm font-medium text-brand-olive-dark">
                                 <input type="checkbox" checked={form.isActive} onChange={(event) => setForm((currentForm) => ({ ...currentForm, isActive: event.target.checked }))} className="h-4 w-4 rounded border-brand-surface text-brand-gold focus:ring-brand-gold" />
                                 Show this program on the public careers page
@@ -493,6 +548,13 @@ const CareerProgramManager: React.FC = () => {
                         ) : (
                             programs.map((program) => (
                                 <article key={program._id} className="rounded-2xl border border-brand-surface bg-brand-off-white p-5">
+                                    {(program.cardImage || program.heroImage) && (
+                                        <img
+                                            src={getAssetUrl(program.cardImage || program.heroImage || '')}
+                                            alt={program.title}
+                                            className="mb-4 h-40 w-full rounded-2xl object-cover"
+                                        />
+                                    )}
                                     <div className="flex items-start justify-between gap-4">
                                         <div>
                                             <h4 className="text-lg font-bold text-brand-black">{program.title}</h4>

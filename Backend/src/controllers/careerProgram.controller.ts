@@ -1,5 +1,14 @@
+import fs from 'fs';
+import path from 'path';
 import { Request, Response } from 'express';
 import CareerProgram from '../models/careerProgram.model';
+
+const careerImageUploadDir = '/home/skyline/file_serve/careers';
+
+interface CareerProgramUploadFiles {
+    heroImage?: Express.Multer.File[];
+    cardImage?: Express.Multer.File[];
+}
 
 const slugify = (value: string) =>
     value
@@ -129,27 +138,54 @@ const normalizeTimelines = (value: unknown): Array<{
         })
         .filter(isDefined);
 
-const buildCareerProgramPayload = (body: Request['body']) => ({
-    title: normalizeString(body.title),
-    slug: normalizeString(body.slug),
-    shortDescription: normalizeString(body.shortDescription),
-    overview: normalizeString(body.overview),
-    country: normalizeString(body.country),
-    eligibleProfiles: normalizeStringList(body.eligibleProfiles),
-    whyChoose: normalizeStringList(body.whyChoose),
-    salary: {
-        adaptation: normalizeSalaryRange(body.salary?.adaptation),
-        fullRecognition: normalizeSalaryRange(body.salary?.fullRecognition),
-        additionalBenefits: normalizeStringList(body.salary?.additionalBenefits),
-    },
-    processSteps: normalizeProcessSteps(body.processSteps),
-    timelines: normalizeTimelines(body.timelines),
-    documentsRequired: normalizeStringList(body.documentsRequired),
-    ctaDescription: normalizeString(body.ctaDescription),
-    tags: normalizeStringList(body.tags),
-    isActive: parseBoolean(body.isActive),
-    sortOrder: parseNumber(body.sortOrder),
-});
+const parseCareerProgramRequestBody = (req: Request) => {
+    const rawPayload = req.body?.payload;
+
+    if (typeof rawPayload === 'string') {
+        try {
+            const parsedPayload = JSON.parse(rawPayload);
+            if (parsedPayload && typeof parsedPayload === 'object') {
+                return parsedPayload as Record<string, unknown>;
+            }
+        } catch (error) {
+            console.warn('Failed to parse career program payload JSON:', error);
+        }
+    }
+
+    return req.body && typeof req.body === 'object'
+        ? req.body as Record<string, unknown>
+        : {};
+};
+
+const buildCareerProgramPayload = (body: Record<string, unknown>) => {
+    const salary = body.salary && typeof body.salary === 'object'
+        ? body.salary as Record<string, unknown>
+        : {};
+
+    return {
+        title: normalizeString(body.title),
+        slug: normalizeString(body.slug),
+        heroImage: normalizeString(body.heroImage),
+        cardImage: normalizeString(body.cardImage),
+        shortDescription: normalizeString(body.shortDescription),
+        overview: normalizeString(body.overview),
+        country: normalizeString(body.country),
+        eligibleProfiles: normalizeStringList(body.eligibleProfiles),
+        whyChoose: normalizeStringList(body.whyChoose),
+        salary: {
+            adaptation: normalizeSalaryRange(salary.adaptation),
+            fullRecognition: normalizeSalaryRange(salary.fullRecognition),
+            additionalBenefits: normalizeStringList(salary.additionalBenefits),
+        },
+        processSteps: normalizeProcessSteps(body.processSteps),
+        timelines: normalizeTimelines(body.timelines),
+        documentsRequired: normalizeStringList(body.documentsRequired),
+        ctaDescription: normalizeString(body.ctaDescription),
+        tags: normalizeStringList(body.tags),
+        isActive: parseBoolean(body.isActive),
+        sortOrder: parseNumber(body.sortOrder),
+    };
+};
 
 const validateCareerProgramPayload = (payload: ReturnType<typeof buildCareerProgramPayload>) => {
     const requiredFields = [
@@ -190,6 +226,41 @@ const validateCareerProgramPayload = (payload: ReturnType<typeof buildCareerProg
     }
 
     return null;
+};
+
+const getCareerProgramUploadFiles = (req: Request) =>
+    (req.files as CareerProgramUploadFiles | undefined) || {};
+
+const toStoredCareerImageUrl = (file: Express.Multer.File) => `/uploads/careers/${file.filename}`;
+
+const resolveCareerImage = (storedValue: string, uploadedFile?: Express.Multer.File) =>
+    uploadedFile ? toStoredCareerImageUrl(uploadedFile) : storedValue || undefined;
+
+const deleteStoredCareerImage = async (imagePath?: string) => {
+    if (!imagePath || !imagePath.startsWith('/uploads/careers/')) {
+        return;
+    }
+
+    const filePath = path.join(careerImageUploadDir, path.basename(imagePath));
+
+    try {
+        await fs.promises.unlink(filePath);
+    } catch (error: any) {
+        if (error?.code !== 'ENOENT') {
+            console.error('Failed to delete stored career image:', error);
+        }
+    }
+};
+
+const cleanupUploadedCareerFiles = async (files: CareerProgramUploadFiles) => {
+    const uploadedFiles = [
+        ...(files.heroImage || []),
+        ...(files.cardImage || []),
+    ];
+
+    await Promise.all(
+        uploadedFiles.map((file) => fs.promises.unlink(file.path).catch(() => undefined))
+    );
 };
 
 const generateUniqueSlug = async (value: string, excludeId?: string) => {
@@ -252,16 +323,21 @@ export const getAdminCareerPrograms = async (_req: Request, res: Response) => {
 };
 
 export const createCareerProgram = async (req: Request, res: Response) => {
+    const uploadedFiles = getCareerProgramUploadFiles(req);
+
     try {
-        const payload = buildCareerProgramPayload(req.body);
+        const payload = buildCareerProgramPayload(parseCareerProgramRequestBody(req));
         const validationError = validateCareerProgramPayload(payload);
 
         if (validationError) {
+            await cleanupUploadedCareerFiles(uploadedFiles);
             return res.status(400).json({ message: validationError });
         }
 
         const program = await CareerProgram.create({
             ...payload,
+            heroImage: resolveCareerImage(payload.heroImage, uploadedFiles.heroImage?.[0]),
+            cardImage: resolveCareerImage(payload.cardImage, uploadedFiles.cardImage?.[0]),
             salary: {
                 adaptation: payload.salary.adaptation!,
                 fullRecognition: payload.salary.fullRecognition!,
@@ -276,28 +352,40 @@ export const createCareerProgram = async (req: Request, res: Response) => {
             program,
         });
     } catch (error) {
+        await cleanupUploadedCareerFiles(uploadedFiles);
         console.error('Creating career program failed:', error);
         return res.status(500).json({ message: 'Failed to create career program.' });
     }
 };
 
 export const updateCareerProgram = async (req: Request, res: Response) => {
+    const uploadedFiles = getCareerProgramUploadFiles(req);
+
     try {
         const program = await CareerProgram.findById(req.params.id);
 
         if (!program) {
+            await cleanupUploadedCareerFiles(uploadedFiles);
             return res.status(404).json({ message: 'Career program not found.' });
         }
 
-        const payload = buildCareerProgramPayload(req.body);
+        const payload = buildCareerProgramPayload(parseCareerProgramRequestBody(req));
         const validationError = validateCareerProgramPayload(payload);
 
         if (validationError) {
+            await cleanupUploadedCareerFiles(uploadedFiles);
             return res.status(400).json({ message: validationError });
         }
 
+        const nextHeroImage = resolveCareerImage(payload.heroImage, uploadedFiles.heroImage?.[0]);
+        const nextCardImage = resolveCareerImage(payload.cardImage, uploadedFiles.cardImage?.[0]);
+        const previousHeroImage = program.heroImage;
+        const previousCardImage = program.cardImage;
+
         program.set({
             ...payload,
+            heroImage: nextHeroImage,
+            cardImage: nextCardImage,
             salary: {
                 adaptation: payload.salary.adaptation!,
                 fullRecognition: payload.salary.fullRecognition!,
@@ -308,12 +396,17 @@ export const updateCareerProgram = async (req: Request, res: Response) => {
         });
 
         await program.save();
+        await Promise.all([
+            previousHeroImage !== nextHeroImage ? deleteStoredCareerImage(previousHeroImage) : Promise.resolve(),
+            previousCardImage !== nextCardImage ? deleteStoredCareerImage(previousCardImage) : Promise.resolve(),
+        ]);
 
         return res.status(200).json({
             message: 'Career program updated successfully.',
             program,
         });
     } catch (error) {
+        await cleanupUploadedCareerFiles(uploadedFiles);
         console.error('Updating career program failed:', error);
         return res.status(500).json({ message: 'Failed to update career program.' });
     }
@@ -328,6 +421,10 @@ export const deleteCareerProgram = async (req: Request, res: Response) => {
         }
 
         await program.deleteOne();
+        await Promise.all([
+            deleteStoredCareerImage(program.heroImage),
+            deleteStoredCareerImage(program.cardImage),
+        ]);
 
         return res.status(200).json({ message: 'Career program deleted successfully.' });
     } catch (error) {

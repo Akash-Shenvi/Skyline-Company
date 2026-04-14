@@ -1,16 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import { X, Upload } from 'lucide-react';
 
 interface ImageUploadProps {
     value?: File | string;
     onChange: (file: File | null) => void;
     preview?: string;
+    label?: string;
+    inputId?: string;
+    helperText?: string;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ value, onChange, preview }) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({
+    value,
+    onChange,
+    preview,
+    label = 'Course Image',
+    inputId,
+    helperText = 'PNG, JPG up to 5MB',
+}) => {
+    const generatedId = useId();
+    const resolvedInputId = inputId || `image-upload-${generatedId}`;
     const [previewUrl, setPreviewUrl] = useState<string | null>(
         typeof value === 'string' ? value : preview || null
     );
+
+    useEffect(() => {
+        setPreviewUrl(typeof value === 'string' ? value : preview || null);
+    }, [preview, value]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -32,7 +48,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ value, onChange, preview }) =
     return (
         <div className="w-full">
             <label className="block text-sm font-medium text-brand-olive-dark mb-2">
-                Course Image
+                {label}
             </label>
 
             {previewUrl ? (
@@ -57,10 +73,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ value, onChange, preview }) =
                         accept="image/*"
                         onChange={handleFileChange}
                         className="hidden"
-                        id="image-upload"
+                        id={resolvedInputId}
                     />
                     <label
-                        htmlFor="image-upload"
+                        htmlFor={resolvedInputId}
                         className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-brand-surface rounded-lg cursor-pointer hover:border-brand-gold transition-colors bg-brand-off-white"
                     >
                         <Upload className="w-10 h-10 text-brand-olive-light mb-2" />
@@ -68,7 +84,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ value, onChange, preview }) =
                             Click to upload image
                         </span>
                         <span className="text-xs text-brand-olive mt-1">
-                            PNG, JPG up to 5MB
+                            {helperText}
                         </span>
                     </label>
                 </div>

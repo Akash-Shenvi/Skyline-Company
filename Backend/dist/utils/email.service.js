@@ -60,6 +60,20 @@ const formatDateTime = (value) => {
         hour12: true,
     });
 };
+/* ━━━ Skyline Brand Color Palette ━━━
+ * These hex values are extracted directly from the website's design system
+ * defined in Frontend/sprachweg/src/index.css under the @theme block.
+ *
+ * brand-black       #1C1C1A   — Primary dark / email header background
+ * brand-red         #C8232B   — Accent red (alerts, urgent)
+ * brand-gold        #E8A020   — Primary gold accent / headings in dark bg
+ * brand-gold-hover  #C8860E   — Darker gold for text on light backgrounds
+ * brand-olive       #6E6E50   — Muted body text
+ * brand-olive-light #A0A07A   — Secondary text
+ * brand-olive-dark  #4A4A34   — Strong muted text / sub-headings
+ * brand-off-white   #F7F6F2   — Email body / page background
+ * brand-surface     #EEEEE8   — Info card background / borders
+ */
 class EmailService {
     constructor() {
         this.transporter = nodemailer_1.default.createTransport({
@@ -106,31 +120,40 @@ class EmailService {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
                 body {
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                     line-height: 1.6;
-                    color: #333333;
+                    color: #4A4A34;
                     margin: 0;
                     padding: 0;
-                    background-color: #f4f4f4;
+                    background-color: #F7F6F2;
                 }
                 .container {
                     max-width: 600px;
                     margin: 0 auto;
                     background-color: #ffffff;
-                    border-radius: 8px;
+                    border-radius: 16px;
                     overflow: hidden;
-                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
                 }
                 .header {
-                    background-color: #0a192f;
+                    background-color: #1C1C1A;
                     color: #ffffff;
-                    padding: 30px;
+                    padding: 36px 30px;
                     text-align: center;
                 }
                 .header h1 {
                     margin: 0;
-                    font-size: 24px;
-                    color: #d6b161;
+                    font-size: 22px;
+                    font-weight: 700;
+                    color: #E8A020;
+                    letter-spacing: 0.02em;
+                }
+                .header-divider {
+                    width: 48px;
+                    height: 3px;
+                    background-color: #E8A020;
+                    margin: 14px auto 0;
+                    border-radius: 2px;
                 }
                 .content {
                     padding: 40px 30px;
@@ -138,67 +161,79 @@ class EmailService {
                 }
                 .welcome-text {
                     font-size: 18px;
-                    color: #0a192f;
+                    color: #1C1C1A;
                     font-weight: 600;
                     margin-bottom: 20px;
                 }
                 .message-body {
-                    color: #555555;
-                    font-size: 16px;
+                    color: #6E6E50;
+                    font-size: 15px;
+                    line-height: 1.7;
+                }
+                .message-body strong {
+                    color: #1C1C1A;
                 }
                 .info-card {
                     margin: 24px 0;
                     padding: 18px 20px;
-                    border: 1px solid #e8edf3;
-                    border-radius: 8px;
-                    background-color: #f8fafc;
+                    border: 1px solid #EEEEE8;
+                    border-radius: 14px;
+                    background-color: #F7F6F2;
                 }
                 .info-row {
                     display: flex;
                     justify-content: space-between;
                     gap: 16px;
-                    padding: 8px 0;
-                    border-bottom: 1px solid #e8edf3;
+                    padding: 10px 0;
+                    border-bottom: 1px solid #EEEEE8;
                 }
                 .info-row:last-child {
                     border-bottom: 0;
                 }
                 .info-label {
-                    color: #6b7280;
-                    font-size: 13px;
+                    color: #6E6E50;
+                    font-size: 12px;
                     font-weight: 600;
                     text-transform: uppercase;
-                    letter-spacing: 0.04em;
+                    letter-spacing: 0.06em;
                 }
                 .info-value {
-                    color: #0a192f;
+                    color: #1C1C1A;
                     font-size: 14px;
                     font-weight: 700;
                     text-align: right;
                 }
                 .action-button {
                     display: inline-block;
-                    background-color: #d6b161;
-                    color: #0a192f !important;
-                    padding: 12px 24px;
+                    background-color: #E8A020;
+                    color: #1C1C1A !important;
+                    padding: 14px 28px;
                     text-decoration: none;
-                    border-radius: 6px;
+                    border-radius: 12px;
                     font-weight: 700;
+                    font-size: 14px;
+                    letter-spacing: 0.02em;
                 }
                 .footer {
-                    background-color: #f8f9fa;
-                    padding: 20px;
+                    background-color: #F7F6F2;
+                    padding: 24px 20px;
                     text-align: center;
                     font-size: 12px;
-                    color: #888888;
-                    border-top: 1px solid #eeeeee;
+                    color: #A0A07A;
+                    border-top: 1px solid #EEEEE8;
+                }
+                .footer a {
+                    color: #C8860E;
+                    text-decoration: none;
+                    font-weight: 600;
                 }
             </style>
         </head>
         <body>
             <div class="container">
                 <div class="header">
-                    <h1>Skyline Skilling & Training Center<br>Training & Skilling Program</h1>
+                    <h1>Skyline Skilling &amp; Training Center<br>Training &amp; Skilling Program</h1>
+                    <div class="header-divider"></div>
                 </div>
                 <div class="content">
                     <div class="welcome-text">Dear ${options.name},</div>
@@ -207,15 +242,15 @@ class EmailService {
                         ${options.paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join('')}
                         ${infoSection}
                         ${actionButton}
-                        <p style="margin-top: 32px; border-top: 1px solid #eee; padding-top: 20px;">
+                        <p style="margin-top: 32px; border-top: 1px solid #EEEEE8; padding-top: 20px;">
                             Warm regards,<br>
-                            <strong>Skyline Skilling & Training Center Team</strong>
+                            <strong style="color: #1C1C1A;">Skyline Skilling &amp; Training Center Team</strong>
                         </p>
                     </div>
                 </div>
                 <div class="footer">
-                    &copy; ${new Date().getFullYear()} Skyline Skilling & Training Center. All rights reserved.<br>
-                    <a href="https://www.skylinetechnologies.in" style="color: #666; text-decoration: none;">www.skylinetechnologies.in</a>
+                    &copy; ${new Date().getFullYear()} Skyline Skilling &amp; Training Center. All rights reserved.<br>
+                    <a href="https://www.skylinetechnologies.in">www.skylinetechnologies.in</a>
                 </div>
             </div>
         </body>
@@ -231,31 +266,40 @@ class EmailService {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
                 body {
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                     line-height: 1.6;
-                    color: #333333;
+                    color: #4A4A34;
                     margin: 0;
                     padding: 0;
-                    background-color: #f4f4f4;
+                    background-color: #F7F6F2;
                 }
                 .container {
                     max-width: 600px;
                     margin: 0 auto;
                     background-color: #ffffff;
-                    border-radius: 8px;
+                    border-radius: 16px;
                     overflow: hidden;
-                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
                 }
                 .header {
-                    background-color: #0a192f;
+                    background-color: #1C1C1A;
                     color: #ffffff;
-                    padding: 30px;
+                    padding: 36px 30px;
                     text-align: center;
                 }
                 .header h1 {
                     margin: 0;
-                    font-size: 24px;
-                    color: #d6b161;
+                    font-size: 22px;
+                    font-weight: 700;
+                    color: #E8A020;
+                    letter-spacing: 0.02em;
+                }
+                .header-divider {
+                    width: 48px;
+                    height: 3px;
+                    background-color: #E8A020;
+                    margin: 14px auto 0;
+                    border-radius: 2px;
                 }
                 .content {
                     padding: 40px 30px;
@@ -263,46 +307,56 @@ class EmailService {
                 }
                 .welcome-text {
                     font-size: 18px;
-                    color: #0a192f;
+                    color: #1C1C1A;
                     font-weight: 600;
                     margin-bottom: 20px;
                 }
                 .message-body {
-                    color: #555555;
-                    font-size: 16px;
+                    color: #6E6E50;
+                    font-size: 15px;
+                    line-height: 1.7;
+                }
+                .message-body strong {
+                    color: #1C1C1A;
                 }
                 .otp-box {
-                    background-color: #f0f4f8;
-                    border: 2px dashed #0a192f;
-                    color: #0a192f;
-                    font-size: 24px;
+                    background-color: #F7F6F2;
+                    border: 2px dashed #E8A020;
+                    color: #1C1C1A;
+                    font-size: 28px;
                     font-weight: bold;
                     text-align: center;
-                    padding: 15px;
-                    margin: 20px 0;
-                    letter-spacing: 5px;
-                    border-radius: 6px;
+                    padding: 18px;
+                    margin: 24px 0;
+                    letter-spacing: 8px;
+                    border-radius: 14px;
                 }
                 .footer {
-                    background-color: #f8f9fa;
-                    padding: 20px;
+                    background-color: #F7F6F2;
+                    padding: 24px 20px;
                     text-align: center;
                     font-size: 12px;
-                    color: #888888;
-                    border-top: 1px solid #eeeeee;
+                    color: #A0A07A;
+                    border-top: 1px solid #EEEEE8;
+                }
+                .footer a {
+                    color: #C8860E;
+                    text-decoration: none;
+                    font-weight: 600;
                 }
             </style>
         </head>
         <body>
             <div class="container">
                 <div class="header">
-                    <h1>Skyline Skilling & Training Center</h1>
+                    <h1>Skyline Skilling &amp; Training Center</h1>
+                    <div class="header-divider"></div>
                 </div>
                 <div class="content">
                     <div class="welcome-text">Dear ${name},</div>
                     
                     <div class="message-body">
-                        <p>Welcome to the <strong>Skyline Skilling & Training Center</strong>.</p>
+                        <p>Welcome to the <strong>Skyline Skilling &amp; Training Center</strong>.</p>
                         
                         <p>We are delighted to have you with us. As requested, here is your One-Time Password (OTP) for <strong>${purpose}</strong>.</p>
                         
@@ -312,17 +366,17 @@ class EmailService {
                         
                         <p>All further information, updates, and important announcements will be shared through your registered login email ID. Kindly check your email regularly to stay informed.</p>
 
-                        <p style="margin-top: 30px;">Once again, thank you for choosing Skyline Skilling & Training Center as your skilling partner.</p>
+                        <p style="margin-top: 30px;">Once again, thank you for choosing Skyline Skilling &amp; Training Center as your skilling partner.</p>
                         
-                        <p style="margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px;">
+                        <p style="margin-top: 40px; border-top: 1px solid #EEEEE8; padding-top: 20px;">
                             Warm regards,<br>
-                            <strong>Skyline Skilling & Training Center Team</strong>
+                            <strong style="color: #1C1C1A;">Skyline Skilling &amp; Training Center Team</strong>
                         </p>
                     </div>
                 </div>
                 <div class="footer">
-                    &copy; ${new Date().getFullYear()} Skyline Skilling & Training Center. All rights reserved.<br>
-                    <a href="${frontendBaseUrl}" style="color: #666; text-decoration: none;">${frontendHostLabel}</a>
+                    &copy; ${new Date().getFullYear()} Skyline Skilling &amp; Training Center. All rights reserved.<br>
+                    <a href="${frontendBaseUrl}">${frontendHostLabel}</a>
                 </div>
             </div>
         </body>
@@ -425,7 +479,7 @@ class EmailService {
             // The user provided text is a "Welcome" message.
             const actionButton = isApproved
                 ? `
-            <a href="${studentDashboardLink}" style="display:inline-block; background-color:#d6b161; color:#0a192f; padding:12px 24px; text-decoration:none; border-radius:6px; font-weight:bold; margin-top:20px;">
+            <a href="${studentDashboardLink}" style="display:inline-block; background-color:#E8A020; color:#1C1C1A; padding:14px 28px; text-decoration:none; border-radius:12px; font-weight:bold; margin-top:20px; font-size:14px; letter-spacing:0.02em;">
                 Access Student Dashboard
             </a>
             `
@@ -441,31 +495,40 @@ class EmailService {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
                 body {
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                     line-height: 1.6;
-                    color: #333333;
+                    color: #4A4A34;
                     margin: 0;
                     padding: 0;
-                    background-color: #f4f4f4;
+                    background-color: #F7F6F2;
                 }
                 .container {
                     max-width: 600px;
                     margin: 0 auto;
                     background-color: #ffffff;
-                    border-radius: 8px;
+                    border-radius: 16px;
                     overflow: hidden;
-                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
                 }
                 .header {
-                    background-color: #0a192f;
+                    background-color: #1C1C1A;
                     color: #ffffff;
-                    padding: 30px;
+                    padding: 36px 30px;
                     text-align: center;
                 }
                 .header h1 {
                     margin: 0;
-                    font-size: 24px;
-                    color: #d6b161;
+                    font-size: 22px;
+                    font-weight: 700;
+                    color: #E8A020;
+                    letter-spacing: 0.02em;
+                }
+                .header-divider {
+                    width: 48px;
+                    height: 3px;
+                    background-color: #E8A020;
+                    margin: 14px auto 0;
+                    border-radius: 2px;
                 }
                 .content {
                     padding: 40px 30px;
@@ -473,24 +536,33 @@ class EmailService {
                 }
                 .welcome-text {
                     font-size: 18px;
-                    color: #0a192f;
+                    color: #1C1C1A;
                     font-weight: 600;
                     margin-bottom: 20px;
                 }
                 .message-body {
-                    color: #555555;
-                    font-size: 16px;
+                    color: #6E6E50;
+                    font-size: 15px;
+                    line-height: 1.7;
+                }
+                .message-body strong {
+                    color: #1C1C1A;
                 }
                 .footer {
-                    background-color: #f8f9fa;
-                    padding: 20px;
+                    background-color: #F7F6F2;
+                    padding: 24px 20px;
                     text-align: center;
                     font-size: 12px;
-                    color: #888888;
-                    border-top: 1px solid #eeeeee;
+                    color: #A0A07A;
+                    border-top: 1px solid #EEEEE8;
+                }
+                .footer a {
+                    color: #C8860E;
+                    text-decoration: none;
+                    font-weight: 600;
                 }
                 .highlight {
-                    color: #0a192f;
+                    color: #1C1C1A;
                     font-weight: bold;
                 }
             </style>
@@ -498,13 +570,14 @@ class EmailService {
         <body>
             <div class="container">
                 <div class="header">
-                    <h1>Skyline Skilling & Training Center</h1>
+                    <h1>Skyline Skilling &amp; Training Center</h1>
+                    <div class="header-divider"></div>
                 </div>
                 <div class="content">
                     <div class="welcome-text">Dear ${name},</div>
                     
                     <div class="message-body">
-                        <p>Welcome to the <span class="highlight">Skyline Skilling & Training Center</span>.</p>
+                        <p>Welcome to the <span class="highlight">Skyline Skilling &amp; Training Center</span>.</p>
                         ${institutionApprovalNotice}
                         
                         <p>We are delighted to have you with us. Our program is designed and delivered by industry-specific professional trainers, ensuring practical knowledge and real-world skill development.</p>
@@ -513,17 +586,17 @@ class EmailService {
                         
                         ${actionButton}
 
-                        <p style="margin-top: 30px;">Once again, thank you for choosing Skyline Skilling & Training Center as your skilling partner. We wish you a successful and enriching learning journey with us.</p>
+                        <p style="margin-top: 30px;">Once again, thank you for choosing Skyline Skilling &amp; Training Center as your skilling partner. We wish you a successful and enriching learning journey with us.</p>
                         
-                        <p style="margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px;">
+                        <p style="margin-top: 40px; border-top: 1px solid #EEEEE8; padding-top: 20px;">
                             Warm regards,<br>
-                            <strong>Skyline Skilling & Training Center Team</strong>
+                            <strong style="color: #1C1C1A;">Skyline Skilling &amp; Training Center Team</strong>
                         </p>
                     </div>
                 </div>
                 <div class="footer">
-                    &copy; ${new Date().getFullYear()} Skyline Skilling & Training Center. All rights reserved.<br>
-                    <a href="https://www.skylinetechnologies.in" style="color: #666; text-decoration: none;">www.skylinetechnologies.in</a>
+                    &copy; ${new Date().getFullYear()} Skyline Skilling &amp; Training Center. All rights reserved.<br>
+                    <a href="https://www.skylinetechnologies.in">www.skylinetechnologies.in</a>
                 </div>
             </div>
         </body>
@@ -597,36 +670,197 @@ class EmailService {
     sendInstitutionStudentWelcomeEmail(params) {
         return __awaiter(this, void 0, void 0, function* () {
             const normalizedInstitutionName = String(params.institutionName || '').trim();
-            const html = this.getProgramEmailTemplate({
-                name: params.studentName,
-                title: 'Your student account is now active.',
-                paragraphs: [
-                    normalizedInstitutionName
-                        ? `A student account has been created for you and approved under <strong>${normalizedInstitutionName}</strong> for <strong>${params.courseTitle} - ${params.levelName}</strong>.`
-                        : `A student account has been created for you and enrolled in <strong>${params.courseTitle} - ${params.levelName}</strong>.`,
-                    'Your institution has already set the password for this account. Please contact your institution coordinator directly if you need the password or login assistance.',
-                    'You can now sign in to the student portal to access your course once you have your credentials.',
-                ],
-                infoRows: [
-                    { label: 'Course', value: params.courseTitle },
-                    { label: 'Level', value: params.levelName },
-                    ...(normalizedInstitutionName
-                        ? [{ label: 'Institution', value: normalizedInstitutionName }]
-                        : []),
-                    { label: 'Portal', value: 'Student Dashboard' },
-                ],
-                actionButton: {
-                    label: 'Open Student Portal',
-                    href: studentDashboardLink,
-                },
-            });
+            const displayName = normalizedInstitutionName || 'Your Institution';
+            const displayCourse = `${params.courseTitle} – ${params.levelName}`;
+            const logoUrl = String(params.institutionLogo || '').trim();
+            const tagline = String(params.institutionTagline || '').trim();
+            const logoSection = logoUrl
+                ? `<img src="${logoUrl}" alt="${displayName}" style="max-height:52px; max-width:180px; margin-bottom:14px; border-radius:8px;" /><br>`
+                : '';
+            const taglineSection = tagline
+                ? `<p style="margin:8px 0 0; font-size:13px; color:#A0A07A; letter-spacing:0.04em;">${tagline}</p>`
+                : '';
+            const html = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+                body {
+                    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    line-height: 1.6;
+                    color: #4A4A34;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #F7F6F2;
+                }
+                .container {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    background-color: #ffffff;
+                    border-radius: 16px;
+                    overflow: hidden;
+                    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+                }
+                .header {
+                    background-color: #1C1C1A;
+                    color: #ffffff;
+                    padding: 36px 30px;
+                    text-align: center;
+                }
+                .header h1 {
+                    margin: 0;
+                    font-size: 22px;
+                    font-weight: 700;
+                    color: #E8A020;
+                    letter-spacing: 0.02em;
+                }
+                .header-divider {
+                    width: 48px;
+                    height: 3px;
+                    background-color: #E8A020;
+                    margin: 14px auto 0;
+                    border-radius: 2px;
+                }
+                .content {
+                    padding: 40px 30px;
+                    background-color: #ffffff;
+                }
+                .welcome-text {
+                    font-size: 18px;
+                    color: #1C1C1A;
+                    font-weight: 600;
+                    margin-bottom: 20px;
+                }
+                .message-body {
+                    color: #6E6E50;
+                    font-size: 15px;
+                    line-height: 1.7;
+                }
+                .message-body strong {
+                    color: #1C1C1A;
+                }
+                .info-card {
+                    margin: 24px 0;
+                    padding: 18px 20px;
+                    border: 1px solid #EEEEE8;
+                    border-radius: 14px;
+                    background-color: #F7F6F2;
+                }
+                .info-row {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 16px;
+                    padding: 10px 0;
+                    border-bottom: 1px solid #EEEEE8;
+                }
+                .info-row:last-child {
+                    border-bottom: 0;
+                }
+                .info-label {
+                    color: #6E6E50;
+                    font-size: 12px;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    letter-spacing: 0.06em;
+                }
+                .info-value {
+                    color: #1C1C1A;
+                    font-size: 14px;
+                    font-weight: 700;
+                    text-align: right;
+                }
+                .action-button {
+                    display: inline-block;
+                    background-color: #E8A020;
+                    color: #1C1C1A !important;
+                    padding: 14px 28px;
+                    text-decoration: none;
+                    border-radius: 12px;
+                    font-weight: 700;
+                    font-size: 14px;
+                    letter-spacing: 0.02em;
+                }
+                .footer {
+                    background-color: #F7F6F2;
+                    padding: 24px 20px;
+                    text-align: center;
+                    font-size: 12px;
+                    color: #A0A07A;
+                    border-top: 1px solid #EEEEE8;
+                }
+                .footer a {
+                    color: #C8860E;
+                    text-decoration: none;
+                    font-weight: 600;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    ${logoSection}
+                    <h1>${displayName}</h1>
+                    ${taglineSection}
+                    <div class="header-divider"></div>
+                </div>
+                <div class="content">
+                    <div class="welcome-text">Dear ${params.studentName},</div>
+
+                    <div class="message-body">
+                        <p><strong>Your student account is ready.</strong></p>
+
+                        <p>We are pleased to inform you that <strong>${displayName}</strong> has enrolled you in <strong>${displayCourse}</strong>. Your student account has been created and is ready to use.</p>
+
+                        <p>Your login credentials have been set up by ${displayName}. If you have not received your password, please contact your institution coordinator directly for assistance.</p>
+
+                        <div class="info-card">
+                            <div class="info-row">
+                                <span class="info-label">Institution</span>
+                                <span class="info-value">${displayName}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Course</span>
+                                <span class="info-value">${params.courseTitle}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Level</span>
+                                <span class="info-value">${params.levelName}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Login Email</span>
+                                <span class="info-value">${params.to}</span>
+                            </div>
+                        </div>
+
+                        <p>Once you have your credentials, sign in to the student portal below to access your course materials, schedules, and progress tracking.</p>
+
+                        <div style="margin-top: 26px;">
+                            <a href="${studentDashboardLink}" class="action-button">Open Student Portal</a>
+                        </div>
+
+                        <p style="margin-top: 32px; border-top: 1px solid #EEEEE8; padding-top: 20px;">
+                            Warm regards,<br>
+                            <strong style="color: #1C1C1A;">${displayName}</strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="footer">
+                    &copy; ${new Date().getFullYear()} ${displayName}. All rights reserved.<br>
+                    Powered by <a href="https://www.skylinetechnologies.in">Skyline Skilling &amp; Training Center</a>
+                </div>
+            </div>
+        </body>
+        </html>
+        `;
             try {
                 yield this.transporter.sendMail({
-                    from: `"Skyline Skilling & Training Center" <${env_1.env.EMAIL_USER}>`,
+                    from: `"${displayName}" <${env_1.env.EMAIL_USER}>`,
                     to: params.to,
-                    subject: `Student Account Activated - ${params.courseTitle} ${params.levelName}${normalizedInstitutionName ? ` - ${normalizedInstitutionName}` : ''}`,
+                    subject: `Welcome to ${displayCourse} – ${displayName}`,
                     html,
-                    text: `Dear ${params.studentName},\n\nYour student account has been created and enrolled in ${params.courseTitle} - ${params.levelName}.${normalizedInstitutionName ? `\nInstitution: ${normalizedInstitutionName}.` : ''}\nYour institution has the password for this account. Please contact them if you need your login credentials.\n\nStudent Dashboard: ${studentDashboardLink}\n\nWarm regards,\nSkyline Skilling & Training Center Team`,
+                    text: `Dear ${params.studentName},\n\nWe are pleased to inform you that ${displayName} has enrolled you in ${displayCourse}.\n\nYour student account has been created and is ready to use. Your login credentials have been set up by ${displayName}. If you have not received your password, please contact your institution coordinator directly.\n\nInstitution: ${displayName}\nCourse: ${params.courseTitle}\nLevel: ${params.levelName}\nLogin Email: ${params.to}\n\nSign in to the student portal: ${studentDashboardLink}\n\nWarm regards,\n${displayName}\n\nPowered by Skyline Skilling & Training Center`,
                 });
                 return true;
             }
@@ -704,28 +938,102 @@ class EmailService {
         <!DOCTYPE html>
         <html>
         <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
-                body { font-family: sans-serif; }
-                .container { padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
-                .label { font-weight: bold; color: #555; }
-                .value { margin-bottom: 15px; color: #333; }
-                .message-box { background: #f9f9f9; padding: 15px; border-left: 4px solid #d6b161; }
+                body {
+                    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    line-height: 1.6;
+                    color: #4A4A34;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #F7F6F2;
+                }
+                .container {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    background-color: #ffffff;
+                    border-radius: 16px;
+                    overflow: hidden;
+                    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+                }
+                .header {
+                    background-color: #1C1C1A;
+                    color: #ffffff;
+                    padding: 30px;
+                    text-align: center;
+                }
+                .header h2 {
+                    margin: 0;
+                    font-size: 20px;
+                    font-weight: 700;
+                    color: #E8A020;
+                    letter-spacing: 0.02em;
+                }
+                .header-divider {
+                    width: 48px;
+                    height: 3px;
+                    background-color: #E8A020;
+                    margin: 12px auto 0;
+                    border-radius: 2px;
+                }
+                .content {
+                    padding: 30px;
+                }
+                .field-label {
+                    font-weight: 700;
+                    color: #6E6E50;
+                    font-size: 11px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.06em;
+                    margin-bottom: 4px;
+                }
+                .field-value {
+                    margin-bottom: 18px;
+                    color: #1C1C1A;
+                    font-size: 15px;
+                }
+                .message-box {
+                    background: #F7F6F2;
+                    padding: 18px;
+                    border-left: 4px solid #E8A020;
+                    border-radius: 0 12px 12px 0;
+                    color: #4A4A34;
+                    font-size: 15px;
+                    line-height: 1.7;
+                }
+                .footer {
+                    background-color: #F7F6F2;
+                    padding: 18px 20px;
+                    text-align: center;
+                    font-size: 11px;
+                    color: #A0A07A;
+                    border-top: 1px solid #EEEEE8;
+                }
             </style>
         </head>
         <body>
             <div class="container">
-                <h2>New Contact Message</h2>
-                <div class="label">Name:</div>
-                <div class="value">${data.name}</div>
-                
-                <div class="label">Email:</div>
-                <div class="value">${data.email}</div>
-                
-                <div class="label">Subject:</div>
-                <div class="value">${data.subject}</div>
-                
-                <div class="label">Message:</div>
-                <div class="message-box">${data.message.replace(/\n/g, '<br>')}</div>
+                <div class="header">
+                    <h2>New Contact Message</h2>
+                    <div class="header-divider"></div>
+                </div>
+                <div class="content">
+                    <div class="field-label">Name</div>
+                    <div class="field-value">${data.name}</div>
+                    
+                    <div class="field-label">Email</div>
+                    <div class="field-value">${data.email}</div>
+                    
+                    <div class="field-label">Subject</div>
+                    <div class="field-value">${data.subject}</div>
+                    
+                    <div class="field-label">Message</div>
+                    <div class="message-box">${data.message.replace(/\n/g, '<br>')}</div>
+                </div>
+                <div class="footer">
+                    Received via contact form &middot; Skyline Skilling &amp; Training Center
+                </div>
             </div>
         </body>
         </html>
@@ -752,27 +1060,103 @@ class EmailService {
         <!DOCTYPE html>
         <html>
         <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
-                body { font-family: sans-serif; line-height: 1.6; color: #333; }
-                .container { padding: 20px; max-width: 600px; margin: 0 auto; }
-                .footer { margin-top: 30px; font-size: 0.9em; color: #666; }
+                body {
+                    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    line-height: 1.7;
+                    color: #4A4A34;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #F7F6F2;
+                }
+                .container {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    background-color: #ffffff;
+                    border-radius: 16px;
+                    overflow: hidden;
+                    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+                }
+                .header {
+                    background-color: #1C1C1A;
+                    color: #ffffff;
+                    padding: 36px 30px;
+                    text-align: center;
+                }
+                .header h1 {
+                    margin: 0;
+                    font-size: 22px;
+                    font-weight: 700;
+                    color: #E8A020;
+                    letter-spacing: 0.02em;
+                }
+                .header-divider {
+                    width: 48px;
+                    height: 3px;
+                    background-color: #E8A020;
+                    margin: 14px auto 0;
+                    border-radius: 2px;
+                }
+                .content {
+                    padding: 36px 30px;
+                }
+                .content p {
+                    color: #6E6E50;
+                    font-size: 15px;
+                    margin: 0 0 14px;
+                }
+                .content strong {
+                    color: #1C1C1A;
+                }
+                .sign-off {
+                    margin-top: 32px;
+                    border-top: 1px solid #EEEEE8;
+                    padding-top: 20px;
+                    font-size: 15px;
+                    color: #6E6E50;
+                }
+                .footer {
+                    background-color: #F7F6F2;
+                    padding: 24px 20px;
+                    text-align: center;
+                    font-size: 12px;
+                    color: #A0A07A;
+                    border-top: 1px solid #EEEEE8;
+                }
+                .footer a {
+                    color: #C8860E;
+                    text-decoration: none;
+                    font-weight: 600;
+                }
             </style>
         </head>
         <body>
             <div class="container">
-                <p>Dear Sir/Madam,</p>
+                <div class="header">
+                    <h1>Skyline Skilling &amp; Training Center</h1>
+                    <div class="header-divider"></div>
+                </div>
+                <div class="content">
+                    <p>Dear Sir/Madam,</p>
 
-                <p>Greetings from Skyline Skilling & Training Center.</p>
+                    <p>Greetings from <strong>Skyline Skilling &amp; Training Center</strong>.</p>
 
-                <p>Thank you for reaching out to us. We appreciate your interest in our organization. Our team of experts will review your details and get in touch with you shortly to discuss your requirements.</p>
+                    <p>Thank you for reaching out to us. We appreciate your interest in our organization. Our team of experts will review your details and get in touch with you shortly to discuss your requirements.</p>
 
-                <p>You may share your profile with us for any service requirements, collaboration opportunities, or strategic partnerships. We look forward to exploring potential avenues of mutual growth and cooperation.</p>
+                    <p>You may share your profile with us for any service requirements, collaboration opportunities, or strategic partnerships. We look forward to exploring potential avenues of mutual growth and cooperation.</p>
 
-                <p>Thank you for connecting with Skyline Skilling & Training Center.</p>
+                    <p>Thank you for connecting with Skyline Skilling &amp; Training Center.</p>
 
+                    <div class="sign-off">
+                        <p>Yours sincerely,<br>
+                        <strong>Skyline Skilling &amp; Training Center</strong></p>
+                    </div>
+                </div>
                 <div class="footer">
-                    <p>Yours sincerely,<br>
-                    <strong>Skyline Skilling & Training Center</strong></p>
+                    &copy; ${new Date().getFullYear()} Skyline Skilling &amp; Training Center. All rights reserved.<br>
+                    <a href="https://www.skylinetechnologies.in">www.skylinetechnologies.in</a>
                 </div>
             </div>
         </body>
@@ -803,31 +1187,40 @@ class EmailService {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
                 body {
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                     line-height: 1.6;
-                    color: #333333;
+                    color: #4A4A34;
                     margin: 0;
                     padding: 0;
-                    background-color: #f4f4f4;
+                    background-color: #F7F6F2;
                 }
                 .container {
                     max-width: 600px;
                     margin: 0 auto;
                     background-color: #ffffff;
-                    border-radius: 8px;
+                    border-radius: 16px;
                     overflow: hidden;
-                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
                 }
                 .header {
-                    background-color: #0a192f;
+                    background-color: #1C1C1A;
                     color: #ffffff;
-                    padding: 30px;
+                    padding: 36px 30px;
                     text-align: center;
                 }
                 .header h1 {
                     margin: 0;
-                    font-size: 24px;
-                    color: #d6b161;
+                    font-size: 22px;
+                    font-weight: 700;
+                    color: #E8A020;
+                    letter-spacing: 0.02em;
+                }
+                .header-divider {
+                    width: 48px;
+                    height: 3px;
+                    background-color: #E8A020;
+                    margin: 14px auto 0;
+                    border-radius: 2px;
                 }
                 .content {
                     padding: 40px 30px;
@@ -835,24 +1228,33 @@ class EmailService {
                 }
                 .welcome-text {
                     font-size: 18px;
-                    color: #0a192f;
+                    color: #1C1C1A;
                     font-weight: 600;
                     margin-bottom: 20px;
                 }
                 .message-body {
-                    color: #555555;
-                    font-size: 16px;
+                    color: #6E6E50;
+                    font-size: 15px;
+                    line-height: 1.7;
+                }
+                .message-body strong {
+                    color: #1C1C1A;
                 }
                 .footer {
-                    background-color: #f8f9fa;
-                    padding: 20px;
+                    background-color: #F7F6F2;
+                    padding: 24px 20px;
                     text-align: center;
                     font-size: 12px;
-                    color: #888888;
-                    border-top: 1px solid #eeeeee;
+                    color: #A0A07A;
+                    border-top: 1px solid #EEEEE8;
+                }
+                .footer a {
+                    color: #C8860E;
+                    text-decoration: none;
+                    font-weight: 600;
                 }
                 .highlight {
-                    color: #0a192f;
+                    color: #1C1C1A;
                     font-weight: bold;
                 }
             </style>
@@ -860,29 +1262,30 @@ class EmailService {
         <body>
             <div class="container">
                 <div class="header">
-                    <h1>Skyline Skilling & Training Center<br>Training & Skilling Program</h1>
+                    <h1>Skyline Skilling &amp; Training Center<br>Training &amp; Skilling Program</h1>
+                    <div class="header-divider"></div>
                 </div>
                 <div class="content">
                     <div class="welcome-text">Dear ${name},</div>
                     
                     <div class="message-body">
-                        <p>Welcome to the <span class="highlight">Skyline Skilling & Training Center</span>.</p>
+                        <p>Welcome to the <span class="highlight">Skyline Skilling &amp; Training Center</span>.</p>
                         
                         <p>We are delighted to have you with us. Our program is designed and delivered by industry-specific professional trainers, ensuring practical knowledge and real-world skill development.</p>
                         
                         <p>All further information, updates, and important announcements will be shared through your registered login email ID. Kindly check your email regularly to stay informed.</p>
                         
-                        <p style="margin-top: 30px;">Once again, thank you for choosing Skyline Skilling & Training Center as your skilling partner. We wish you a successful and enriching learning journey with us.</p>
+                        <p style="margin-top: 30px;">Once again, thank you for choosing Skyline Skilling &amp; Training Center as your skilling partner. We wish you a successful and enriching learning journey with us.</p>
                         
-                        <p style="margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px;">
+                        <p style="margin-top: 40px; border-top: 1px solid #EEEEE8; padding-top: 20px;">
                             Warm regards,<br>
-                            <strong>Skyline Skilling & Training Center Team</strong>
+                            <strong style="color: #1C1C1A;">Skyline Skilling &amp; Training Center Team</strong>
                         </p>
                     </div>
                 </div>
                 <div class="footer">
-                    &copy; ${new Date().getFullYear()} Skyline Skilling & Training Center. All rights reserved.<br>
-                    <a href="https://www.skylinetechnologies.in" style="color: #666; text-decoration: none;">www.skylinetechnologies.in</a>
+                    &copy; ${new Date().getFullYear()} Skyline Skilling &amp; Training Center. All rights reserved.<br>
+                    <a href="https://www.skylinetechnologies.in">www.skylinetechnologies.in</a>
                 </div>
             </div>
         </body>

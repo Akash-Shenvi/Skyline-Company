@@ -36,6 +36,8 @@ export interface CareerProgram {
     _id: string;
     title: string;
     slug: string;
+    heroImage?: string;
+    cardImage?: string;
     shortDescription: string;
     overview: string;
     country: string;
@@ -56,6 +58,8 @@ export interface CareerProgram {
 export interface CareerProgramPayload {
     title: string;
     slug: string;
+    heroImage?: string;
+    cardImage?: string;
     shortDescription: string;
     overview: string;
     country: string;

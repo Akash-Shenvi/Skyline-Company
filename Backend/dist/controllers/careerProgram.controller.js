@@ -13,7 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteCareerProgram = exports.updateCareerProgram = exports.createCareerProgram = exports.getAdminCareerPrograms = exports.getCareerProgramBySlug = exports.getPublicCareerPrograms = void 0;
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
 const careerProgram_model_1 = __importDefault(require("../models/careerProgram.model"));
+const careerImageUploadDir = '/home/skyline/file_serve/careers';
 const slugify = (value) => value
     .trim()
     .toLowerCase()
@@ -112,20 +115,42 @@ const normalizeTimelines = (value) => (Array.isArray(value) ? value : [])
     };
 })
     .filter(isDefined);
+const parseCareerProgramRequestBody = (req) => {
+    var _a;
+    const rawPayload = (_a = req.body) === null || _a === void 0 ? void 0 : _a.payload;
+    if (typeof rawPayload === 'string') {
+        try {
+            const parsedPayload = JSON.parse(rawPayload);
+            if (parsedPayload && typeof parsedPayload === 'object') {
+                return parsedPayload;
+            }
+        }
+        catch (error) {
+            console.warn('Failed to parse career program payload JSON:', error);
+        }
+    }
+    return req.body && typeof req.body === 'object'
+        ? req.body
+        : {};
+};
 const buildCareerProgramPayload = (body) => {
-    var _a, _b, _c;
-    return ({
+    const salary = body.salary && typeof body.salary === 'object'
+        ? body.salary
+        : {};
+    return {
         title: normalizeString(body.title),
         slug: normalizeString(body.slug),
+        heroImage: normalizeString(body.heroImage),
+        cardImage: normalizeString(body.cardImage),
         shortDescription: normalizeString(body.shortDescription),
         overview: normalizeString(body.overview),
         country: normalizeString(body.country),
         eligibleProfiles: normalizeStringList(body.eligibleProfiles),
         whyChoose: normalizeStringList(body.whyChoose),
         salary: {
-            adaptation: normalizeSalaryRange((_a = body.salary) === null || _a === void 0 ? void 0 : _a.adaptation),
-            fullRecognition: normalizeSalaryRange((_b = body.salary) === null || _b === void 0 ? void 0 : _b.fullRecognition),
-            additionalBenefits: normalizeStringList((_c = body.salary) === null || _c === void 0 ? void 0 : _c.additionalBenefits),
+            adaptation: normalizeSalaryRange(salary.adaptation),
+            fullRecognition: normalizeSalaryRange(salary.fullRecognition),
+            additionalBenefits: normalizeStringList(salary.additionalBenefits),
         },
         processSteps: normalizeProcessSteps(body.processSteps),
         timelines: normalizeTimelines(body.timelines),
@@ -134,7 +159,7 @@ const buildCareerProgramPayload = (body) => {
         tags: normalizeStringList(body.tags),
         isActive: parseBoolean(body.isActive),
         sortOrder: parseNumber(body.sortOrder),
-    });
+    };
 };
 const validateCareerProgramPayload = (payload) => {
     const requiredFields = [
@@ -168,6 +193,30 @@ const validateCareerProgramPayload = (payload) => {
     }
     return null;
 };
+const getCareerProgramUploadFiles = (req) => req.files || {};
+const toStoredCareerImageUrl = (file) => `/uploads/careers/${file.filename}`;
+const resolveCareerImage = (storedValue, uploadedFile) => uploadedFile ? toStoredCareerImageUrl(uploadedFile) : storedValue || undefined;
+const deleteStoredCareerImage = (imagePath) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!imagePath || !imagePath.startsWith('/uploads/careers/')) {
+        return;
+    }
+    const filePath = path_1.default.join(careerImageUploadDir, path_1.default.basename(imagePath));
+    try {
+        yield fs_1.default.promises.unlink(filePath);
+    }
+    catch (error) {
+        if ((error === null || error === void 0 ? void 0 : error.code) !== 'ENOENT') {
+            console.error('Failed to delete stored career image:', error);
+        }
+    }
+});
+const cleanupUploadedCareerFiles = (files) => __awaiter(void 0, void 0, void 0, function* () {
+    const uploadedFiles = [
+        ...(files.heroImage || []),
+        ...(files.cardImage || []),
+    ];
+    yield Promise.all(uploadedFiles.map((file) => fs_1.default.promises.unlink(file.path).catch(() => undefined)));
+});
 const generateUniqueSlug = (value, excludeId) => __awaiter(void 0, void 0, void 0, function* () {
     const baseSlug = slugify(value) || 'career-program';
     let slug = baseSlug;
@@ -223,53 +272,68 @@ const getAdminCareerPrograms = (_req, res) => __awaiter(void 0, void 0, void 0, 
 });
 exports.getAdminCareerPrograms = getAdminCareerPrograms;
 const createCareerProgram = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _a, _b, _c;
+    const uploadedFiles = getCareerProgramUploadFiles(req);
     try {
-        const payload = buildCareerProgramPayload(req.body);
+        const payload = buildCareerProgramPayload(parseCareerProgramRequestBody(req));
         const validationError = validateCareerProgramPayload(payload);
         if (validationError) {
+            yield cleanupUploadedCareerFiles(uploadedFiles);
             return res.status(400).json({ message: validationError });
         }
-        const program = yield careerProgram_model_1.default.create(Object.assign(Object.assign({}, payload), { salary: {
+        const program = yield careerProgram_model_1.default.create(Object.assign(Object.assign({}, payload), { heroImage: resolveCareerImage(payload.heroImage, (_a = uploadedFiles.heroImage) === null || _a === void 0 ? void 0 : _a[0]), cardImage: resolveCareerImage(payload.cardImage, (_b = uploadedFiles.cardImage) === null || _b === void 0 ? void 0 : _b[0]), salary: {
                 adaptation: payload.salary.adaptation,
                 fullRecognition: payload.salary.fullRecognition,
                 additionalBenefits: payload.salary.additionalBenefits,
-            }, slug: yield generateUniqueSlug(payload.slug || payload.title), sortOrder: (_a = payload.sortOrder) !== null && _a !== void 0 ? _a : yield getNextSortOrder() }));
+            }, slug: yield generateUniqueSlug(payload.slug || payload.title), sortOrder: (_c = payload.sortOrder) !== null && _c !== void 0 ? _c : yield getNextSortOrder() }));
         return res.status(201).json({
             message: 'Career program created successfully.',
             program,
         });
     }
     catch (error) {
+        yield cleanupUploadedCareerFiles(uploadedFiles);
         console.error('Creating career program failed:', error);
         return res.status(500).json({ message: 'Failed to create career program.' });
     }
 });
 exports.createCareerProgram = createCareerProgram;
 const updateCareerProgram = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _a, _b, _c;
+    const uploadedFiles = getCareerProgramUploadFiles(req);
     try {
         const program = yield careerProgram_model_1.default.findById(req.params.id);
         if (!program) {
+            yield cleanupUploadedCareerFiles(uploadedFiles);
             return res.status(404).json({ message: 'Career program not found.' });
         }
-        const payload = buildCareerProgramPayload(req.body);
+        const payload = buildCareerProgramPayload(parseCareerProgramRequestBody(req));
         const validationError = validateCareerProgramPayload(payload);
         if (validationError) {
+            yield cleanupUploadedCareerFiles(uploadedFiles);
             return res.status(400).json({ message: validationError });
         }
-        program.set(Object.assign(Object.assign({}, payload), { salary: {
+        const nextHeroImage = resolveCareerImage(payload.heroImage, (_a = uploadedFiles.heroImage) === null || _a === void 0 ? void 0 : _a[0]);
+        const nextCardImage = resolveCareerImage(payload.cardImage, (_b = uploadedFiles.cardImage) === null || _b === void 0 ? void 0 : _b[0]);
+        const previousHeroImage = program.heroImage;
+        const previousCardImage = program.cardImage;
+        program.set(Object.assign(Object.assign({}, payload), { heroImage: nextHeroImage, cardImage: nextCardImage, salary: {
                 adaptation: payload.salary.adaptation,
                 fullRecognition: payload.salary.fullRecognition,
                 additionalBenefits: payload.salary.additionalBenefits,
-            }, slug: yield generateUniqueSlug(payload.slug || payload.title, String(program._id)), sortOrder: (_a = payload.sortOrder) !== null && _a !== void 0 ? _a : program.sortOrder }));
+            }, slug: yield generateUniqueSlug(payload.slug || payload.title, String(program._id)), sortOrder: (_c = payload.sortOrder) !== null && _c !== void 0 ? _c : program.sortOrder }));
         yield program.save();
+        yield Promise.all([
+            previousHeroImage !== nextHeroImage ? deleteStoredCareerImage(previousHeroImage) : Promise.resolve(),
+            previousCardImage !== nextCardImage ? deleteStoredCareerImage(previousCardImage) : Promise.resolve(),
+        ]);
         return res.status(200).json({
             message: 'Career program updated successfully.',
             program,
         });
     }
     catch (error) {
+        yield cleanupUploadedCareerFiles(uploadedFiles);
         console.error('Updating career program failed:', error);
         return res.status(500).json({ message: 'Failed to update career program.' });
     }
@@ -282,6 +346,10 @@ const deleteCareerProgram = (req, res) => __awaiter(void 0, void 0, void 0, func
             return res.status(404).json({ message: 'Career program not found.' });
         }
         yield program.deleteOne();
+        yield Promise.all([
+            deleteStoredCareerImage(program.heroImage),
+            deleteStoredCareerImage(program.cardImage),
+        ]);
         return res.status(200).json({ message: 'Career program deleted successfully.' });
     }
     catch (error) {

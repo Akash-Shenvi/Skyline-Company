@@ -111,6 +111,8 @@ const sendInstitutionStudentWelcomeEmailsInBatches = (students) => __awaiter(voi
             courseTitle: student.courseTitle,
             levelName: student.levelName,
             institutionName: student.institutionName || undefined,
+            institutionLogo: student.institutionLogo || undefined,
+            institutionTagline: student.institutionTagline || undefined,
         })));
     }
 });
@@ -232,6 +234,8 @@ const processInstitutionApproval = (params) => __awaiter(void 0, void 0, void 0,
                 courseTitle: request.courseTitle,
                 levelName: request.levelName,
                 institutionName: institutionScope.institutionName,
+                institutionLogo: institution.institutionLogo || null,
+                institutionTagline: institution.institutionTagline || null,
             });
         }
         (0, languageBatchScope_1.applyLanguageInstitutionScope)(batch, institutionScope);
