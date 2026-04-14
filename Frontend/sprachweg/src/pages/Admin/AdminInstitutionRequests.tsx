@@ -187,24 +187,24 @@ const AdminInstitutionRequests: React.FC = () => {
                         Back to Dashboard
                     </Link>
                     <div className="flex flex-wrap items-center gap-3">
-                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Institution Requests</h1>
+                        <h1 className="text-3xl font-bold text-gray-900">Institution Requests</h1>
                         <span className="rounded-full bg-[#d6b161] px-3 py-1 text-sm font-semibold text-[#0a192f]">
                             {summary.pending} Pending
                         </span>
                     </div>
-                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                    <p className="mt-2 text-sm text-gray-600">
                         Review institution submissions, approve entire batches, reject requests, and delete resolved entries.
                     </p>
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-4">
-                    <div className="rounded-2xl border bg-white p-4 shadow-sm dark:bg-[#112240]"><div className="text-sm text-gray-500">Pending</div><div className="mt-1 text-3xl font-bold">{summary.pending}</div></div>
-                    <div className="rounded-2xl border bg-white p-4 shadow-sm dark:bg-[#112240]"><div className="text-sm text-gray-500">Approved</div><div className="mt-1 text-3xl font-bold">{summary.approved}</div></div>
-                    <div className="rounded-2xl border bg-white p-4 shadow-sm dark:bg-[#112240]"><div className="text-sm text-gray-500">Rejected</div><div className="mt-1 text-3xl font-bold">{summary.rejected}</div></div>
-                    <div className="rounded-2xl border bg-white p-4 shadow-sm dark:bg-[#112240]"><div className="text-sm text-gray-500">Total</div><div className="mt-1 text-3xl font-bold">{summary.total}</div></div>
+                    <div className="rounded-2xl border bg-white p-4 shadow-sm"><div className="text-sm text-gray-500">Pending</div><div className="mt-1 text-3xl font-bold">{summary.pending}</div></div>
+                    <div className="rounded-2xl border bg-white p-4 shadow-sm"><div className="text-sm text-gray-500">Approved</div><div className="mt-1 text-3xl font-bold">{summary.approved}</div></div>
+                    <div className="rounded-2xl border bg-white p-4 shadow-sm"><div className="text-sm text-gray-500">Rejected</div><div className="mt-1 text-3xl font-bold">{summary.rejected}</div></div>
+                    <div className="rounded-2xl border bg-white p-4 shadow-sm"><div className="text-sm text-gray-500">Total</div><div className="mt-1 text-3xl font-bold">{summary.total}</div></div>
                 </div>
 
-                <div className="rounded-2xl border bg-white p-4 shadow-sm dark:bg-[#112240]">
+                <div className="rounded-2xl border bg-white p-4 shadow-sm">
                     <div className="flex flex-col gap-4 xl:flex-row">
                         <form
                             onSubmit={(event) => {
@@ -248,7 +248,7 @@ const AdminInstitutionRequests: React.FC = () => {
                 ) : error ? (
                     <div className="rounded-2xl border border-red-200 bg-red-50 px-6 py-8 text-center text-red-700">{error}</div>
                 ) : requests.length === 0 ? (
-                    <div className="rounded-2xl border bg-white py-20 text-center shadow-sm dark:bg-[#112240]">
+                    <div className="rounded-2xl border bg-white py-20 text-center shadow-sm">
                         <Building2 className="mx-auto mb-4 h-10 w-10 text-gray-400" />
                         <div className="text-lg font-semibold">No institution requests found</div>
                     </div>
@@ -259,7 +259,7 @@ const AdminInstitutionRequests: React.FC = () => {
                             const isProcessing = processingId === request._id;
                             const institutionName = request.institutionId.institutionName || request.institutionId.name;
                             return (
-                                <div key={request._id} className="rounded-2xl border bg-white p-5 shadow-sm dark:bg-[#112240]">
+                                <div key={request._id} className="rounded-2xl border bg-white p-5 shadow-sm">
                                     <div className="flex flex-col gap-5 xl:flex-row xl:justify-between">
                                         <div className="flex-1 space-y-4">
                                             <div className="flex flex-wrap items-center gap-3">
@@ -346,7 +346,7 @@ const AdminInstitutionRequests: React.FC = () => {
                             );
                         })}
 
-                        <div className="flex flex-col gap-4 rounded-2xl border bg-white px-5 py-4 shadow-sm dark:bg-[#112240] sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex flex-col gap-4 rounded-2xl border bg-white px-5 py-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
                             <p className="text-sm text-gray-600">
                                 Page <span className="font-semibold">{pagination.currentPage}</span> of <span className="font-semibold">{pagination.totalPages}</span>
                                 {' '}• Total {pagination.totalRequests} requests
