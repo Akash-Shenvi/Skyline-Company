@@ -228,10 +228,7 @@ const LoginPage: React.FC = () => {
                                 </div>
 
 
-                                <div className="flex items-center gap-2">
-                                    <input type="checkbox" id="remember" className="rounded border-brand-surface text-brand-gold focus:ring-brand-gold w-4 h-4 cursor-pointer" />
-                                    <label htmlFor="remember" className="text-sm text-brand-olive-dark cursor-pointer select-none">Remember me for 30 days</label>
-                                </div>
+
 
                                 <Button
                                     type="submit"
