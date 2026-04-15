@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, type Easing } from 'framer-motion';
-import { ArrowRight, BriefcaseBusiness, MapPin, Star, Shield, Zap } from 'lucide-react';
+import { ArrowRight, BriefcaseBusiness, MapPin, Shield, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
@@ -11,7 +11,7 @@ import {
     type CareerProgram,
 } from '../types/careerProgram';
 
-const DEFAULT_HERO_IMAGE = 'https://images.unsplash.com/photo-1551076805-e166946c9eb9?q=80&w=2600&auto=format&fit=crop';
+
 const DEFAULT_CARD_IMAGE = 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1400&auto=format&fit=crop';
 
 const easeOut: Easing = [0.0, 0.0, 0.2, 1];
