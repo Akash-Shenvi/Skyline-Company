@@ -422,7 +422,7 @@ const ChatPage: React.FC = () => {
                         <button
                             onClick={handleSend}
                             disabled={!input.trim() || !connected}
-                            className="p-2.5 rounded-xl bg-brand-gold text-brand-black hover:bg-brand-gold-hover disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex-shrink-0 shadow-sm"
+                            className="p-2.5 rounded-xl bg-brand-red text-white hover:bg-brand-red-hover disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex-shrink-0 shadow-sm"
                         >
                             <Send className="w-5 h-5" />
                         </button>

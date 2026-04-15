@@ -216,7 +216,7 @@ const LanguageDashboard: React.FC = () => {
                             resetForm();
                             setShowForm(true);
                         }}
-                        className="bg-brand-gold hover:bg-brand-gold-hover text-brand-black flex items-center gap-2"
+                        className="bg-brand-red hover:bg-brand-red-hover text-white flex items-center gap-2"
                     >
                         <Plus className="w-5 h-5" />
                         Add Language
@@ -331,7 +331,7 @@ const LanguageDashboard: React.FC = () => {
                                 </div>
 
                                 <div className="flex gap-3 pt-4 border-t border-brand-surface">
-                                    <Button type="submit" disabled={loading} className="flex-1 bg-brand-gold hover:bg-brand-gold-hover text-brand-black flex items-center justify-center gap-2"><Save className="w-5 h-5" />{loading ? 'Saving...' : editingId ? 'Update Language' : 'Create Language'}</Button>
+                                    <Button type="submit" disabled={loading} className="flex-1 bg-brand-red hover:bg-brand-red-hover text-white flex items-center justify-center gap-2"><Save className="w-5 h-5" />{loading ? 'Saving...' : editingId ? 'Update Language' : 'Create Language'}</Button>
                                     <Button type="button" onClick={() => setShowForm(false)} variant="outline" className="flex-1">Cancel</Button>
                                 </div>
                             </form>

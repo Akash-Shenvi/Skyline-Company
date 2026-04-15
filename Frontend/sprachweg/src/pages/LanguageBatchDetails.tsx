@@ -49,8 +49,8 @@ const getBatchTabFromSearchParams = (searchParams: URLSearchParams, fallbackTab:
 
 const getUnreadTrainerChatButtonClasses = (hasUnread: boolean) => (
     hasUnread
-        ? 'flex items-center gap-2 px-3 py-2 rounded-xl border border-brand-gold/30 bg-brand-gold text-brand-black text-sm font-semibold shadow-sm transition-colors duration-200 hover:bg-[#cfaa5b]'
-        : 'flex items-center gap-1.5 px-3 py-2 rounded-xl bg-brand-gold/10 text-brand-gold hover:bg-brand-gold/20 text-sm font-semibold transition-colors duration-200'
+        ? 'flex items-center gap-2 px-3 py-2 rounded-xl border border-brand-red/30 bg-brand-red text-white text-sm font-semibold shadow-sm transition-colors duration-200 hover:bg-brand-red-hover'
+        : 'flex items-center gap-1.5 px-3 py-2 rounded-xl bg-brand-red/10 text-brand-red hover:bg-brand-red/20 text-sm font-semibold transition-colors duration-200'
 );
 
 interface Annotation {
@@ -634,7 +634,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                 resetForm();
                                 setShowAddModal(true);
                             }}
-                            className="group inline-flex items-center gap-2 px-6 sm:px-8 py-3 rounded-xl font-semibold bg-gradient-to-r from-brand-gold to-brand-gold-hover text-brand-black hover:shadow-lg hover:shadow-brand-gold/20 hover:-translate-y-0.5 transition-all duration-300 border border-brand-gold/50"
+                            className="group inline-flex items-center gap-2 px-6 sm:px-8 py-3 rounded-xl font-semibold bg-brand-red text-white hover:bg-brand-red-hover hover:shadow-lg hover:shadow-brand-red/20 hover:-translate-y-0.5 transition-all duration-300 border border-brand-red/50"
                             role="button"
                             aria-label={`Add new ${activeTab}`}
                         >
@@ -873,7 +873,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                         <button
                                             type="button"
                                             onClick={handleCreateAssessment}
-                                            className="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-gold px-5 py-3 text-sm font-bold text-brand-black transition hover:bg-brand-gold-hover"
+                                            className="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand-red px-5 py-3 text-sm font-bold text-white transition hover:bg-brand-red-hover"
                                         >
                                             <Plus className="h-4 w-4" />
                                             Create Assessment
@@ -967,7 +967,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                             <button
                                                 type="button"
                                                 onClick={() => handleOpenAssessment(assessment._id)}
-                                                className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-gold px-5 py-3 text-sm font-bold text-brand-black transition hover:bg-brand-gold-hover"
+                                                className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-red px-5 py-3 text-sm font-bold text-white transition hover:bg-brand-red-hover"
                                             >
                                                 <ExternalLink className="h-4 w-4" />
                                                 {isLearner
@@ -1321,7 +1321,7 @@ const LanguageBatchDetails: React.FC<LanguageBatchDetailsProps> = ({ trainingTyp
                                 <button
                                     type="submit"
                                     disabled={submitting}
-                                    className="w-full px-4 py-3 bg-gradient-to-r from-brand-gold to-brand-gold-hover text-brand-black hover:shadow-lg hover:shadow-brand-gold/20 hover:-translate-y-0.5 rounded-xl font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold/30"
+                                    className="w-full px-4 py-3 bg-brand-red text-white hover:bg-brand-red-hover hover:shadow-lg hover:shadow-brand-red/20 hover:-translate-y-0.5 rounded-xl font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red/30"
                                     aria-busy={submitting}
                                 >
                                     {submitting ? (

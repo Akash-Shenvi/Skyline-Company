@@ -447,7 +447,7 @@ const ProfileCompletionModal: React.FC<ProfileCompletionModalProps> = ({ isOpen,
                                 type="submit"
                                 form="profile-form"
                                 disabled={loading}
-                                className="flex-1 justify-center rounded-lg bg-brand-gold px-4 py-2.5 text-sm font-semibold text-brand-black shadow-sm hover:bg-brand-gold-hover focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2 disabled:opacity-50 transition-colors min-h-[48px]"
+                                className="flex-1 justify-center rounded-lg bg-brand-red px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-red-hover focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 disabled:opacity-50 transition-colors min-h-[48px]"
                             >
                                 {loading ? 'Saving...' : 'Save & Continue'}
                             </Button>

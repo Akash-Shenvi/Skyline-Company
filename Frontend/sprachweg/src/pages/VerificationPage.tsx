@@ -216,7 +216,7 @@ const VerificationPage: React.FC = () => {
                                     <button
                                         type="submit"
                                         disabled={isSearching || !certificateId.trim()}
-                                        className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-gold px-8 py-4 font-semibold text-brand-black hover:bg-brand-gold-hover focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2 focus:ring-offset-brand-black disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:shadow-lg hover:shadow-brand-gold/25 text-sm sm:text-base"
+                                        className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-red px-8 py-4 font-semibold text-white hover:bg-brand-red-hover focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2 focus:ring-offset-brand-black disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:shadow-lg hover:shadow-brand-red/25 text-sm sm:text-base"
                                         id="verify-button"
                                     >
                                         {isSearching ? (

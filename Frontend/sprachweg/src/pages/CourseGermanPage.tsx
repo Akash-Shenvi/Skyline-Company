@@ -196,7 +196,7 @@ const CourseGermanPage: React.FC = () => {
       {/* Floating Language Toggle */}
       <button
         onClick={() => setLang(lang === 'de' ? 'en' : 'de')}
-        className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 flex items-center justify-center gap-2 px-4 py-2.5 md:px-5 md:py-3 bg-brand-gold hover:bg-brand-gold-hover text-brand-black font-semibold md:font-bold text-xs md:text-sm rounded-full shadow-[0_4px_20px_rgba(214,177,97,0.4)] transition-all hover:-translate-y-1 active:scale-95"
+        className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 flex items-center justify-center gap-2 px-4 py-2.5 md:px-5 md:py-3 bg-brand-red hover:bg-brand-red-hover text-white font-semibold md:font-bold text-xs md:text-sm rounded-full shadow-[0_4px_20px_rgba(200,35,43,0.4)] transition-all hover:-translate-y-1 active:scale-95"
       >
         <Globe className="w-4 h-4 md:w-4 md:h-4 animate-pulse shrink-0" />
         <span className="whitespace-nowrap">{lang === 'de' ? '🇬🇧 Translate to English' : '🇩🇪 Auf Deutsch lesen'}</span>

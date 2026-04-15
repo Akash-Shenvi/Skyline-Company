@@ -162,7 +162,7 @@ const ForgotPasswordPage: React.FC = () => {
 
                                 <Button
                                     type="submit"
-                                    className="w-full bg-brand-gold hover:bg-brand-gold-hover text-brand-black py-3.5 rounded-xl font-semibold shadow-lg shadow-amber-900/10 flex items-center justify-center gap-2"
+                                    className="w-full bg-brand-red hover:bg-brand-red-hover text-white py-3.5 rounded-xl font-semibold shadow-lg shadow-red-900/10 flex items-center justify-center gap-2"
                                     disabled={loading}
                                     data-testid="reset-button"
                                 >

@@ -174,7 +174,7 @@ const BatchCard: React.FC<{ batch: Batch; onManage: (batch: Batch) => void }> = 
             {/* CTA */}
             <button
                 onClick={() => onManage(batch)}
-                className="group/btn w-full flex items-center justify-center gap-2 rounded-xl bg-brand-gold px-4 py-3 text-sm font-bold text-brand-black hover:bg-brand-gold-hover active:scale-[0.98] transition-all"
+                className="group/btn w-full flex items-center justify-center gap-2 rounded-xl bg-brand-red px-4 py-3 text-sm font-bold text-white hover:bg-brand-red-hover active:scale-[0.98] transition-all"
             >
                 <Upload className="h-4 w-4" />
                 Open Batch

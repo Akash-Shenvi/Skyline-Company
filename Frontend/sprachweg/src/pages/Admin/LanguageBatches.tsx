@@ -484,7 +484,7 @@ const LanguageBatches: React.FC = () => {
                     <button
                         type="button"
                         onClick={() => setShowPromoteModal(true)}
-                        className="inline-flex items-center gap-2 rounded-lg bg-brand-gold px-4 py-2 font-bold text-brand-black transition-colors hover:bg-brand-gold-hover"
+                        className="inline-flex items-center gap-2 rounded-lg bg-brand-red px-4 py-2 font-bold text-white transition-colors hover:bg-brand-red-hover"
                     >
                         <Users className="h-5 w-5" />
                         Promote New Trainer
@@ -844,7 +844,7 @@ const LanguageBatches: React.FC = () => {
                                     </button>
                                     <button
                                         type="submit"
-                                        className="flex-1 rounded-lg bg-brand-gold py-2.5 font-bold text-brand-black transition-colors hover:bg-brand-gold-hover"
+                                        className="flex-1 rounded-lg bg-brand-red py-2.5 font-bold text-white transition-colors hover:bg-brand-red-hover"
                                     >
                                         Save Assignment
                                     </button>
@@ -884,7 +884,7 @@ const LanguageBatches: React.FC = () => {
                                     <button
                                         type="submit"
                                         disabled={promoting}
-                                        className="flex-1 rounded-lg bg-brand-gold py-2.5 font-bold text-brand-black transition-colors hover:bg-brand-gold-hover disabled:opacity-50"
+                                        className="flex-1 rounded-lg bg-brand-red py-2.5 font-bold text-white transition-colors hover:bg-brand-red-hover disabled:opacity-50"
                                     >
                                         {promoting ? 'Promoting...' : 'Promote'}
                                     </button>

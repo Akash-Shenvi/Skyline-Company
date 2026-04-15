@@ -180,7 +180,7 @@ const RegisterPage: React.FC = () => {
                                 </button>
                             </Link>
                             <button
-                                className="flex-1 py-2.5 text-sm font-semibold text-brand-black bg-brand-gold rounded-lg shadow-md transition-all"
+                                className="flex-1 py-2.5 text-sm font-semibold text-white bg-brand-red rounded-lg shadow-md transition-all"
                                 aria-selected="true"
                             >
                                 Create Account
@@ -327,7 +327,7 @@ const RegisterPage: React.FC = () => {
 
                                         <Button
                                             type="submit"
-                                            className="w-full bg-brand-gold hover:bg-brand-gold-hover text-brand-black py-3.5 rounded-xl font-semibold shadow-lg shadow-amber-900/10 transition-transform active:scale-[0.98]"
+                                            className="w-full bg-brand-red hover:bg-brand-red-hover text-white py-3.5 rounded-xl font-semibold shadow-lg shadow-red-900/10 transition-transform active:scale-[0.98]"
                                             disabled={loading}
                                         >
                                             {loading ? (
@@ -395,7 +395,7 @@ const RegisterPage: React.FC = () => {
 
                                         <Button
                                             type="submit"
-                                            className="w-full bg-brand-gold hover:bg-brand-gold-hover text-brand-black py-3.5 rounded-xl font-semibold shadow-lg shadow-amber-900/10 transition-transform active:scale-[0.98] flex items-center justify-center gap-2"
+                                            className="w-full bg-brand-red hover:bg-brand-red-hover text-white py-3.5 rounded-xl font-semibold shadow-lg shadow-red-900/10 transition-transform active:scale-[0.98] flex items-center justify-center gap-2"
                                             disabled={loading}
                                         >
                                             {loading ? 'Verifying...' : (

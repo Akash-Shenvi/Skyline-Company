@@ -157,8 +157,8 @@ const getTrainerName = (
 
 const getChatButtonClasses = (hasUnread: boolean) => (
     hasUnread
-        ? 'relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-brand-gold/30 bg-brand-gold text-brand-black shadow-sm transition-colors hover:bg-[#cfaa5b]'
-        : 'relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-gold/10 text-brand-gold transition-colors hover:bg-brand-gold/20'
+        ? 'relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-brand-red/30 bg-brand-red text-white shadow-sm transition-colors hover:bg-brand-red-hover'
+        : 'relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-red/10 text-brand-red transition-colors hover:bg-brand-red/20'
 );
 
 

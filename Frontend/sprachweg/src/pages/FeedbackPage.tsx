@@ -245,7 +245,7 @@ const FeedbackPage: React.FC = () => {
                                     className={`w-full sm:w-auto flex justify-center items-center gap-2 px-8 py-3.5 border border-transparent text-base font-semibold rounded-lg transition-all shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-70 disabled:cursor-not-allowed ${
                                         isSuccess 
                                             ? 'bg-brand-olive/50 hover:bg-brand-olive text-white focus:ring-brand-olive' 
-                                            : 'bg-brand-gold hover:bg-brand-gold-hover text-brand-black focus:ring-brand-gold'
+                                            : 'bg-brand-red hover:bg-brand-red-hover text-white focus:ring-brand-red'
                                     }`}
                                 >
                                     {isLoading ? (

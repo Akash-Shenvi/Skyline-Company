@@ -545,7 +545,7 @@ const LanguageTraining: React.FC = () => {
                                 onClick={() => setIsBookingOpen(true)}
                                 whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(214, 177, 97, 0.4)' }}
                                 whileTap={{ scale: 0.95 }}
-                                className="px-8 py-4 bg-brand-gold text-brand-black font-bold rounded-xl hover:bg-brand-gold-hover transition-all shadow-lg"
+                                className="px-8 py-4 bg-brand-red text-white font-bold rounded-xl hover:bg-brand-red-hover transition-all shadow-lg"
                             >
                                 Book Free Trial
                             </motion.button>

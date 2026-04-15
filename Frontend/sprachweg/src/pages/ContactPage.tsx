@@ -477,7 +477,7 @@ const ContactPage: React.FC = () => {
                                     </a>
                                     <a
                                         href="tel:+919353731755"
-                                        className="flex items-center justify-center gap-2 px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 bg-brand-gold rounded-lg sm:rounded-xl text-brand-black font-semibold text-xs sm:text-sm md:text-base hover:bg-brand-gold-hover transition-all duration-300 group shadow-lg hover:shadow-xl min-h-[44px]"
+                                        className="flex items-center justify-center gap-2 px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 bg-brand-red rounded-lg sm:rounded-xl text-white font-semibold text-xs sm:text-sm md:text-base hover:bg-brand-red-hover transition-all duration-300 group shadow-lg hover:shadow-xl min-h-[44px]"
                                     >
                                         {ICONS.call}
                                         <span>Call</span>
@@ -598,7 +598,7 @@ const ContactPage: React.FC = () => {
                                             <button
                                                 type="submit"
                                                 disabled={submitting}
-                                                className="w-full inline-flex items-center justify-center gap-2 px-4 sm:px-6 md:px-8 py-3 sm:py-3.5 md:py-4 bg-gradient-to-r from-brand-black to-brand-olive-dark hover:from-brand-olive-dark hover:to-[#1a3050] text-white text-xs sm:text-sm md:text-base lg:text-lg font-semibold rounded-lg sm:rounded-xl shadow-2xl hover:shadow-3xl transform hover:scale-[1.02] active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-300 min-h-[44px]"
+                                                className="w-full inline-flex items-center justify-center gap-2 px-4 sm:px-6 md:px-8 py-3 sm:py-3.5 md:py-4 bg-brand-red hover:bg-brand-red-hover text-white text-xs sm:text-sm md:text-base lg:text-lg font-semibold rounded-lg sm:rounded-xl shadow-2xl hover:shadow-3xl transform hover:scale-[1.02] active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-300 min-h-[44px]"
                                             >
                                                 {submitting ? (
                                                     <>

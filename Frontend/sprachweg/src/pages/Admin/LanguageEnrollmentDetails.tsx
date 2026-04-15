@@ -704,7 +704,7 @@ const LanguageEnrollmentDetails: React.FC = () => {
                                     <button
                                         onClick={(event) => handleApprove(enrollment, event)}
                                         disabled={!!processingId}
-                                        className={`flex-1 bg-brand-gold hover:bg-brand-gold-hover text-brand-black py-2.5 px-4 rounded-lg font-bold text-sm flex items-center justify-center gap-2 transition-colors shadow-lg ${processingId ? 'opacity-70 cursor-not-allowed' : ''}`}
+                                        className={`flex-1 bg-brand-red hover:bg-brand-red-hover text-white py-2.5 px-4 rounded-lg font-bold text-sm flex items-center justify-center gap-2 transition-colors shadow-lg ${processingId ? 'opacity-70 cursor-not-allowed' : ''}`}
                                     >
                                         {processingId === enrollment._id ? (
                                             <>
@@ -1203,7 +1203,7 @@ const LanguageEnrollmentDetails: React.FC = () => {
                                     <button
                                         onClick={() => handleApprove(selectedEnrollment)}
                                         disabled={!!processingId}
-                                        className={`inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-bold text-brand-black transition-colors hover:bg-brand-gold-hover ${processingId ? 'cursor-not-allowed opacity-70' : ''}`}
+                                        className={`inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-brand-red px-6 py-3 font-bold text-white transition-colors hover:bg-brand-red-hover ${processingId ? 'cursor-not-allowed opacity-70' : ''}`}
                                     >
                                         {processingId === selectedEnrollment._id ? (
                                             <>

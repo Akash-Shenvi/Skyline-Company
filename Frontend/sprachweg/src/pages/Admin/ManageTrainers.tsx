@@ -183,7 +183,7 @@ const ManageTrainers: React.FC = () => {
                                 <button
                                     type="submit"
                                     disabled={promoting}
-                                    className="w-full rounded-lg bg-brand-gold py-3 text-sm font-bold text-brand-black transition-colors hover:bg-brand-gold-hover disabled:opacity-50 flex items-center justify-center gap-2"
+                                    className="w-full rounded-lg bg-brand-red py-3 text-sm font-bold text-white transition-colors hover:bg-brand-red-hover disabled:opacity-50 flex items-center justify-center gap-2"
                                 >
                                     {promoting ? (
                                         <>

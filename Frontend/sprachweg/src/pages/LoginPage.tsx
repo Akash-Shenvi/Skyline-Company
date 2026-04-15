@@ -154,7 +154,7 @@ const LoginPage: React.FC = () => {
                         {/* Tab Switcher */}
                         <div className="bg-white p-1.5 rounded-xl flex mb-8 shadow-sm border border-brand-surface w-full max-w-sm mx-auto">
                             <button
-                                className="flex-1 py-2.5 text-sm font-semibold text-brand-black bg-brand-gold rounded-lg shadow-md transition-all"
+                                className="flex-1 py-2.5 text-sm font-semibold text-white bg-brand-red rounded-lg shadow-md transition-all"
                                 aria-selected="true"
                             >
                                 Sign In
@@ -254,7 +254,7 @@ const LoginPage: React.FC = () => {
 
                                 <Button
                                     type="submit"
-                                    className="w-full bg-brand-gold hover:bg-brand-gold-hover text-brand-black py-3.5 rounded-xl font-semibold shadow-lg shadow-amber-900/10 transition-transform active:scale-[0.98]"
+                                    className="w-full bg-brand-red hover:bg-brand-red-hover text-white py-3.5 rounded-xl font-semibold shadow-lg shadow-red-900/10 transition-transform active:scale-[0.98]"
                                     disabled={loading}
                                     data-testid="login-submit"
                                 >

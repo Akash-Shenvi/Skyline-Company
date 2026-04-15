@@ -650,7 +650,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                                 <button
                                     type="submit"
                                     disabled={saving}
-                                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-gold px-6 py-3 text-sm font-bold text-brand-black transition hover:bg-brand-gold-hover disabled:cursor-not-allowed disabled:opacity-60"
+                                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-red px-6 py-3 text-sm font-bold text-white transition hover:bg-brand-red-hover disabled:cursor-not-allowed disabled:opacity-60"
                                 >
                                     {saving && <Loader2 className="h-4 w-4 animate-spin" />}
                                     Publish Assessment
@@ -741,7 +741,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                                             <button
                                                 type="button"
                                                 onClick={handleRetry}
-                                                className="inline-flex items-center gap-2 rounded-xl bg-brand-gold px-4 py-3 text-sm font-bold text-brand-black transition hover:bg-brand-gold-hover"
+                                                className="inline-flex items-center gap-2 rounded-xl bg-brand-red px-4 py-3 text-sm font-bold text-white transition hover:bg-brand-red-hover"
                                             >
                                                 <RotateCcw className="h-4 w-4" />
                                                 Retry Assessment
@@ -864,7 +864,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                                     <button
                                         type="submit"
                                         disabled={submitting}
-                                        className="inline-flex items-center gap-2 rounded-xl bg-brand-gold px-6 py-3 text-sm font-bold text-brand-black transition hover:bg-brand-gold-hover disabled:cursor-not-allowed disabled:opacity-60"
+                                        className="inline-flex items-center gap-2 rounded-xl bg-brand-red px-6 py-3 text-sm font-bold text-white transition hover:bg-brand-red-hover disabled:cursor-not-allowed disabled:opacity-60"
                                     >
                                         {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
                                         Submit Assessment
@@ -886,7 +886,7 @@ const BatchAssessmentPage: React.FC<BatchAssessmentPageProps> = ({ trainingType 
                                 <button
                                     type="button"
                                     onClick={() => setShowStudentForm(true)}
-                                    className="mt-5 inline-flex items-center gap-2 rounded-xl bg-brand-gold px-5 py-3 text-sm font-bold text-brand-black transition hover:bg-brand-gold-hover"
+                                    className="mt-5 inline-flex items-center gap-2 rounded-xl bg-brand-red px-5 py-3 text-sm font-bold text-white transition hover:bg-brand-red-hover"
                                 >
                                     <ExternalLink className="h-4 w-4" />
                                     Start Assessment
