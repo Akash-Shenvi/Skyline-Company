@@ -14,65 +14,56 @@ const fadeInUp = {
     visible: (custom: number = 0) => ({
         opacity: 1,
         y: 0,
-        transition: { duration: 0.6, delay: custom * 0.1, ease: [0.22, 1, 0.36, 1] as const }
+        transition: { duration: 0.8, delay: custom * 0.1, ease: [0.22, 1, 0.36, 1] as const }
     })
 };
 
 const staggerContainer = {
     hidden: { opacity: 0 },
-    visible: (startHeavyAnimations: boolean = false) => ({
+    visible: {
         opacity: 1,
-        transition: startHeavyAnimations
-            ? { staggerChildren: 0.1, delayChildren: 0.2 }
-            : { duration: 0.3 } // Instant for first paint, delay stagger until after
-    })
+        transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+    }
 };
 
-// Elevated Hero Background - Memoized and deferred for performance
-const HeroBackground: React.FC<{ startAnimations: boolean }> = React.memo(({ startAnimations }) => {
+// Elevated Hero Background
+const HeroBackground: React.FC = () => {
     const shouldReduceMotion = useReducedMotion();
     const { scrollY } = useScroll();
-    const y1 = useTransform(scrollY, [0, 500], [0, shouldReduceMotion ? 0 : 150]);
-    const y2 = useTransform(scrollY, [0, 500], [0, shouldReduceMotion ? 0 : -150]);
-    const opacity = useTransform(scrollY, [0, 500], [1, 0]);
+    const y1 = useTransform(scrollY, [0, 500], [0, shouldReduceMotion ? 0 : 200]);
+    const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
     return (
         <motion.div
-            style={{ opacity, contain: 'paint' }}
+            style={{ opacity }}
             className="absolute inset-0 z-0 overflow-hidden pointer-events-none"
-            aria-hidden="true"
         >
-            {/* Static background immediately visible */}
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay"></div>
-
-            {/* Heavy animated layers deferred until after first paint */}
-            {startAnimations && (
-                <>
-                    <motion.div
-                        style={{ y: y1 }}
-                        animate={{
-                            scale: [1, 1.1, 1],
-                            opacity: [0.3, 0.5, 0.3]
-                        }}
-                        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                        className="absolute -top-[10%] -right-[10%] h-[600px] w-[600px] rounded-full bg-gradient-to-br from-brand-gold/20 to-brand-gold/50/10 blur-[120px]"
-                    />
-                    <motion.div
-                        style={{ y: y2 }}
-                        animate={{
-                            scale: [1, 1.2, 1],
-                            opacity: [0.2, 0.4, 0.2]
-                        }}
-                        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                        className="absolute top-[20%] -left-[10%] h-[500px] w-[500px] rounded-full bg-brand-red/50/10 blur-[100px]"
-                    />
-                </>
-            )}
+            <motion.div
+                style={{ y: y1 }}
+                animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.15, 0.3, 0.15],
+                    x: [0, 50, 0],
+                    y: [0, -30, 0]
+                }}
+                transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -top-[10%] -right-[10%] h-[800px] w-[800px] rounded-full bg-brand-red/20 blur-[120px]"
+            />
+            <motion.div
+                animate={{
+                    scale: [1, 1.1, 1],
+                    opacity: [0.1, 0.2, 0.1],
+                    x: [0, -30, 0]
+                }}
+                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="absolute top-[20%] -left-[10%] h-[600px] w-[600px] rounded-full bg-brand-gold/15 blur-[100px]"
+            />
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
         </motion.div>
     );
-});
-// Types
-interface FormData {
+};
+
+interface ContactFormData {
     name: string;
     email: string;
     subject: string;
@@ -96,8 +87,6 @@ interface FieldIconProps {
 interface SuccessAnimationProps {
     onReset: () => void;
 }
-
-// 3D Tilt Hook removed for performance optimization
 
 // LazyIframe Component - Only loads when in viewport
 const LazyIframe: React.FC<{ src: string; title: string; className?: string }> = ({ src, title, className }) => {
@@ -160,14 +149,6 @@ const useIcons = () => useMemo(() => ({
             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
         </svg>
     ),
-    partner: (
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-            <circle cx="9" cy="7" r="4" />
-            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-        </svg>
-    ),
     whatsapp: (
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
@@ -205,7 +186,7 @@ const SuccessAnimation = React.memo<SuccessAnimationProps>(({ onReset }) => (
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="mx-auto flex h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 items-center justify-center rounded-full bg-gradient-to-br from-brand-olive to-brand-olive text-white shadow-lg"
+            className="mx-auto flex h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 items-center justify-center rounded-full bg-brand-red text-white shadow-lg"
         >
             <motion.svg
                 initial={{ pathLength: 0 }}
@@ -241,7 +222,7 @@ const SuccessAnimation = React.memo<SuccessAnimationProps>(({ onReset }) => (
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9 }}
             onClick={onReset}
-            className="mt-4 sm:mt-6 md:mt-8 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 bg-gradient-to-r from-brand-black to-brand-olive-dark text-white rounded-lg sm:rounded-xl font-semibold text-xs sm:text-sm md:text-base hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-xl min-h-[44px] flex items-center justify-center"
+            className="mt-4 sm:mt-6 md:mt-8 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 bg-brand-black text-white rounded-lg sm:rounded-xl font-semibold text-xs sm:text-sm md:text-base hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-xl min-h-[44px] flex items-center justify-center"
         >
             Send Another Message
         </motion.button>
@@ -273,14 +254,12 @@ const itemVariants = {
 
 const ContactPage: React.FC = () => {
 
-    const [form, setForm] = useState<FormData>({ name: "", email: "", subject: "", message: "" });
+    const [form, setForm] = useState<ContactFormData>({ name: "", email: "", subject: "", message: "" });
     const [submitting, setSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [submitError, setSubmitError] = useState("");
     const [startHeavyAnimations, setStartHeavyAnimations] = useState(false);
 
-    // const contactCardRef = useTilt(true, isMobile);
-    // const formCardRef = useTilt(true, isMobile);
     const ICONS = useIcons();
 
     // Defer heavy animations until after first paint / idle
@@ -297,9 +276,7 @@ const ContactPage: React.FC = () => {
         }
     }, []);
 
-
-
-    const updateField = (key: keyof FormData, value: string) => {
+    const updateField = (key: keyof ContactFormData, value: string) => {
         setForm((prev) => ({ ...prev, [key]: value }));
     };
 
@@ -335,12 +312,8 @@ const ContactPage: React.FC = () => {
         }
     };
 
-
-
-    // Data
     const contactEmails: ContactEmail[] = [
         { type: 'Training', email: 'careers@skylinetraining.in' },
-        // { type: 'Queries', email: 'info@skylinetechnologies.in' }
     ];
 
     const officeAddress = "JLB Complex Gopadi, NH 66, Koteshwara Proper, Kundapura, Karnataka 576201";
@@ -354,37 +327,37 @@ const ContactPage: React.FC = () => {
             <Header />
 
             {/* Hero Section */}
-            {/* Hero Section */}
-            <section className="relative bg-gradient-to-br from-brand-black via-brand-olive-dark to-[#1a365d] py-28 sm:py-36 text-center overflow-hidden">
-                <HeroBackground startAnimations={startHeavyAnimations} />
+            <section className="relative bg-brand-black pt-32 pb-24 sm:pt-40 sm:pb-32 overflow-hidden border-b-[8px] border-brand-red">
+                <HeroBackground />
 
                 <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
                     <motion.div
                         initial="hidden"
                         animate="visible"
                         variants={staggerContainer}
-                        custom={startHeavyAnimations}
-                        className="mx-auto max-w-4xl"
+                        className="mx-auto max-w-4xl flex flex-col items-center"
                     >
-                        <motion.div variants={fadeInUp} className="mb-6 flex justify-center">
-                            <span className="inline-flex items-center gap-2 rounded-full border border-brand-gold/20 bg-brand-gold/10 px-4 py-1.5 text-sm font-semibold text-brand-gold backdrop-blur-sm">
-                                <MessageCircle className="h-4 w-4 fill-current" />
-                                Get In Touch
+                        <motion.div variants={fadeInUp} className="mb-8">
+                            <span className="inline-flex items-center gap-2 rounded-full border border-brand-red/30 bg-brand-red/10 px-4 py-2 text-xs sm:text-sm font-bold tracking-widest text-brand-red uppercase backdrop-blur-md shadow-[0_0_20px_rgba(200,35,43,0.1)]">
+                                <MessageCircle className="h-4 w-4" />
+                                Support & Inquiries
                             </span>
                         </motion.div>
 
                         <motion.h1
                             variants={fadeInUp}
-                            className="font-display mb-4 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
+                            className="text-4xl sm:text-5xl lg:text-7xl font-sans font-bold text-white mb-8 leading-[1.1] tracking-tight"
                         >
-                            Contact <span className="bg-gradient-to-r from-brand-gold to-brand-gold-hover bg-clip-text text-transparent">Us</span>
+                            Let's Start a<br />
+                            <span className="text-brand-red">Conversation</span>
                         </motion.h1>
 
                         <motion.p
                             variants={fadeInUp}
-                            className="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-brand-olive-light sm:text-lg"
+                            className="text-lg sm:text-xl text-white/60 max-w-2xl mx-auto mb-12 leading-relaxed"
                         >
-                            Ready to transform your industry with cutting-edge automation solutions? Let's discuss how our PLC, IoT, and SCADA expertise can revolutionize your operations.
+                            Have questions about our technical training or global career pathways? 
+                            Our team is here to guide you toward your professional goals.
                         </motion.p>
                     </motion.div>
                 </div>

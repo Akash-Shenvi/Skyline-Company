@@ -8,6 +8,34 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { Header } from '../components/layout';
 import { getDashboardPathForRole } from '../lib/authRouting';
 
+// Elevated Hero Background for Auth Pages
+const HeroBackground: React.FC = () => {
+    return (
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+            <motion.div
+                animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.1, 0.2, 0.1],
+                    x: [0, 30, 0],
+                    y: [0, -20, 0]
+                }}
+                transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -top-[10%] -right-[10%] h-[500px] w-[500px] rounded-full bg-brand-red/20 blur-[100px]"
+            />
+            <motion.div
+                animate={{
+                    scale: [1, 1.1, 1],
+                    opacity: [0.05, 0.15, 0.05],
+                    x: [0, -20, 0]
+                }}
+                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="absolute top-[20%] -left-[10%] h-[400px] w-[400px] rounded-full bg-brand-gold/15 blur-[80px]"
+            />
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+        </div>
+    );
+};
+
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -72,26 +100,21 @@ const LoginPage: React.FC = () => {
             <main id="main" role="main" className="min-h-screen pt-20 flex">
                 {/* Left Panel - Hero */}
                 <div className="hidden lg:flex lg:w-1/2 bg-brand-black text-white p-16 flex-col justify-between relative overflow-hidden">
-                    {/* Decorative Elements */}
-                    <div className="absolute top-12 right-12 w-32 h-32 border border-white/20 rounded-3xl transform rotate-12" />
-                    <div className="absolute bottom-12 left-12 w-24 h-24 border border-white/10 rounded-full" />
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
+                    <HeroBackground />
 
                     <div className="relative z-10">
-
-
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
+                            transition={{ duration: 0.8 }}
                         >
-                            <h1 className="font-sans text-5xl font-medium leading-tight mb-6">
+                            <h1 className="text-5xl lg:text-7xl font-sans font-bold leading-[1.1] mb-8 tracking-tight">
                                 Welcome Back to<br />
-                                Your<br />
-                                Skill Training
+                                Your <span className="text-brand-red">Skill</span><br />
+                                <span className="text-white">Training</span>
                             </h1>
 
-                            <p className="text-white/75 text-lg mb-12 max-w-md leading-relaxed">
+                            <p className="text-white/60 text-lg mb-12 max-w-sm leading-relaxed">
                                 Continue your path to technical mastery and global career opportunities in the industry.
                             </p>
 
@@ -103,24 +126,23 @@ const LoginPage: React.FC = () => {
                                 ].map((item, i) => (
                                     <motion.div
                                         key={i}
-                                        custom={i}
                                         initial={{ opacity: 0, x: -20 }}
                                         animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: 0.4 + (i * 0.1) }}
+                                        transition={{ delay: 0.6 + (i * 0.1) }}
                                         className="flex items-center gap-4"
                                     >
-                                        <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                                            <CheckCircle className="w-4 h-4 text-brand-gold" />
+                                        <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 backdrop-blur-sm">
+                                            <CheckCircle className="w-5 h-5 text-brand-red" />
                                         </div>
-                                        <span className="text-white">{item}</span>
+                                        <span className="text-white/80 font-medium">{item}</span>
                                     </motion.div>
                                 ))}
                             </div>
                         </motion.div>
                     </div>
 
-                    <div className="text-sm text-white/75/60">
-                        SoVir Technologies LLP © {new Date().getFullYear()}
+                    <div className="relative z-10 text-sm text-white/40 tracking-widest uppercase font-bold">
+                        Skyline Technologies LLP © {new Date().getFullYear()}
                     </div>
                 </div>
 

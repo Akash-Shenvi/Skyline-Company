@@ -1,7 +1,7 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
-import { motion, useScroll, useTransform, useReducedMotion, useInView, useAnimation } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { Award } from 'lucide-react';
 
 // --- Theme Colors ---
@@ -14,7 +14,7 @@ const fadeInUp = {
     visible: (custom: number = 0) => ({
         opacity: 1,
         y: 0,
-        transition: { duration: 0.6, delay: custom * 0.1, ease: [0.22, 1, 0.36, 1] as const }
+        transition: { duration: 0.8, delay: custom * 0.1, ease: [0.22, 1, 0.36, 1] as const }
     })
 };
 
@@ -22,68 +22,43 @@ const staggerContainer = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
-        transition: { staggerChildren: 0.15, delayChildren: 0.2 }
+        transition: { staggerChildren: 0.1, delayChildren: 0.2 }
     }
 };
 
-// Animated section wrapper
-const AnimatedSection: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className }) => {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: '-100px' });
-    const controls = useAnimation();
-
-    useEffect(() => {
-        if (isInView) {
-            controls.start('visible');
-        }
-    }, [isInView, controls]);
-
-    return (
-        <motion.div
-            ref={ref}
-            initial="hidden"
-            animate={controls}
-            variants={staggerContainer}
-            className={className}
-        >
-            {children}
-        </motion.div>
-    );
-};
-
-// Hero Background Component with parallax blobs + grain
+// Hero Background Component with premium animated blobs
 const HeroBackground: React.FC = () => {
     const shouldReduceMotion = useReducedMotion();
     const { scrollY } = useScroll();
-    const y1 = useTransform(scrollY, [0, 500], [0, shouldReduceMotion ? 0 : 150]);
-    const y2 = useTransform(scrollY, [0, 500], [0, shouldReduceMotion ? 0 : -150]);
-    const opacity = useTransform(scrollY, [0, 500], [1, 0]);
+    const y1 = useTransform(scrollY, [0, 500], [0, shouldReduceMotion ? 0 : 200]);
+    const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
     return (
         <motion.div
             style={{ opacity }}
             className="absolute inset-0 z-0 overflow-hidden pointer-events-none"
-            aria-hidden="true"
         >
             <motion.div
                 style={{ y: y1 }}
                 animate={{
-                    scale: [1, 1.1, 1],
-                    opacity: [0.3, 0.5, 0.3]
+                    scale: [1, 1.2, 1],
+                    opacity: [0.15, 0.3, 0.15],
+                    x: [0, 50, 0],
+                    y: [0, -30, 0]
                 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-[10%] -right-[10%] h-[600px] w-[600px] rounded-full bg-gradient-to-br from-brand-gold/20 to-red-500/10 blur-[120px]"
+                transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -top-[10%] -right-[10%] h-[800px] w-[800px] rounded-full bg-brand-red/20 blur-[120px]"
             />
             <motion.div
-                style={{ y: y2 }}
                 animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.2, 0.4, 0.2]
+                    scale: [1, 1.1, 1],
+                    opacity: [0.1, 0.2, 0.1],
+                    x: [0, -30, 0]
                 }}
-                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute top-[20%] -left-[10%] h-[500px] w-[500px] rounded-full bg-brand-gold/50/10 blur-[100px]"
+                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="absolute top-[20%] -left-[10%] h-[600px] w-[600px] rounded-full bg-brand-gold/15 blur-[100px]"
             />
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay"></div>
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
         </motion.div>
     );
 };
@@ -97,40 +72,40 @@ const AboutPage: React.FC = () => {
             <main id="main-content" className="flex-1">
 
                 {/* --- HERO SECTION --- */}
-                <section className="relative bg-gradient-to-br from-brand-black via-brand-olive-dark to-[#1a365d] overflow-hidden py-28 sm:py-36 text-center">
+                <section className="relative bg-brand-black pt-32 pb-24 sm:pt-40 sm:pb-32 overflow-hidden border-b-[8px] border-brand-red">
                     <HeroBackground />
 
                     <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <AnimatedSection className="flex flex-col items-center text-center">
-                            <motion.div variants={fadeInUp} className="mb-6 flex justify-center">
-                                <span className="inline-flex items-center gap-2 rounded-full border border-brand-gold/20 bg-brand-gold/10 px-4 py-1.5 text-sm font-semibold text-brand-gold backdrop-blur-sm">
-                                    <Award className="h-4 w-4 fill-current" />
-                                    Learn. Automate. Communicate. Succeed.
+                        <motion.div
+                            initial="hidden"
+                            animate="visible"
+                            variants={staggerContainer}
+                            className="flex flex-col items-center text-center"
+                        >
+                            <motion.div variants={fadeInUp} className="mb-8">
+                                <span className="inline-flex items-center gap-2 rounded-full border border-brand-red/30 bg-brand-red/10 px-4 py-2 text-xs sm:text-sm font-bold tracking-widest text-brand-red uppercase backdrop-blur-md shadow-[0_0_20px_rgba(200,35,43,0.1)]">
+                                    <Award className="h-4 w-4" />
+                                    Our Story & Mission
                                 </span>
                             </motion.div>
+
                             <motion.h1
                                 variants={fadeInUp}
-                                className="text-4xl md:text-5xl lg:text-6xl font-sans font-bold text-white mb-6 leading-tight"
+                                className="text-4xl sm:text-5xl lg:text-7xl font-sans font-bold text-white mb-8 leading-[1.1] tracking-tight"
                             >
-                                About Skyline Skilling &amp; <br />
-                                <span className="text-brand-gold relative">
-                                    Training Center
-                                    <motion.span
-                                        initial={{ scaleX: 0 }}
-                                        animate={{ scaleX: 1 }}
-                                        transition={{ delay: 0.8, duration: 0.6 }}
-                                        className="absolute -bottom-2 left-0 w-full h-1 bg-brand-gold/50 rounded-full origin-left"
-                                    />
-                                </span>
+                                Empowering Global<br />
+                                <span className="text-brand-red">Careers</span> Since Day One
                             </motion.h1>
+
                             <motion.p
                                 variants={fadeInUp}
-                                custom={1}
-                                className="text-lg md:text-xl text-brand-olive-light max-w-3xl mx-auto mb-10 leading-relaxed"
+                                className="text-lg sm:text-xl text-white/60 max-w-3xl mx-auto mb-12 leading-relaxed"
                             >
-                                Empowering Global Careers Through Language, Skills &amp; Automation
+                                At Skyline Skilling & Training Center, we bridge the gap between 
+                                potential and professional excellence through language mastery 
+                                and industrial expertise.
                             </motion.p>
-                        </AnimatedSection>
+                        </motion.div>
                     </div>
                 </section>
 
