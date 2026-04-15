@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, BriefcaseBusiness, MapPin } from 'lucide-react';
+import { motion, useReducedMotion, useScroll, useTransform, type Easing } from 'framer-motion';
+import { ArrowRight, BriefcaseBusiness, MapPin, Star, Shield, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
@@ -13,6 +13,60 @@ import {
 
 const DEFAULT_HERO_IMAGE = 'https://images.unsplash.com/photo-1551076805-e166946c9eb9?q=80&w=2600&auto=format&fit=crop';
 const DEFAULT_CARD_IMAGE = 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1400&auto=format&fit=crop';
+
+const easeOut: Easing = [0.0, 0.0, 0.2, 1];
+
+const fadeInUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easeOut } }
+};
+
+const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.15,
+            delayChildren: 0.1
+        }
+    }
+};
+
+const HeroBackground: React.FC = () => {
+    const shouldReduceMotion = useReducedMotion();
+    const { scrollY } = useScroll();
+    const y1 = useTransform(scrollY, [0, 500], [0, shouldReduceMotion ? 0 : 150]);
+    const y2 = useTransform(scrollY, [0, 500], [0, shouldReduceMotion ? 0 : -150]);
+    const opacity = useTransform(scrollY, [0, 500], [1, 0]);
+
+    return (
+        <motion.div
+            style={{ opacity }}
+            className="absolute inset-0 z-0 overflow-hidden pointer-events-none"
+            aria-hidden="true"
+        >
+            <motion.div
+                style={{ y: y1 }}
+                animate={{
+                    scale: [1, 1.1, 1],
+                    opacity: [0.4, 0.6, 0.4]
+                }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -top-[10%] -right-[10%] h-[600px] w-[600px] rounded-full bg-gradient-to-br from-brand-gold/20 to-brand-black/10 blur-[120px]"
+            />
+            <motion.div
+                style={{ y: y2 }}
+                animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.5, 0.3]
+                }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="absolute top-[20%] -left-[10%] h-[500px] w-[500px] rounded-full bg-brand-red/10 blur-[100px]"
+            />
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay"></div>
+        </motion.div>
+    );
+};
 
 const CareersPage: React.FC = () => {
     const [programs, setPrograms] = useState<CareerProgram[]>([]);
@@ -52,37 +106,48 @@ const CareersPage: React.FC = () => {
         <div className="min-h-screen bg-brand-off-white flex flex-col font-sans text-brand-olive-dark">
             <Header />
 
-            <section className="relative flex min-h-[500px] items-center justify-center overflow-hidden pt-20 pb-20">
-                <div className="absolute inset-0">
-                    <img 
-                        src={DEFAULT_HERO_IMAGE} 
-                        alt="Global medical professionals" 
-                        className="h-full w-full object-cover object-center"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-br from-brand-black/95 via-brand-olive-dark/95 to-[#1b3b52]/90 mix-blend-multiply" />
-                    <div className="absolute inset-0 bg-brand-black/40" />
-                </div>
-                
-                <div className="relative mx-auto w-full max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+            <section className="relative py-28 sm:py-36 overflow-hidden bg-brand-black text-brand-white border-b-[8px] border-brand-red">
+                <HeroBackground />
+
+                <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, ease: 'easeOut' }}
-                        className="mx-auto max-w-4xl rounded-3xl border border-white/10 bg-brand-black/40 p-8 backdrop-blur-md sm:p-12"
+                        initial="hidden"
+                        animate="visible"
+                        variants={staggerContainer}
+                        className="flex flex-col items-center text-center"
                     >
-                        <span className="inline-flex items-center gap-2 rounded-full border border-brand-gold/40 bg-brand-gold/10 px-4 py-1.5 text-sm font-semibold tracking-wide text-brand-gold">
-                            <BriefcaseBusiness className="h-4 w-4" />
-                            Global Career Programs
-                        </span>
-                        <h1 className="mt-6 text-4xl font-extrabold leading-tight text-white sm:text-5xl md:text-6xl">
-                            International pathways,
-                            <span className="block bg-gradient-to-r from-brand-gold via-[#ffd479] to-brand-gold bg-clip-text text-transparent pt-2">
-                                built for success.
+                        <motion.div variants={fadeInUp} className="mb-8 flex justify-center">
+                            <span className="inline-flex items-center gap-2 rounded-full border border-brand-gold/20 bg-brand-gold/10 px-4 py-1.5 text-sm font-semibold text-brand-gold backdrop-blur-sm">
+                                <BriefcaseBusiness className="h-4 w-4" />
+                                Global Career Programs
                             </span>
-                        </h1>
-                        <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[#d4d4cb] sm:text-lg">
+                        </motion.div>
+
+                        <motion.h1
+                            variants={fadeInUp}
+                            className="font-display mb-6 text-5xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl"
+                        >
+                            International pathways,<br className="hidden sm:inline" />
+                            <span className="text-brand-red">built for success.</span>
+                        </motion.h1>
+
+                        <motion.p
+                            variants={fadeInUp}
+                            className="mb-10 max-w-2xl text-lg leading-relaxed text-brand-off-white sm:text-xl"
+                        >
                             Explore career programs with eligibility guidance, salary expectations, step-by-step process clarity, and end-to-end relocation support.
-                        </p>
+                        </motion.p>
+
+                        <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-4 text-sm font-medium text-brand-white">
+                            <div className="flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 backdrop-blur-sm border border-white/20 hover:border-brand-gold transition-colors">
+                                <Shield className="h-5 w-5 text-brand-gold" />
+                                <span>Relocation Support</span>
+                            </div>
+                            <div className="flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 backdrop-blur-sm border border-white/20 hover:border-brand-red transition-colors">
+                                <Zap className="h-5 w-5 text-brand-red" />
+                                <span>Career Guidance</span>
+                            </div>
+                        </motion.div>
                     </motion.div>
                 </div>
             </section>
