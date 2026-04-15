@@ -120,7 +120,7 @@ const LoginPage: React.FC = () => {
                     </div>
 
                     <div className="text-sm text-white/75/60">
-                        Skyline Technologies LLP © {new Date().getFullYear()}
+                        SoVir Technologies LLP © {new Date().getFullYear()}
                     </div>
                 </div>
 
@@ -128,7 +128,7 @@ const LoginPage: React.FC = () => {
                 <div className="w-full lg:w-1/2 flex items-center justify-center p-8 relative">
                     <div className="w-full max-w-md">
                         {/* Mobile Header (Visible only on small screens) */}
-                        
+
                         {/* Tab Switcher */}
                         <div className="bg-white p-1.5 rounded-xl flex mb-8 shadow-sm border border-brand-surface w-full max-w-sm mx-auto">
                             <button
