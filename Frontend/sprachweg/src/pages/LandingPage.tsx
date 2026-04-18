@@ -352,7 +352,7 @@ const LandingPage: React.FC = () => {
 
 
     return (
-        <div className="min-h-screen bg-brand-white font-sans">
+        <div className="min-h-screen bg-brand-white font-sans overflow-x-hidden">
             {/* Skip to content */}
             <a
                 href="#main-content"
@@ -390,7 +390,7 @@ const LandingPage: React.FC = () => {
                         </motion.div>
 
                         {/* Headline */}
-                        <h1 className="font-sans text-[clamp(1.6rem,4.5vw,4.5rem)] font-bold text-white leading-[1.1] tracking-tight mx-auto mb-6 whitespace-nowrap">
+                        <h1 className="font-sans text-[clamp(1.6rem,4.5vw,4.5rem)] font-bold text-white leading-[1.1] tracking-tight mx-auto mb-6">
                             Skyline Skilling <span className="text-brand-gold">&amp;</span> Training Center
                         </h1>
 

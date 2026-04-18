@@ -141,7 +141,7 @@ const CareersPage: React.FC = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-brand-off-white flex flex-col font-sans text-brand-olive-dark">
+        <div className="min-h-screen bg-brand-off-white flex flex-col font-sans text-brand-olive-dark overflow-x-hidden">
             <Header />
 
             {/* ── Hero Section ── */}
